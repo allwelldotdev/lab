@@ -25,7 +25,7 @@ To repeat the search function or motion across the line use `;` to repeat FORWAR
 `incsearch` incremental search.
 `hlsearch` or `hls` highlight search.
 `:set hlsearch?` to check `hlsearch` setting. If output is `nohlsearch` then `hlsearch` is off.
-`:set hls` set `hlsearch` to on.
+`:set hls` or `:hls` or `:hlsearch` set `hlsearch` to on.
 
 >A neat trick for search, replace, and repeat incrementally is `/search-term` to search a word or character, `cw` to change the word, `n` to move to the next similar search-term, and `.` to automatically repeat the `cw` action.
 ## Matching parenthesis search
@@ -92,22 +92,16 @@ To repeat the search function or motion across the line use `;` to repeat FORWAR
 > You can also use `y` as an operator: `yw` yanks one word, `yy` yanks the whole line, then `p` puts that line.
 ## Set option
 
-> To remove the highlighting of matches enter: `:nohlsearch`
+`:set xxx` sets the option `xxx`.
 
-> If you want to ignore case for just one search command, use `\\c` in the phrase: `/ignore\\c <ENTER>`
-
-Typing "`:set xxx`" sets the option "`xxx`". Some options are:
-
+Some options are:
 '`ic`' '`ignorecase`' ignore upper/lower case when searching
-
 '`is`' '`incsearch`' show partial matches for a search phrase
-
 '`hls`' '`hlsearch`' highlight all matching phrases.
-
-You can either use the long or the short option name.
 
 Prepend "`no`" to switch an option off: `:set noic`
 
+> If you want to ignore case for just one search command, use `\\c` in the phrase: `/ignore\\c <ENTER>`
 ### Getting help
 
 Vim has a comprehensive on-line help system. To get started, try one of these three:
