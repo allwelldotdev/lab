@@ -21,8 +21,27 @@ For example, if using python3.9 and you'd like to name your virtual environment 
 python3.9 -m venv py39_course
 ```
 
-> If using zsh on wsl:ubuntu, and you encounter a problem of not seeing the indication of the activated virtual environment via the name next to your user prompt in your terminal (as shown in the image below). Do the following:
+> If using zsh on wsl:ubuntu and you encounter a problem of not seeing the indication of the activated virtual environment via the text in parenthesis next to your user prompt in your terminal (as shown in the image below). Do the following:
 
 ![[Pasted image 20241224235005.png]]
-
+1. Open `~/.zshrc` file and check that you have included `virtualenv` in your plugins array, like so:
+   ```bash
+   plugins=(git virtualenv python)
+```
+2. Disable prompt suppression.
+   ```bash
+   # export VIRTUAL_ENV_DISABLE_PROMPT=1
+```
+3. Check common configuration files for the env variable.
+   ```bash
+   grep -r "VIRTUAL_ENV_DISABLE_PROMPT" ~/.zshrc ~/.zshenv ~/.oh-my-zsh/*
+```
+4. Unset the environment variable.
+   ```bash
+   unset VIRTUAL_ENV_DISABLE_PROMPT
+```
+5. Reload your `~/.zshrc` configuration file.
+   ```bash
+   source ~/.zshrc
+```
 
