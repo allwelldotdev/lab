@@ -20,3 +20,9 @@ For example, if using python3.9 and you'd like to name your virtual environment 
 ```bash
 python3.9 -m venv py39_course
 ```
+
+> If using zsh on wsl:ubuntu, and you encounter a problem of not seeing the indication of the activated virtual environment via the name next to your user prompt in your terminal (as shown in the image below). Do the following:
+
+![[Pasted image 20241224235005.png]]
+
+
