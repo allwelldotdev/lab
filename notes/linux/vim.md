@@ -102,7 +102,7 @@ Some options are:
 Prepend "`no`" to switch an option off: `:set noic`
 
 > If you want to ignore case for just one search command, use `\\c` in the phrase: `/ignore\\c <ENTER>`
-### Getting help
+## Get help
 
 Vim has a comprehensive on-line help system. To get started, try one of these three:
 
@@ -112,9 +112,8 @@ Vim has a comprehensive on-line help system. To get started, try one of these th
 
 Read the text in the help window to find out how the help works.
 
-Type `CTRL-W CTRL-W` to jump from one window to another.
-
-Type `:q <ENTER>` to close the help window.
+`CTRL-W CTRL-W` to jump from one window to another.
+`:q <ENTER>` to close the help window.
 
 You can find help on just about any subject, by giving an argument to the "`:help`" command. Try these (don't forget pressing `<ENTER>`):
 
@@ -124,10 +123,9 @@ You can find help on just about any subject, by giving an argument to the "`:hel
     :help insert-index
     :help user-manual
 ```
+## Startup script
 
-### Create a startup script
-
-Enable Vim features
+Enable Vim features.
 
 Vim has many more features than Vi, but most of them are disabled by default. To start using more features you should create a "vimrc" file.
 
@@ -145,7 +143,7 @@ You can add all your preferred settings to this "vimrc" file.
 
 For more information type `:help vimrc-intro`
 
-### Completion
+## Command completion
 
 Command line completion with `CTRL-D` and `<TAB>`
 
@@ -159,14 +157,60 @@ Command line completion with `CTRL-D` and `<TAB>`
 
 > Completion works for many commands. Just try pressing `CTRL-D` and `<TAB>`. It is especially useful for `:help` .
 
-- Summary
-    
-    When typing a `:` command, press `CTRL-D` to see possible completions.
-    
-    Press `<TAB>` to use one completion.
-    
+>When typing a `:` command, press `CTRL-D` to see possible completions.
+>Press `<TAB>` to use one completion.
 
-### Further reading
+## Text objects
+
+for words…
+- `daw` = delete a word
+- `ciw` = change inner word.
+
+for sentences…
+- `das` = delete a sentence
+- `cis` = change inner sentence.
+
+for paragraphs…
+- `dap` = delete a paragraph
+- `cip` = change inner paragraph.
+## Navigational key-bindings for zsh
+
+```bash
+# Navigation
+bindkey '^a' beginning-of-line       # Ctrl+A: Move to beginning of line
+bindkey '^e' end-of-line             # Ctrl+E: Move to end of line
+bindkey '^b' backward-char           # Ctrl+B: Move backward one character
+bindkey '^f' forward-char            # Ctrl+F: Move forward one character
+bindkey '^[b' backward-word          # Alt+B: Move backward one word
+bindkey '^[f' forward-word           # Alt+F: Move forward one word
+
+# Editing
+bindkey '^u' backward-kill-line      # Ctrl+U: Delete from cursor to start of line
+bindkey '^k' kill-line               # Ctrl+K: Delete from cursor to end of line
+bindkey '^[d' kill-word              # Alt+D: Delete word forward
+bindkey '^[^h' backward-kill-word    # Alt+Backspace: Delete word backward
+bindkey '^y' yank                    # Ctrl+Y: Paste last deleted text
+bindkey '^t' transpose-chars         # Ctrl+T: Swap current character with previous
+
+# History
+bindkey '^s' history-incremental-search-forward  # Ctrl+S: Forward history search
+bindkey '^[p' history-search-backward            # Alt+P: Search backward in history
+bindkey '^[n' history-search-forward             # Alt+N: Search forward in history
+bindkey '^[<' beginning-of-buffer-or-history     # Alt+<: Move to first line in history
+bindkey '^[>' end-of-buffer-or-history           # Alt+>: Move to last line in history
+
+# Completion
+bindkey '^i' expand-or-complete      # Tab: Perform completion
+bindkey '^[[Z' reverse-menu-complete # Shift+Tab: Reverse completion menu
+
+# Misc
+bindkey '^l' clear-screen            # Ctrl+L: Clear screen
+bindkey '^x^e' edit-command-line     # Ctrl+X, Ctrl+E: Edit command in external editor
+```
+## Command line window
+
+`q:` show command line window in vim. To quit it, type `:q`.
+## Further reading
 
 Read the user manual next: "`:help user-manual`".
 
