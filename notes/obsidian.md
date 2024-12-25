@@ -1,5 +1,11 @@
 ## For vault: [github.com/allwelldotdev/lab...notes](https://github.com/allwelldotdev/lab/tree/main/notes)
-### Community plugins in use:
+### Obsidian hotkey commands I use:
+- Toggle left sidebar: `Shift + Alt + L`
+- Toggle right sidebar: `Shift + Alt + R`
+- Open quick switcher: `Ctrl + O`
+- Open command palette: `Ctrl + P`
+- Toggle reading/editing view: `Ctrl + E`
+### Community plugins I use:
 1. Git
 2. Keyshots
 #### Keyshots
