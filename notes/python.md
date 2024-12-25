@@ -29,19 +29,19 @@ python3.9 -m venv py39_course
    ```bash
    plugins=(git virtualenv python)
    ```
-2. Disable prompt suppression.
+2. If plugin included and venv indication is not working, disable prompt suppression:
    ```bash
    # export VIRTUAL_ENV_DISABLE_PROMPT=1
    ```
-3. Check common configuration files for the env variable.
+3. Check common configuration files for the env variable `VIRTUAL_ENV_DISABLE_PROMPT`:
    ```bash
    grep -r "VIRTUAL_ENV_DISABLE_PROMPT" ~/.zshrc ~/.zshenv ~/.oh-my-zsh/*
      ```
-4. Unset the environment variable.
+4. If after commenting out the env variable `export` command, it's still set. Unset the environment variable:
    ```bash
    unset VIRTUAL_ENV_DISABLE_PROMPT
      ```
-5. Reload your `~/.zshrc` configuration file.
+5. Reload `~/.zshrc`:
    ```bash
    source ~/.zshrc
 	 ```
