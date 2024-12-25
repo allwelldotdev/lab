@@ -8,6 +8,7 @@
 ### Community plugins I use:
 1. Git
 2. Keyshots
+3. Latex Suite
 #### Keyshots
 - IDE Keys Mapping: Visual Studio Code
 ###### List of Keyshots commands in use:
