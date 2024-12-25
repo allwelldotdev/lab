@@ -3,29 +3,29 @@ Learned from:
 2. watching Jason Cannon's course, titled 'Vim Masterclass', on [Udemy](https://www.udemy.com/course/vim-commands-cheat-sheet/).
 ## Cursor location and file status
 
-`CTRL-G` displays your location in the file and the file status.
-`G` moves to the end of the file.
-`<line-number> G` moves to that line number.
-`gg` moves to the first line.
+- `CTRL-G` displays your location in the file and the file status.
+- `G` moves to the end of the file.
+- `<line-number> G` moves to that line number.
+- `gg` moves to the first line.
 ## Search command
 
-`/` followed by a phrase searched FORWARD for the phrase.
-`?` followed by a phrase searches BACKWARD for the phrase.
-`n` to find the next occurrence in the same direction,
-`N` to search in the opposite direction.
-`CTRL-O` takes you back to older positions,
-`CTRL-I` to newer positions.
-
-`f` followed by a search character searches FORWARD for the character within a line.
-`F` followed by a search character searches BACKWARD for the character within a line.
-`t` followed by a search character searches FORWARD for the character within a line and positions the cursor before the character you searched for.
-`T` followed by a search character searches BACKWARD for the character within a line and positions the cursor before the character you searched for.
-To repeat the search function or motion across the line use `;` to repeat FORWARD and `,` to repeat BACKWARD.
-
-`incsearch` incremental search.
-`hlsearch` or `hls` highlight search.
-`:set hlsearch?` to check `hlsearch` setting. If output is `nohlsearch` then `hlsearch` is off.
-`:set hls` or `:hls` or `:hlsearch` set `hlsearch` to on.
+- `/` followed by a phrase searched FORWARD for the phrase.
+- `?` followed by a phrase searches BACKWARD for the phrase.
+- `n` to find the next occurrence in the same direction,
+- `N` to search in the opposite direction.
+- `CTRL-O` takes you back to older positions,
+- `CTRL-I` to newer positions.
+---
+- `f` followed by a search character searches FORWARD for the character within a line.
+- `F` followed by a search character searches BACKWARD for the character within a line.
+- `t` followed by a search character searches FORWARD for the character within a line and positions the cursor before the character you searched for.
+- `T` followed by a search character searches BACKWARD for the character within a line and positions the cursor before the character you searched for.
+- To repeat the search function or motion across the line use `;` to repeat FORWARD and `,` to repeat BACKWARD.
+---
+- `incsearch` incremental search.
+- `hlsearch` or `hls` highlight search.
+- `:set hlsearch?` to check `hlsearch` setting. If output is `nohlsearch` then `hlsearch` is off.
+- `:set hls` or `:hls` or `:hlsearch` set `hlsearch` to on.
 
 >A neat trick for search, replace, and repeat incrementally is `/search-term` to search a word or character, `cw` to change the word, `n` to move to the next similar search-term, and `.` to automatically repeat the `cw` action.
 ## Matching parenthesis search
@@ -35,11 +35,11 @@ To repeat the search function or motion across the line use `;` to repeat FORWAR
 
 >This command does the same thing 'find and replace' does. It searches for a string or character and replaces it with another.
 
-`:s/thee/the <ENTER>` only substitutes the first occurrence of “thee” in the line.
-`:s/thee/the/g <ENTER>` substitutes globally in the line.
-`:#,#s/old/new/g` where #,# are the line numbers of the range of lines where the substitution is to be done.
-`:%s/old/new/g` to change every occurrence in the whole file.
-`:%s/old/new/gc` to find every occurrence in the whole file, with a prompt whether to substitute or not.
+- `:s/thee/the <ENTER>` only substitutes the first occurrence of “thee” in the line.
+- `:s/thee/the/g <ENTER>` substitutes globally in the line.
+- `:#,#s/old/new/g` where #,# are the line numbers of the range of lines where the substitution is to be done.
+- `:%s/old/new/g` to change every occurrence in the whole file.
+- `:%s/old/new/gc` to find every occurrence in the whole file, with a prompt whether to substitute or not.
 ## Executing external commands
 
 >You can execute any external command this way, also with arguments.
@@ -66,19 +66,19 @@ To repeat the search function or motion across the line use `;` to repeat FORWAR
 
 > You can also read the output of an external command. For example, `:r !ls` reads the output of the `ls` command and puts it below the cursor.
 
-`:r <FILENAME>` retrieves disk file FILENAME and puts it below the cursor position.
-`:r !ls` reads the output of the `ls` command and puts it below the cursor position.
+- `:r <FILENAME>` retrieves disk file FILENAME and puts it below the cursor position.
+- `:r !ls` reads the output of the `ls` command and puts it below the cursor position.
 ## Open command
 
-`o` to open a line BELOW the cursor and start Insert mode.
-`O` to open a line ABOVE the cursor.
+- `o` to open a line BELOW the cursor and start Insert mode.
+- `O` to open a line ABOVE the cursor.
 ## The append command
 
 > `a`, `i` and `A` all go to the same Insert mode, the only difference is where the characters are inserted.
 
-`a` to insert text AFTER the cursor.
-`A` to insert text after the end of the line.
-`e` command moves (or motions) the cursor to the end of a word.
+- `a` to insert text AFTER the cursor.
+- `A` to insert text after the end of the line.
+- `e` command moves (or motions) the cursor to the end of a word.
 ## Replace mode
 
 > Replace mode is like Insert mode, but every typed character deletes an existing character.
@@ -86,8 +86,8 @@ To repeat the search function or motion across the line use `;` to repeat FORWAR
 `R` enters replace mode until `ESC` is pressed.
 ## Copy and paste text
 
-`y` operator yanks (copies) text
-`p` puts (pastes) text.
+- `y` operator yanks (copies) text
+- `p` puts (pastes) text.
 
 > You can also use `y` as an operator: `yw` yanks one word, `yy` yanks the whole line, then `p` puts that line.
 ## Set option
@@ -95,9 +95,9 @@ To repeat the search function or motion across the line use `;` to repeat FORWAR
 `:set xxx` sets the option `xxx`.
 
 Some options are:
-'`ic`' '`ignorecase`' ignore upper/lower case when searching
-'`is`' '`incsearch`' show partial matches for a search phrase
-'`hls`' '`hlsearch`' highlight all matching phrases.
+- '`ic`' '`ignorecase`' ignore upper/lower case when searching
+- '`is`' '`incsearch`' show partial matches for a search phrase
+- '`hls`' '`hlsearch`' highlight all matching phrases.
 
 Prepend "`no`" to switch an option off: `:set noic`
 
@@ -112,8 +112,8 @@ Vim has a comprehensive on-line help system. To get started, try one of these th
 
 Read the text in the help window to find out how the help works.
 
-`CTRL-W CTRL-W` to jump from one window to another.
-`:q <ENTER>` to close the help window.
+- `CTRL-W CTRL-W` to jump from one window to another.
+- `:q <ENTER>` to close the help window.
 
 You can find help on just about any subject, by giving an argument to the "`:help`" command. Try these (don't forget pressing `<ENTER>`):
 

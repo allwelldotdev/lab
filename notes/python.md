@@ -65,19 +65,27 @@ source <path_to_venv>/bin/activate
 	- `pip install -r requirements.txt` to install packages from `requirements.txt`
 
 ## Running python
-**Python REPL (read-eval-print-loop)**. The Python REPL is the interactive mode of reading, compiling, running your code. This is also known as **interactive mode**.
+### Python REPL (read-eval-print-loop).
+The Python REPL is the interactive mode of reading, compiling, running your code. This is also known as **interactive mode**.
 ![python repl](assets/Pasted%20image%2020241225112258.png)
-
-**Python Script mode**. This is different from Python REPL mode. Here, in Script mode, you write all your code first then call Python and it runs your code and outputs it to the system.
+### Python Script mode.
+This is different from Python REPL mode. Here, in Script mode, you write all your code first then call Python and it runs your code and outputs it to the system.
 ![python script mode](assets/Pasted%20image%2020241225112435.png)
 ### Jupyter Notebooks
 Jupyter Notebooks is software that has been developed on top of Python that wraps the REPL into a nicer interface. This is not the only one software available that does this. There are others are well.  
 Jupyter Notebooks is a REPL, but browser-based.
 
+![jupyter notebook](assets/Pasted%20image%2020241225115903.png)
+
 The files you create and save into your repo locally from Jupyter Notebooks are called '**a notebook**' and they usually use the `.ipynb` extension.
 
 > Jupyter Notebooks is also known as **interactive python**.
 
-![jupyter notebook](assets/Pasted%20image%2020241225115903.png)
+#### Jupyter Notebook commands
+- `CTRL + Enter` runs the code in a cell
+- `ESC` exists edit mode to view mode
+- In view mode, `dd` deletes the selected cell
+- `y` transforms a cell to code
+- 
 
 
