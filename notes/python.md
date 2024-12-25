@@ -82,13 +82,39 @@ The files you create and save into your repo locally from Jupyter Notebooks are 
 > Jupyter Notebooks is also known as **interactive python**.
 
 #### Jupyter Notebook commands
-- `CTRL + Enter` runs the code in a cell
+- `CTRL + Enter` runs code in selected cell
 - `ESC` exists edit mode to view mode
 - `Enter` to edit a cell
 - In view mode, `dd` deletes the selected cell
 - `y` transforms a cell to code
 - `m` transforms a cell to markdown
 - `r` transforms a cell to raw.
-- 
-
-
+## Python basics
+### Integers
+- The `int` type
+	- used to represent literal numbers: 0, 1, 100, -100, etc.
+	- integers can be of any magnitude (as long as you have memory!)
+	- integer numbers can be created from a literal in the python code
+		- 100
+		- -100
+		- 10_500_000 (note how you can use underscores for readability)
+	- or, as the result of some calculation (expression)
+		- 1 + 1
+#### Integer representations
+- computers only know two numbers
+	- 0 and 1 → binary system, aka base 2
+- any number in a computer is represented using powers of 2
+### Floats
+- the `float` type
+- used to represent real numbers (floating point): 3.14, -1.3
+- can use python literals to define a `float`
+	- 3.14
+	- -1.3
+	- 1_234.567_876
+- the decimal point differentiates a `float` from an `int` when using literals
+	- 1 → `int`
+	- 1.0 → `float`
+#### Float binary representation
+ - `floats` work in the same way as [Integer representations](#Integer%20representations)
+ - `floats` are represented by using powers of 2 and fractions of powers of 2
+ - 
