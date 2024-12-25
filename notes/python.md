@@ -84,6 +84,7 @@ The files you create and save into your repo locally from Jupyter Notebooks are 
 #### Jupyter Notebook commands
 - `CTRL + Enter` runs the code in a cell
 - `ESC` exists edit mode to view mode
+- `Enter` to edit a cell
 - In view mode, `dd` deletes the selected cell
 - `y` transforms a cell to code
 - `m` transforms a cell to markdown

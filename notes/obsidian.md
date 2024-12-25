@@ -1,6 +1,6 @@
-## For vault: [github.com/allwelldotdev/lab/notes](https://github.com/allwelldotdev/lab/tree/main/notes)
+## For vault: [github.com/allwelldotdev/lab...notes](https://github.com/allwelldotdev/lab/tree/main/notes)
 ### Community plugins in use:
-1. GIt
+1. Git
 2. Keyshots
 #### Keyshots
 - IDE Keys Mapping: Visual Studio Code
