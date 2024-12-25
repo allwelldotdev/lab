@@ -119,15 +119,13 @@ The files you create and save into your repo locally from Jupyter Notebooks are 
  - `floats` are represented by using powers of 2 and fractions of powers of 2
 
 $$\begin{align}
-   \frac{1}{2^2}+\frac{0}{2^2}+\frac{1}{2^3}&=\frac{1}{2}+\frac{0}{4}+\frac{1}{8} \\
-   &= 0.5 + 0 + 0.125 = 0.625
-   \end{align}$$
-   
+\frac{1}{2^2}+\frac{0}{2^2}+\frac{1}{2^3}&=\frac{1}{2}+\frac{0}{4}+\frac{1}{8} \\
+&= 0.5 + 0 + 0.125 = 0.625
+\end{align}$$ 
 - certain numbers do not have a finite decimal representation $(\frac{1}{3})$
-- same happens with binary representations!
-  $$
-  0.1 = \frac{0}{2} + \underbrace{\underbrace{\frac{0}{4} + \frac{0}{8} + \frac{1}{16} + \frac{1}{32}}_{0.09375} + \frac{0}{64} + \frac{0}{128} + \frac{0}{256} + \frac{0}{512}}_{.099609375} + ...
-  $$
+- same happens with binary representations
+
+$$0.1 = \frac{0}{2} + \underbrace{\underbrace{\frac{0}{4} + \frac{0}{8} + \frac{1}{16} + \frac{1}{32}}_{0.09375} + \frac{0}{64} + \frac{0}{128} + \frac{0}{256} + \frac{0}{512}}_{.099609375} + ...$$
 
 
 
