@@ -86,6 +86,8 @@ The files you create and save into your repo locally from Jupyter Notebooks are 
 - `ESC` exists edit mode to view mode
 - In view mode, `dd` deletes the selected cell
 - `y` transforms a cell to code
+- `m` transforms a cell to markdown
+- `r` transforms a cell to raw.
 - 
 
 
