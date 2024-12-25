@@ -114,10 +114,16 @@ The files you create and save into your repo locally from Jupyter Notebooks are 
 - the decimal point differentiates a `float` from an `int` when using literals
 	- 1 → `int`
 	- 1.0 → `float`
-#### Float binary representation
+#### Float binary representations
  - `floats` work in the same way as [Integer representations](#Integer%20representations)
- - `floats` are represented by using powers of 2 and fractions of powers of 2 $$
-   \frac{1}{2^2}+\frac{0}{2^2}+\frac{1}{2^3}=\frac{1}{2}+\frac{0}{4}+\frac{1}{8}
+ - `floats` are represented by using powers of 2 and fractions of powers of 2
    $$
- - 
+   \begin{align}
+   \frac{1}{2^2}+\frac{0}{2^2}+\frac{1}{2^3}&=\frac{1}{2}+\frac{0}{4}+\frac{1}{8} \\
+   &= 0.5 + 0 + 0.125 = 0.625
+   \end{align}
+   $$
+   
+- certain numbers do not have a finite decimal representation $(\frac{1}{3})$
+
 

@@ -21,4 +21,17 @@ To write mathematical numbers or text representations in Obsidian, you can utili
 Learn more:
 - [link 1](https://www.perplexity.ai/search/in-obsidian-how-do-i-write-mat-Qnz48iPxRDeJrK_CUrZfbw)
 - [link 2](https://www.perplexity.ai/search/how-can-i-write-fractions-in-l-_7xXMTPJTouhy33Fzl8rDg)
+### Line breaks and multi-line environments
+>To effectively use line breaks, you need to wrap your equations in an appropriate environment like `align`, `aligned`, or `multline`. For example:
+
+```tex
+$$
+\begin{align}
+1 &= 1 \\
+2 &= 2
+\end{align}
+$$
+```
+[Learn more](https://www.perplexity.ai/search/in-obsidian-how-do-i-write-mat-Qnz48iPxRDeJrK_CUrZfbw) (scroll to the 4th prompt).
+
 ---
