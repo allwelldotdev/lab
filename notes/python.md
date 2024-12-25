@@ -7,7 +7,7 @@ Learning from Dr Fred Baptiste's Python Fundamentals course on [Udemy](https://w
 - The reference implementation of python is **CPython** otherwise known as **Canonical Python**. This is the standard, official python.
 
 ## Virtual Environments
-Virtual Environments in Python are used to make a copy of Python installation to enable you switch between Python versions and Python dependency versions or differences for your Python project.
+Virtual Environments `venv` in Python are used to make a copy of Python installation to enable you switch between Python versions and Python dependency versions or differences for your Python project.
 
 Within Python virtual environments (or venv) are scripts to "activate" / "deactivate" the environment.
 
@@ -20,6 +20,8 @@ For example, if using python3.9 and you'd like to name your virtual environment 
 ```bash
 python3.9 -m venv py39_course
 ```
+
+> Where do you store the `venv` file? I usually store mine in the same directory as the project I'm working on to keep things simple and less complicated.
 
 > If using zsh on wsl:ubuntu and you encounter a problem of not seeing the indication of the activated virtual environment via the text in parenthesis next to your user prompt in your terminal (as shown in the image below). Do the following:
 
@@ -45,4 +47,32 @@ python3.9 -m venv py39_course
    ```bash
    source ~/.zshrc
 	 ```
+
+> Switch to another venv when a venv is activated by running:
+
+```bash
+source <path_to_venv>/bin/activate
+```
+## Python package installer `pip`
+`pip` lets you install python packages to your `venv`.
+- activate the virtual environment first (sets your PATH)
+- `pip install package_name`
+	- install versions
+	- `pip install package_name==1.3.2`
+	- `pip install package_name<=1.2`
+	- `pip install package_name>2.0`
+- use `requirements.txt` to keep track of required packages and versions.
+	- `pip install -r requirements.txt` to install packages from `requirements.txt`
+
+## Running python
+**Python REPL (read-eval-print-loop)**. The Python REPL is the interactive mode of reading, compiling, running your code. This is also known as **interactive mode**.
+
+
+**Python Script mode**. This is different from Python REPL mode. Here, in Script mode, you write all your code first then call Python and it runs your code and outputs it to the system.
+
+### Jupyter Notebooks
+Jupyter Notebooks is software that has been developed on top of Python that wraps the REPL into a nicer interface. This is not the only one software available that does this. There are others are well.  
+Jupyter Notebooks is a REPL, but browser-based.
+
+The files you create and save into your repo locally from Jupyter Notebooks are called '**a notebook**' and they usually use the `.ipynb` extension.
 
