@@ -23,7 +23,7 @@ python3.9 -m venv py39_course
 
 > If using zsh on wsl:ubuntu and you encounter a problem of not seeing the indication of the activated virtual environment via the text in parenthesis next to your user prompt in your terminal (as shown in the image below). Do the following:
 
-![[Pasted image 20241224235005.png]]
+![venv indication in python](assets/Pasted%20image%2020241224235005.png)
 
 1. Open `~/.zshrc` file and check that you have included `virtualenv` in your plugins array, like so:
    ```bash
