@@ -66,10 +66,10 @@ source <path_to_venv>/bin/activate
 
 ## Running python
 **Python REPL (read-eval-print-loop)**. The Python REPL is the interactive mode of reading, compiling, running your code. This is also known as **interactive mode**.
-
+![python repl](assets/Pasted%20image%2020241225112258.png)
 
 **Python Script mode**. This is different from Python REPL mode. Here, in Script mode, you write all your code first then call Python and it runs your code and outputs it to the system.
-
+![python script mode](assets/Pasted%20image%2020241225112435.png)
 ### Jupyter Notebooks
 Jupyter Notebooks is software that has been developed on top of Python that wraps the REPL into a nicer interface. This is not the only one software available that does this. There are others are well.  
 Jupyter Notebooks is a REPL, but browser-based.
