@@ -76,3 +76,8 @@ Jupyter Notebooks is a REPL, but browser-based.
 
 The files you create and save into your repo locally from Jupyter Notebooks are called '**a notebook**' and they usually use the `.ipynb` extension.
 
+> Jupyter Notebooks is also known as **interactive python**.
+
+![jupyter notebook](assets/Pasted%20image%2020241225115903.png)
+
+
