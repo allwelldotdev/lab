@@ -34,4 +34,12 @@ $$
 ```
 [Learn more](https://www.perplexity.ai/search/in-obsidian-how-do-i-write-mat-Qnz48iPxRDeJrK_CUrZfbw) (scroll to the 4th prompt).
 
+### Underbrace
+Using the `\underbrace{}_{}` tag, this allows you to create horizontal annotations. [See this example](python.md#^latex-underbrace) to learn more.
+```tex
+$$
+\underbrace{<content>}_{<annotated-tag>}
+$$
+```
+
 ---
