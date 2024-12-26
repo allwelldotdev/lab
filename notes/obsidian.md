@@ -5,6 +5,7 @@
 - Open quick switcher: `Ctrl + O`
 - Open command palette: `Ctrl + P`
 - Toggle reading/editing view: `Ctrl + E`
+- Toggle live preview/source mode: `Shift + Alt + P`
 ### Community plugins I use:
 1. Git
 2. Keyshots
