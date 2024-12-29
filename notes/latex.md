@@ -42,4 +42,10 @@ $$
 $$
 ```
 
+### Encapsulate fractions in brackets
+```tex
+\left(\dfrac{numerator}{denominator}\right)
+```
+[Learn more](https://www.perplexity.ai/search/how-do-i-specify-brackets-or-p-1efrdbUsQ5aWFOWs6MUgZA)
+
 ---

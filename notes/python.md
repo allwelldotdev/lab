@@ -270,4 +270,28 @@ Advice:
 - As in [the Integer Division](#The%20`//`%20Operator) operator, negative numbers here complicate things a bit!
 - But `%` is defined for negative integers and even floats as well.
 - Going back to [the earlier example](#^6dabf9):
-$$\frac{131}{3} = floor\brac\frac{}
+$$\frac{131}{3} = floor\left(\dfrac{131}{3}\right) + \frac{131mod3}{3}$$
+- In other words: `a / b = a // b + (a % b)/b`
+- Rewriting through algebraic manipulation:
+	- 1st iteration: `a % b = b (a / b - a // b)`
+	- Final iteration: `a % b = a - b (a // b)` *this value here is what modulus us defined as* ^787ec5
+- Therefore, `a % b` is defined as the value that satisfies [the above equation](#^787ec5).
+	- and that's how `a % b` is well defined for negative values.
+	- and even for `floats`!
+	- this explains the "weird" (aka non-intuitive) behavior for negative numbers
+		- `12 % 5 = 2` *this is intuitive*
+		- *these are non-intuitive* (because they involve negative numbers)
+			- `12 % -5 = -3`
+			- `-12 % 5 = 3`
+			- `-12 % -5 = -2`
+	- as well as how it works for real numbers `12.5 % 3 = 0.5`
+		- Let's calculate it:
+			- `12.5 // 3 = 4.0`
+			- `a % b = a - b (a // b)`
+			- `12.5 & 3 = 12.5 - 3 (4.0) = 12.5 - 12.0 = 0.5`
+	- moral: be careful using "intuition" for `%` and `//` and negative values.
+
+### Comparison Operators
+
+
+
