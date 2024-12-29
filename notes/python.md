@@ -145,11 +145,11 @@ $$0.1=\frac{0}{2} + \underbrace{\underbrace{\frac{0}{4} + \frac{0}{8} + \frac{1}
 Entities created by Python, which have **state** *(data)* and **methods** *(functionality)*. This is otherwise known as **encapsulation**.
 - `int` is an object
 	- when we do `1+1`, python calls the `__add__()` method of the `int` object.
-	- `10 + 100 = 110` is `(10).__add__(100) = 110`
+	- `10 + 100 == 110` is `(10).__add__(100) == 110`
 - `float` numbers are objects too
 	- a popular *functionality* for the `float` object is `as_integer_ratio()`
 	- `as_integer_ratio()` gives you the fraction value of `floats` in ratio
-	- `(0.125).as_integer_ratio() = 1, 8` represented in fraction as $\frac{1}{8}$
+	- `(0.125).as_integer_ratio() == 1, 8` represented in fraction as $\frac{1}{8}$
 
 >Therefore, everything in Python is an object, which has **state** *(data)* and **methods** *(functionality)*.
 
@@ -241,3 +241,26 @@ Use parenthesis `(` and `)` to group expressions.
 	- it's actually a numerical type in Python (`complex`)
 
 ### Operator Precedence
+Operators have precedence
+- an operator with higher precedence will *bind* more tightly
+- fancy way of saying *it will be evaluated first*
+Advice:
+- relying on operator precedence is tricky
+- very easy to introduce bugs
+- use parenthesis
+	- it's just a few keystrokes more and will save a lot of pain later!
+	- use `(2 * 10) + 5`
+> Always specify parenthesis in your expressions, both to be safe, and to reduce confusion for someone else, who may not be as familiar with operator precedence and may be reading your code.
+### Integer Division and Modulus
+- Python integer division: `//`
+	- `131 // 3 == 43`
+- Remainder: use python mod operator `%`
+	- `131 % 3 == 2`
+
+#### The `//` Operator
+- `a // b` calculates the "integer portion" of `a / b`
+	- easy to understand when `a` and `b` are positive
+- Reality: `a // b` is the floor of `a / b`
+	- `floor(x)` is the *largest* integer number `<= x`
+	![floor in the integer division operator](assets/Pasted%20image%2020241229155420.png)
+	- 
