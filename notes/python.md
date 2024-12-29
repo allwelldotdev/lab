@@ -81,6 +81,10 @@ The files you create and save into your repo locally from Jupyter Notebooks are 
 
 > Jupyter Notebooks is also known as **interactive python**.
 
+To start up Jupyter Notebooks in terminal, use command:
+```bash
+jupyter notebook <path/to/open/in/notebook>
+```
 #### Jupyter Notebook commands
 - `CTRL + Enter` runs code in selected cell
 - `ESC` exists edit mode to view mode
@@ -127,5 +131,14 @@ $$\begin{align}
 - same happens with binary representations!
 
 $$0.1=\frac{0}{2} + \underbrace{\underbrace{\frac{0}{4} + \frac{0}{8} + \frac{1}{16} + \frac{1}{32}}_{0.09375} + \frac{0}{64} + \frac{0}{128} + \frac{0}{256} + \frac{0}{512}}_{.099609375} + \dots$$^latex-underbrace
+
+#### Floats are not always exact
+- bottom line: not all exact decimal numbers have an exact float representation
+	- not a limitation of Python
+	- all languages (incl. Excel) that use these binary fractions have that issue
+	- ⚠️ be careful when comparing floats to one another
+- there is a data type that can handle exact representations of decimal fractions
+	- `Decimal` (we will look at this type later)
+	- ⚠️ calculations using `Decimal` are much slower than `float`
 
 
