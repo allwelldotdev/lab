@@ -141,4 +141,71 @@ $$0.1=\frac{0}{2} + \underbrace{\underbrace{\frac{0}{4} + \frac{0}{8} + \frac{1}
 	- `Decimal` (we will look at this type later)
 	- ⚠️ calculations using `Decimal` are much slower than `float`
 
+### Objects
+Entities created by Python, which have **state** *(data)* and **methods** *(functionality)*. This is otherwise known as **encapsulation**.
+- `int` is an object
+	- when we do `1+1`, python calls the `__add__()` method of the `int` object.
+	- `10 + 100 = 110` is `(10).__add__(100) = 110`
+- `float` numbers are objects too
+	- a popular *functionality* for the `float` object is `as_integer_ratio()`
+	- `as_integer_ratio()` gives you the fraction value of `floats` in ratio
+	- `(0.125).as_integer_ratio() = 1, 8` represented in fraction as $\frac{1}{8}$
+
+>Therefore, everything in Python is an object, which has **state** *(data)* and **methods** *(functionality)*.
+
+#### Dot Notation
+The dot notation is used to access the (**state** and **functionality**) attributes of objects. For example: `car.brand` or `car.accelerate(10, "mph")`.
+
+##### Immutability & Mutability
+- an object is **mutable** if its internal state **can** be changed
+	- on or more attributes can be changed
+- an object is **immutable** if its internal state **cannot** be changed
+	- the state of the object is "set in stone"
+- in Python many data types are immutable, ex:
+	- integers
+	- floats
+	- booleans
+	- strings
+	- ...
+- while some are mutable, ex:
+	- lists
+	- dictionaries
+	- sets
+	- ...
+
+### Variables
+- Variables are a store of value.
+- `=` is used to assign values, it's not the equal sign in Python.
+#### How Variable Assignment Works
+$$\underbrace{apy}_{LHS} = \underbrace{0.25}_{RHS}$$
+- python evaluates the RHS first
+	- then it "assigns" that result to the symbol in the "LHS" (the LHS becomes a named reference to whatever results from RHS)
+
+#### Variable Naming
+- case sensitive: `apr` is a different symbol than `APR`
+- *must* follow certain rules
+- *should* follow certain conventions
+##### Must-Follow Rules
+- *start* with underscore `_` or letter `a-z A-Z` (unicode characters are actually okay but stick to `a-z A-Z`
+- *followed* by a number of underscores or letters, or digits `0-9`
+- for example: `var my_var index1 index_1 _var __var __add__`
+	- variables like these `__add__` are referred to as dunder methods in Python. They are special characters that have special meanings for Python's internal operations. Therefore, even though they're legal variables, stay away from using them in your code as they could clash with Python internals. [Learn more](https://www.perplexity.ai/search/what-is-the-variable-naming-co-QQcwnxNxTUOFG2IoPJpPRA).
+- cannot be reserved words: `True False if def and or`
+##### Should-Follow Conventions
+- **PEP 8** style guide → typical conventions followed by most Python devs. [Learn more](https://www.python.org/dev/peps/pep-0008/).
+- terminology:
+	- **camel case** → separate words are distinguished by uppercase letters: `accountBalance bankAccount`
+	- **snake case** → separate words are distinguished by underscores: `account_balance bank_account`
+- for standard variables: 
+	- snake case
+	- all lowercase letters
+		- `account_balance` ✅
+		- `account_Balance` ❌
+- good idea to follow standard conventions
+	- but sometimes you may want to break those conventions
+	- that's okay - just have a good reason and be consistent.
+> From the PEP 8 Style Guide:
+> *A foolish consistency is the hobgoblin of little minds.
+> (Emerson)*
+
 
