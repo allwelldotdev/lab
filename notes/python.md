@@ -254,7 +254,7 @@ Advice:
 ### Integer Division and Modulus
 - Python integer division: `//`
 	- `131 // 3 == 43`
-- Remainder: use python mod operator `%`
+- Remainder: use python mod operator `%` ^6dabf9
 	- `131 % 3 == 2`
 
 #### The `//` Operator
@@ -263,4 +263,11 @@ Advice:
 - Reality: `a // b` is the floor of `a / b`
 	- `floor(x)` is the *largest* integer number `<= x`
 	![floor in the integer division operator](assets/Pasted%20image%2020241229155420.png)
-	- 
+	- `12 / 5 == 2.4` and `12 // 5 == 2`
+	- While `-12 / 5 == -2.4` then `-12 // 5 == -3`
+
+#### The `mod` Operator
+- As in [the Integer Division](#The%20`//`%20Operator) operator, negative numbers here complicate things a bit!
+- But `%` is defined for negative integers and even floats as well.
+- Going back to [the earlier example](#^6dabf9):
+$$\frac{131}{3} = floor\brac\frac{}
