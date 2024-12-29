@@ -228,3 +228,16 @@ Binary Operators
 - Division `10 / 2`
 - Power (exponentiation) `2 ** 4`
 Use parenthesis `(` and `)` to group expressions.
+
+#### Operand Types
+- Arithmetic operators can act on any numerical type: `int` & `float`
+- What the operator does is determined by the type of the operands
+
+#### The Power Operator
+- The power operator works just like its mathematical counterpart
+- Python supports floats for either operand of the `**` operator
+- Python also supports negative bases with real exponents 
+	- complex numbers
+	- it's actually a numerical type in Python (`complex`)
+
+### Operator Precedence
