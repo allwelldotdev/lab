@@ -208,4 +208,23 @@ $$\underbrace{apy}_{LHS} = \underbrace{0.25}_{RHS}$$
 > *A foolish consistency is the hobgoblin of little minds.
 > (Emerson)*
 
-
+### Arithmetic Operators
+An operator is a programming language symbol that performs some operation on one or more values.
+Certain types of operators include:
+- arithmetic operators
+- comparison (or relational) operators
+- logical operators
+The values an operator acts on are called **operands**
+- An operator that works on a single operand is called a **unary operator**
+- An operator that works on two operands is called a **binary operator**
+- An operator that work on three operands is called a **ternary operator**
+Unary Operators
+- Unary Minus `-10`
+- Unary Plus `+10`
+Binary Operators
+- Addition `10 + 20`
+- Subtraction `20 - 10`
+- Multiplication `10 * 2`
+- Division `10 / 2`
+- Power (exponentiation) `2 ** 4`
+Use parenthesis `(` and `)` to group expressions.
