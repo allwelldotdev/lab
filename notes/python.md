@@ -354,13 +354,32 @@ $$\frac{131}{3} = floor\left(\dfrac{131}{3}\right) + \frac{131mod3}{3}$$
 ![truth table for `or` operator](assets/Pasted%20image%2020241230160548.png)
 - If `a` is `True`, then `a or b` is always `True`, no matter what `b` is.
 
-> Short-Circuited Evaluation occurs in Python when an operand expression within a Boolean operator results to a `False` value, causing Python to skip running the rest of the program and return the result.
+> Short-Circuited Evaluation occurs in Python when a the left operand expression in an `and` Boolean operator results to a `False` value, causing Python to skip running the rest of the program and return the result.
 > 
 > For example:
 ```python
 sin(a) > 0 and cos(a) < 0
-# if the left operand returns `False`, Python would not calculate the right operand to get an answer 
+# if the left operand returns `False`, Python would not calculate the right operand to get an answer → 'Short-Circuited Evaluation'
 ```
+
+#### Example of Short-Circuiting Usefulness
+- suppose we have some trading algorithm that can calculate some buy signal (True/False)
+	- the catch is that the calculation is complex and resource-intensive
+	- in addition, we only want to place an order if the exchange is open
+- we could write some code to do this:
+```python
+if calc_signal(symbol) and exchange_open(symbol):
+	buy(symbol)
+```
+- the problem: when exchange is closed we needlessly calculate the signal
+- but because of short-circuiting we can write:
+```python
+if exchange_open(symbol) and calc_signal(symbol):
+	buy(symbol)
+```
+- this way if exchange is closed, we don't even calculate the signal.
+
+
 
 
 
