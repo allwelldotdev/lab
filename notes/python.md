@@ -330,7 +330,37 @@ $$\frac{131}{3} = floor\left(\dfrac{131}{3}\right) + \frac{131mod3}{3}$$
 		- `10 in s` → `False`
 		- `10 not in s` → `True`
 
- 
+ > `id()` is used to display the memory address or ID of an object in memory.
+
+### Boolean Operators
+- in Boolean algebra we only have two values: `True` and `False`
+- and three basic operators: `and`, `or`, `not`
+- `not` is a unary operator
+- `and`, `or` are binary operators
+
+#### The `not` Operator
+- `not` simply reverses the Boolean value
+![truth table](assets/Pasted%20image%2020241230155004.png)
+
+#### The `and` Operator
+- `a and b` is `True` if and only if both `a` and `b` are `True`
+	- `False` otherwise.
+- if `a` is `False`, then `a and b` is always `False`, no matter what `b` is.
+![truth table for `and` operator](assets/Pasted%20image%2020241230160410.png)
+
+#### The `or` Operator
+- `a and b` is `False` if and only if both `a` and `b` are `False`
+	- `True` otherwise
+![truth table for `or` operator](assets/Pasted%20image%2020241230160548.png)
+- If `a` is `True`, then `a or b` is always `True`, no matter what `b` is.
+
+> Short-Circuited Evaluation occurs in Python when an operand expression within a Boolean operator results to a `False` value, causing Python to skip running the rest of the program and return the result.
+> 
+> For example:
+```python
+sin(a) > 0 and cos(a) < 0
+# if the left operand returns `False`, Python would not calculate the right operand to get an answer 
+```
 
 
- 
+
