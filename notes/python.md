@@ -292,6 +292,45 @@ $$\frac{131}{3} = floor\left(\dfrac{131}{3}\right) + \frac{131mod3}{3}$$
 	- moral: be careful using "intuition" for `%` and `//` and negative values.
 
 ### Comparison Operators
+- also known as *relational* operators
+- compares two things and yields a Boolean `bool` result
+- `==` equality comparison
+- `!=` for "not equal"
+- `<, <=, >, >=` assumes the operands are comparable
+	- `10.5 < 100` makes sense
+	- `hello > 100` doesn't really make sense.
+- `==` between operands that are not comparable returns `False`
+- `<, <=,...` etc. between non-comparable operands usually generates an `Exception`
+	- `TypeError` (we'll come back to exceptions later.)
+- `int` and `float` types are comparable to each other
+	- `10 <= 10.9` → `True`
+- `float` is a different story!
+	- `0.1 + 0.1 + 0.1 == 0.3` → `False`
+	- Why? Because of [finite representation](#Floats%20are%20not%20always%20exact).
+
+> In general, never use `==` to compare floats.
+
+#### Identity vs Value Equality of Objects
+- To see if two objects are the *same object* → `is`
+- To see if two (compatible) objects are *equal in value* (in some sense) → `==`
+- The `is` operator is purely concerned with the memory address (*identity*) of objects
+	- `is` is called the *identity comparison* operator
+- The `==` operator, is, like `+`, actually implemented by the type itself.
+	- recall: `a + b` actually executes `a.__add__(b)`
+	- `==` works the same way, using the `__eq__` method
+	- `a == b` → `a.__eq__(b)`
+- So we can define what `==` means for custom types, by implementing `__eq__`
+
+#### `in` and `not in` Comparison Operators
+- these are known as membership operators: `in` and `not in`
+- works with collection types
+	- determines membership in some collection
+		- `s = {1, 2, 3.14, True, 5.1}` (like a mathematical set)
+		- `1 in s` → `True`
+		- `10 in s` → `False`
+		- `10 not in s` → `True`
+
+ 
 
 
-
+ 
