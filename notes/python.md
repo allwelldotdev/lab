@@ -379,6 +379,8 @@ if exchange_open(symbol) and calc_signal(symbol):
 ```
 - this way if exchange is closed, we don't even calculate the signal.
 
+## Conditional Execution
+### `if`...`else`...
 
 
 
