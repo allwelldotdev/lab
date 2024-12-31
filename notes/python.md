@@ -214,13 +214,16 @@ Certain types of operators include:
 - arithmetic operators
 - comparison (or relational) operators
 - logical operators
+
 The values an operator acts on are called **operands**
 - An operator that works on a single operand is called a **unary operator**
 - An operator that works on two operands is called a **binary operator**
-- An operator that works on three operands is called a **ternary operator**
+- An operator that works on three operands is called a **ternary operator** ^a59e93
+
 Unary Operators
 - Unary Minus `-10`
 - Unary Plus `+10`
+
 Binary Operators
 - Addition `10 + 20`
 - Subtraction `20 - 10`
@@ -244,12 +247,14 @@ Use parenthesis `(` and `)` to group expressions.
 Operators have precedence
 - an operator with higher precedence will *bind* more tightly
 - fancy way of saying *it will be evaluated first*
+
 Advice:
 - relying on operator precedence is tricky
 - very easy to introduce bugs
 - use parenthesis
 	- it's just a few keystrokes more and will save a lot of pain later!
 	- use `(2 * 10) + 5`
+
 > Always specify parenthesis in your expressions, both to be safe, and to reduce confusion for someone else, who may not be as familiar with operator precedence and may be reading your code.
 ### Integer Division and Modulus
 - Python integer division: `//`
@@ -433,5 +438,45 @@ else:
 
 > As you know with Java, C++, C#, or JavaScript, the `elif` statement resembles a `switch` statement. Python does not have a `switch` statement - `elif` is as close as you're going to get.
 
-## Ternary Conditional Operator
-[[|Remember where we learned about operators]], there, we learned that operators that work on three operands is a Ternary Operator. 
+### Ternary Conditional Operator
+[Remember where we learned about operators](#^a59e93), there, we learned that operators that work on three operands is a Ternary Operator. 
+The conditional ternary operator changes this:
+```python
+if <conditional exp>:
+	var = value1
+else:
+	var = value2
+```
+to this:
+```python
+value1 if <conditional exp> else value2
+```
+- this is a *single* ternary operator
+- if condition is `True`, it returns `value1`
+- if condition is `False`, it returns `value2`
+- instead of values, the return can also be an expression (the result of the expression is then used). Like so:
+```python
+<exp1> if <condition> else <exp2>
+
+# something like this below ...
+var = (a - b) if a > b else (b - a)
+```
+
+> Just like we saw with Boolean operators, the ternary operator also uses short-circuit evaluation. See how below:
+```python
+<exp1> if <condition> else <exp2>
+```
+- first evaluates `<condition>`
+- if it is `True`, evaluates and returns `<exp1>`
+	- but does not evaluate `<exp2>`
+- if it is `False`, evaluates and returns `<exp2>`
+	- but does not evaluate `<exp1>`
+
+## Sequence Types
+
+
+
+
+
+
+
