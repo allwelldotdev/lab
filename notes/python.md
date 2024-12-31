@@ -553,6 +553,53 @@ l = [10, 20, 30, 40, 50]
 	- then `len(l)` → `0`
 	- `l[0]`
 
+### Tuple
+#### The `tuple` Type
+- very similar to the `list` type
+	- it is a *container* type
+	- it is a *sequence* type
+	- tuples can be *heterogenous*
+	- BUT... they are an *immutable* container type
+	- unlike lists, once a tuple has been created
+		- cannot add or remove elements
+		- cannot replace elements
+
+#### `tuple` Literals
+- Python tuples can be created using *literals*
+	- `(10, 20, 30, 40)`
+	- note the enclosing *round brackets* `( )`
+	- this indicates the collection is a tuple
+- just like lists, they can contain *any* object, including another tuple. See below:
+```python
+(10, 20, (3, 4))
+(10, 20, (True, False), [100, 200])
+```
+- often we don't even need the `( )`
+- Python interprets a *comma* separated list of elements as a tuple
+	- so we can write `(10, 20, 30)`
+	- or just `10, 20, 30`
+- both these code snippets result in `t` being a tuple:
+```python
+t = (10, 20, 30)
+t = 10, 20, 30
+```
+- just like lists, tuples can contain any object
+	- including other tuples or lists
+
+![tuples](assets/Pasted%20image%2020241231211917.png)
+
+- we can omit the parenthesis on the outer tuple
+```python
+1, [True, False], (3, 4)
+```
+- but not `(3, 4)`
+```python
+1, [True, False], 3, 4 # not the same
+```
+
+#### *tuples* are Immutable
+- unlike lists, we *cannot replace* an element of a tuple
+- 
 
 
 
