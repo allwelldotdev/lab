@@ -217,7 +217,7 @@ Certain types of operators include:
 The values an operator acts on are called **operands**
 - An operator that works on a single operand is called a **unary operator**
 - An operator that works on two operands is called a **binary operator**
-- An operator that work on three operands is called a **ternary operator**
+- An operator that works on three operands is called a **ternary operator**
 Unary Operators
 - Unary Minus `-10`
 - Unary Plus `+10`
@@ -354,7 +354,7 @@ $$\frac{131}{3} = floor\left(\dfrac{131}{3}\right) + \frac{131mod3}{3}$$
 ![truth table for `or` operator](assets/Pasted%20image%2020241230160548.png)
 - If `a` is `True`, then `a or b` is always `True`, no matter what `b` is.
 
-> Short-Circuited Evaluation occurs in Python when a the left operand expression in an `and` Boolean operator results to a `False` value, causing Python to skip running the rest of the program and return the result.
+> **Short-Circuited Evaluation** occurs in Python when a the left operand expression in an `and` Boolean operator results to a `False` value, causing Python to skip running the rest of the program and return the result.
 > 
 > For example:
 ```python
@@ -381,7 +381,57 @@ if exchange_open(symbol) and calc_signal(symbol):
 
 ## Conditional Execution
 ### `if`...`else`...
+#### The `if` statement
+```python
+if <expression evaluates to True: # note the colon ':'
+	code line 1 # notice how this code block is indented
+	code line 2 # this tells Python that all these lines should
+	...         # be executed if the condition is True
+```
+- you "exit" a code block by unindenting your code
+- Python uses code indentation to group together chunks of code
+	- called *code blocks*
+- if you are familiar with other languages such as Java, JavaScript or C/C++, this is equivalent to using braces `{ }`.
+#### The `else` Clause
+- Python's `if` statement supports an `else` clause (*it is optional*)
+```python
+if <expression is True>:
+	[Code Block 1]
+else:
+	[Code Block 2]
+```
+#### Nested `if` Statements
+- sometimes we need to nest conditional logic, either in the `if` block or in the `else` block.
+```python
+if price < 1000:
+	if price < 500:
+		volume = 50
+	else:
+		volume = 10
+	make_purchase(volume)
+else:
+	print('Too pricey!')
+```
+- can nest to any number of levels 
+- too much nesting can make code very hard to read!
+- keep nesting to a minimum.
+### `elif`...
+We've seen multi-level `if` statements before and how hard they are to read for humans (*especially because of their much use of nesting*). `elif` helps us solve that.
+#### The `elif` Clause
+Instead of an `if` nested structure, Python provides an `elif` clause
+- equivalent to a nested `else-if`
+- does not require this double indentation
+- easier to read!
+```python
+if grade >= 90:
+	grade_letter = 'A'
+elif grade >= 80:
+	grade_letter = 'B'
+else:
+	grade_letter = 'F'
+```
 
+> As you know with Java, C++, C#, or JavaScript, the `elif` statement resembles a `switch` statement. Python does not have a `switch` statement - `elif` is as close as you're going to get.
 
-
-
+## Ternary Conditional Operator
+[[|Remember where we learned about operators]], there, we learned that operators that work on three operands is a Ternary Operator. 
