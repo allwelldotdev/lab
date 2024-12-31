@@ -492,9 +492,66 @@ print(running_total)
 ```
 
 ## Sequence Types
+#### What are Sequences?
+- sequences are ordered collections of objects
+	- there is a *first* element
+	- there is a *second* element
+	- and the *next* one.
+	- sometimes called the *sequential order*
+- we can *index* those elements using integers
+	- like counting them one by one
+- but in Python (and most programming languages)
+	- **numbering starts at** `0`
+- like anything in Python, **sequences are objects**
+	- they just happen to be *container type objects* that *contain* other objects.
+#### Indexing Sequences
+- *first* element refers to the element at index `0`
+- *second* element refers to the element at index `1`
+- *last* element refers to the element at index `n-1` (assuming `n` elements in sequence)
+#### Homogenous vs Heterogeneous Sequences
+- certain sequence types *can only* contain objects that are *all the same type*
+	- *homogeneous* sequence types
+- other types of sequences *may* contain objects that are of different type
+For instance:
+- lists → mutable heterogeneous sequence type 
+- tuples → immutable heterogeneous sequence type 
+- strings → immutable homogeneous sequence type 
 
+### Lists
+- it is a *container* type
+	- it contains elements
+- it is a *sequence* type
+	- elements are *ordered* sequentially
+	- elements are *indexed*
+- lists can be *heterogeneous*
+- lists are *mutable*
+	- can add, replace or remove elements
+- lists have *unbounded* growth
+	- can add as many elements as we want
+	- but they are still *finite*
+- lists are *objects*
+	- they have state
+		- the elements contained in the list
+	- they have functionality
+		- add element, remove element, etc.
 
+#### Sequence Length
+```python
+l = [10, 20, 30, 40, 50]
+```
+- visual inspection
+	- length of `l` is `5`
+- but we can use `code` to calculate this for us
+- the `len` function
+	- `len(l)` → `5`
+	- `len([True, False])` → `2`
 
+#### Empty Lists
+- sometimes we want to start with an empty list and have code that adds to the list as our program runs
+- to create an empty list we can just use a *literal*
+	- `l = []`
+	- then `len(l)` → `0`
+	- `l[0]`
 
 
 
