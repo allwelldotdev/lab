@@ -472,6 +472,25 @@ var = (a - b) if a > b else (b - a)
 - if it is `False`, evaluates and returns `<exp2>`
 	- but does not evaluate `<exp1>`
 
+> **On code readability:** When you start writing a chunk of code, your first focus should be on correctness (no bugs) and readability. Maybe the code could be written more concisely, but sacrificing readability, or maybe it could be written more efficiently, but again at the cost of readability. It could... But don't fall into that trap - write your code for clarity and correctness **first**. Then later, once its working and you determine that that piece of code is a bottleneck to your overall program, then, and only then, go back and optimize it.
+> 
+> And readability is not for the benefit of the Python compiler - it's for us, humans, who have to read the code!
+
+> The ternary operator is also very useful to deal with `null` values.
+
+> The ternary operator has a lower precedence, so we need to use `( )` parenthesis to make our code behave the way we want. See what I mean in the code below:
+
+```python
+current_value = -999
+running_total = 15_000
+running_cost = 125
+
+running_total = running_total + (0 if current_value == -999 else current_value)
+# notice the use of parenthesis `( )` to encapsulate the ternary operator, telling Python to return the ternary operator first before adding it to the `running_total`
+
+print(running_total)
+```
+
 ## Sequence Types
 
 
