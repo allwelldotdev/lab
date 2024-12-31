@@ -599,7 +599,18 @@ t = 10, 20, 30
 
 #### *tuples* are Immutable
 - unlike lists, we *cannot replace* an element of a tuple
-- 
+- the *container* is immutable
+	- does not mean *elements* in the container are immutable.
+
+#### Creating Empty *tuples*
+- not very useful, so not used very often
+- use empty parenthesis
+```python
+t = ()
+```
+- that tuple is immutable, so it will remain empty for its lifetime
+
+
 
 
 
