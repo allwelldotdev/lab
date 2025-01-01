@@ -619,6 +619,77 @@ t = ()
 >When we use these `list()` and `tuple()` functions it is very important to understand that although a new tuple or list object is created, the references inside those sequences are shared. We'll come back to this topic when we look at copying sequences.
 
 ### Strings
+#### The `str` Type
+- this is a *container* type
+- it is a *sequence* type
+- string are *homogeneous* → they can only contain characters (Unicode)
+- they are *immutable*
+
+#### `str` Literals
+- Python strings can be created using *literals*
+	- `'this is a string'`
+	- note the enclosing quotes `'...'`
+- can also use double quotes
+	- `"this is a string"`
+	- note the enclosing double quotes `"..."`
+- these quotes/double quotes are called the string *delimiters*
+- an empty string literal can be `' '` or `" "`
+
+#### Indexing, Length
+- works the same way as any sequence type
+	- use an *index* number to access elements of the string
+	- use the `len()` function to find the length of the string
+	- `s = 'Python'`
+	- `len(s)` → `6`
+	- `s[0]` → `'P'` (a string containing a single character)
+	- `s[1]` → `'y'`
+	- `s[6]` → `IndexError`
+
+> Just like `list()` and `tuple()` functions, the `str()` function can take any sequence type and make a string out of it.
+> 
+> In much the same way, a string can be converted to a list or tuple using the `list()` and `tuple()` functions. This can be handy if we want to create a list of items (see below):
+```python
+l = list('abcdef')
+```
+
+> String also support being multiplied by an integer (see below):
+> 
+> There is one very important caveat to this: the repeated element is the same element repeated `n` times.  **To resolve this**, we can use libraries such as `numpy` to easily create initialized lists and matrices without these pitfalls.
+```python
+s = '=' * 10
+```
+
+### Slicing
+- *slicing* is a way to extract ranges of elements from a sequence
+```python
+[start:stop]
+```
+- *start* position (by index number)
+- *stop* position (by index number)
+- start index is *inclusive* of the element
+- stop index is *exclusive* of the element
+- slices are the *same type* of the sequences being sliced
+- `str` is a sequence type (slicing for strings works the same way)
+
+#### Including Last Element in Slice
+- how do we specify including the last element?
+- it's ok to specify indexes outside the sequence bounds!
+	- Python will automatically figure it out
+	- `s[6:12]` → `'Newton'`
+	- `s[6:1000]` → `'Newton'`
+- we can also leave the end index *blank*
+	- Python will interpret as "*up to and including the last element*"
+	- `s[6:]`
+
+#### Including First Element in Slice
+- just specify `0` as the start
+- can also leave the start index *blank*
+	- `s[:5]` → `'Isaac'`
+- this is actually valid
+	- `s[:]` → `'Isaac Newton'`
+	- this made a *shallow copy* of the sequence
+	- we'll come back to that soon.
+
 
 
 
