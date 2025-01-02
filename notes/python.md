@@ -690,7 +690,24 @@ s = '=' * 10
 	- this made a *shallow copy* of the sequence
 	- we'll come back to that soon.
 
+#### Slicing in Steps
+- a step is a way to specify an interval when slicing a sequence
+	- `s[start:stop:step]`
+	- `[2:10:2]`
+		- start at (and include) index `2`
+		- end at (but exclude) index `10`
+		- move in steps of `2`
 
+#### Negative Steps
+- possible to use *negative* step values
+	- starts at index `start` (inclusive)
+	- stops at index `end` (exclusive)
+	- moves *backwards* → so `start` should be greater than `end`
+
+![negative steps - slicing](assets/Pasted%20image%2020250102212933.png)
+
+To recap:
+![slicing summary](assets/Pasted%20image%2020250102213236.png)
 
 
 
