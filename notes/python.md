@@ -709,5 +709,41 @@ s = '=' * 10
 To recap:
 ![slicing summary](assets/Pasted%20image%2020250102213236.png)
 
+### Manipulating Sequences
+- mutable sequences can be modified
+	- *replace* elements
+	- *delete* elements
+	- *add* elements
+		- often *appended* (to the end)
+		- can also specify where in the sequence to *insert*
 
+#### Replacing Single Elements
+Replace an element at index `i` by assigning a new element to that index
+```python
+l = [10, 20, 30]
+l[1] = 'hello'
+# l → [10, 'hello', 30]
+```
 
+#### Replacing an Entire Slice
+- can also replace an entire slice
+	- just assign a new collection to the slice
+	- slice will be replaced with elements in RHS
+	- `my_list = [1, 2, 3, 4, 5]`
+	- ![replacing an entire slice in python](assets/Pasted%20image%2020250103152242.png)
+- Python uses the *elements* of the sequence in RHS when assigning to a *slice* (but not when assigning using a single index)
+
+#### Deleting Elements
+- can delete an element by *index*
+	- ![delete element by index](assets/Pasted%20image%2020250103152640.png)
+- can delete an element by *slice*
+	- ![delete element by slice](assets/Pasted%20image%2020250103152709.png)
+
+#### Appending Elements
+- we can *append* one element
+	- `my_list = [1, 2, 3]`
+	- `my_list.append(4)`
+	- `my_list` → `[1, 2, 3, 4]`
+- to append multiple elements, we *extend* the sequence
+	- `my_list = [1, 2, 3]`
+	- ![append](assets/Pasted%20image%2020250103153028.png)
