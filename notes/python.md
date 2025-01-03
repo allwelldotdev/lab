@@ -781,4 +781,29 @@ timeit('<add_code_to_run_here>', globals=globals(), number=100_000) # number att
 
 #### Shallow Copy
 - ![shallow copy](assets/Pasted%20image%2020250103163026.png)
+- `origial` and `shallow_copy` are *not* the same containers
+- but the elements are referencing the *same* objects
+- add/remove/replace element in one does not affect the other
+	- ![shallow copy 2](assets/Pasted%20image%2020250103163219.png)
+- but mutating an element will affect both (since it is a shared reference)
+	- ![shallow copy 3](assets/Pasted%20image%2020250103163329.png)
+
+#### Creating Shallow Copies
+- use slicing to slice the entire sequence `my_list[:]`
+- use the copy method `my_list.copy()`
+
+#### Creating Deep Copies
+- uses `deepcopy` function in the `copy` module
+```python
+from copy import deepcopy
+my_list = [['a', 'b'], 2, 3]
+my_copy = deepcopy(my_list)
+```
+
+> Again, just to recap, shallow copies apply to mutable sequence types only (for instance, you can shallow copy a tuple but it'll be useless because you cannot modify a tuple), but deep copies work for either.
+
+### Unpacking Sequences
+
+
+
 
