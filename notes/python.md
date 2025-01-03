@@ -733,6 +733,8 @@ l[1] = 'hello'
 	- ![replacing an entire slice in python](assets/Pasted%20image%2020250103152242.png)
 - Python uses the *elements* of the sequence in RHS when assigning to a *slice* (but not when assigning using a single index)
 
+> You can also replace an entire slice in reverse order but it acts a bit weird when you do it. Therefore, minimize this application as much as possible. [Learn more](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35150726?start=354#notes).
+
 #### Deleting Elements
 - can delete an element by *index*
 	- ![delete element by index](assets/Pasted%20image%2020250103152640.png)
@@ -746,4 +748,37 @@ l[1] = 'hello'
 	- `my_list` → `[1, 2, 3, 4]`
 - to append multiple elements, we *extend* the sequence
 	- `my_list = [1, 2, 3]`
-	- ![append](assets/Pasted%20image%2020250103153028.png)
+	- ![append elements using extend](assets/Pasted%20image%2020250103153028.png)
+
+#### Inserting an Element
+- instead of appending, we could *insert* at some index
+	- use sparingly - this is much slower than appending or extending
+- ![inserting an element into a sequence](assets/Pasted%20image%2020250103160322.png)
+- ![inserting an element into a sequence - 2](assets/Pasted%20image%2020250103160412.png)
+- element is inserted so its position is the *index* - remaining elements are shifted right
+
+> When *inserting* or *appending* items it takes it as is not as a sequence.
+> For example:
+> using *append* `[1, 2, 3, 4].append('python')` → `[1, 2, 3, 4, 'python']`
+> using *insert* `[1, 2, 3, 4].insert(0, 'abc')` → `['abc', 1, 2, 3, 4]` 
+
+> To test how long a program runs in Python use:
+```python
+from timeit import timeit # import the timeit() function
+timeit('<add_code_to_run_here>', globals=globals(), number=100_000) # number attr is the number of times the code to run and test for on avg.
+```
+
+### Copying Sequences
+#### Shallow vs Deep Copies
+- two types of copies
+	- *shallow* copies
+		- new sequence is created (not same sequence object as original)
+		- elements in new sequence *reference the same elements* as original
+	- *deep* copies
+		- new sequence is created (not same sequence object as original)
+		- each element in ew sequence is a *deep copy* of the original
+			- totally new and independent objects
+
+#### Shallow Copy
+- ![shallow copy](assets/Pasted%20image%2020250103163026.png)
+
