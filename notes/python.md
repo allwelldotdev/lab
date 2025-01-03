@@ -803,6 +803,62 @@ my_copy = deepcopy(my_list)
 > Again, just to recap, shallow copies apply to mutable sequence types only (for instance, you can shallow copy a tuple but it'll be useless because you cannot modify a tuple), but deep copies work for either.
 
 ### Unpacking Sequences
+- consider the sequence
+	- `data = (1, 2, 3)` → this is a `tuple` with three elements
+- we want to assign those values `1`, `2` and `3` to some symbols `a`, `b` and `c` respectively
+- could do it this way:
+```python
+a = data[0]
+b = data[1]
+c = data[2]
+```
+- but Python has a better way of doing this! It's called *Unpacking*
+	- `a, b, c = (1, 2, 3)`
+	- Since tuples don't actually need the parenthesis in this case, we can write:
+	- `a, b, c = 1, 2, 3`
+
+- this works with any sequence in general
+	- `a, b = [10, 20]`
+	- `a, b, c = 'XYZ'`
+- beware!
+	- the number of elements in sequence on RHS must match number of symbols on LHS
+	- ![unpacking sequences](assets/Pasted%20image%2020250103174402.png)
+
+#### Swapping Two Variable Values
+- this is a common problem
+	- given two variables `a` and `b`, swap the value of `a` and `b`
+	- Initial State:
+		- `a = 10`
+		- `b = 20`
+	- End State:
+		- `a = 20`
+		- `b = 10`
+- typical solutions uses a temporary variable
+```python
+temp = a
+a = b
+b = temp
+# 3 lines of code and an unnecessary variable
+```
+- can use unpacking to our advantage here
+- remember: in an assignment, the RHS expression is evaluated completely first then the assignment takes place
+	- `a, b = b, a`
+	- RHS is evaluated first `b, a` is the tuple `20, 10`
+	- then the assignment is made `a, b = 20, 10`
+	- values of `a` and `b` have been swapped!
+
+> You can also evaluate expressions while unpacking sequences, like so:
+```python
+s = 'abcdef'
+a, b, c = (1 + 1, s[::-1], 3.14)
+# a = 2
+# b = 'fedcba'
+# c = 3.14
+```
+
+## Strings
+
+
 
 
 
