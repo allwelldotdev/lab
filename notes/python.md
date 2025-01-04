@@ -920,10 +920,131 @@ a, b, c = (1 + 1, s[::-1], 3.14)
 			- `\U` is followed by 8 digits
 
 ### Common String Methods
-- Python has a ton of string methods. Check them out here.
-- 
+- Python has a ton of string methods. Check them out [here](https://docs.python.org/3/library/stdtypes.html#string-methods).
+- categories to look at:
+	- case conversions
+	- stripping start and end characters
+	- concatenating strings
+	- splitting and joining strings
+	- finding substrings
+- methods, called using dot notation `my_string.method()`
+- remember that strings are *immutable*
+	- operations never modify a string
+	- just return a *new string*
 
+#### Case Mappings
+```python
+lower() # 'Hello World'.lower() → 'hello world'
+upper() # 'python'.upper() → 'PYTHON'
+title() # 'one two three'.title() → 'One Two Three'
+```
+- returns a *new string*
+	- primarily for visual display
+		- BEWARE: may not work for caseless comparisons
 
+#### Case Folding
+```python
+casefold() # used for caseless comparisons
+s1 = 'hello'
+s2 = 'HeLlo'
+s1.casefold() == s2.casefold() # True
+```
+
+#### Stripping
+- sometimes we want to remove leading and trailing characters
+	- trailing commas
+	- whitespace around a string
+```python
+.lstrip() # strips all whitespace on left of string
+.rstrip() # strips all whitespace on right of string
+.strip() # strips all whitespace on both ends of string
+```
+- can *specify* what characters to strip
+```python
+.strip(' ') # strip space characters from both ends
+.lstrip('abc') # strip the characters 'a', 'b', 'c' from left end
+```
+- returns *new string*
+
+#### Concatenation
+- combining two or more strings to form a single string is called *concatenation*
+```python
+'Hello' + ' ' + 'World!' # 'Hello World!'
+```
+- again, this creates a *new* string
+
+#### Splitting Strings
+- useful for parsing data from a text file
+	- `data = '100, 200, 300, 400'`
+		- a string containing comma delimited values
+- can easily split this on the comma
+	- `data.split(',')`
+- returns a `list` of strings
+	- `['100', ' 200', ' 300', ' 400']`
+		- note the spaces
+		- we can *strip* them later
+
+#### Joining Strings
+- this is the opposite of splitting strings
+```python
+# suppose we want to join the strings below with ', ' characters between each:
+# 'a' 'b' 'c' 'd'
+# we could write:
+'a' + ', ' + 'b' + ', ' + 'c' + ', ' + 'd'
+```
+- tedious to type out
+- hardcoded
+	- what if we have a *sequence* of strings we want to concatenate
+	- this approach is not general enough
+```python
+data = ('ab', 'cd', 'ef') # data is a *sequence* of strings
+'--'.join(data) # joins the strings in data with `--` in between
+				# 'ab--cd--ef'
+','.join(['10', '20', '30']) # '10,20,30'
+```
+- remember that a string is a *sequence* of single characters
+```python
+'='.join('python') # 'p=y=t=h=o=n'
+```
+
+#### Finding Substrings
+- you often want to know if a sequence of characters is contained inside another
+- use the `in` operator
+```python
+'x' in 'xyz' # True
+'a' in 'xyz' # False
+'pyt' in 'python' # True
+'pyt' in 'Python' # False (python is case-sensitive)
+```
+- tests containment
+	- but gives no indication of where the substring is
+- slight variation
+	- does string start (or end) with the specified characters
+	- still a containment test
+	- `.startswith('...')`.
+	- `.endswith('...')`.
+```python
+'python'.startswith('py') # True
+'python'.startswith('hon') # False
+'python'.endswith('py') # False
+'python'.endswith('hon') # True
+```
+
+#### Finding the Index of a Substring
+- used when we need to know the *index* of the start position of a substring
+	- `data = 'This is a grammatically correct sentence.'`
+	- at what index does the string 'correct' occur?
+		- `data.index('correct')` → `24`
+	- what if substring is *not found*?
+		- Python raises a `ValueError`
+		- potentially useful once we learn how to handle exceptions
+	- what if we don't want an exception?
+		- `find` → returns `-1` if substring is not found
+```python
+data = 'This is a grammatically correct sentence.'
+data.find('correct') # 24
+data.find('DOW') # 
+```
 
 
 
