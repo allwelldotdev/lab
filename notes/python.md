@@ -1043,8 +1043,67 @@ data = ('ab', 'cd', 'ef') # data is a *sequence* of strings
 ```python
 data = 'This is a grammatically correct sentence.'
 data.find('correct') # 24
-data.find('DOW') # 
+data.find('DOW') # -1
 ```
+- once we know how to handle exceptions, this method is a bit redundant
+	- instead, use `index` with exception handling
+
+> **Important Note:**
+> - only interested in *whether or not* a substring is contained in another string
+> 	- use `in`
+> - only use `index` or `find` when you *need* to know the *index*
+> 	- `in` is much faster!
+> - the `in` operator works for all sequence types, but `find` only works for `str`
+
+> A little bit more work on `index` string method:
+```python
+message = 'To every action there is an equal and opposite reaction.'
+# if I want to find the index of action in the string
+message.index('action') # 9
+# if I want to find the index of the other representation of 'action' in the string - re(action)
+message.index('action', 9 + len('action')) # 58
+```
+
+### String Interpolation
+- often we want to *build* strings that contain values from some variable
+- can use concatenation
+	- `+` works with two strings
+	- cannot mix string and numeric for example
+		- `'test' + 100 # TypeError`
+		- `'test' + str(100) # 'test100'`
+
+> `open` is a keyword in Python. Therefore, never use `open` as a variable name in Python. Instead use `open_`
+
+- multiple variants
+	- here are two most common techniques
+		- the `format` method
+		- using `f` Strings
+
+#### The `format` Method
+- use `{}` as placeholders in our string
+- pass variables to `format` method in the same order we want them in the string
+- number of `{}` in string and arguments in `format` should match
+	- `format` can have more arguments, they'll just be ignored
+	- `IndexError` exception if not enough arguments
+- note how we didn't have to convert the values to strings (Python did that for us)
+
+#### f Strings
+- new to Python 3.6
+- prefix the string with `f`
+- use `{expr}` directly inside the string
+- Python evaluates `expr` and interpolates the result directly inside the string
+```python
+f'1 + 1 = {1 + 1}' # '1 + 1 = 2'
+value - 3.14
+f'pi is approximately {value}' # 'pi is approximately 3.14'
+```
+
+## Iteration
+
+
+
+
+
 
 
 
