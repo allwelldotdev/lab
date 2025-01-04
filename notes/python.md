@@ -1099,6 +1099,70 @@ f'pi is approximately {value}' # 'pi is approximately 3.14'
 ```
 
 ## Iteration
+- fundamental aspect of writing code is *repetition*
+	- want to repeat the same process (code) multiple times
+- how many times?
+	- *known in advance*
+		- load files with 10,000 rows
+		- process each row
+			- repeat the same process 10,000 times
+		- *deterministic*
+	- *not known in advance*
+		- get commodity tick data
+			- analyze data until ask price falls below some level
+				- then do something else and stop processing
+		- process may repeat 10 times, or 100 times, we don't know in advance
+		- *non-deterministic*
+- this repetition is called *iteration*
+
+#### Deterministic Iteration
+- we iterate over the elements of some container
+	- e.g. sequences
+	- more generally over objects that are *iterable*
+	- not all iterables are sequences 
+		- a bag of marbles is iterable, but it's not a sequence!
+	- `for` loop
+
+#### Non-Deterministic Iteration
+- we iterate while some condition is `True`
+- `while` loop
+
+### `range`
+#### The `range` Object
+- `range` object is an *iterable* object
+	- it serves up integers one by one as they are requested
+	- but the full list of integers does not exist all at once in memory
+	- memory efficient
+	- it has a *finite* number of integers
+- we can *iterate* over that range object
+	- since it exists and has a finite number of integers
+		- *deterministic* iteration
+- we can use the `range()` function to create `range` *objects*
+#### The `range()` Function
+- three flavors depending on how many arguments are specified
+	- `range(end)` *one argument*
+		- generates integers from `0` (*inclusive*) to `end` (*exclusive*)
+	- `range(start, end)` *two arguments*
+		- generates integers from `start` (*inclusive*) to `end` (*exclusive*)
+	- `range(start, end, step)` *three arguments*
+		- generates integers from `start` (*inclusive*) to `end` (*exclusive*)
+			- in steps of `step`
+- should remind you of [slicing](#Slicing)
+#### Viewing Contents of `range` Object
+```python
+r = range(5)
+print(r) # 'range(5)'
+		 # not what we wanted
+```
+- we can *convert* `range` object to a `list` or `tuple`
+```python
+print(tuple(r)) # (0, 1, 2, 3, 4)
+print(list(r)) # [0, 1, 2, 3, 4]
+```
+
+
+
+
 
 
 
