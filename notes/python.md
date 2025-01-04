@@ -857,6 +857,71 @@ a, b, c = (1 + 1, s[::-1], 3.14)
 ```
 
 ## Strings
+- strings are sequence types 
+	- but they are more *specialized* than generic sequences
+		- they are *homogeneous*
+		- every element is a *single character*
+
+### Unicode
+#### In the beginning...
+...there was ASCII (American Standard Code for Information Interchange)
+- addressed the problem of a *standard* for assigning
+	- numeric codes
+		- to characters
+		- printable and non-printable
+	- and encoding the value into binary (using sequences of 7 bits)
+			- given a data stream filled with `0`'s and `1`'s
+			- carve up in 7 bits and decode character
+- fonts handle *displaying* the character
+	- a bunch of pixels
+- supported character set was limited
+	- 128 characters 
+		- 95 printable characters (a-z, A-Z, 0-9, * / etc.) 
+		- 33 non-printable characters (control code, esc, newline, tab, etc.)
+	- ![unicode chart](assets/Pasted%20image%2020250104141322.png)
+- attempts were made to extend the ASCII set
+	- still far too limited
+	- standard was poorly followed
+- Unicode was developed 
+	- focused on assigning a code to a character (*code point*)
+	- does *not* specify how to encode the code points into a binary format
+		- other standards for doing that appeared
+			- UTF-8 (*very popular, default in Python*)
+			- UTF-16
+			- UTF-32 (*UTF* → *Unicode Transformation Format*)
+	- `> 100_000` code points defined so far.
+
+#### Code Points
+- backward compatible with ASCII
+	- ASCII character code for 'A' → 65 (decimal), 41 (hexadecimal)
+	- Unicode code point for 'A' → 65 (decimal), 41 (hexadecimal)
+		- decimal → base 10 (0-9)
+		- hexadecimal → base 16 (0-9, A-F)
+
+#### What are hexadecimals?
+> To understand hexadecimal numbers and how to calculate them as well as binary and decimal, [click here](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35150878?start=329#notes).
+
+[See](https://www.compart.com/en/unicode/U+0041) the Unicode Character A for example.
+![unicode character A](assets/Pasted%20image%2020250104143511.png)
+- `ord()` function
+	- returns code point for single character (in decimal)
+	- `ord('A')` → 65
+- `hex()`
+	- converts decimal to hex *string*
+	- `hex(65)` → `'0x41'` (`0x` prefix indicates the number after that is in hex)
+
+#### Other ways to specify the character in a string
+- use *escape* codes
+	- by name `\N{}`
+	- by hex code
+		- `\u03B1` or `\u03b1` for four hex digits (0-F)
+			- `\u` is limited to 4 digits
+		- `\U000003B1` for eight hex digits (0-F)
+			- `\U` is followed by 8 digits
+
+### Common String Methods
+- Python has a ton of string methods. Check them out here.
+- 
 
 
 
