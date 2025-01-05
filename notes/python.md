@@ -1363,6 +1363,8 @@ print('done')
 > Let's say we're scanning through an iterable, looking for an element equal to: `'Python'`
 > 
 > If we find the value, we want to terminate our scan immediately and print `'found'`, otherwise we want to print `'not found'`
+^0d0684
+
 ```python
 found = False
 
@@ -1375,6 +1377,43 @@ if not found:
 	print('not found')
 ```
 
+#### The `else` Clause
+- Python is really confusing here...
+- `for` loops can have an `else` clause
+	- but it has nothing to do with the `else` clause of an `if` statement
+- the `else` clause of a `for` loop executes *if and only if* no `break` was encountered
+	- *in your mind: read it as, "else if no break"*
+```python
+for i in range(5):
+	<code block 1>
+else: # if no break
+	<code block 2>
+```
+- `<code block 2>` executes if loop terminated normally
+
+Therefore, back to our [example](#^0d0684):
+```python
+found = False
+
+for el in my_list:
+	if el == 'Python'
+		found = True
+		print('found')
+		break
+if not found:
+	print('not found')
+
+# equivalently...
+
+for el in my_list:
+	if el == 'Python':
+		print('found')
+		break
+else: # if no break
+	print('not found')
+```
+
+## Dictionaries
 
 
 
