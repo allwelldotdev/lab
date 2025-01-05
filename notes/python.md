@@ -1165,10 +1165,78 @@ print(list(r)) # [0, 1, 2, 3, 4]
 > - we can use a `for` loop to iterate over this iterable
 
 ### `for` Loops
-	
+- `for` loops are used to *iterate* over elements of any *iterable*
+- the loop mechanism retrieves elements from the iterable *one at a time*
+- the *body* of the `for` loop is *executed* for each element retrieved
+- the loop terminates when all elements have been iterated
 
+This is an example of a `for` loop:
+```python
+for x in ['a', 'b']:
+	y = x + x
+	print(y)
+print('done')
+```
 
+#### Iterating over `range` Objects
+- `range` objects are iterable
+```python
+for i in range(4): # range(4) → 0, 1, 2, 3
+	sq = i * i
+	print(sq) # output: 0
+			  #         1
+			  #         4
+			  #         9
+```
 
+#### Loop Bodies (Blocks)
+- blocks can contain any valid Python code
+	- `if...else`
+	- another loop (nested loop)
+```python
+for i in range(1, 4):
+	for j in range (1, i+1):
+		print(i, j, i*j)
+	print('')
+# output: 1 1 1 ← i = 1; j in range(1, 1+1)
+
+#         2 1 2 ← i = 2; j in range(1, 2+1)
+#         2 2 4
+
+#         3 1 3 ← i = 3; j in range(1, 3+1)
+#         3 2 6
+#         3 3 9
+```
+
+#### The `enumerate` Function
+`enumerate` is a function that:
+- takes an iterable argument
+- returns a new iterable whose elements are a `tuple` consisting of:
+	- the *index* number of the original element
+	- the *original element* itself
+```python
+data = [10, 20, 30, -10, 40, -5]
+for t in enumerate(data):
+	print(t) # output: (0, 10)
+			 #         (1, 20)
+			 #         (2, 30)
+			 #         (3, -10)
+			 #         (4, 40)
+			 #         (5, -5)
+```
+- at each iteration `t` is a tuple `(index, element)`
+- it can be unpacked!
+
+> We can unpack values into variables in the `for` clause itself. Like so:
+```python
+data = [10, 20, 30, -10, 40, -5]
+for index, element in enumerate(data):
+	if element < 0:
+		data[index] = 0
+# output: data → [10, 20, 30, 0, 40, 0]
+```
+
+### `while` Loops
 
 
 
