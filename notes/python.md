@@ -1165,7 +1165,7 @@ print(list(r)) # [0, 1, 2, 3, 4]
 > - we can use a `for` loop to iterate over this iterable
 
 ### `for` Loops
-
+	
 
 
 
