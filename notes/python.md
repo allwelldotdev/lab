@@ -1237,6 +1237,39 @@ for index, element in enumerate(data):
 ```
 
 ### `while` Loops
+- different than `for`
+- here we want to repeat some code as long as some condition is `True`
+	- non-deterministic
+		- we don't necessarily know when condition becomes `True`
+		- maybe never!
+		- infinite loop
+
+This is an example of a `while` loop:
+```python
+while expr:
+	<code block>
+```
+- `expr` is evaluated at the *start* of each iteration
+- if it is `True`, execute `<code block>`
+- if it is `False`, terminate loop immediately
+- may never execute (if `expr` is `False` on first iteration)
+- may never terminate (if `expr` never becomes `False`)
+
+Example:
+```python
+value = 10
+
+while value < 15:
+	print(value)
+	value = value + 1 # increments `value` by 1
+# output: 10
+#         11
+#         12
+#         13
+#         14
+```
+
+
 
 
 
