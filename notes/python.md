@@ -1208,6 +1208,8 @@ for i in range(1, 4):
 #         3 3 9
 ```
 
+> Using a `for` loop to both iterate over and remove/insert elements of a sequence at the same time is, in general, a bad idea. [See this](#^5ba42a) to learn more.
+
 #### The `enumerate` Function
 `enumerate` is a function that:
 - takes an iterable argument
@@ -1269,10 +1271,109 @@ while value < 15:
 #         14
 ```
 
+> `while` loops are useful for modifying iterables as we are iterating over them.
+> 
+> For example, suppose we have a list of data that we have to process and remove from the list once we have processed it, repeating this until the list is empty.
+^5ba42a
 
+```python
+data = [100, 200, 300, 400, 500]
 
+while len(data) > 0:
+    last_element = data.pop()  # retrieves and removes last list element
+    print(f'processing element: {last_element}')
+# output: processing element: 500
+#         processing element: 400
+#         processing element: 300
+#         processing element: 200
+#         processing element: 100
+```
 
+> On the other hand, trying to the do the same using a `for` loop is not recommended!
+> 
+> Using a `for` loop to both iterate over and remove/insert elements of a sequence at the same time is, in general, a bad idea.
 
+### `continue`, `break` and `else`
+- sometimes we want to skip an iteration, but without terminating the loop
+	- `continue`
+	- immediately jumps to the next iteration
+```python
+my_list = [1, 2, 3, 100, 4, 5]
+
+for i in my_list:
+	if i > 50:
+		continue
+	print(i)
+print('done')
+# output: 1
+#         2
+#         3
+#         4
+#         5
+#         'done'
+```
+- when `i` is 100
+- `continue` is executed
+- loop jumps to next iteration
+---
+- `continue` is not used very often
+	- can sometimes make code difficult to read and understand
+```python
+for i in my_list:
+	if i > 50:
+		continue
+	print(i)
+print('done')
+
+# equivalently...
+
+for i in my_list:
+	if i <= 50:
+		print(i)
+print('done')
+```
+- less code, easier to read / understand.
+
+#### Early Termination
+- loops can be exited early (before all elements have been iterated)
+	- `break`
+```python
+my_list = [1, 2, 3, 100, 4, 5]
+
+for i in my_list:
+	if i > 50:
+		break
+	print(i)
+print('done')
+# output: 1
+#         2
+#         3
+#         'done'
+```
+- when `i` is 100
+- `break` is executed
+- loop is terminated immediately
+---
+- loop terminating early using `break`
+	- sometimes called *abnormal* or *early* termination
+- sometimes you may want to execute some code if loop terminated normally
+	- and a different code otherwise (early/abnormal termination)
+
+> **For example:**
+> Let's say we're scanning through an iterable, looking for an element equal to: `'Python'`
+> 
+> If we find the value, we want to terminate our scan immediately and print `'found'`, otherwise we want to print `'not found'`
+```python
+found = False
+
+for el in my_list:
+	if el == 'Python'
+		found = True
+		print('found')
+		break
+if not found:
+	print('not found')
+```
 
 
 
