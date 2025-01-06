@@ -1414,6 +1414,31 @@ else: # if no break
 ```
 
 ## Dictionaries
+Dictionaries are one of the most important data structures in Python
+- we don't always see them
+	- but they're lurking in the shadows! 😎
+- we saw that variables are symbols pointing to objects
+	- some string (variable name) is *associated* with some object
+- objects are also dictionaries
+	- properties are symbols *associated* to some value (object)
+	- methods are names *associated* to some function
+		- `s.upper()`
+		- `l.append()`
+- associating two things together is extremely useful
+	- a phone book
+		- associates a number to a name
+	- DNS
+		- associates a URL with a numeric IP address
+	- book index
+		- associates a chunk of text with a page number
+- associative arrays
+	- sometimes called a *map*
+	- *abstract* concept
+	- can be implemented in *different* ways
+	- Dictionaries (or hash maps) are one *concrete* implementation
+
+### Associative Arrays and Dictionaries
+
 
 
 
