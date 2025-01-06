@@ -1691,6 +1691,57 @@ d1.update(d2) # the key:value pairs of 'd2' will be merged into 'd1'
 - **Important:** `d1` is *mutated*
 
 ## Sets
+### What are Python Sets?
+- just like a mathematical set
+	- a *collection* of elements
+	- *no ordering* to the elements
+	- each element is *unique*
+- it is an *iterable*
+	- but *no guarantee* on what the *iteration order* will be
+- think of it like a bag of marbles (a *collection* of marbles)
+	- to iterate you reach in the bag and grab a marble (any marble)
+	- continue doing so until the bag is empty
+		- *no order* is guaranteed!
+- just like mathematical sets, Python supports *operations*
+	- union
+	- intersection
+	- difference
+	- membership (is some object an element of a set or not)
+	- containment (subset, strict subset, superset, strict superset)
 
+### Python Sets
+- type is `set`
+- sets are *iterable*
+- iteration *order* is *not guaranteed* (at least not yet)
+- set *elements* must be *hashable*
+- sets are *mutable*
+	- **sets are not hashable**
+		- a set cannot be an element of another set, or a key in a dictionary
+		- if you really want nested sets, use `frozenset` (you can check this out in Python docs)
+			- *immutable* equivalent of sets - those are **hashable** (if all elements are themselves hashable)
+
+#### Defining Sets
+- literal form
+	- - note the `{}` - just like for dictionaries
+	- but no `key:value` pairs, just the `keys`
+```python
+{1, 'a', True}
+```
+- can also use the `set()` function
+```python
+set([1, 'a', True])
+```
+- *empty* set
+	- cannot use `{}`
+	- that would be a empty *dictionary*
+	- `set()`
+---
+- use a `for` loop for iteration
+- use `in` for membership testing
+- `len(s)` returns the number of elements in the set
+- `s.clear()` removes all the elements of the set
+- `s.copy()` creates a *shallow copy*
+
+### Common Set Operations
 
 
