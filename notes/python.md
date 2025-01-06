@@ -1457,6 +1457,8 @@ Dictionaries are one of the most important data structures in Python
 	- `tuples` may be hashable (if all the elements are themselves hashable)
 	- `lists` are *not* hashable (in general, *mutable* objects are *not* hashable)
 
+> To find out if an element is hashable use the `hash()` function in Python. Use it by passing the element as an argument in the function. It should return a string of numbers.
+
 #### Python Dictionaries
 - a dictionary is a data structure that associates a `value` to a `key`
 	- both `value` and `key` are Python objects
@@ -1535,5 +1537,80 @@ d[[10, 20]] = 100
 	- `[10, 20]` is a `list`, and lists are not hashable
 	- *cannot* be used as a key
 
+### Iterating Dictionaries
+#### Dictionaries are Iterable
+- we can use the `for` loop to iterate over a Dictionaries'
+	- `keys`
+	- `values`
+	- `key:value` pairs
+- default iteration is over the dictionary `keys`
+```python
+data = {'a': 1, 'b': 2, 'c': 3}
 
+for k in data:
+	print(k) # output: a
+	#                  b
+	#                  c
+```
 
+#### Iterating over `values`
+- dictionaries have a method called `values()`
+	- `values()` returns an *iterable* containing just the values of the dictionary
+```python
+data = {'a': 1, 'b': 2, 'c': 3}
+
+for v in data.values():
+	print(v) # output: 1
+	#                  2
+	#                  3
+```
+
+#### Iterating over `key:value` Pairs
+- dictionaries have a method called `items()`
+	- `items()` returns an *iterable* containing the `keys` and `values` in a *tuple*
+```python
+data = {'a': 1, 'b': 2, 'c': 3}
+
+for t in data.items():
+	print(t) # output: ('a', 1)
+	#                  ('b', 2)
+	#                  ('c', 3)
+
+# using unpacking
+for k, v in data.items():
+	print(f'{k} = {v}') # output: a = 1
+	#                             b = 2
+	#                             c = 3
+```
+
+#### The `keys()` Method
+Technically, there is also a `keys()` method
+- behaves like `values()` or `items()`
+- but it is iterable over the `keys` of the dictionary
+```python
+data = {'a': 1, 'b': 2, 'c': 3}
+
+for k in data.keys():
+	print(k) # output: a
+	#                  b
+	#                  c
+```
+- but default iterations is over `keys` anyway
+	- so `keys()` is not particularly useful for iteration
+
+#### Insertion Order
+- we saw in sequence types that elements have positional order
+	- not every iterable has positional order
+		- we can pull marbles out of the bag, but there is no particular order
+	- for a long time Python dictionaries were the same
+		- a "bag" of `key:value` pairs that could be looked up by key
+		- iteration order was not guaranteed to be anything specific
+- this changed in **Python 3.6**
+	- the *iteration order* reflects the *insertion order*.
+
+> What do we mean by 'insertion order'?
+> Insertion Order is the order in which the `key:value` pairs are listed out. Adding a new element, makes the new element the last element added in order. But we still cannot retrieve elements by index.
+> 
+> **NOTE:** Updating the value of an existing key does not change it's insertion order. However removing the key and reinserting it again does change the order.
+
+### Working with Dictionaries
