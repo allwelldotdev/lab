@@ -1438,8 +1438,102 @@ Dictionaries are one of the most important data structures in Python
 	- Dictionaries (or hash maps) are one *concrete* implementation
 
 ### Associative Arrays and Dictionaries
+> [Learn](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35150934?start=121#notes) one way of the old ways of associating keys to values in Python, and code in general.
+> [Learn](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35150934?start=229#notes) another approach that uses storing data in separate lists (lists of tuples).
+- both approaches have major drawbacks
+	- must scan an array until we find the correct element
+	- the longer the array, the longer time this will take (worst case is last element)
 
+#### Hash Maps (aka Dictionaries)
+- better implementation is the *hash map* (or *dictionary*)
+	- similar to the last approach we saw
+	- but a special mechanism is used to quickly find a key 
+		- lookup *speed is not affected by size* of dictionary
 
+**IMPORTANT THINGS TO NOTE**
+- keys must be *hashable* (hence the terms hash map)
+	- `strings` are hashable
+	- `numerics` are hashable
+	- `tuples` may be hashable (if all the elements are themselves hashable)
+	- `lists` are *not* hashable (in general, *mutable* objects are *not* hashable)
+
+#### Python Dictionaries
+- a dictionary is a data structure that associates a `value` to a `key`
+	- both `value` and `key` are Python objects
+	- `key` must be *hashable* type (e.g. `str`, `int`, `bool`, `float`, ...) and unique
+	- `value` can be *any type*
+	- type is `dict`
+	- it is a collection of `key: value` pairs
+	- it is *iterable*
+		- but it is not a sequence type
+		- `values` are looked up by `key`, not by `index`
+		- technically, there is no ordering in a dictionary (we'll come back to this point)
+	- it's a *mutable* collection
+
+#### Looking up values in a Dictionary
+- use `[]` just like for sequence types
+	- but instead of an index values we specify the *key*
+```python
+d = {
+	 'a': 97,
+	 'b': 98,
+	 'A': 65,
+	 'B': 66,
+	 'z': 122,
+	 'Z': 90
+}
+
+d['a'] # 97
+d['Z'] # 90
+```
+
+#### Replacing the Value of an existing Key
+```python
+d = {
+	 'symbol': 'AAPL',
+	 'date': '2020-03-10',
+	 'close': 285
+}
+
+# to change the values associated with 'close':
+d['close'] = 285.34
+
+# `d` (dictionary) now looks like this:
+"""
+d = {
+	'symbol': 'AAPL',
+	'date': '2020-30-10',
+	'close': 285.34
+}
+"""
+```
+
+#### Adding a New `key:value` Pair
+- simply assign a value to a new key
+	- if key exists, it will be *updated* as we just saw
+	- if key does not exist, a new entry is *inserted* with key and value
+		- (and this explains why keys in a dictionary are necessarily unique!)
+
+#### Deleting a `key:value` Pair
+- we can remove `key:value` pairs from a dict
+	- use the `del` keyword
+```python
+# to delete a key:value pair in an object or dictionary in Python:
+del d['open']
+```
+
+#### Common Exceptions
+- certain operations on dictionaries can lead to `KeyError` exceptions
+	- trying to read a non-existent key
+	- trying to delete a non-existent key
+- trying to use a *non-hashable* object as a `key` leads to a `TypeError` exception
+```python
+d[[10, 20]] = 100
+# this leads to a `TypeError` exception
+```
+- `TypeError: unhashable type: 'list'`
+	- `[10, 20]` is a `list`, and lists are not hashable
+	- *cannot* be used as a key
 
 
 
