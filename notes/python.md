@@ -1743,5 +1743,23 @@ set([1, 'a', True])
 - `s.copy()` creates a *shallow copy*
 
 ### Common Set Operations
+#### Disjointedness
+- two sets are *disjoint* if they have no elements in common
+- `s1.isdisjoint(s2)`
+	- `True` if no common elements exist
+	- `False` if one or more common elements exist
+#### Adding or Removing Elements
+```python
+s = {10, 'b', True}
+
+s.add(4) # {10, 'b', True, 4}
+s.add('b') # {10, 'b', True, 4} no duplicates in a set
+
+s.remove('b') # {10, True, 4}
+s.remove(100) # **KeyError**
+
+s.discard(4) # {10, True}
+s.discard(100) # no exception {10, True}
+```
 
 
