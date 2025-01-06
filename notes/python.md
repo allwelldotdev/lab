@@ -1614,3 +1614,83 @@ for k in data.keys():
 > **NOTE:** Updating the value of an existing key does not change it's insertion order. However removing the key and reinserting it again does change the order.
 
 ### Working with Dictionaries
+#### Membership Testing
+How do we test if a `key` exists in a `dict`? Using `in`
+```python
+d = {'a': 1, 'b': 2}
+'a' in d # True
+'x' in d # False
+```
+- `not in` can be used to test if a `key` is not present
+
+#### Useful Methods and Functions
+- `d.clear()`
+	- removes all elements from `d`
+- `d.copy()`
+	- creates a *shallow copy* of `d`
+		- same as sequences
+		- use `copy.deepcopy()` to create a *deep copy*
+- `len(d)`
+	- returns number of elements in `d`
+
+#### Other Methods to Create Dictionaries
+- `d = {'a': 1, 'b': 2}`
+- `d = dict(a = 1, b = 2)`
+	- symbols must be valid variable names and will be used, in string form, as the keys
+- can create a dictionary with several keys all initialized to the same value
+```python
+d = dict.fromkeys(['cnt_1', 'cnt_2', 'cnt_3'], 0)
+d # {'cnt_1': 0, 'cnt_2': 0, 'cnt_3': 0}
+```
+- first argument of `fromkeys()` should be an *iterable* (list, tuple, string, etc)
+```python
+d = dict.fromkeys('abc', 100)
+d # {'a': 100, 'b': 100, 'c': 100}
+```
+
+#### Creating Empty Dictionaries
+- often we create dictionaries that start empty
+	- and get mutated (modified) as our code runs
+- can use a literal `d = {}`
+- can use the `dict()` function
+
+#### The `get()` Method
+- trying to retrieve a non-existent key results in a `KeyError` exception
+	- sometimes we want to have a "default" value if a key does not exist
+		- could use `if` statements and test if key exists using `in`
+		- could try to retrieve the key and *handle* the exception
+		- or, use the `get()` method
+- `get()` can take two arguments
+	- the `key` for which we want the corresponding `value`
+	- the default `value` we want to use if the `key` does not exist
+- `get()` can also take a single argument, the `key`
+	- default value is `None` (special object to handle "nothing")
+- data in Python is often handled using dictionaries
+	- when we work with data we often have *missing values*
+	- sometimes, not only is the value missing, but the *key* as well
+- using `get()` allows us to simplify our code to assign a default for missing keys
+```python
+if 'ssn' in person_dict:
+	social = person_dict['ssn']
+else:
+	social = ''
+
+# using the get() method for dictionaries, we could also write:
+social = person_dict.get('ssn', '')
+# this will return '' and empty string if 'ssn' key is not available in 'person_dict' dictionary
+```
+
+#### Merging one Dictionary into Another
+- the `update()` method
+	- takes a single argument: another dictionary
+```python
+d1.update(d2) # the key:value pairs of 'd2' will be merged into 'd1'
+```
+- keys in `d2` *not in* `d1` will be *added* to `d1` (with the value)
+- keys in `d2` that *are present* in `d1` will *overwrite* the value in `d1` with that of `d2`
+- **Important:** `d1` is *mutated*
+
+## Sets
+
+
+
