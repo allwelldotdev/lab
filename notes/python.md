@@ -1438,7 +1438,7 @@ Dictionaries are one of the most important data structures in Python
 	- Dictionaries (or hash maps) are one *concrete* implementation
 
 ### Associative Arrays and Dictionaries
-> [Learn](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35150934?start=121#notes) one way of the old ways of associating keys to values in Python, and code in general.
+> [Learn](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35150934?start=121#notes) one of the old ways of associating keys to values in Python, and code in general.
 > [Learn](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35150934?start=229#notes) another approach that uses storing data in separate lists (lists of tuples).
 - both approaches have major drawbacks
 	- must scan an array until we find the correct element
@@ -1539,7 +1539,7 @@ d[[10, 20]] = 100
 
 ### Iterating Dictionaries
 #### Dictionaries are Iterable
-- we can use the `for` loop to iterate over a Dictionaries'
+- we can use the `for` loop to iterate over Dictionaries
 	- `keys`
 	- `values`
 	- `key:value` pairs
