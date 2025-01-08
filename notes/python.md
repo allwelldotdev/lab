@@ -1690,6 +1690,8 @@ d1.update(d2) # the key:value pairs of 'd2' will be merged into 'd1'
 - keys in `d2` that *are present* in `d1` will *overwrite* the value in `d1` with that of `d2`
 - **Important:** `d1` is *mutated*
 
+> Dictionaries are used extensively in Python.
+
 ## Sets
 ### What are Python Sets?
 - just like a mathematical set
