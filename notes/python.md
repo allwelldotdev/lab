@@ -1763,6 +1763,9 @@ s.remove(100) # **KeyError**
 s.discard(4) # {10, True}
 s.discard(100) # no exception {10, True}
 ```
-
-
+#### Subsets and Supersets
+```python
+s1 < s2 # True if s1 is a strict subset of s2
+s1 <= s2 # True if s1 is a subset of
+```
  
