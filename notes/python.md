@@ -1766,6 +1766,50 @@ s.discard(100) # no exception {10, True}
 #### Subsets and Supersets
 ```python
 s1 < s2 # True if s1 is a strict subset of s2
-s1 <= s2 # True if s1 is a subset of
+s1 <= s2 # True if s1 is a subset of s2
+s1 > s2 # True if s1 is a strict superset of s2
+s1 >= s2 # True if s1 is a superset of s2
+# Therefore...
+{1, 2} < {1, 2, 3} # True - Strict Subset
+{1, 2} < {1, 2} # False - Not Strict Subset
+
+{1, 2} <= {1, 2, 3} # True - Subset
+{1, 2} <= {1, 2} # True - Subset
+
+{1, 2, 3} > {1, 2} # True - Strict Superset
+{1, 2} > {1, 2} # False - Not Strict Superset
+
+{1, 2, 3} >= {1, 2} # True - Superset
+{1, 2} >= {1, 2} # True - Superset
 ```
- 
+ [See this response](https://www.perplexity.ai/search/i-may-have-missed-the-teaching-TzpsGBtPRrS8M7Q3hWBO3A) by PerplexityAI to refresh your memory on Mathematical Sets and the meaning of subsets & supersets.
+#### Unions and Intersections
+```python
+s1 | s2 # returns the union of s1 & s2
+s1 & s2 # returns the intersection of s1 & s2
+# For example...
+s1 = {1, 2, 3}
+s2 = {3, 4, 5}
+s1 | s2 # {1, 2, 3, 4, 5}
+s1 & s2 # {3} : (again, set elements are unique)
+```
+#### Set Difference
+the *difference* `s1 - s2` of two sets is all the elements of one set minus the elements of the other set.
+![set difference](assets/Pasted%20image%2020250110130939.png)
+
+> **Caution**: set difference is *not commutative* `s1 - s2 != s2 - s1`
+```python
+s1 = {1, 2, 3}
+s2 = {3, 4, 5}
+s1 - s2 # {1, 2}
+s2 - s1 # {4, 5}
+```
+---
+- always keep sets in mind when coding
+	- *membership* testing in sets is much faster than lists or tuples
+	- easy to *eliminate duplicate values* from a collection
+	- easy to find *common values* between two collections
+	- easy to find values in one collection but *not in another*
+
+## Comprehensions
+
