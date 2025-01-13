@@ -1918,6 +1918,47 @@ print(elapsed_time) # 0.07221294499999997
 		- just the `key` portion
 ![set comprehensions](assets/Pasted%20image%2020250113121631.png)
 
+> The idea of creating a dictionary that contains all the unique keys from a collection and a count for the corresponding value is one way of expressing what's called a mathematical multiset. See how this is calculated below:
+```python
+data = ['a', 'a', 'a', 'b', 'b', 'c', 'c', 'c', 'd']
+# given `data` we want to do the below:
+# freq = {
+	# 'a' = 3,
+	# 'b' = 2,
+	# 'c' = 3,
+	# 'd' = 1,
+# }
+
+# we can achieve this one of two ways:
+
+# 1. using regular `for` loop
+freq = {}
+
+for element in set(data):
+	count = len([char for char in data if char == element])
+	freq[element] = count
+
+print(freq) # freq = {
+				# 'a' = 3,
+				# 'b' = 2,
+				# 'c' = 3,
+				# 'd' = 1,
+			# }
+
+#2. using set comprehensions
+freq = {
+		element: len([char for char in data if char == element])
+		for element in set(data)
+}
+print(freq) # freq = {
+				# 'a' = 3,
+				# 'b' = 2,
+				# 'c' = 3,
+				# 'd' = 1,
+			# }
+```
+> The function we just executed in the previous example above is performed by a module in built-in Python library known as `collections`. We can call like so: `from collections import Counter`. [Learn more](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35150982?start=874#notes)
+## Exceptions
 
 
 
