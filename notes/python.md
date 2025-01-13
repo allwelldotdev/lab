@@ -1724,7 +1724,7 @@ d1.update(d2) # the key:value pairs of 'd2' will be merged into 'd1'
 
 #### Defining Sets
 - literal form
-	- - note the `{}` - just like for dictionaries
+	- note the `{}` - just like for dictionaries
 	- but no `key:value` pairs, just the `keys`
 ```python
 {1, 'a', True}
@@ -1810,6 +1810,14 @@ s2 - s1 # {4, 5}
 	- easy to *eliminate duplicate values* from a collection
 	- easy to find *common values* between two collections
 	- easy to find values in one collection but *not in another*
+
+> To write the entire alphabet string `'abcdefghijklmnopqrstuvwxyz'` using a Python string property, do the following:
+```python
+import string
+string.ascii_lowercase # abcdefghijklmnopqrstuvwxyz
+string.ascii_uppercase # ABCDEFGHIJKLMNOPQRSTUVWXYZ
+string.ascii_letters # abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+```
 
 ## Comprehensions
 
