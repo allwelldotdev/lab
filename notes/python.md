@@ -763,6 +763,7 @@ l[1] = 'hello'
 > using *insert* `[1, 2, 3, 4].insert(0, 'abc')` → `['abc', 1, 2, 3, 4]` 
 
 > To test how long a program runs in Python use:
+^9d76ab
 ```python
 from timeit import timeit # import the timeit() function
 timeit('<add_code_to_run_here>', globals=globals(), number=100_000) # number attr is the number of times the code to run and test for on avg.
@@ -1820,4 +1821,106 @@ string.ascii_letters # abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 ```
 
 ## Comprehensions
+- comprehensions are an easy way to create new iterables from other iterables
+	- like using a loop, but easier and more concise syntax
+	- works well for simple cases
+		- can quickly become unreadable!
+		- readability matters!!
+Example:
+- given a list of 2D vectors
+	- `[(0, 0), (1, 1), (1, 2), (3, 5)]`
+- create a new list containing the magnitude of each vector
+	- ![magnitude of each vector in comprehensions](assets/Pasted%20image%2020250113112235.png)
+
+### List Comprehensions
+- a *comprehension* is a way to use one iterable to *create* another
+	- more *concise* than using regular loops
+		- use for *simple* computations
+- different types of comprehensions
+	- lists
+	- dictionaries
+	- sets
+	- generators
+- a list comprehension is used to generate a `list` object
+
+The `list` *comprehension* syntax looks like this:
+![list comprehension](assets/Pasted%20image%2020250113112950.png)
+```python
+# In general, `list` comprehensions look like this:
+[expression for item in iterable]
+```
+> Comprehensions are actually functions. We'll look at this later when we examine Function and Closures. Comprehensions build up and returns the calculated iterable.
+
+Example:
+From the list `numbers`, create a new list of even numbers.
+- the standard approach:
+```python
+numbers = [1, 2, 3, 4, 5, 6, 7, 8]
+evens = []
+for number in numbers:
+	if number % 2 == 0:
+		evens.append(number)
+```
+- using `list` comprehensions:
+	- comprehension syntax supports an `if` clause:
+```python
+evens = [number ** 2 for number in numbers if number % 2 == 0]
+```
+- in general:
+```python
+[expression1 for item in items if expression2]
+# `if` acts like a filter
+```
+
+> `perf_counter` is something we can use to measure relative elapsed times. [Similar to](#^9d76ab) `timeit`. It is a measure of elapsed time from some point of origin - this origin point is undefined, but we can get the `perf_counter` value at different points in our code, and calculate the difference between the different measurements. As shown in the example below:
+
+Comprehensions are much more efficient to use than `for` loops. See the example test below for comparison:
+- `for` loop speed
+```python
+from time import perf_counter
+start = perf_counter()
+for i in range(100_000):
+    magnitudes = []
+    for vector in vectors:
+        magnitude = sqrt(vector[0] ** 2 + vector[1] ** 2)
+        magnitudes.append(magnitude)
+end = perf_counter()
+
+elapsed_time = end - start
+print(elapsed_time) # 0.359776093
+```
+- comprehension speed
+```python
+from time import perf_counter
+start = perf_counter()
+for i in range(100_000):
+    magnitudes = [sqrt(vector[0] + vector[1]) for vector in vectors]
+end = perf_counter()
+
+elapsed_time = end - start
+print(elapsed_time) # 0.07221294499999997
+```
+- as you can see the comprehension approach is quite faster.
+
+> In conclusion, `list` comprehensions are mechanisms we use to easily create a new list based on another iterable. But comprehension syntax can quickly devolve into hard to understand messes - keep it simple!
+
+### Dictionary and Set Comprehensions
+- similar to list comprehensions
+	- use `{}` instead of `[]`
+		- remember literals for dictionaries and sets use `{}`
+			- dictionary elements are *pairs* → `key:value`
+			- set elements are *single* values
+![dictionary comprehensions](assets/Pasted%20image%2020250113120849.png)
+
+#### Set Comprehensions
+- similar to a dictionary comprehension
+	- but elements are not `key:value` pairs
+		- just the `key` portion
+![set comprehensions](assets/Pasted%20image%2020250113121631.png)
+
+
+
+
+
+
 
