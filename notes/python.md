@@ -2069,6 +2069,97 @@ name = input('Enter name (5 chars min): ')
 	- it's OK for program to terminate - we can figure out what went wrong and attempt to fix it later - possibly handling that case specifically
 	- if we don't know exactly why or where the problem occurs in our code, there's not much we can do to recover from the exception
 - we handle exceptions that are raised by *small chunks* of code
+- we try to handle very *specific* exceptions, not broad ones 
+	- usually handle exceptions that we can do something about
+#### `try...except...`
+- wrap the code we want to implement an exception handler for inside a `try` block
+- we handle possible exception(s), using `except` blocks (one or more)
+![try-except-block](assets/Pasted%20image%2020250114172023.png)
+#### Handling and re-raising an exception
+- sometimes we want to handle an exception, but then re-raise the same exception or a different exception
+	- often because there's nothing we can do
+	- sometimes to create a more explicit exception
+- to raise an exception in an `except` block:
+	- `raise` → re-raises the same exception that caused the except block to be entered
+	- `raise SomeException('...')`
+##### Application
+- one very common case for re-raising is for error logging
+	- we can view the logs after our program has terminated abnormally
+```python
+try:
+	...
+except Exception as ex:
+	log(ex)
+	raise
+```
+- we intercept a broad range of exceptions by handling `Exception`
+- we *log* the exception somewhere (console, file, database, etc)
+- we *re-raise* the exception and let something else either handle it or terminate the program
+---
+- what do I mean "something else will handle it?"
+	- we'll see this more when we cover functions
+	- `try...except...` can be *nested*
+		- usually indirectly
+		- but directly too
+```python
+try:
+	try:
+		raise ValueError('something happened')
+	except ValueError as ex:
+		log(ex)
+		raise
+except Exception as ex:
+	print(f'ignoring: {ex}')
+```
+- here our `ValueError` gets handled twice.
+#### Handline Multiple Exception Types
+- not limited to a single `except` block
+```python
+try:
+	...
+except IndexError as ex:
+	...
+except ValueError as ex:
+	...
+except Exception as ex:
+	...
+```
+- Python will match the exception to the *first* type that matches in sequence of except blocks
+- so write except blocks *from most specific to least specific* exception types
+#### The `finally` Clause
+- sometimes we want some code to run after a `try...except...` whether an exception occurred or not, and whether it was handled or not
+	- use the `finally` clause
+```python
+try:
+	...
+except ValueError as ex:
+	...
+except IndexError as ex:
+	...
+finally:
+	# always runs no matter what, before exception flow resumes
+```
+##### Application
+- useful when we want a piece of code to always run
+	- whether an exception has occurred or not
+	- whether the exception was handled or not
+		- whether exception was re-raised or a new one was raised
+```python
+try:
+	open_database_connection()
+	start_transaction()
+	write_data()
+	commit_transaction()
+except WriteException as ex:
+	rollback_transaction()
+	raise
+finally:
+	close_database_connection()
+```
+
+## Iterables and Iterators
+
+
 
 
 
