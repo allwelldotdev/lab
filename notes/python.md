@@ -2157,6 +2157,38 @@ finally:
 	close_database_connection()
 ```
 
+> Say you have a list of values that you'd like to find the average for.
+> 1. If there's a non-numeric value in the list you'd like to skip that value and go on to calculate average for the numeric values in the list.
+>2. If there's no value in the list, you'd like to return `0` as average.
+>
+>This is a good example of nested `try...except...` blocks. See below:
+```python
+data = [10, 20, 30, None, 'abc']
+
+sum_data = 0
+count_data = 0
+
+try:
+	for element in data:
+		try:
+			sum_data += element
+			count_data += 1
+		except TypeError:
+			# skip iteration element - so do nothing 
+			pass	
+	
+	average = sum_data / count_data
+except ZeroDivisionError:
+	average = 0
+
+print(f'average = {average}') # average = 20.0
+# this would also output `0` if `data` was an empty list
+```
+
+> Usually, when you raise another error inside an `except...` block, Python shows you a traceback display where you can trace the parent exception where the newly raised exception was raised from.
+
+> For the `finally` block to run, you don't need to have a preceding `except` block, as long as you don't anticipate raising any exceptions whether knowingly or unknowingly through the code within the `try` block.
+
 ## Iterables and Iterators
 
 
