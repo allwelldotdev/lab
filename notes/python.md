@@ -1972,7 +1972,9 @@ print(freq) # freq = {
 - *raising*: starting an exception *event flow*
 - *exception handling*: *interacting* with an exception flow in some manner
 - *unhandled exception*: an exception flow that is *not handled* by our code
-
+### Exception Hierarchy
+- python exceptions form a hierarchy
+- 
 
 
 
