@@ -1959,6 +1959,20 @@ print(freq) # freq = {
 ```
 > The function we just executed in the previous example above is performed by a module in built-in Python library known as `collections`. We can call like so: `from collections import Counter`. [Learn more](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35150982?start=874#notes)
 ## Exceptions
+### What are exceptions?
+- exceptions are special events that happen when something out of the ordinary happens while our code is running
+- an exception is generally unexpected behavior 
+	- but not always
+	- it may be something we expect to happen from time to time
+		- we can deal with it and continue running our code
+- so an exception is not necessarily an error
+- but unhandled exception will cause our program to terminate
+### Terminology
+- *exception*: a special type of *object* in Python
+- *raising*: starting an exception *event flow*
+- *exception handling*: *interacting* with an exception flow in some manner
+- *unhandled exception*: an exception flow that is *not handled* by our code
+
 
 
 
