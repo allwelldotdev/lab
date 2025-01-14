@@ -1959,7 +1959,7 @@ print(freq) # freq = {
 ```
 > The function we just executed in the previous example above is performed by a module in built-in Python library known as `collections`. We can call like so: `from collections import Counter`. [Learn more](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35150982?start=874#notes)
 ## Exceptions
-### What are exceptions?
+#### What are exceptions?
 - exceptions are special events that happen when something out of the ordinary happens while our code is running
 - an exception is generally unexpected behavior 
 	- but not always
@@ -1967,14 +1967,65 @@ print(freq) # freq = {
 		- we can deal with it and continue running our code
 - so an exception is not necessarily an error
 - but unhandled exception will cause our program to terminate
-### Terminology
+#### Terminology
 - *exception*: a special type of *object* in Python
 - *raising*: starting an exception *event flow*
 - *exception handling*: *interacting* with an exception flow in some manner
 - *unhandled exception*: an exception flow that is *not handled* by our code
-### Exception Hierarchy
-- python exceptions form a hierarchy
-- 
+#### Exception Hierarchy
+- python exceptions form a hierarchy (this will be covered precisely when looking at Object Oriented Programming - OOP). See → https://docs.python.org/3/library/exceptions.html#exception-hierarchy
+- basically means that exceptions can be classes sub-divided into sub-exceptions that are more specific
+- for example a broad exception might be `LookupError`
+	- more specifically it could be an `IndexError` or a `KeyError`
+	- both of these are categorized more broadly as a `LookupError`
+		- can choose to handle `IndexError` specifically
+		- or `LookupError` more broadly
+- this means that if an exception object is an `IndexError` exception
+	- it is also a `LookupError` exception
+	- and it is also an `Exception` exception
+		- most exceptions we work with are classified as `Exception` types
+#### Python Built-in Exceptions
+- python has many built-in exception types, which you can read here: http://docs.python.org/3/library/exceptions.html
+- common exceptions include:
+	- `SyntaxError`
+	- `ZeroDivisionError`
+	- `IndexError`
+	- `KeyError`
+	- `ValueError`
+	- `TypeError`
+	- `FileNotFoundError`
+	- and many more...
+#### EAFP vs LBYL
+- when we think something unexpected may go wrong in our code
+	- figure out if something it's going to go wrong before we do it
+		- LBYL → Look Before You Leap
+	- just do it, and handle the exception if it occurs
+		- EAFP → Easier to Ask Forgiveness than Permission
+- generally, in Python
+	- follow EAFP
+	- exception handling
+#### Why EAFP?
+Something that is exceptional should be *infrequent*
+- if we are dividing two integers in a loop that repeats 1,000 times
+	- out of every 1,000 times we run, we expect division by zero to occur 5 times
+		- LBYL → test that divisor is non-zero 1,000 times
+		- EAFP → just do it, and handle the division by zero error 5 times
+			- often more efficient
+- also trying to fully determine if something is *going* to go wrong is a *lot harder* to write than just handling things when they *do* go wrong.
+#### Exception Handling Flow
+- an exception occurs
+	- an exception object is created
+	- an exception flow is started
+	- we do nothing about it
+		- program terminates
+	- we interrupt the exception flow
+		- try to handle the exception in some sense, if possible
+		- then
+			- resume running program uninterrupted
+			- or, let the exception resume
+			- or, start a new exception flow
+### Raising Exceptions
+
 
 
 
