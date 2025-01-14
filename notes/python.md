@@ -2025,7 +2025,50 @@ Something that is exceptional should be *infrequent*
 			- or, let the exception resume
 			- or, start a new exception flow
 ### Raising Exceptions
+- often we want to start an exception flow ourselves
+	- called *raising* an exception
+- an exception object is associated with an exception flow
+	- we create a new exception object
+	- we raise the exception object
+- doing this is most useful when we create functions
+	- we'll see this later
+	- for now, we'll just learn how to raise an exception
 
+Example:
+- create an exception object using one of Python's built-in exceptions
+	- `ex = ValueError()`
+	- usually we include a custom exception message
+	- `ex = ValueError('Name must be at least 5 characters long.')`
+- we raise the exception, starting an exception flow
+	- `raise ex`
+- often we do both in one step
+	- `raise ValueError('Name must be at least 5 characters long.')`
+- raising an exception ourselves results in the same exception flow that Python does when it raises some exception
+	- we can choose to handle the exception
+	- if we don't handle the exception, program terminates
+
+> 3 functions in Python that display information on the exception object is `repr()`, `print()`, and `str()`.
+> - `repr()` displays developer information of the object parsed. This is what Jupyter uses to display contents of variables and objects in the notebook. This is mostly used by developers.
+> - `str()` displays the string message of the object. This can be used to share error messages to users.
+> - `print()` does the same thing `str()` does.
+
+> `input()` function takes in some input and returns it to a variable. Like so:
+```python
+name = input('Enter name (5 chars min): ')
+# notice the space after the colon. It's used to space out the input box and the string repr of `input`
+```
+
+> `issubclass()` is a function that returns a Boolean value if the first argument is a subclass in the [exception hierarchy](#Exception%20Hierarchy) to the second argument.
+
+> `type()` is a function that returns the kind of object the variable or object passed into it is.
+### Handling Exceptions
+#### General Suggestions for Exception Handling
+- in general we do not want to just handle any exception anywhere in our code
+	- too much work
+	- cannot anticipate every point of failure
+	- it's OK for program to terminate - we can figure out what went wrong and attempt to fix it later - possibly handling that case specifically
+	- if we don't know exactly why or where the problem occurs in our code, there's not much we can do to recover from the exception
+- we handle exceptions that are raised by *small chunks* of code
 
 
 
