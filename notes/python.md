@@ -2257,10 +2257,65 @@ l = list(range(100_000_000))
 del l # this will delete `l` variable and release the memory space occupied by it (this also known as 'garbage collection')
 ```
 
-> `range()` is a *lazy iterable*, it's not an iterator. It's a lazy iterable because it doesn't create the objects it iterates over yet, until the next object is requested of it.
+> `range()` is a *lazy iterable*, it's not an iterator. It's a lazy iterable because it doesn't create the objects yet, until the next object is requested of it.
 > 
-> In difference, `enumerate()` returns an *iterator* not an iterable. Therefore, once it's been iterated over, it can't be used again unless another iterator is created.
+> In difference, `enumerate()` returns an *iterator* not an iterable. Therefore, once it's been iterated over, it can't be used again unless a *new* iterator is created.
+
+^78ba5e
+
+> Objects that support `iter()` and `next()` are iterators. Objects that only support `iter()` are iterables.
+
+> **Why learn about Iterables and Iterators?**
+> Often in Python, objects we get (from calling some functions), are not iterables, but just iterators. In other words, they are not re-usable - in the sense that they become exhausted, and we cannot re-use them to iterate from the beginning. Why do these types of objects even exist? Basically for performance reasons.
+
+> As we'll see later when we study **generators**, it is possible to have an iterator that allows us to iterate over a "virtual" collection - in the sense that the next element is calculated and returned, but no memory is wasted in holding all the elements, and the up-front computational cost of calculating all the elements is avoided - they are generated one at a time, and doled out one at a time.
+> 
+> This technique of calculating and doling out elements one at a time is called **lazy iteration**. Iterators are generally lazy, and [some iterables can be lazy too](#^78ba5e).
+
 ### Generators
+- we've seen list, dictionary and set comprehensions
+- but no tuple comprehensions...
+	- works because list is mutable
+	- tuples are not mutable
+		- no tuple comprehension
+but we *can* write this as a (valid) expression:
+```python
+(i ** 2 for i in range(5))
+```
+- this creates a *generator* object
+	- generators are *iterators*
+		- which means they calculate the `next()` method/function 
+	- they calculate and hand out elements *one at a time* as requested
+		- unlike `[i ** 2 for i in range(5)]`
+			- calculates all the elements and *creates* the list *immediately*
+	- generators use *lazy iteration*
+		- a *lazy property* is one that is not calculated until it is requested
+#### Why use Generators?
+- memory efficiency
+	- e.g. take all the rows from a file, and write them out, transformed to some other file
+		- read the entire file in memory, iterate through that and save rows 
+			- entire file in memory!
+			- you may not have enough memory!
+		- read lines one at a time from file
+			- read a row, process it, save it, discard it, request next row, ...
+			- only one line in memory at any point
+- performance (possibly)
+	- if you only need to read the first few elements of the iterable
+	- why go through the computations to calculate all of them?
+		- plus unnecessary memory usage on top of that
+#### What's the Downside of Generators?
+- generators are *lazy iterators*
+	- *one-time use*
+- not good if you need to iterate through the same iterable many times
+	- or even just a few times if the calculations are computationally expensive or take a long time (maybe IO bound)
+#### Creating Generators
+- use *generator comprehensions*
+- use the *yield* keyword in functions instead of return
+	- this is a more advanced concept than python fundamentals
+
+> In summary, generators are great! But beware, they are not re-usable, and if you're going to need to iterate through them multiple times, you may be better off making the performance/memory trade-off.
+
+## Functions
 
 
 
