@@ -2190,6 +2190,71 @@ print(f'average = {average}') # average = 20.0
 > For the `finally` block to run, you don't need to have a preceding `except` block, as long as you don't anticipate raising any exceptions whether knowingly or unknowingly through the code within the `try` block.
 
 ## Iterables and Iterators
+- an iterable is something that can be iterated over (kind of a circular definition)
+	- i.e. we take one element, then the next, then the next, until we've covered all elements
+	- no specific iteration order is mandated
+- obviously a *sequence* type is iterable (positional ordering)
+- we saw *dictionaries* can be iterated over (insert order)
+- but we also saw *sets*: iterable, but no guaranteed order of any kind
+- general idea behind *iteration* is then:
+	- start somewhere in the collection (at the beginning if that means something)
+	- keep requesting the next element
+	- until there's nothing left (exhausted)
+---
+- so we have two concepts here:
+	- a collection of objects that can be iterated over
+		- an *iterable*
+	- something that is able to give us the next element when we request it
+		- an *iterator*
+### Iterables and Iterators
+- an iterable is something that can be iterated over
+	- but we still need something that can
+		- give us the next item
+		- keep track of what it's given us so far (so it doesn't give us the same element twice)
+		- informs us when there's nothing left for it to give us
+		- that's called an *iterator*
+			- used by Python to iterate over an *iterable*
+---
+- an iterable is just a *collection of objects*
+	- it doesn't know anything about *how* to iterate
+	- however it knows how to create and give us an *iterator* when we need it
+- iterables implement a special method `__iter__()` that returns a new iterator
+	- can also be called using the `iter()` function
+- the iterator has a special method called `__next__()` that can be called to get the next element
+	- can also use the `next()` function
+	- it keeps track of what is has already handed out (so iterator are kind of one-time use!)
+	- it raises a `StopIteration` exception when `next()` is called if there's nothing left
+#### The Internal Mechanics of a `for` Loop
+When we write a `for` loop that iterates over an iterable, what Python is actually doing is this:
+```python
+l = [1, 2, 3, 4, 5]
+
+iterator = iter(l)
+try:
+	while True:
+		# return next(iterator) - here we'll just print it
+		print(next(iterator))
+except StopIteration:
+	# expected when we reach the end
+	# so silence this exception
+	pass
+```
+- the key thing here is that we can see the iterator has some state
+	- it has a `__next__()` method
+	- but there's no going back, no starting from the beginning again
+	- to do that we have to request for a *new* iterator
+- and that's what a `for` loop does - it requests a new iterator from the iterable before it starts looping
+- objects such as lists, tuples, sets, dictionaries, string, range objects are *iterables*
+- but some objects in Python are *iterators* - not iterables
+	- iterators actually implement an `__iter__()` method
+		- but they just return themselves (with their current state), not a new iterator
+	- they allow us to iterate over them
+	- but *only once*
+
+### Generators
+
+
+
 
 
 
