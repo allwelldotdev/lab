@@ -2251,6 +2251,15 @@ except StopIteration:
 	- they allow us to iterate over them
 	- but *only once*
 
+> To delete a variable from memory, use the `del` keyword. Like so:
+```python
+l = list(range(100_000_000))
+del l # this will delete `l` variable and release the memory space occupied by it (this also known as 'garbage collection')
+```
+
+> `range()` is a *lazy iterable*, it's not an iterator. It's a lazy iterable because it doesn't create the objects it iterates over yet, until the next object is requested of it.
+> 
+> In difference, `enumerate()` returns an *iterator* not an iterable. Therefore, once it's been iterated over, it can't be used again unless another iterator is created.
 ### Generators
 
 
