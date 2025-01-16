@@ -2469,7 +2469,7 @@ average(1, 2, 3, 4, 5)
 	- there is nothing special about the name `args`
 	- we can use any valid name
 		- ultimately, use a meaningful name
-		- `args` is often too generic (but this is largely what python developers use out in the wild when specifying *variable positional arguments*)
+		- `args` is often too generic (but this is largely what python developers use out in the wild when specifying *an arbitrary number of positional arguments*)
 
 > You cannot specify *specific positional parameters* **after** a *starred parameter has been defined*. Meaning you cannot do this:
 ```python
@@ -2555,7 +2555,86 @@ func(10, 20, c=100) # returns a=10, b=20, args=(,), c=100
 ---
 - but this allows someone to pass in as many positional arguments as they want
 	- what if we don't want that?
-- we still have to tell Python that there are no more positional 
+- we still have to tell Python that there are no more positional arguments
+- we use a `*` *without* a parameter name
+```python
+def func(a, b, *, c):
+	...
+```
+- `a` and `b` are positional parameters
+- there are no more positional parameters after that
+- so `c` is a keyword-only argument
+```python
+# calling the function above: `def func(a, b, *, c)`
+func(10, 20, c=100) # ✅
+func(10, 20, 30, c=100) # ❌
+```
+- using this technique `c` *must* be passed as a named argument
+- `a` and `b` *can* be passed as positional arguments
+	- or as *named* arguments
+```python
+# calling the function above: `def func(a, b, *, c)`
+func(b=2, a=1, c=3) # ✅
+func(a, c=3, b=2) # ✅
+```
+#### Default Values
+- can also assign *default* values to keyword-only arguments
+```python
+def func(a, b, *, c=100):
+	...
+```
+- `c` is optional, and will default to `100`
+- if `c` is passed, it *must* still be passed as a named argument
+```python
+# calling the function above: `def func(a, b, *, c=100)`
+func(10, 20) # c=100
+func(10, 20, c=30) # c=30
+```
+- can mix default values for both positional and keyword-only arguments
+#### Arbitrary Number of Keyword-only Parameters
+- saw `*` for arbitrary number of positional arguments
+- use `**` for arbitrary number of keyword-only arguments
+```python
+def func(a, b, *args, c, d, **kwargs):
+	...
+```
+- `a` and `b` are positional
+- `c` and `d` are keyword-only
+- extra positional arguments are scooped up into `args`
+- extra named arguments are scooped up into `kwargs`
+---
+how are keyword-only (or named) arguments they scooped up?
+- `**` keyword-only arguments are scooped up into a *dictionary*
+	- *key* is the argument *name*
+	- *value* is the argument *value*
+```python
+def func(a, *, d, **others): # `others` is a dict
+	...
+```
+![keyword-only arguments](assets/Pasted%20image%2020250116194652.png)
+
+> In the same way we use `*` as a parameter to express that all the parameters *after it* must be keyword-only arguments, we use `/` as a parameter to express that all the parameters *before it* must be positional-only argument (in other words, they cannot be named arguments). Like so:
+```python
+def func(a, b, *, c): # `x` indicates `c` and any other prevailing parameter after `*` must be passed as a keyword-only argument
+	...
+# in the same way...
+def func(a, b, /, *, c) # `/` indicates `a` and `b` and any other parameter before `/` must be passed as a positional-only argument (they cannot be passed as named arguments)
+```
+
+> When formatting code using print format like so `print(f'...')`. If you want to return a JSON format that contains curly braces as a `str` literal `'{...}'` then you double up the interpolation curly braces to tell the `print(f'...')` function that you're escaping the interpolation. Like so:
+```python
+print(f'{{"longitude": {longitude}, "latitude": {latitude}}}') # notice the double-up `f-string` curly braces
+
+# this would return valid JSON syntax, like so :
+'''
+{
+	"longtitude": 10,
+	"latitude": 20
+}
+'''
+```
+
+### Lambda Functions
 
 
 
