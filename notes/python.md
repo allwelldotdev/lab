@@ -2635,8 +2635,34 @@ print(f'{{"longitude": {longitude}, "latitude": {latitude}}}') # notice the doub
 ```
 
 ### Lambda Functions
+- *lambda functions* are just functions
+	- they are not defined using a `def` and a block of code
+	- it's an *expression* that returns a function object
+		- Python does not create a name or symbol for the function
+		- just returns the function object
+		- we can assign it to a variable or pass it as an argument
+		- also called *anonymous functions
+		- they are very *simple* functions (no code block)
+```python
+lambda a, b: a + b # this is a lambda function (an anonymous function)
+```
+![lambda function](assets/Pasted%20image%2020250116204612.png)
+- this expression returns a `function` object
+- we need to assign it to a symbol if we want to use it
+```python
+f = lambda a, b: a + b
+f(10, 20) # 30
+```
 
+> Positional, keyword-only arguments, and complex parameters work in Lambda Functions the same way they do in normal (or defined) functions. 
 
+- can *always* use a function defined using `def` instead of these lambdas
+- generally used to write shorter code in some *simple* cases
+	- we'll see an example of this in the next sections
+	- but you *don't have* to use them
+- however, they do get used often, so you should be aware of them
+
+## Some Additional Functions
 
 
 
