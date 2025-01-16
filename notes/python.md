@@ -2391,6 +2391,25 @@ add(10, 1) # returns 11
 	- it does this by *position*
 ![positional arguments in python functions](assets/Pasted%20image%2020250116120859.png)
 - *positional arguments*
+
+> Although the parameters are defined as positional parameters, Python supports **calling** the function with **named** arguments as follows:
+```python
+add(a=2, b=3) # returns  5
+```
+> The advantage of this is: we don't have to rely on getting the positions of the arguments correct, *as long as we are naming them*, Python will assign them to their respective parameter in the function.
+> 
+> So, although the `add(a, b)` function uses **positional** parameters, we can choose to pass them **positionally** or **named** (also referred to as **keyword** arguments).
+
+> It's possible to call a function that defines positional parameters using a **mix** of positional and named arguments. However, we have to be careful, once we start using named arguments in a call, *all subsequent arguments must be named too*.
+
+> In Python, there is a naming convention to use `_` or `__` by themselves when dealing with variables whose values are not used elsewhere. For instance in a list comprehension or loop. Like so:
+```python
+# instead of doing :
+[[default_value for i in range(n)] for j in range(m)]
+# do :
+[[default_value for _ in range(n)] for __ in range(m)]
+```
+
 #### Namespaces
 - when a function is called *it knows nothing about how it was called before*
 - every time a function is called 
@@ -2405,11 +2424,81 @@ add(10, 1) # returns 11
 [Learn more about local namespaces in functions](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35151032?start=642#notes).
 
 ### Star Arguments
+- saw how to specify positional parameters in a function
+```python
+def average(a, b, c, d):
+	return (a + b + c + d) / 4
+```
+- but what if we wanted to specify an *arbitrary* number of parameters?
+	- we'd like to call our function with different number of arguments
+```python
+average(1)
+average(1, 2, 3)
+average(1, 2, 3, 4)
+```
+- could write a function to use an iterable as a single argument
+```python
+def average(iterable):
+	return sum(iterable) / len(iterable)
+```
+- but this makes calling the syntax a little weird
+```python
+average([1, 2, 3])
+average([1])
+```
+- would be nicer if we had a mechanism to accept a *variable* number of args 
+---
+- Python supports a special parameter type for this
+	- uses a `*` prefix on a parameter name
+```python
+def average(*values):
+	# return average
+```
+- this means we can call `average` with any number of arguments 
+```python
+average(1)
+average(1, 2, 3, 4, 5)
+```
+- how do we access these values *inside* the function?
+	- use the parameter name
+		- `values` in this case
+		- it'll be a `tuple` containing all the argument values
+---
+- often you'll see code that uses `*args`
+	- the `*` is the important part
+	- there is nothing special about the name `args`
+	- we can use any valid name
+		- ultimately, use a meaningful name
+		- `args` is often too generic
 
+> You cannot specify *specific positional parameters* **after** a *starred parameter has been defined*. Meaning you cannot do this:
+```python
+# this is wrong :
+def my_func(a, b, *args, c):
+	# function body
+	...
+# this is wrong because `*args` will scoop up all the positinal arguments after `a` & `b`. `c` will not get any positional arguments
 
+# the only way this works if for `c` to be passed in as a *keyword-only argument*, like so :
+my_func(1, 2, 3, 4, 5, c=6)
+```
 
-
-
+### Default Values
+- possible to specify *optional* parameters
+	- means function can be called *without* passing in the argument
+	- but we still have that parameter
+		- it needs a value
+		- we can specify a *default* value to use if the argument is not supplied
+For example:
+```python
+def func(a=1): # `a` parameter has a default value of 1
+	print(a)
+func() # returns 1 'default value'
+func(10) # returns 10 'argument value'
+```
+![default values](assets/Pasted%20image%2020250116132425.png)
+- once you specify a positional argument with a default value
+	- all positional parameters after that *must* specify 
 
 
 
