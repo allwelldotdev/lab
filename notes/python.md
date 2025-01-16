@@ -2316,6 +2316,96 @@ but we *can* write this as a (valid) expression:
 > In summary, generators are great! But beware, they are not re-usable, and if you're going to need to iterate through them multiple times, you may be better off making the performance/memory trade-off.
 
 ## Functions
+#### Why?
+- easy *code re-use*
+	- much easier to code the `sqrt()` function once
+		- and then call it multiple times
+- breaking up complex code into easier to understand chunks
+	- problem *decomposition*
+---
+- when we create a `function`, we may want values to be passed into it when it's called
+	- *arguments* or *parameters*
+		- technically not the same thing but everyone uses them interchangeably
+- when we define a function, we may define symbols for the values that will be passed into the function
+	- these symbols are called *parameters*
+- when we call a function, we specify values for these parameters
+	- these values are called *arguments*
+- so a *parameter* is when we *define* the function
+- an *argument* is when we *call* the function
+#### Functions are Python Objects
+- just like everything in Python, functions are objects
+	- they have state
+		- name (maybe!)
+		- code
+		- parameters
+		- they are *callable*
+			- and **always** `return` something when called
+- they can be assigned to a symbol
+- can be passed as a parameter to another function
+- can be returned from a function call
+#### Callables
+- an object is *callable* if it can be *called* - using `()`
+- functions are run by calling them
+	- `print('hello')`
+	- `math.sqrt(4)`
+- but other types of objects are also *callable*
+	- not necessarily a `function` object
+```python
+my_list.copy() # calling the *method* on the `my_list` object
+range(100) # creating a *new* `range` object
+```
+- the more general term is *callable*
+
+### Custom Functions
+- functions can be defined using the `def` keyword
+```python
+def function_name():
+	# indented block
+	...
+	return <value>
+```
+![how functions are defined](assets/Pasted%20image%2020250116114922.png)
+- function body contains valid Python code
+- this creates a function object
+- the function object is associated with the symbol `function_name`
+	- (in the same way `a = 10` associates the integer object `10` with the symbol `a`)
+
+> If you don't explicitly specify a `return` value in your function, Python will automatically return `None`
+
+- functions are more useful when we pass values to them
+	- `len(my_iter)`
+		- here, we pass an argument `my_iter` to the `len()` function
+	- every time we call the `len` function we can pass a different value
+		- the function body (implementation) of the `len` function start running
+			- it's aware of the value that was passed to it
+- same with custom functions
+	- need to specify the *parameters*, by name, that will be used when we *call* it
+```python
+def add(a, b):
+	return a + b
+
+add(2, 3) # returns 5
+add(10, 1) # returns 11
+```
+- when we call `add(2, 3)`, how does Python assign `2` to the symbol `a`, and `3` to `b`?
+	- it does this by *position*
+![positional arguments in python functions](assets/Pasted%20image%2020250116120859.png)
+- *positional arguments*
+#### Namespaces
+- when a function is called *it knows nothing about how it was called before*
+- every time a function is called 
+	- an empty dictionary is created
+	- populated with any arguments passed in
+		- key = param name, value = argument
+		- nothing else
+	- then the function code runs
+	- this dictionary is called the (local) *namespace*
+		- after the function returns the dictionary is wiped out from memory
+		- consecutive calls to the same function are independent of each other
+[Learn more about local namespaces in functions](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35151032?start=642#notes).
+
+### Star Arguments
+
 
 
 
