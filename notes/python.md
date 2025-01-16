@@ -2389,7 +2389,7 @@ add(10, 1) # returns 11
 ```
 - when we call `add(2, 3)`, how does Python assign `2` to the symbol `a`, and `3` to `b`?
 	- it does this by *position*
-![positional arguments in python functions](assets/Pasted%20image%2020250116120859.png)
+![positional arguments in python function](assets/Pasted%20image%2020250116120859.png)
 - *positional arguments*
 
 > Although the parameters are defined as positional parameters, Python supports **calling** the function with **named** arguments as follows:
@@ -2424,7 +2424,7 @@ add(a=2, b=3) # returns  5
 [Learn more about local namespaces in functions](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35151032?start=642#notes).
 
 ### Star Arguments
-- saw how to specify positional parameters in a function
+- [saw](assets/Pasted%20image%2020250116120859.png) how to specify positional parameters in a function
 ```python
 def average(a, b, c, d):
 	return (a + b + c + d) / 4
@@ -2469,7 +2469,7 @@ average(1, 2, 3, 4, 5)
 	- there is nothing special about the name `args`
 	- we can use any valid name
 		- ultimately, use a meaningful name
-		- `args` is often too generic
+		- `args` is often too generic (but this is largely what python developers use out in the wild when specifying *variable positional arguments*)
 
 > You cannot specify *specific positional parameters* **after** a *starred parameter has been defined*. Meaning you cannot do this:
 ```python
@@ -2523,8 +2523,39 @@ def func(a, b=1, *args)
 ```
 
 ### Keyword-Only Arguments
+- we saw how positional parameters can be passed
+	- positionally
+	- as a *named* argument
+		- also called a *keyword* argument
+```python
+def func(a, b, c):
+	...
 
-
+func(1, 2, 3)
+# or ...
+func(c=3, b=2, a=1)
+```
+ - passing argument as a keyword argument is *optional*
+---
+- can also make passing an argument by name *mandatory*
+	- these are called *keyword-only* arguments
+- keyword-only parameters must come *after* all positional parameters
+	- `def func(a, b, c)`
+	- we want `c` to *always* be passed as a named argument
+	- somehow we have to tell Python that after `a` and `b` there are no more positional arguments
+	- one way is to use a `*` parameter
+		- `def func(a, b, *args, c)`
+		- since `*args` will scoop up every remaining positional argument
+			- `c` *must* be a keyword-only argument
+```python
+# calling the function above: `def func(a, b, *args, c)`
+func(10, 20, 30, c=100) # returns a=10, b=20, args=(30,), c=100
+func(10, 20, c=100) # returns a=10, b=20, args=(,), c=100
+```
+---
+- but this allows someone to pass in as many positional arguments as they want
+	- what if we don't want that?
+- we still have to tell Python that there are no more positional 
 
 
 
