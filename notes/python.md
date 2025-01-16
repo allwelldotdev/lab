@@ -2498,7 +2498,34 @@ func(10) # returns 10 'argument value'
 ```
 ![default values](assets/Pasted%20image%2020250116132425.png)
 - once you specify a positional argument with a default value
-	- all positional parameters after that *must* specify 
+	- all positional parameters after that *must* specify a default value too
+		- with the exception of a *starred* parameter
+	- why is that?
+```python
+def func(a=1, b):
+	pass
+
+func(10)
+```
+- is `10` supposed to go into `a`?
+	- in which case we're short one argument
+- or use default for `a` and assign `10` to `b`?
+- don't know! (this is problematic for Python to parse)
+---
+- so once we have default arguments we need to specify default for all parameters after it
+```python
+def func(a, b, c=1, d=2):
+	...
+```
+- but this is still ok:
+```python
+def func(a, b=1, *args)
+```
+
+### Keyword-Only Arguments
+
+
+
 
 
 
