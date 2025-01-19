@@ -2662,7 +2662,13 @@ f(10, 20) # 30
 	- but you *don't have* to use them
 - however, they do get used often, so you should be aware of them
 
-> 
+> The `replace()` function or rather method for `str` can iterate through a string of characters and replace the first argument character specified in the function parameter with the second. Like so: 
+```python
+s = "word1, word2. word3 word4 word4"
+
+s = s.replace(',', ' ') # replace('replace_first_arg', 'with_second_arg')
+s # 'word1  word2. word3 word4 word4'
+```
 
 ## Some Additional Functions
 
