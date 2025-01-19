@@ -2730,7 +2730,135 @@ t = (1, 10, 2, 9, 3, 8)
 sorted(t) # [1,2, 3, 8, 9, 10]
 sorted(t, reverse=True) # [10, 9, 8, 3, 2, 1]
 ```
+#### Sorting Strings
+- numbers have a natural sort order
+- strings also have a natural sort order in Python
+	- *lexicographic* order
+		- *dictionary* order, *alphabetical* order
+- **BEWARE** the characters `a` and `A` are not the same
+- Python assigns a numerical character code (the unicode character code) to every character in a string
+```python
+ord('A') # 65
+ord('Z') # 90
+ord('a') # 97
+ord('z') # 122
 
+# therefore, 'A' < 'Z' < 'a' < 'z'
+```
+- so, Python will use "alphabetical" sorting, but upper case letters will be sorted before their equivalent lower case versions
+- natural sort order of string is case sensitive
+```python
+sorted(['Boy', 'baby']) # ['Boy', 'baby'] - ascending sort
+```
+#### Sorting Other Types
+- we can "visually" sort other types of objects 
+	- list of *Persons*
+		- we can sort this list
+			- *by* name
+			- *by* age
+			- *by* profession
+- we always sort *by* some property of the objects we're sorting
+	- we'll come back to this in a later section
+#### `min` and `max`
+- closely related to sorting
+	- to find the *minimum* of a collection
+		- *sort* the collection (*by* something) in *ascending* order
+		- pick the *first* element
+	- to find the *maximum* of a collection
+		- *sort* the collection (*by* something) in *descending* order
+		- pick the *first* element
+	- (or you could sort in the other direction in both cases and pick the last element)
+```python
+min([1, 10, 2, 9, 8]) # 1
+max([1, 10, 2, 9, 8]) # 10
+min([]) # `ValueError` exception
+```
+- can specify a `default` value to return if the iterable is empty
+	- keyword-only argument
+```python
+min([], default=0) # 0
+```
+- can also use an arbitrary number of positional arguments instead
+```python
+min(1, 10, 2, 9, 3, 8) # 1
+max(1, 10, 2, 9, 3, 8) # 10
+```
+- we'll come back to `min` and `max` when we look at sorting again later...
+### `zip`
+- the `zip()` function is a very useful and often used function
+	- consider these lists that contain related information
+```python
+l1 = ['a', 'b', 'c', 'd', 'e', 'f']
+l2 = [97, 98, 99, 100, 101, 102]
+```
+- we want to create a list of tuples that contain the corresponding elements from `l1` and `l2` 
+- we could do this:
+```python
+combo = [(l1[i], l2[i]) for i in range(len(l1))]
+combo # [
+#			('a', 97)
+#			('b', 98)
+#			('c', 99)
+#			('d', 100)
+#			('e', 101)
+#			('f', 102)
+#       ]
+```
+- but, we may have an issue if two lists are not of the same length
+	- have to stop at the shortest of the two lengths
+```python
+l1 = ['a', 'b', 'c', 'd', 'e']
+l2 = [97, 98, 99]
 
+combo = [(li[i], l2[i]) for i in range(min(len(l1), len(l2)))]
+combo # [
+	#       ('a', 97)
+	#       ('b', 98)
+	#       ('c', 99)
+#       ]
+```
+- that's what the `zip()` function does!
+```python
+l1 = ['a', 'b', 'c', 'd', 'e']
+l2 = [97, 98, 99]
+
+combo = zip(l1, l2)
+```
+- **BEWARE** `zip()` returns an *iterator*
+	- remember those?
+	- can only iterate through them once
+```python
+list(combo) # [
+		#       ('a', 97)
+		#       ('b', 98)
+		#       ('c', 99)
+#             ]
+list(combo) # []
+```
+---
+- if you want to iterate multiple times over the same zipped collection
+	- store it in a list
+```python
+combo = list(zip(li, l2))
+```
+- often don't need to do that (why?):
+	- `zip()` does not actually create anything other than an iterator
+	- no physical space has been used for the tuples
+	- iterating over `zip()` result, just iterates over the iterables simultaneously
+- costs almost nothing to call `zip(l1, l2)` multiple times
+---
+- zip is extensible
+	- not limited to two iterables
+	- any number of iterables (positional args)
+```python
+l1 = [1, 2, 3]
+l2 = [1, 2, 3, 4, 5]
+l3 = [1, 2, 3, 4, 5, 6, 7]
+
+zip(l1, l2, l3) # (1, 1, 1)
+				# (2, 2, 2)
+				# (3, 3, 3)
+```
+- always returns an *iterator* that produces *tuples*
 
 
