@@ -2671,6 +2671,7 @@ s # 'word1  word2. word3 word4 word4'
 ```
 
 ## Some Additional Functions
+### `round`
 
 
 
