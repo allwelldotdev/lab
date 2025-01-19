@@ -2672,8 +2672,64 @@ s # 'word1  word2. word3 word4 word4'
 
 ## Some Additional Functions
 ### `round`
+- `round()` is a built-in function that can be used to round floats
+	- uses *banker's rounding*
+		- also called *round half to even*
+		- rounds away from zero
+			- `1.8` → `2`
+			- `-1.8` → `-2`
+		- ties round to closest even digit
+			- `1.5` → `2`
+			- `2.5` → `2`
+		- good choice to eliminate various *biases*
+- can also use `round()` to round to the closest multiple of $\frac{1}{10}$
+	- `round(value, exponent)`
+	- `exponent` is used to specify what power of $\frac{1}{10}$ to round to
+- let's look at it mathematically first (i.e. without worrying about float representations)
+	- `round(x, 1)` → rounds to the nearest `0.1` $10^{-1}$
+	- `round(x, 2)` → rounds to the nearest `0.01` $10^{-2}$
+	- `round(x, -1)` → rounds to the nearest `10` $10^{1}$
+	- `round(x, -2)` → rounds to the nearest `100` $10^{2}$
+- not just rounding things *after* the decimal point but also *before* the decimal point
+![rounding to closest multiple of...](assets/Pasted%20image%2020250119154947.png)
+#### Rounding Ties in Floats
+- technically rounds to closest number that ends with an even digit
+```python
+round(0.125, 2) # 0.12
+```
+- so why this?
+```python
+round(0.325, 2) # 0.33, why not 0.32?
+```
+- remember floats do not have (in general) an exact representation!
+```python
+0.325 # 0.325000000000000011102230246252
+```
+- so this is **not** a tie!
 
+> By default, `round()` will round to the closest integer (using banker's rounding).
 
+> Remember, `format(0.325, '.20f')` shows you the exact representation of the float `0.325` in Python.
+
+### `sorted`, `min`, `max`
+#### Sorting Numbers
+- numbers have a *natural* sort order
+- they can be sorted *ascending* or *descending* by that *sort order*
+- `sorted` is the built-in function that can be used to sort a collection of numbers
+	- single positional argument: an *iterable* containing the numbers
+	- by default, it sorts in *ascending* order
+	- keyword-only argument to `reverse` the sort order
+		- default is `False` → sorts *ascending*
+		- specify `reverse=True` → sorts *descending*
+	- always returns a new `list`
+		- original iterable is *not mutated*
+For example:
+```python
+t = (1, 10, 2, 9, 3, 8)
+
+sorted(t) # [1,2, 3, 8, 9, 10]
+sorted(t, reverse=True) # [10, 9, 8, 3, 2, 1]
+```
 
 
 
