@@ -1452,7 +1452,7 @@ Dictionaries are one of the most important data structures in Python
 		- lookup *speed is not affected by size* of dictionary
 
 **IMPORTANT THINGS TO NOTE**
-- keys must be *hashable* (hence the terms hash map)
+- keys must be *hashable* (hence the terms 'hash map')
 	- `strings` are hashable
 	- `numerics` are hashable
 	- `tuples` may be hashable (if all the elements are themselves hashable)
@@ -2849,7 +2849,7 @@ combo = list(zip(li, l2))
 ---
 - zip is extensible
 	- not limited to two iterables
-	- any number of iterables (positional args)
+	- any number of iterables (as positional args)
 ```python
 l1 = [1, 2, 3]
 l2 = [1, 2, 3, 4, 5]
@@ -2860,5 +2860,19 @@ zip(l1, l2, l3) # (1, 1, 1)
 				# (3, 3, 3)
 ```
 - always returns an *iterator* that produces *tuples*
+
+## Higher Order Functions
+
+
+### Passing and Returning Functions
+
+
+### `map`
+
+
+### Closures
+
+
+## Sorting and Filtering
 
 
