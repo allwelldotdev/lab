@@ -2907,9 +2907,76 @@ f(2, 3) # 5
 - still a silly example but we'll see more real examples soon.
 
 ### `map`
+- the `map()` function calls a specified function for every element of some iterable
+- very similar to doing something like this:
+```python
+def my_map(func, iterable):
+	result = [func(element) for element in iterable]
+	return result
+```
+- here we are creating a `list` that contains the function `func` applied to every element of `iterable`
+	- but it creates a `list`
+	- can take a lot of space if iterable is large
+	- especially wasteful if we don't iterate over all the values
 
+- `map()` returns an iterator
+```python
+iterator = map(func, iterable)
+```
+- as we iterate over that iterator:
+	- Python moves to the next item in `iterable`
+	- calls `func(element)`
+	- returns the result 
+		- less wasted space
+		- saves computations if we don't iterate over the whole list
+- equivalently we could also just use a *generator expression* 
+```python
+(func(el) for el in iterable)
+```
+
+> It's important to understand that iterators/generators are far more efficient than building a list with comprehension.
 
 ### Closures
+- formerly, we saw that function definitions can be *nested* within another function
+```python
+def outer():
+	def inner():
+		...
+```
+- and we saw that we can return the inner function from the outer function
+```python
+def outer():
+	def inner():
+		...
+	return inner
+```
+- but we can create variables from the outer function also, or pass arguments when we call it
+```python
+def outer(a, b):
+	c = 100
+	def inner():
+		...
+	return inner
+```
+- `inner` can "see" those variables 
+	- it even retains these values when it is returned
+	- the inner function can "capture" those variables
+		- this is called *closure*
+```python
+def outer(a):
+	def inner():
+		return a * 10
+	return inner
+
+f = outer(2)
+
+f() # returns 20
+```
+- `f` is now the inner function that *closes* over `a` *with a value of* `2`
+	- `a` is called a *free variable* of the closure `f`
+- we can call `f`
+	- `f()` → `20`
+
 
 
 ## Sorting and Filtering
