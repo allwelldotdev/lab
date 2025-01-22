@@ -2976,8 +2976,49 @@ f() # returns 20
 	- `a` is called a *free variable* of the closure `f`
 - we can call `f`
 	- `f()` → `20`
+---
+- but there are some *rules*!
+	- you can always "*read*" a variable from the outer scope
+![closure](assets/Pasted%20image%2020250122150001.png)
+- outer
+	- `{'c': 100, 'inner': <function>}`
+- inner
+	- *closure* `inner`, with `c=100`
+---
+- but things change if we *set* that symbol to a value in the *inner* scope
+![closure - inner and outer scope](assets/Pasted%20image%2020250122150253.png)
+- outer
+	- `{'c': 100, 'inner': <function>}`
+- inner
+	- `{'c': 20}`
+---
+Example:
+```python
+def power(n):
+	def inner(x):
+		return x ** n
+	return inner
+squares = power(2)
+squares(3) # 9
+```
+- call `power(2)`
+	- `power` runs with `n = 2`
+	- `inner` is a function that "captures" `n = 2` → a *closure*
+	- the closure is returned
+- `squares` is the closure: function `inner` with `n=2` that takes one argument (`x`)
+- we can re-use `power` multiple times:
+```python
+def power(n):
+	def inner(x):
+		return x ** n
+	return inner
 
+squares = power(2) # [inner with n = 2]
+cubes = power(2) # [inner with n = 3]
 
+squares(3) # 9
+cubes(3) # 27
+```
 
 ## Sorting and Filtering
 
