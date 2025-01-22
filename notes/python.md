@@ -2862,10 +2862,49 @@ zip(l1, l2, l3) # (1, 1, 1)
 - always returns an *iterator* that produces *tuples*
 
 ## Higher Order Functions
-
+- in Python any object can:
+	- be *passed to* a function as an argument (or a callable in general)
+	- be *returned from* a function (or callable in general)
+- functions are *objects*
+- functions can be *passed to* and or *returned from* functions
+- these are called *higher order functions*
+	- it's a math concept too - often referred to as operators or functionals
+		- (functions that do not allow passing a function to or returning a function are called first order functions)
+- amongst other things:
+	- a function definition can itself contain another function definition 
+		- and can return it
+	- this means we can call a function that builds another function and runs it, or even returns it
+	- what becomes interesting is that variables in the outer function become available to the inner function
 
 ### Passing and Returning Functions
+- function arguments can be functions
+	- the object is passed, not called
+		- so don't use `()` to pass a function, that would pass the result of the function!
+![passing and returning functions](assets/Pasted%20image%2020250122134328.png)
+#### Nested Functions
+- function bodies can contain any valid Python code
+	- including defining functions
+![nested functions](assets/Pasted%20image%2020250122134459.png)
+#### Returning Functions
+- a function can also return a function
+![returning functions](assets/Pasted%20image%2020250122134639.png)
+- silly example
+- that said, often we return a nested function
+```python
+def generate_func(name):
+	def add(a, b):
+		return a + b
+	def mult(a, b):
+		return a * b
+	if name == 'sum':
+		return add
+	else:
+		return mult
 
+f = generate_func('sum')
+f(2, 3) # 5
+```
+- still a silly example but we'll see more real examples soon.
 
 ### `map`
 
