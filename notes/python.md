@@ -3102,5 +3102,90 @@ data = [3, 1, -6, -2, -4, -5]
 ```python
 # [-6, -4, -2, 1, 3, 5]
 ```
-- 
+- sort based on absolute value
+```python
+# [1, -2, 3, -4, 5, -6]
+```
+- sort based on the second digit of the square root of the absolute value
+	- maybe something more practical
+		- sort a collection of objects (symbol, open, high, low, close)
+			- by symbol
+			- by open
+			- by high - low
+---
+- how do we sort by a different criteria
+- how do we sort arbitrary objects that may not have a natural sort order
+- approach is similar to how filter worked 
+	- iterable
+	- to each element in iterable, assign a value that is used to sort
+- just like `filter` used a predicate function to calculate `True`/`False` for each element
+---
+- `sorted` can take a `key` function as a *named* argument
+	- `key` function returns a value for each element
+	- those values have a natural sort order
+	- usually numbers, but does not have to be
+```python
+data = [3, 1, -6, -2, -4, 5]
+
+def sort_key(x):
+	return abs(x)
+
+sorted(data, key=sort_key)
+sorted(data, key=lambda x: abs(x))
+sorted(data, key=abs)
+```
+---
+- the main point is that `key` is just a *function* that returns a value for each element of the iterable
+- `sorted()` then uses that value to sort the items in the iterable
+```python
+data = {'a': 300, 'b': 100, 'c': 200}
+```
+- sort the keys of the dictionary based on the corresponding value
+	- *key_func(dict_key)* → *corresponding value*
+```python
+sorted(data.keys(), key=lambda k: data[k]) # ['b', 'c', 'a']
+sorted(data.keys(), key=lambda k: data[k], reverse=True) # ['a', 'c', 'b']
+```
+
+> We define a **key** function that, for each element of an iterable, calculates some value. The sort can be be made based on that **key** function's return value for each element.
+
+> The data below was sorted by absolute value.
+> Something to notice in the result is that both `-6` and `6` have the same key value (`6`) - so which one comes first in the sorted elements? That will depend on the relative positioning of those original elements in the iterable, and since `-6` occurred before `6` in the original `data`, we end up with the relative positioning in the sorted list.
+> Not all sorts behave this way - those that do, and Python's `sorted` sort algorithm does, are called **stable sorts**.
+```python
+data = [-10, -6, 0, 3, 6]
+
+def key_func(x):
+    return abs(x)
+
+sorted(data) # [-10, -6, 0, 3, 6]
+
+sorted(data, key=key_func) # [0, 3, -6, 6, -10]
+```
+
+### `min` and `max`
+- previously we saw that to get the minimum of an iterable
+	- sort iterable from low to high
+	- take first element
+- similarly with maximums
+- but we just saw that sorting always uses an associated key
+	- so when we talk of `min` and `max`
+	- we really have the same thing - a *sort key* is used
+```python
+min(iterable, key=<func>)
+max(iterable, key=<func>)
+
+data = [-1, 2, -3, 4, -5]
+
+min(data) # -5
+max(data) # 4
+```
+- but this assumes a natural sort order
+	- i.e. key func is an identity function - returns the iterable value as is
+- let's say we want the sort to be based on the absolute value 
+```python
+min(data, key=abs) # -1
+max(data, key=abs) # -5
+```
+
 
