@@ -2715,7 +2715,7 @@ round(0.325, 2) # 0.33, why not 0.32?
 #### Sorting Numbers
 - numbers have a *natural* sort order
 - they can be sorted *ascending* or *descending* by that *sort order*
-- `sorted` is the built-in function that can be used to sort a collection of numbers
+- `sorted` is the built-in function that can be used to sort a collection of numbers^sorted
 	- single positional argument: an *iterable* containing the numbers
 	- by default, it sorts in *ascending* order
 	- keyword-only argument to `reverse` the sort order
@@ -2723,7 +2723,7 @@ round(0.325, 2) # 0.33, why not 0.32?
 		- specify `reverse=True` → sorts *descending*
 	- always returns a new `list`
 		- original iterable is *not mutated*
-For example:
+For example: ^a8d2f3
 ```python
 t = (1, 10, 2, 9, 3, 8)
 
@@ -3021,5 +3021,68 @@ cubes(3) # 27
 ```
 
 ## Sorting and Filtering
+### Filtering
+- *filtering* is the selection of a subset of items based on whether some condition is true or not
+- given a list of numbers from 1 to 100, filter this list to contain even numbers only
+- can think of it this way:
+![filtering](assets/Pasted%20image%2020250124184223.png)
+- apply a function (`is_even`) to every item in the list
+	- only keep items for which function returns `True`
+#### Predicate Function
+- a *predicate function* is simply a function or one or more arguments that returns `True` or `False`
+- for filtering in general:
+	- given an *iterable* and *predicate function*
+	- only keep the items for which the predicate function evaluates to `True`
+```python
+# for example: imagine we have this list below
+l = [1, 2, -5, 6, -1, 0] # iterable
 
+# predicate function
+def is_positive(x):
+	return x > 0
+
+# filter
+l = [1, 2, -5, 6, -1, 0]
+pred = is_positive
+# output : [1, 2, 6]
+```
+---
+- python has a `filter` function that works exactly that way 
+```python
+filter(pred, iterable)
+```
+See examples:
+```python
+data = [1, 2, 3, -1, -2, 0]
+
+def is_positive(x):
+	return x > 0
+
+filter(is_positive, data) # [1, 2, 3]
+
+def is_even(x):
+	return x % 2 == 0
+
+filter(is_even, data) # [2, -2, 0]
+```
+- `filter(is_positive, data)`
+	- lazy *iterator*
+	- can only iterate through this once
+---
+- can also use a predicate function created via a lambda
+```python
+is_positive = lambda x: x > 0
+filter(is_positive, data)
+```
+- and often, directly inline with the call to `filter`:
+```python
+filter(lambda x: x > 0, data)
+```
+
+> Functions that return `True` or `False` based on one or more arguments, are called **predicate** functions.
+
+### Sorting
+- we've looked at the `sorted` function [before](#^a8d2f3)
+
+- 
 
