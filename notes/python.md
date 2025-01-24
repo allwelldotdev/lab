@@ -2715,7 +2715,7 @@ round(0.325, 2) # 0.33, why not 0.32?
 #### Sorting Numbers
 - numbers have a *natural* sort order
 - they can be sorted *ascending* or *descending* by that *sort order*
-- `sorted` is the built-in function that can be used to sort a collection of numbers^sorted
+- `sorted` is the built-in function that can be used to sort a collection of numbers
 	- single positional argument: an *iterable* containing the numbers
 	- by default, it sorts in *ascending* order
 	- keyword-only argument to `reverse` the sort order
@@ -3083,6 +3083,24 @@ filter(lambda x: x > 0, data)
 
 ### Sorting
 - we've looked at the `sorted` function [before](#^a8d2f3)
-
+	- given an *iterable*
+		- return a `list`, that has been *sorted*
+			- but *by what*?
+```python
+sorted([10, 9, 3, 1, 2, 8]) # [1, 2, 3, 8, 9, 10]
+```
+- sorting numbers is very intuitive
+	- numbers have a natural sort order, and we can sort the elements based on their values
+- sorting strings was a bit more complicated
+	- assign an integer value to each character, and use that to sort strings
+---
+- we can sort the *same* data in *different* ways
+```python
+data = [3, 1, -6, -2, -4, -5]
+```
+- sort based on value
+```python
+# [-6, -4, -2, 1, 3, 5]
+```
 - 
 
