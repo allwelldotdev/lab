@@ -3374,7 +3374,66 @@ logger.debug('debug message') # this calls the logging object on the 'debug' log
 # to learn more about the logger & logging system in Python standard library, check out the Python docs
 ```
 
+> Decorators are very handy for adding pre and post function-call code that is reusable across multiple functions in a way that is completely transparent to the caller of the function.
+
 ### LRU Cache
+- this is a really interesting application of decorators
+- it solves the following problem
+	- you have some function that gets called often
+		- the *same* set of *arguments* are used *often*
+		- the function is *deterministic*
+			- calls with the same arguments should produce the same result
+		- re-calculating the function is fairly *costly*
+- we could use a *caching* mechanism
+	- *first time* a set of arguments is encountered, calculate result
+		- store result in a *cache*
+	- *subsequent* calls with *same* arguments, recovers result from *cache*
+---
+- basic idea is this:
+```python
+cache = {}
+def func(a, b, c):
+	key = (a, b, c)
+	if key in cache:
+		return cache[key]
+	# calculations here
+	cache[key] = result # add result to cache
+	return result
+```
+- first time we call `func` with `func(1, 2, 3)`
+	- result is calculated
+	- result is inserted into `cache` dictionary using the key `(1, 2, 3)`
+- next time `func(1, 2, 3)` is called, result is returned directly from *cache* dictionary 
+- we'll see in code, how we can try doing this ourselves using decorators
+---
+- Python has such a decorator - the `lru_cache` decorator
+	- LRU - Least Recently Used
+- caches should not grow indefinitely
+	- so keep the `n` most recent
+- works well when most recent calls are good predictors of upcoming calls
+- can specify the cache size we want
+	- `maxsize` positional argument
+		- `None` means unbounded (this produces an unbounded cache which using more and more memory, the more the cache needs for storage)
+		- otherwise specify an `int` to set cache `maxsize`
+---
+- this is the way it works:
+```python
+from functools import lru_cache
+
+@lru_cache(maxsize=20)
+def func(a, b, c):
+	...
+```
+- uses a decorator
+	- this decorator can also take arguments
+- there is a restriction
+	- the arguments passed to the function must be *hashable* values
+		- that's because they are used as a key in the cache dictionary
+
+## Text Files
+
+
+
 
 
 
