@@ -3225,10 +3225,156 @@ max(data, key=abs) # -5
 - when we call `fun1`, `fun2`, etc
 ![why are decorators useful 2?](assets/Pasted%20image%2020250128114451.png)
 ### Decorators
+- recall nested functions
+```python
+def outer():
+	def inner():
+		...
+	return inner
+```
+- calling `outer()` --> returns the function `inner`
+```python
+f = outer()
+f() # this called `inner` returned by `outer` 
+```
+---
+- using closures, we can do this:
+```python
+def outer(fn):
+	def inner():
+		print(f'Calling {fn}...')
+		result = fn()
+		return result
+	return inner
 
+def hello():
+	return 'Hello!'
 
+f = outer(hello) # `inner` function is created
+				 # it's a closure with `fn` pointing to `hello`
 
+f() # calls `inner`, with `fn` pointing to `hello`
+	# this calls `hello()`
+	# and returns the result of the call - 'Hello!'
+```
+- so `outer` can *create* and *return* a function that will execute whatever function is passed as an argument to `outer`
+```python
+f = outer(fun1) # f() --> will call `fun1` (and maybe do some extra things)
+f = outer(fun2) # f() --> will call `fun2` (and maybe do some extra things)
+f = outer(fun3) # f() --> will call `fun3` (and maybe do some extra things)
+```
+- but we also want to be able to pass *arguments* to `fun1`, `fun2`, `fun3`
+	- so pass them to `inner` and use those args to call `fn`
+```python
+def outer(fn):
+	def inner(*args, **kwargs):
+		print(f'Calling {fn}...')
+		result = fn(*args, **kwargs)
+		return result
+	return inner
+```
+- can think of this as a wrapper for `fn`
+	- we call `outer(fn)` to create a *new function* that wraps `fn`
+		- we can *call* that *new function* with *arguments*
+			- it does it's *own thing* (like `print` for example)
+			- but it also *executes* `fn`, with whatever arguments we pass in
+				- and *returns* the result of the call
+```python
+def log(fn):
+	def inner(*args, **kwargs):
+		print(f'Calling {fn}...')
+		result = fn(*args, **kwargs)
+		return result
+	return inner
+```
+- we have a very simple logger here `log(fn)`
+- suppose we have some functions
+```python
+def add(x, y):
+	return x + y
 
+def greet(name):
+	return f'Hello {name}!'
+```
+- we can create some functions that will perform the same task and also run the logging code
+```python
+add_logged = log(add)
+greet_logged = log(greet)
+```
+---
+- so now, instead of calling `add`
+	- call `add_logged`
+		- if we need to change logging format
+		- do it in just one place!
+	- but we must change all calls to `add` to now be `add_logged`
+		- yikes!
+- remember that Python is a dynamic language
+	- we can re-assign any object to any symbol
+- instead of: `add_logged = log(add)`
+	- how about: `add = log(add)`
+	- the symbol `add` now points to the *new* function (not the original `add`)
+		- which will call the *original* function object
+---
+- that's the basic decorator pattern
+```python
+def wrapper(func):
+	def inner(*args, **kwargs):
+		# some code here ...
+		result = func(*args, **kwargs)
+		# some code here ...
+		return result
+	return inner
+
+def func(a, b):
+	...
+
+func = wrapper(func)
+```
+- `wrapper` is called a *decorator*
+---
+- this is so common
+```python
+def func(a, b):
+	...
+
+func = wrapper(func)
+```
+- there is a shorthand notation!
+```python
+@wrapper
+def func(a, b):
+	...
+```
+- exactly same as above
+```python
+def func(a, b):
+	...
+
+func = wrapper(func)
+```
+
+> [Learn more](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35151144?start=650#notes) about Python's logging system by importing the logging package, like so:
+> `import logging`
+> 
+> To configure the logger/logging system per application, do this:
+```python
+import logging
+
+logging.basicConfig(
+					format='%(asctime)s %(levelname)s: %(message)s',
+					level=logging.DEBUG
+)
+
+# after configuring the logging system for your application...
+
+logger = logging.getLogger('Custom Log') # this attaches a logging object to the `logger` symbol
+
+logger.debug('debug message') # this calls the logging object on the 'debug' log level with the message "debug message"
+
+# to learn more about the logger & logging system in Python standard library, check out the Python docs
+```
+
+### LRU Cache
 
 
 
