@@ -3442,6 +3442,8 @@ def fib(n):
     return fib(n-1) + fib(n-2)
 ```
 
+> The LRU cache + Fibonacci algorithm performance and memory relationship is the perfect example of how, as often is the case, we need to balance performace 
+
 ## Text Files
 
 
