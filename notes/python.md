@@ -3430,6 +3430,18 @@ def func(a, b, c):
 	- the arguments passed to the function must be *hashable* values
 		- that's because they are used as a key in the cache dictionary
 
+> The term "**memorization**", which is not a spelling typo but a real term in computing is a specialized computing technique that involves storing the results of expensive function calls and reusing them when the same inputs occur again.
+> 
+> This is what is achieved in Python through the use of the **LRU Cache**.
+
+> When a function calls itself, it's known as a **recursive function**. An example of a recursive function is the Fibonacci algorithm. Recursive functions are used to implement certain algorithms like Fibonacci, factorials, etc. Below is the Fibonacci algorithm:
+```python
+def fib(n):
+    if n <= 1:
+        return n
+    return fib(n-1) + fib(n-2)
+```
+
 ## Text Files
 
 
