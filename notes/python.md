@@ -1957,7 +1957,7 @@ print(freq) # freq = {
 				# 'd' = 1,
 			# }
 ```
-> The function we just executed in the previous example above is performed by a module in built-in Python library known as `collections`. We can call like so: `from collections import Counter`. [Learn more](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35150982?start=874#notes)
+> The function we just executed in the previous example above is performed by a module in built-in Python library known as `collections`. We can call the function like so: `from collections import Counter`. [Learn more](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35150982?start=874#notes)
 ## Exceptions
 #### What are exceptions?
 - exceptions are special events that happen when something out of the ordinary happens while our code is running
@@ -3189,6 +3189,44 @@ max(data, key=abs) # -5
 ```
 
 ## Decorators
+- decorators are a form of metaprogramming
+	- **metaprogramming** is a fancy way of saying we can modify how some piece of code runs by using another piece of code
+- they allows us to wrap some functionality around an already defined function
+	- without having to modify the code of the original function
+- leverages:
+	- closures
+	- functions are first class citizens (aka. higher order functions) 
+	- reassign any object to an existing symbol
+#### Why are decorators useful?
+- let's use an example to understand this
+- suppose we have a program with some functions called over and over again
+	- `fun1`, `fun2`, `fun3`, etc
+- every time one of those functions is called, we want to produce a *log*
+	- maybe just print to the console that the function was called
+- we could certainly put the "logging" functionality into each function (as seen below)
+![why are decorators useful](assets/Pasted%20image%2020250128113734.png)
+- repeating the same code multiple times
+- what if we want to include date/time the call was made
+	- go back and edit logging code inside each function
+	- 3 weeks later: add some timing to it too
+		- go back and edit logging code inside each function
+- does not work this way, WHY?
+	- *too much typing!*
+	- *error-prone*
+	- *easy to be inconsistent*
+---
+- instead we write the logging code *once*
+	- and "apply" it to each function we want to log
+- basically we want to build a second function that will:
+	- run some code
+	- execute the original function with the arguments that were passed in
+	- run some code
+	- return the result of the call
+- when we call `fun1`, `fun2`, etc
+![why are decorators useful 2?](assets/Pasted%20image%2020250128114451.png)
+### Decorators
+
+
 
 
 
