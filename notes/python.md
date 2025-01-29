@@ -3445,7 +3445,13 @@ def fib(n):
 > The LRU cache + Fibonacci algorithm performance and memory relationship is the perfect example of how, as often is the case, we need to balance performance with memory usage.
 
 ## Text Files
-
+- opening text files
+- read data from them
+- write data to them
+- remembering to close the files when we're done!
+	- a mechanism to make sure we never forget
+		- **context managers**
+### 
 
 
 
