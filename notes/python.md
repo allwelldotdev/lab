@@ -3451,7 +3451,72 @@ def fib(n):
 - remembering to close the files when we're done!
 	- a mechanism to make sure we never forget
 		- **context managers**
-### 
+#### What are Contexts and Context Managers?
+- this doesn't cover how to create one from scratch (although Python lets us do that)
+	- we'll use one already created
+- a *context* is an area of code that is *entered* and *exited*
+- it is *entered* by "calling" a *context manager* using a `with` statement 
+- it is *exited* when the `with` code block is exited
+- the context manager is responsible for...
+	- running some code on entry
+	- running some on exit
+![context manager](assets/Pasted%20image%2020250129195529.png)
+### Reading Text Files
+#### Opening Files
+- to read or write to a text file, we first need to *open* the file
+```python
+open(file_path) # where `file_path` is path to file you want to open
+				# can be absolute or relative to where the Python app is running
+```
+- need to tell Python *how* we want to interact with the file, the `mode` of operation
+```python
+open(file_path, mode) # `mode` has three values:
+					  # `r` : read-only (default)
+					  # `w` : write-only, create new file, or overwrite if it exists
+					  # `a` : write-only, create new file, or append if it exists
+```
+---
+- what is returned by `open()`?
+	- an object that has many methods and properties
+		- `readlines()`
+		- `closed` --> is file closed?
+		- `close()` --> this allows us to close the file after we're done with it
+	- but it's also an *iterator*
+		- provides iteration over the individual lines in the text file
+		- `next`
+			- `for` loop, etc.
+		- technically, we can reset the "play head" (but that would be learned in an advanced course)
+			- just think of it as an iterator
+#### Closing Files
+- always close a file after you're done with it
+	- releases the resource (not unlimited number of open files)
+	- writes are often buffered until the file is closed
+```python
+f = open('file_path', 'w')
+# write to file ...
+f.close()
+```
+---
+- but what happens if an exception occurs while the file is open?
+- use a `try...finally...` to always close the file, no matter what
+```python
+f = open('file_path', 'w')
+try:
+	# write to file ...
+finally:
+	f.close()
+```
+- that's one approach
+#### `open()` as a Context Manager
+- `open()` is also a context manager
+```python
+with open('file_path', 'w') as f:
+	# write to file ...
+```
+- as soon as the context exists, file is closed
+	- even if an unhandled exception occurs in context block
+
+### Writing Text Files
 
 
 
