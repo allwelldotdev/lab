@@ -3478,7 +3478,7 @@ open(file_path, mode) # `mode` has three values:
 ---
 - what is returned by `open()`?
 	- an object that has many methods and properties
-		- `readlines()` --> to read the file line by line where each line is a list item
+		- `readlines()` --> to read the file line by line where each line is a `list` item
 		- `closed` --> is file closed?
 		- `close()` --> this allows us to close the file after we're done with it
 	- but it's also an *iterator*
