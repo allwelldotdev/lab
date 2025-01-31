@@ -3551,6 +3551,19 @@ open('<file_path>', 'a')
 	- writes each string as iterable to file
 		- it does not add a `\n` character automatically after each string
 
+> When we use the `write()` method on the object returned from the `open()` function, the return value is the number of characters written to the file.
+```python
+f = open('test.csv', 'w')
+f.write('abc') # 3 : `3` is the return value of how many characters 'abc' were written into the file
+```
+
+> To create a newline, when using `write()` or `writelines()`, we have to specifically write a `\n` character.
+
+> When trying to append some data to an already written file, if the file does not have a trailing newline `\n` character on the last line, the new appended data will be joined to the last written data to the file. 
+> This is one reason why we usually include the `\n` character, even for the last line in our text file.
+
+## Modules & Imports
+
 
 
 
