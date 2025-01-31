@@ -3563,7 +3563,25 @@ f.write('abc') # 3 : `3` is the return value of how many characters 'abc' were w
 > This is one reason why we usually include the `\n` character, even for the last line in our text file.
 
 ## Modules & Imports
+What happens when amount of code becomes very *large*? (e.g. lots of functions)
+- sometimes our code needs to grow beyond a single file or a Jupyter notebook
+- need to *break up* code into *multiple* files
+	- each file can group similar or related functionality together
+	- code in one file (like a function) should be available to the other files
+- in Python these code files are called *modules*
+	- modules can be *nested* within other modules
+		- modules that contain other modules are called *packages*
+- creating packages is beyond the scope of this course
+- but we should know what they are and how to use existing ones
+### Built-Ins
+- Python has many *built-in* object types and functions
+	- `bool`, `int`, `float`, `str`, `list`, `tuple`, `dict`
+	- `print()`, `filter()`, `sorted()`, `zip()`, `len()`, etc
+- these are baked right into Python
+	- they're always available
+		- we don't have to do anything special to use them
 
+> Check out Python built-in library here: 
 
 
 
