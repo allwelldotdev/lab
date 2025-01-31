@@ -3474,6 +3474,7 @@ open(file_path, mode) # `mode` has three values:
 					  # `r` : read-only (default)
 					  # `w` : write-only, create new file, or overwrite if it exists
 					  # `a` : write-only, create new file, or append if it exists
+					  # `r+` : both read and write
 ```
 ---
 - what is returned by `open()`?
@@ -3481,6 +3482,10 @@ open(file_path, mode) # `mode` has three values:
 		- `readlines()` --> to read the file line by line where each line is a `list` item
 		- `closed` --> is file closed?
 		- `close()` --> this allows us to close the file after we're done with it
+		- `name` --> the name of the file
+		- `readable()` --> is the file readable?
+		- `writeable()` --> is the file writeable?
+		- `mode` --> what is the file 'open' mode? `r`, `w`, or `a` ?
 	- but it's also an *iterator*
 		- provides iteration over the individual lines in the text file
 		- `next`
@@ -3517,6 +3522,35 @@ with open('file_path', 'w') as f:
 	- even if an unhandled exception occurs in context block
 
 ### Writing Text Files
+- same principle as reading text files
+	- *open* file (in write mode)
+		- *write* to file
+	- *close* file
+		- especially *important* for writes, since changes may be lost otherwise
+- best to use a *context manager*
+#### Write modes
+- `w`
+```python
+open('<file_path>', 'w')
+```
+- *creates* file if it does *not exist*
+- *overwrites* (clears out) file if it *already exists*
+---
+- `a`
+```python
+open('<file_path>', 'a')
+```
+- *creates* file if it does *not exist*
+- *appends* to end of file if it *already exists*
+#### Writing Text to File
+- `f.write(<some string>)`
+	- writes specified to string
+		- it does not add a `\n` character automatically
+		- have to do that ourselves if we need it
+- `f.writelines(<iterable of strings>)`
+	- writes each string as iterable to file
+		- it does not add a `\n` character automatically after each string
+
 
 
 
