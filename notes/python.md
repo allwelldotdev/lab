@@ -3573,7 +3573,7 @@ What happens when amount of code becomes very *large*? (e.g. lots of functions)
 		- modules that contain other modules are called *packages*
 - creating packages is beyond the scope of this course
 - but we should know what they are and how to use existing ones
-### Built-Ins
+#### Built-Ins
 - Python has many *built-in* object types and functions
 	- `bool`, `int`, `float`, `str`, `list`, `tuple`, `dict`
 	- `print()`, `filter()`, `sorted()`, `zip()`, `len()`, etc
@@ -3581,7 +3581,121 @@ What happens when amount of code becomes very *large*? (e.g. lots of functions)
 	- they're always available
 		- we don't have to do anything special to use them
 
-> Check out Python built-in library here: 
+> Check out Python built-in library here: https://docs.python.org/3/library/functions.html
+
+#### Standard Library
+- Python has a lot of libraries (modules and packages) that come *standard* with base Python installation
+- we have to specifically tell Python we want to use them
+	- we "load" them using an `import` statement
+	- why not just load (import) everything always?
+		- there is a ton of libraries
+		- do you really want to load up thousands of libraries into memory for things you don't even need?
+		- other reasons too, which we'll see as we work with packages during the remainder of this course
+---
+- Python provides a huge selection of libraries (modules and packages) that cover things like:
+	- numerical and math
+		- math functions
+		- stats functions
+		- random functions
+		- Decimal objects (alternative to floats)
+	- date and time
+	- CSV files
+	- cryptography
+	- networking, internet and many, many more...
+
+> Check out Python standard library here: https://docs.python.org/3/library/index.html
+
+#### 3rd Party Libraries
+- sometimes the standard library is insufficient or too cumbersome
+	- standard library has to be as generic as possible
+	- it may provide the basic building blocks to do something
+	- but you may need to write a lot of functions/code to tie them together
+- many developers create libraries that leverage the standard library (or other 3rd party libraries), but provide a higher level, easier to use interface to more specialized functionality
+- sometimes 3rd party libraries have a very narrow and specific focus
+	- performance or advanced functionality might be one reason
+		- `NumPy`
+		- `SciPy`
+		- `QuantLib`
+		- `Pandas`
+		- `Matplotlib`
+		- `scikit-learn`
+---
+- we can *install* those libraries, and `import` them like any package
+- where do you find a list of available 3rd party libraries
+	- most exhaustive source is *PyPI* (*Py*thon *P*ackage *I*ndex) --> https://pypi.org
+	- they can be installed using `pip install` like we saw in the beginning
+	- more than 220,000 libraries
+---
+- how to find the "good" ones?
+	- read blogs, posts, books, web sites and see what other people are using
+	- does it have a good documentation?
+	- is it still actively developed?
+	- is it widely used?
+- but maybe your niche is extremely specific and very niche
+	- maybe something not so great is there that will work as a starting point
+But don't just look for a 3rd party library for everything you write!
+- if 3rd party library is full of bugs and unsupported, life will be painful!
+- write your own code - often it's far simpler!
+---
+- here, we only cover a few specialized 3rd party libraries
+- Official [Python docs](https://docs.python.org/3/index.html) and [library docs](https://docs.python.org/3/library/index.html) are your best source of information
+	- blog posts and similar online resources can be very helpful (unless they're just plain wrong!)
+	- [stackoverflow](https://stackoverflow.com)h is a fantastic resource for getting questions answered
+		- so is AI
+			- [Claude](https://claude.ai)
+			- [Perplexity](https://perplexity.ai)
+	- but at some point you'll need to look into the official docs
+
+### Basic Imports
+- Python has quite a few built-in functions and data types (classes) --> https://docs.python.org/3/library/functions.html
+	- built-ins are always available
+		- they are essentially "pre-loaded"
+		- but there's a lot more in Python's "standard library"
+			- way too much to load everything all the time
+			- even more so with 3rd party libraries
+			- so we need to load those as needed
+	- all this functionality is split up into *separate* modules or packages
+		- think of a module as a code file
+		- we then load just the modules we need
+#### Loading a Module
+- modules are just objects
+	- we need to "create" the object
+	- we need to assign a symbol (variable) to that object
+	- we can then use the variable to reference the module object
+		- which has properties, functions, other objects
+the `import` statement is used to both:
+- load the module (create the module object)
+- assign a symbol to that object
+
+Example:
+```python
+import math
+```
+- `math` is a module in the standard library for math related functionality
+- the `math` module has been loaded (from file) 
+- and variable (symbol) `math` is a reference to that module object
+- `math` contains many functions, such as `sqrt`
+- like with any object, we use *dot notation* to reach inside the object
+![modules and imports - dot notation](assets/Pasted%20image%2020250131153929.png)
+#### Aliasing
+```python
+import some_module
+```
+- loads `some_module`
+- creates a variable of the *same name* that references that module
+what if we wanted to make that module symbol something else ?
+```python
+import some_module as sm
+```
+- load `some_module`
+- creates a variable `sm` that references the `some_module` object
+
+### Import Variants
+
+
+
+
+
 
 
 
