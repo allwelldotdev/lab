@@ -3677,6 +3677,17 @@ import math
 - `math` contains many functions, such as `sqrt`
 - like with any object, we use *dot notation* to reach inside the object
 ![modules and imports - dot notation](assets/Pasted%20image%2020250131153929.png)
+
+> In general it is customary not to rename (alias) a module, unless there are reasons to do so - like trying to import two modules from different libraries that might be named the same.
+> 
+> As always there are exceptions to that rule, and you'll often see people import some of the standard libraries such as `numpy` using `np` as an alias, or `pandas` using `pd` as an alias.
+> 
+> These are pretty much widely known and accepted conventions, so that's OK. But otherwise, using a custom alias might make your code harder to read, so use wisely.
+> 
+> For example using `m` as an alias to `math` like I did earlier is probably a good example of what **not** to do!
+
+> One thing you will notice when you compare the Python standard library vs 3rd party libraries is that Python tends to keep modules/packages very flat - not a whole lot of nested modules.
+
 #### Aliasing
 ```python
 import some_module
@@ -3691,7 +3702,75 @@ import some_module as sm
 - creates a variable `sm` that references the `some_module` object
 
 ### Import Variants
+- so far we've seen two variants of the `import` statement
+	- `import some_module`
+	- `import some_module as alias`
+- if we want to use something inside the module we have to use the dot notation 
+	- `fractions.Fraction(1, 2)`
+	- `fractions.Fraction(1, 4)`
+- what if we just want to use `Fraction` inside `fractions`
+	- can we avoid using `fractions.Fraction` all the time?
+	- yes!
+---
+- we can import symbols from a module directly into the corresponding symbols in our code
+```python
+from fractions import Fraction
+```
+- the `fractions` module is *loaded*
+	- but the symbol `fractions` is NOT added to our local variables
+	- instead the `Fraction` symbol is added to our local variables
+		- references the `Fraction` property inside the `fractions` module
+```python
+f1 = Fraction(1, 2)
+```
+---
+- can do the same with any module
+```python
+from math import sqrt
+sqrt(2)
+```
+- what if we want more than one attribute from the module?
+```python
+from math import sqrt, pi, factorial
+```
+- `sqrt`, `pi`, `factorial` are now available as symbols in our local scope
+```python
+sqrt(2)
+2 * pi
+```
 
+> When we write:
+```python
+from math import sqrt
+```
+> the **entire** `math` module is **still** loaded into memory - it's just what variables are put into our namespace that change.
+
+## Dates and Times
+#### Fundamental Concepts
+- time zones and UTC
+- epoch times
+- times without dates
+- dates without times
+- dates with times
+- ISO 8601 Standard
+#### Coordinated Universal Time
+- *UTC*
+	- sometimes still referred to as *GMT* (Greenwich Mean Time)
+	- world standard
+	- no adjustment for daylight saving time
+	- easiest is to *always* use UTC *internally* in our programs
+		- *convert* incoming times to UTC
+		- work exclusively in UTC *internally*
+		- *display* to user using their preferred *time zone*
+![how datetime data is parsed is usually parsed in our program](assets/Pasted%20image%2020250202144449.png)
+#### Challenges with External Sources of Time Data
+- Python has special data types, for `time`, `date`, and `datetime`
+- *external* sources of time data usually given as *strings*
+	- it is a *visual* (string) *representation* of a date/time
+	- but what *format*?
+```python
+
+```
 
 
 
