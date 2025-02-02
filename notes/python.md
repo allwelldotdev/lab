@@ -3768,9 +3768,131 @@ from math import sqrt
 - *external* sources of time data usually given as *strings*
 	- it is a *visual* (string) *representation* of a date/time
 	- but what *format*?
-```python
+		- `3/1/2020 2:35:01 pm` --> is this *March 1*, or *January 3*?
+		- `March 1, 2020 14:35:01`
+		- `03-01-2020 02:35:01 PM`
+	- what *time zones*?
+		- may or may not be specified, using different "standards"
+		- how do we convert these to *UTC* based date/times in our apps?
+		- what formatting should we use?
+#### ISO Format
+- *ISO 8601* defines *standards* for string representations of dates and times
+![iso format standard](assets/Pasted%20image%2020250202145413.png)
+---
+why are time zones important?
+*May 1, 2020, 10:23:35am* in *Eastern Time*
+- daylight savings time in effect (*EDT*) --> `2020-05-01T10:23:35-04:00`
+*December 1, 2020, 10:23:35am* in *Eastern Time*
+- daylight savings time NOT in effect (*EST*) --> `2020-12-01T10:23:35-05:00`
+---
+- keeping track of all this in calculations is difficult!
+- convert to UTC first
+	- `2020-05-01T10:23:35-04:00` --> `2020-05-01T14:23:35Z`
+	- `2020-12-01T10:23:35-05:00` --> `2020-12-01T15:23:35Z`
+- then convert to whatever time zone for display purposes to user (if necessary)
+---
+- Python has a lot of functionality for calculations with dates and times
+	- to minimize introducing bugs, always use UTC based times
+	- but converting these "input" times to UTC is difficult!
+		- can be done using Python and the standard library
+		- much easier to leverage 3rd party libraries for this:
+			- `dateutil` - easier to deal with parsing datetime strings
+			- `pytz` - easier to deal with parsing time zones
+#### Epoch Time
+- we saw that dealing with date/times involves time zones (whether UTC or something else)
+- introduced by Unix as a way to define a datetime without using timezones
+	- start with a base datetime
+		- the *epoch*
+	- given a datetime, calculate it as the *difference* in seconds from the *epoch*
+	- also called Unix or POSIX time
+		- epoch is system dependent
+		- Usually: `January 1, 1970 00:00:00 UTC`
+			- `2020-05-01T10:23:35-04:00` --> `1588343015.0` (the datetime presented, the difference between the date to default epoch time (January 1, 1970) is the value in seconds - `1588343015.0` )
+			- but if ingesting datetime information that use epoch times, you need to know the epoch!
+#### The `time` Module
+- used for *time* manipulations
+	- mostly uses epoch times
+	- we won't use this much
+- but it also includes some useful functions
+	- `sleep`
+	- `perf_counter`
+#### The `datetime` Module
+- used for `date`(only), `time`(only), `datetime`(date with time) objects
+- can handle time zones
+- provides *formatting* and *parsing* capabilities
+- defines a `timedelta` data type (class)
+	- used to represent time *difference* between two date/time objects
 
+### The `time` Module
+#### `perf_counter`
+- `perf_counter` is used to measure *elapsed* time in (float) seconds
+	- from some *undefined* start (0) (usually when program starts running)
+	- always look at *difference* between calls to `perf_counter`
+	- uses a clock with highest available precision
+```python
+from time import pert_counter
+t1 = perf_counter()
+t2 = perf_counter()
+elapsed = t2 - t1
 ```
+#### `sleep`
+- `sleep(n)` is used to *pause* execution for (float) `n` seconds
+	- why would you want to slow your program down ??
+		- give time for something else to finish 
+			- usually some external resource 
+			- maybe a network connection is temporarily down
+				- retry connecting a few times but wait in-between retries
+#### Getting the *epoch*
+- Unix systems use *January 1, 1970, 00:00:00 (UTC)*
+```python
+time.gmtime(n)
+```
+- returns a time object (`struct_time`)
+- based on `n` seconds elapsed from *epoch*
+- has the following properties:
+	- `tm_year`
+	- `tm_mon`
+	- `tm_day`
+	- `tm_hour`
+	- `tm_min`
+	- `tm_sec`
+- ignores fractional seconds (if float)
+---
+- to find the `epoch` on your system
+```python
+time.gmtime(0) # returns :
+# struct_time(tm_year=1970, tm_mon=1, tm_day=1, tm_hour=0, tm_min=0, tm_sec=0, ...)
+```
+#### Getting the Current *epoch* Time
+```python
+time.time() # returns the current time (in seconds) since the epoch
+```
+- get UTC `time_struct` from that...
+```python
+time.gmtime(time.time())
+```
+#### Converting from `time_struct` to epoch Time
+- `gmtime()` converts an *epoch time* `n` to a `time_struct`
+- can also convert a `time_struct` back to an *epoch time*
+```python
+calendar.timegm(time_struct)
+```
+- `timegm` is the inverse of `gmtime`
+- it is located in the `calendar` module
+```python
+from calendar import timegm
+n = 1_000_000_000
+t = gmtime(n) # struct_time(tm_year=2001, tm_mon=9, ...)
+timegm(t) # 1_000_000_000
+```
+#### Formatting *epoch* time to human readable string
+- if we show someone an epoch time (a float), that does not mean much to them
+	- as humans we are used to certain formats for the date and time
+	- use the `strftime(format, time_struct)` function (*str*ing *f*ormat *time*)
+	- *format* is a *string* that contains special formatting directives
+- for example, 
+
+
 
 
 
