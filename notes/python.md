@@ -4106,6 +4106,84 @@ timedelta(
 	- returns the total number of seconds (fractional duration) in duration
 
 ### Naive and Aware Times
+- *aware* time
+	- time that has a time zone attached to it
+- *naive* time
+	- no time zone info
+- to simplify our coding life, we made two decisions:
+	- all times we create or work with will be:
+		- naive
+		- in UTC
+- the idea is that any datetime we ingest, immediately gets transformed into a native UTC datetime 
+- convert to aware non-UTC for display or output purposes only
+#### `timezone` Definition
+```python
+datetime.timezone
+```
+- class to *define* a time zone
+	- name (optional)
+	- UTC offset
+		- defined as a `timedelta` object
+- how is that offset defined exactly?
+- time zone offset defines the number of hours or minutes that should be *added to or subtracted from* the corresponding UTC time
+- if a time zone is 4 hours behind, then the offset is `-4 hours`
+```python
+tz_EDT = timezone(timedelta(hours=-4), 'EDT')
+```
+- pre-defined UTC time zone: `timezone.utc`
+#### Aware `datetime`
+how do we create aware datetimes? Using either of these two ways
+```python
+from datetime import datetime, timezone, timedelta
+
+d1 = datetime.fromisoformat('2020-05-15T13:30:00-05:00')
+```
+```python
+tz_EDT = timezone(timedelta(hours=-4), 'EDT')
+
+d2 = datetime(year=2020, month=5, day=13, hour=13, minute=30, second=0, tzinfo=tz_EDT)
+```
+#### Converting from One Time Zone to Another
+- if we have an aware `datetime`, we can easily *change* it to another *time zone*
+	- use the `.astimezone(target_tz)` method of the `datetime` object
+```python
+d1 = datetime.fromisoformat('2020-05-15T13:30:00-04:00')
+
+tz_CDT = timezone(timedelta(hours=-5), 'CDT')
+
+d1.astimezone(tz_CDT) # datetime(2020, 05, 15, 12, 30, 00, tzinfo=tz_CDT)
+d1.astimezone(timezone.utc) # datetime(2020, 05, 15, 17, 30, 00, tzinfo=timezone.utc))
+```
+- notice that the `datetime` objects remain *aware*
+#### Adding or Removing Time Zone
+- careful! Do not remove the time zone from a non-UTC timestamp!
+	- unless you know what you're doing and this is intentional
+- ok to remove from a UTC aware timestamp - since we assume everything is UTC
+- to make a UTC aware timestamp naive, just replace the `tzinfo` value with `None`
+- to add a time zone to a naive timestamp, replace `tzinfo` with appropriate `timezone`
+- use the `.replace()` method on `datetime`objects
+#### The `replace()` Method
+- if `dt` is some `datetime` object
+	- create a new `datetime` object with the exact same values:
+		- `dt_copy = dt.replace()`
+	- or replace one or more values while we do the copy
+		- `dt_copy = dt.replace(year=2021, hour=0)`
+	- in particular, we can do that with the `tzinfo` value
+		- `dt.replace(tzinfo=None)`
+		- `dt.replace(tzinfo=timezone.utc)`
+#### Daylight Savings Time
+- many places change their clock twice a year - daylight savings time
+	- *not everyone* does
+		- Most parts of Arizona do not, but some do!
+	- *not* everyone does it at the *same time* 
+	- *not* everyone changes by the *same amount* 
+	- when and how much has *changed over the years* for the same places
+- so, how do we convert a UTC datetime into some specific time zone?
+	- it must take all these things into account
+		- difficult!
+	- Olson Database (or IANA time zone database)
+		- https://en.wikipedia.org/wiki/Tz_database
+	- the `pytz` 3rd party library
 
 
 
