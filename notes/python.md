@@ -3890,7 +3890,13 @@ timegm(t) # 1_000_000_000
 	- as humans we are used to certain formats for the date and time
 	- use the `strftime(format, time_struct)` function (*str*ing *f*ormat *time*)
 	- *format* is a *string* that contains special formatting directives
-- for example, 
+- for example, suppose we have an epoch time: `1587253022` (which is actually `2020-04-18 23:37:02`) 
+	- we can format this time into *April 18, 2020* as follows:
+```python
+t_struct = gmtime(1587253022)
+strftime("%B, %d, %Y", gmtime(t_struct))
+```
+
 
 
 
