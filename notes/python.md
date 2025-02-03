@@ -3854,7 +3854,7 @@ time.gmtime(n)
 - has the following properties:
 	- `tm_year`
 	- `tm_mon`
-	- `tm_day`
+	- `tm_mday`
 	- `tm_hour`
 	- `tm_min`
 	- `tm_sec`
@@ -3863,7 +3863,7 @@ time.gmtime(n)
 - to find the `epoch` on your system
 ```python
 time.gmtime(0) # returns :
-# struct_time(tm_year=1970, tm_mon=1, tm_day=1, tm_hour=0, tm_min=0, tm_sec=0, ...)
+# struct_time(tm_year=1970, tm_mon=1, tm_mday=1, tm_hour=0, tm_min=0, tm_sec=0, ...)
 ```
 #### Getting the Current *epoch* Time
 ```python
@@ -3918,11 +3918,123 @@ See some below:
 `%p` --> AM or PM
 
 `%M` --> minute number
+
 `%S` --> second number
 
+`%z` --> time zone offset `+/-HH:MM`
+`%Z` --> time zone name
 
+---
+`%w` --> weekday number (Sunday=0)
+`%A` --> weekday full name
+`%a` --> weekday abbreviated name
 
+---
+for example:
+- epoch time `t = 1587253022` (2020-04-18T23:37:02)
+```python
+from time import strftime, gmtime
+t_struct = gmtime(t)
 
+strftime("%Y-%m-%dT%H:%M:%Sz", t_struct) # '2020-04-18T23:37:02z'
+strftime("Today is %A, %B, %d, %Y", t_struct) # 'Today is Saturday, April 18, 2020'
+strftime('Time: %I:%M %p %Z', t_struct) # 'Time: 11:37 PM UTC'
+```
+#### Parsing Date/Time Strings
+- this is the *reverse* of the formatting we just saw
+	- given a string such as `"04/18/2020 11:37:02 PM"`
+		- "convert" it to an epoch time 
+- we'll assume the time was given in UTC (since no indication was given)
+- also assume format is Month/Day/Year (not Day/Month/Year)
+	- in this case we can safely assume this, since there is no month 18
+	- not always that lucky!
+- we need to tell Python *what to expect* in the string, using same *directives* as before
+	- `time.strptime(date_string, format)` - (*str*ing *p*arse *time*)
+```python
+from time import strptime
+
+s = "04/18/2020 11:37:02 PM"
+
+strptime(s, "%m/%d/%Y %I:%M:%S %p") # returns :
+# time.struct_time(
+					# tm_year=2020,
+					# tm_mon=04,
+					# tm_mday=18,
+					# tm_hour=23,
+					# tm_min=37,
+					# tm_sec=2,
+					# tm_wday=5,
+					# tm_yday=109,
+					# tm_isdst=-1,
+#)
+```
+---
+- for every date/time formatting variant, we have to specify the `format` to parse it
+	- `4/18/20 23:45:34` --> "%m/%d/%y %H:%M:%S"
+	- `18/04/20 11:45:34 PM` --> "%d/%m/%y %I:%M:%S %p"
+	- `20/4/18 11:45:34 PM` --> "%y/%m/%d %I:%M:%S %p"
+- this can get difficult
+- especially if our various data sources use a *mixture* of formats
+- this is where 3rd party libraries, such as `dateutil` can help
+	- we'll come back to this later...
+
+> `gmtime` ignores the non-integer portion (fractional seconds) of the argument.
+> 
+> We can access individual fields of this `time_struct` structure, using either positional indexes, or the property names (this structure is something called a **named tuple** - a tuple of values, but where each element of the tuple can be accessed by name also).
+```python
+from time import gmtime, time
+current = gmtime(time())
+current[0], current.tm_year # 2025, 2025
+```
+
+> A list of all the supported formatting directives for dates and times here: https://docs.python.org/3/library/time.html#time.strftime
+> 
+> Some additional directives you can use, here: https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
+
+### The `datetime` Module
+- the `time` module is a low-level library
+	- good for working with *epoch times*
+		- but a bit cumbersome
+		- not a ton of functionality
+- instead use the `datetime` module
+	- isolates us from epoch times (used internally)
+	- provides handy data types (classes)
+		- `date`
+		- `time`
+		- `datetime`
+		- `timedelta`
+		- `timezone`
+#### `datetime.date`
+- `date` is a data type (class) for working with pure dates (no times)
+```python
+from datetime import date
+date(year, month, day)
+```
+(or import `datetime` module, and use *fully qualified* names)
+```python
+import datetime
+datetime.date(year, month, day)
+```
+- properties:
+	- `year`
+	- `month`
+	- `day`
+---
+- `date.today()`
+	- returns local date as a `date` object
+- `<date_obj>.toisoformat()`
+	- returns an ISO 8601 string for the `date` object
+- `date.fromisoformat("iso formatted date string")`
+	- parses and creates a `date` object from an ISO formatted date string
+#### `datetime.time`
+- `time` is a data type (class) used to work with pure times (no date)
+	- it can be time zone *naive* or *aware*
+- `time(hour, minute, second, microsecond, tzinfo`
+	- properties:
+		- `hour, minute, second, microsecond`
+		- `tzinfo` --> `None` for naive times
+	- `time.fromisoformat(s)`
+	- `<time_obj>.toiso`
 
 
 
