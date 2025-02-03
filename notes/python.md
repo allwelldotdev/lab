@@ -3762,6 +3762,7 @@ from math import sqrt
 		- *convert* incoming times to UTC
 		- work exclusively in UTC *internally*
 		- *display* to user using their preferred *time zone*
+
 ![how datetime data is parsed is usually parsed in our program](assets/Pasted%20image%2020250202144449.png)
 #### Challenges with External Sources of Time Data
 - Python has special data types, for `time`, `date`, and `datetime`
@@ -3782,6 +3783,7 @@ from math import sqrt
 why are time zones important?
 *May 1, 2020, 10:23:35am* in *Eastern Time*
 - daylight savings time in effect (*EDT*) --> `2020-05-01T10:23:35-04:00`
+
 *December 1, 2020, 10:23:35am* in *Eastern Time*
 - daylight savings time NOT in effect (*EST*) --> `2020-12-01T10:23:35-05:00`
 ---
@@ -3807,7 +3809,7 @@ why are time zones important?
 	- also called Unix or POSIX time
 		- epoch is system dependent
 		- Usually: `January 1, 1970 00:00:00 UTC`
-			- `2020-05-01T10:23:35-04:00` --> `1588343015.0` (the datetime presented, the difference between the date to default epoch time (January 1, 1970) is the value in seconds - `1588343015.0` )
+			- `2020-05-01T10:23:35-04:00` --> `1588343015.0` (the datetime presented: the difference between the date to default epoch time (January 1, 1970) is the value in seconds - `1588343015.0`)
 			- but if ingesting datetime information that use epoch times, you need to know the epoch!
 #### The `time` Module
 - used for *time* manipulations
@@ -3896,6 +3898,27 @@ timegm(t) # 1_000_000_000
 t_struct = gmtime(1587253022)
 strftime("%B, %d, %Y", gmtime(t_struct))
 ```
+---
+> here are a few more format directives: https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes
+
+See some below:
+
+`%Y` --> four digit year
+`%y` --> two digit year
+
+`%m` --> month number
+`%B` --> month full name
+`%b` --> month abbreviated name
+
+`%d` --> day of the month name
+
+---
+`%H` --> hour in 24-hour clock
+`%I` --> hour in 12-hour clock
+`%p` --> AM or PM
+
+`%M` --> minute number
+`%S` --> second number
 
 
 
