@@ -4186,7 +4186,42 @@ d1.astimezone(timezone.utc) # datetime(2020, 05, 15, 17, 30, 00, tzinfo=timezone
 	- the `pytz` 3rd party library (we'll come back to this later)
 
 ### Custom Representations
+- recall the `time` module
+	- `strftime()`
+		- format a time struct using formatting directives
+			- `strftime('Time: %I:%M %p %Z', t_struct)`
+	- `strptime()`
+		- parse a datetime into a struct using formatting directives
+			- `strptime(s, "%m/%d/%Y %I:%M:%S %p")`
+---
+- `strftime` is available for:
+	- `datetime.time`
+	- `datetime.date`
+	- `datetime.datetime`
+- `strptime` is available for:
+	- `datetime.datetime`
+- uses the *same* special formatting directives
 
+> The `strptime()` method in `datetime.datetime` object comes handy when we need to parse an ISO format that is not formatted in Python way. This is an example:
+> 
+> When we parse the `datetime` ISO format:
+```python
+datetime.fromisoformat('2020-05-15T22:30:00-05:00') # returns ...
+# datetime.datetime(2020, 5, 15, 22, 30, tzinfo=datetime.timezone(datetime.timedelta(days=-1, seconds=68400)))
+
+# that worked just fine, but recall that the `:` in the time zone offset is actually **optional** in the ISO 8601 specification
+```
+> That worked, so no problems. But when we parse a datetime in another valid ISO format that is not formatted for Python such as:
+```
+'2020-05-15T22:30:00-0500'
+
+as well as this:
+
+'2020-05-15T22:30:00-05'
+```
+> If we try to parse those examples, we'll get an `Invalid isoformat string` `ValueError` message. This is why the `strptime()` method in `datetime.datetime` is useful. That said, there are 3rd party libraries such as `dateutil` that help us handle this much better.
+
+## CSV Module
 
 
 
