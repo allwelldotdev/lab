@@ -4034,7 +4034,79 @@ datetime.date(year, month, day)
 		- `hour, minute, second, microsecond`
 		- `tzinfo` --> `None` for naive times
 	- `time.fromisoformat(s)`
-	- `<time_obj>.toiso`
+	- `<time_obj>.toisoformat()`
+#### `datetime.datetime`
+- class that supports *both* date and time
+```python
+from datetime import datetime
+datetime(year, month, day, hour, minute, second, microsecond, tzinfo)
+```
+- properties for `year`, `month`, ...
+- `datetime.dateime.fromisoformat(s)`
+- `<datetime_obj>.toisoformat()`
+- `datetime.datetime.utcnow()`
+	- returns *naive* local date/time in UTC
+
+>  As we work with dates and times in our program, everything is in UTC, we do not have to worry about time zones and daylight savings, and we only convert to some other time zone when we want to display a date/time to our users in their local time zone - and usually that's up to the UI to do this.
+>  
+>  The same idea goes for storing data (in a database, file, etc.) - we always store these dates in UTC (whether aware or naive will depend on your storage solution and particular circumstances).
+
+> To get date/time/datetime from the epoch time, we use: `datetime.date.fromtimestamp(time.time())`
+
+> We can also convert an ISO formatted day without resorting to parsing directives.
+```python
+datetime.date.fromisoformat('2020-12-31') # datetime.date(2020, 12, 31)
+```
+> We can do the reverse of that and produce an ISO formatted date string.
+```python
+dt = datetime.date(2020, 12, 1)
+dt.isoformat() # '2020-12-01'
+```
+
+### Date Arithmetic
+- date arithmetic mostly involves working with
+	- `date`, `time`, `datetime`
+- time *durations* (e.g. 1 day and 2 hours and 30 minutes and 15 seconds)
+- `datetime` module has a special class for durations
+	- `timedelta`
+	- subtracting one date/time from another results in a `timedelta`
+	- can add or subtract a `timedelta` from a date/time
+#### `datetime.timedelta`
+```python
+from datetime import timedelta
+timedelta(
+			days,
+			seconds, microseconds, milliseconds,
+			minutes,
+			hours,
+			weeks
+)
+```
+- arguments are optional and default to `0`
+- argument values are additive
+	- `timedelta(days=1, hours=1)`
+		- duration of 1 day and 1 hour
+		- 25 hours
+---
+- notice there is no *month* argument
+	- what does it mean to add a month to a date ???
+		- 31 days, 30 days, 29 days, 28 days ???
+```
+1/15/2020 + 1 month --> 2/15/2020 ?
+1/31/2020 + 1 month --> 2/31/2020 ??
+```
+---
+- most arguments in `timedelta()` are for *convenience*
+	- internally `timedelta`objects store the values in days, seconds, and microseconds
+- properties:
+	- `.days`
+	- `.seconds`
+	- `.microseconds`
+- `<timedelta_obj>.total_seconds()`
+	- returns the total number of seconds (fractional duration) in duration
+
+### Naive and Aware Times
+
 
 
 
