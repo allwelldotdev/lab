@@ -4022,7 +4022,7 @@ datetime.date(year, month, day)
 ---
 - `date.today()`
 	- returns local date as a `date` object
-- `<date_obj>.toisoformat()`
+- `<date_obj>.isoformat()`
 	- returns an ISO 8601 string for the `date` object
 - `date.fromisoformat("iso formatted date string")`
 	- parses and creates a `date` object from an ISO formatted date string
@@ -4034,7 +4034,7 @@ datetime.date(year, month, day)
 		- `hour, minute, second, microsecond`
 		- `tzinfo` --> `None` for naive times
 	- `time.fromisoformat(s)`
-	- `<time_obj>.toisoformat()`
+	- `<time_obj>.isoformat()`
 #### `datetime.datetime`
 - class that supports *both* date and time
 ```python
@@ -4043,7 +4043,7 @@ datetime(year, month, day, hour, minute, second, microsecond, tzinfo)
 ```
 - properties for `year`, `month`, ...
 - `datetime.dateime.fromisoformat(s)`
-- `<datetime_obj>.toisoformat()`
+- `<datetime_obj>.isoformat()` --> converting "to iso format"
 - `datetime.datetime.utcnow()`
 	- returns *naive* local date/time in UTC
 
