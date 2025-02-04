@@ -4338,7 +4338,51 @@ with open('actors.csv') as f:
 > Basically, different variants of CSV files will require possibly different settings.
 
 ### Dialects
+- previously, we saw that we can define all kinds of settings to specify the CSV format
+- works, but if we need to repeat the same settings often
+	- tedious typing the same code over and over again
+	- error prone - might forget or mis-type one of the settings
+- instead we can bundle up all the settings into a custom *dialect*
+	- basically just a way to package the settings once in our program
+	- and re-use elsewhere in the same program multiple times
+#### Listing Available Dialects
+- `csv` module comes with some pre-defined dialects
+	- `excel`
+	- `excel-tab` (for tab delimited values)
+- we can add our own to that list
+	- register a dialect with
+		- a *name* for the dialect
+		- *values* for `delimiter`, `quotechar`, etc.
+```python
+csv.register_dialect("<name>", delimiter='...', quotechar='...', ...)
+```
 
+> The dialect gets registered while your program is running. When you start your program and rerun your program, your dialect doesn't exist anymore. You have to recreate and register your dialect. 
+
+#### Using a Defined Dialect
+- we can specify a dialect instead of individual values for `csv.reader`
+```python
+csv.reader(f, dialect='excel')
+```
+- `excel` is the *default* for dialect
+	- same as `csv.reader(f)`
+- or we can specify our custom dialect we registered
+```python
+csv.reader(f, dialect='my-custom-dialect')
+```
+
+> We can list available `csv` dialects by running
+```python
+csv.list_dialects()
+```
+
+### More Examples Reading CSV Files
+
+
+### Writing CSV Files
+
+
+## Random Module
 
 
 
