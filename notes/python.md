@@ -4222,6 +4222,18 @@ as well as this:
 > If we try to parse those examples, we'll get an `Invalid isoformat string` `ValueError` message. This is why the `strptime()` method in `datetime.datetime` is useful. That said, there are 3rd party libraries such as `dateutil` that help us handle this much better.
 
 ## CSV Module
+- [earlier](#Reading%20Text%20Files) we saw how to read and write text files
+	- we even parsed some data from a simple CSV file
+- but CSV formats *vary*, so more complicated than that simple example
+	- often called CSV *dialects*
+- would require a lot of manual work on our part to deal with all these variants
+- `csv` module provides functionality to read and write a wide variety of CSV formats
+	- including tab delimited, pipe (`|`) delimited
+	- can deal with different line separators
+		- Unix and Windows line separators are different
+			- `\n` in Unix
+			- `\r\n` in Windows
+### Reading CSV Files
 
 
 
