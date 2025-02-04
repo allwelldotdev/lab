@@ -4309,7 +4309,34 @@ with open('some_file') as f:
 
 > Check out the CSV module in Python Standard Library: https://docs.python.org/3/library/csv.html
 
+> The basic premise of CSV format is:
+> 1. each row is a record
+> 2. first record may contain the field names
+> 3. each row (ending with a `\n` or `\r\n`) represents a single record
+> 4. fields can be separated by an arbitrary character or set of characters (but it is consistent for the entire file)
+> 5. text fields may themselves be delimited by some arbitrary delimiter (usually single or double quotes)
+
+> The primary function to read a CSV file, is the `reader` function. It returns an iterator that can be used to iterate over the rows (records) one by one. In general, we need to give this `reader`:
+> - an open file to use
+> - what `delimiter` is used for field separators
+> - what character (`quotechar`) is used for delimiting text fields when necessary
+```python
+import csv
+
+# open file using a context manager
+with open('actors.csv') as f:
+	reader = csv.reader(f, delimiter=',', quotechar='"')
+	for row in reader:
+		print(row)
+```
+> There are a lot more parameters that `reader` supports, such as:
 > 
+> - `skipinitialspace` (in case a space is after the delimiter - if `True` (the default), it just ignores it)
+> - `doublequote` and `escapechar` - can control how `quotechar` characters inside a field should themselves be quoted or escaped.
+> 	- we'll come back to this in the context of writing CSV files
+> 
+> Basically, different variants of CSV files will require possibly different settings.
+
 ### Dialects
 
 
