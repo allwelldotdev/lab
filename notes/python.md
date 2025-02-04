@@ -4234,9 +4234,37 @@ as well as this:
 			- `\n` in Unix
 			- `\r\n` in Windows
 ### Reading CSV Files
-
-
-
+#### What is CSV Data?
+- CSV is a format for tabular data
+	- rows and columns
+- basic idea:
+	- each row in a file is a row of data
+		- rows in files are separated by a *newline* (OS Specific)
+		- each field in the row is separated by a *separator* aka *delimiter*
+- but that brings up a few things...
+	- what field separator to use?
+		- comma?
+		- yes, but not necessarily
+	- how to deal with a field containing a comma (or whatever separator)?
+---
+```csv
+FULL_NAME,DOB,SSN
+Smith, John,3/1/1985,123-456-789
+```
+- `Smith, John` is actually a single field but the `,` inside is going to cause problems
+- use some *delimiter*
+	- maybe double quotes
+	- but doesn't have to be!
+```csv
+"Smith, John","3/1/1985","123-456-789"
+```
+- but we don't *need* the delimiters around the DOB or SSN
+	- `"Smith, John",3/1/1985,123-456-789`
+---
+- what if field contains the field delimiter character?
+```csv
+"Doyle, Conan","First Holmes book was the "Scarlet Letter"
+```
 
 
 
