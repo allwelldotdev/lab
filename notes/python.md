@@ -4235,7 +4235,7 @@ as well as this:
 			- `\r\n` in Windows
 ### Reading CSV Files
 #### What is CSV Data?
-- CSV is a format for tabular data
+- CSV also known as **Comma Separated Values**, is a format for tabular data
 	- rows and columns
 - basic idea:
 	- each row in a file is a row of data
@@ -4263,8 +4263,56 @@ Smith, John,3/1/1985,123-456-789
 ---
 - what if field contains the field delimiter character?
 ```csv
-"Doyle, Conan","First Holmes book was the "Scarlet Letter"
+"Doyle, Conan","First Holmes book was the "Scarlet Letter""
 ```
+- double up the quotes
+```csv
+"Doyle, Conan","First Holmes book was the ""Scarlet Letter"""
+```
+- or use a prefix character to "escape" the next character
+	- e.g. `\` like Python (`\n`, `\t`, etc)
+		- but doesn't have to be!
+```csv
+"Doyle, Conan","First Holmes book was the \"Scarlet Letter\""
+```
+- as you can see there can be different ways of approaching this
+#### CSV is not a standard format
+- unfortunately CSV is not exactly a standard
+	- a variety of flavors exist
+		- *dialects*
+		- most common one is Excel
+			- `delimiter` (field separator) --> `,`
+			- `quotechar` (field delimiter) --> `"`
+			- *doubles* `quotechar` if found inside a field
+			- only uses `quotechar` if delimiter is found inside a field
+- but there are other valid CSV formats too
+	- `field1|field2|field3`
+		- *pipe* (`|`) delimited
+	- `field1  field2  field3` (spaced using tab character)
+		- *tab* delimited
+#### Parsing CSV Data
+- *default* parser dialect is `excel`
+	- but we can specify custom settings for `delimiter`, `quotechar`, etc
+```python
+csv.reader(f, delimiter=',', quotechar='"')
+# `f` : an open file to read from
+# `delimiter` : optional, defaults to `,`
+# `quotechar` : optional, defaults to `"`
+```
+- returns an *iterator* of parsed rows over the file
+```python
+with open('some_file') as f:
+	reader = csv.reader(f) # default uses , and "
+	for row in reader:
+		# row is a list containing parsed fields
+```
+
+> Check out the CSV module in Python Standard Library: https://docs.python.org/3/library/csv.html
+
+> 
+### Dialects
+
+
 
 
 
