@@ -1904,6 +1904,19 @@ print(elapsed_time) # 0.07221294499999997
 
 > In conclusion, `list` comprehensions are mechanisms we use to easily create a new list based on another iterable. But comprehension syntax can quickly devolve into hard to understand messes - keep it simple!
 
+> While using list comprehensions, to iterate two levels deep into an iterable like the below: (do this!)
+```python
+l = [[1, 2, 3], [3, 4, 5], [5, 6, 7]]
+new_l = [num for row in l for num in row]
+print(new_l) # [1, 2, 3, 3, 4, 5, 5, 6, 7]
+
+# what happened was, the first `for` loop (for row in l) in the comprehension
+# should iterate over the outer loop, while the second `for` loop (for num in row) 
+# should iterate over the inner loop
+
+# In Python list comprehensions, the order of the `for` clauses should mirror how you would write nested `for` loops
+```
+
 ### Dictionary and Set Comprehensions
 - similar to list comprehensions
 	- use `{}` instead of `[]`
@@ -1958,6 +1971,7 @@ print(freq) # freq = {
 			# }
 ```
 > The function we just executed in the previous example above is performed by a module in built-in Python library known as `collections`. We can call the function like so: `from collections import Counter`. [Learn more](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35150982?start=874#notes)
+
 ## Exceptions
 #### What are exceptions?
 - exceptions are special events that happen when something out of the ordinary happens while our code is running
