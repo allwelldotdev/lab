@@ -4387,6 +4387,7 @@ print('\\') # \
 ```
 
 > This is the `csv` dialect to parse 'pdv' (pipe delimited value) files:
+^503740
 ```python
 csv.register_dialect(
 	'pdv',
@@ -4415,7 +4416,37 @@ with open('actors.pdv') as f:
 	- either by using individual values (`delimiter`, `quotechar`, etc.)
 	- or using a *dialect* (built-in or custom)
 - unless there are some reasons not to, just use the standard `excel` dialect
+#### Writing a CSV File
+- use `csv.writer`
+	- then use the `writerow` method to write out each row in your data
+```python
+with open('<file_name', 'w') as f:
+	writer = csv.writer(f, dialect='...')
+	for row in data:
+		writer.writerow(row)
+```
+- where `data` is an iterable containing iterables of fields
+```python
+data = [
+	[row1_col1, row1_col2, ...],
+	[row2_col1, row2_col2, ...],
+	...
+]
+```
+- if you want a header row, write that out too using `writerow` and an iterable of headers 
 
+> The `csv.write` function, similarly to the `csv.reader` function expects the file we want to write out to as its first argument, then we can specify a dialect (default is `excel`), and/or specify specific CSV settings.
+
+> We can specify a different dialect if we wanted to, like that `pdv` dialect we [defined earlier](#^503740)
+```python
+csv.register_dialect(
+    'pdv', 
+    delimiter='|', 
+    quotechar = "'", 
+    escapechar="\\",
+    doublequote=False # this enforces the csv.writer to use the `escapechar` instead of the `doublequote` for `quotechar`
+)
+```
 
 ## Random Module
 
