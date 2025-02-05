@@ -4376,10 +4376,45 @@ csv.reader(f, dialect='my-custom-dialect')
 csv.list_dialects()
 ```
 
-### More Examples Reading CSV Files
+> In Python, as is with most programs including Linux, `\` in a string literal "escapes" the next character - i.e. gives it a special meaning:
+```python
+print("1\t2\t3\t4")
+# 1    2    3    4   
+```
+> As you can see `\t` is interpreted as a tab character. So, we cannot just use `\` by itself in a string, to actually define a `\` character in a string literal we can use `\\`:
+```python
+print('\\') # \
+```
 
+> This is the `csv` dialect to parse 'pdv' (pipe delimited value) files:
+```python
+csv.register_dialect(
+	'pdv',
+	delimiter='|',
+	quotechat="'",
+	skipinitialspace=True,
+	escapechar='\\'
+)
+
+# check if the newly-created dialect is in the dialect list
+csv.list_dialects() # ['excel', 'excel-tab', 'unix', 'pdv']
+
+# now when using csv.reader you can specify this dialect like so:
+with open('actors.pdv') as f:
+	reader = csv.reader(f, dialect='pdv')
+	for row in reader:
+		print(row)
+```
 
 ### Writing CSV Files
+- reverse of reading and parsing a csv file 
+- given some data, write it out to a csv file
+	- an iterable of rows
+		- each row is itself an iterable of fields (columns)
+- just like reading a CSV file, we can specify formatting options
+	- either by using individual values (`delimiter`, `quotechar`, etc.)
+	- or using a *dialect* (built-in or custom)
+- unless there are some reasons not to, just use the standard `excel` dialect
 
 
 ## Random Module
