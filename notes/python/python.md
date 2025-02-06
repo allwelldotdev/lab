@@ -4536,9 +4536,39 @@ random.random()
 	- all display *same repeatability* for *same seed*
 #### Generating Random Integers
 ```python
-randrange(stop)
-randrange(start, stop, step) 
+randrange(stop) # generates random integers in `range(stop)`
+randrange(start, stop, step) # generates random integers in `range(start, stop, step)`
 ```
+```python
+randint(a, b)
+```
+- generates `int` in `[a, b]`
+- equivalent to `randrange(a, b+1)`
+	- syntax convenience
+---
+- uniform distribution
+- call repeatedly to produce a sequence of random integers
+#### Generating Random Floats
+- `random()`
+	- random `float` in `[0.0, 1.0)`
+	- uniform distribution
+- `uniform(a, b)`
+	- random `float` in `[a, b]`
+	- uniform distribution
+- `gauss(mu, sigma)`
+	- random float
+	- normal distribution
+		- mean = `mu`, std deviation = `sigma`
+and many more - see the online docs : https://docs.python.org/3/library/random.html
+
+> To use the `random` module, you have to import it.
+```python
+import random
+```
+
+
+### Sampling and Shuffling
+
 
 
 
