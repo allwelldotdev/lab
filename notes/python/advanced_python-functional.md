@@ -74,11 +74,92 @@ dir(my_func.__code__)
 #### The `inspect` Module
 ```python
 import inspect
-from inspect import ismethod, isfunction, isroutine
+from inspect import ismethod, isfunction, isroutine # and many more...
+# again, the can list the available properties, attributes, and methods
+# in `inspect` using `dir(inspect)`
 
 ismethod(obj), isfunction(obj), isroutine(obj)
 ```
-- 
+what's the difference between a *function* and a *method*?
+- classes and object have *attributes* - an object that is bound (to the class or the object)
+- an attribute that is *callable*, is called a *method*
+```python
+def my_func():
+	pass
+
+def MyClass:
+	def func(self):
+		pass
+
+my_obj = MyClass()
+```
+- `func` is bound to `my_obj`, an instance of `MyClass`
+	- `isfunction(my_func)` --> True
+	- `ismethod(my_func)` --> False
+	- `isfunction(my_obj.func)` --> False
+	- `ismethod(my_obj.func)` --> True
+	- `isroutine(my_func)` --> True
+	- `isroutine(my_obj.func)` --> True
+		- both `isroutines()` work out to `True` because `isroutine()` checks whether the object passed in is a *function* or *method*
+#### Code Introspection
+- we can recover the source code of our functions/method
+```python
+inspect.getsource(my_func) # a string containing our entire `def` statement,
+# including annotations, docstrings, etc.
+```
+- we can find out in which module our function was created
+```python
+inspect.getmodule(my_func) # <module '__main__'>
+inspect.getmodule(print) # <module 'builtins' (built-in)>
+inspect.getmodule(math.sin) # <module 'math' (built-in)>
+```
+#### Function Comments
+```python
+# setting up variable
+i = 10
+
+# TODO: Implement function
+# some additional notes
+def my_func(a, b=1):
+	#commend inside my_func
+	pass
+
+inspect.getcomments(my_func) # '# TODO: Implement function\nsome additional notes'
+```
+- many IDE's support the **TODO** commend to flag functions and other callables
+- note that this is not the same as docstrings
+#### Callable Signatures
+```python
+inspect.signature(my_func) # Signature instance
+```
+- contains an attribute called `parameters`
+	- essentially a dictionary of parameter names (keys), and metadata about the parameters (values)
+		- `keys` --> parameter name
+		- `values` --> objects with attributes such as `name`, `default`, `annotation`, `kind`
+- `kind` refers to the type of argument
+	- `POSITIONAL_OR_KEYWORD`
+	- `VAR_POSITIONAL`
+	- `KEYWORD_ONLY`
+	- `VAR_KEYWORD`
+	- `POSITIONAL_ONLY`
+---
+```python
+def my_func(a: 'a string',
+			b: int = 1,
+			*args: 'additional positional args',
+			kw1: 'first keyword-only arg',
+			kw2: 'second keyword-only arg' = 10,
+			**kwargs: 'additional keyword-only args') -> str:
+	"""does something
+	or other"""
+	pass
+
+for param in inspect.signature(my_func).parameters.values():
+	print('Name:', param.name)
+	print('Default:', param.default)
+	print('Annotation:', param.annotation)
+	print('Kind:', param.kind)
+```
 
 ### Callables
 
