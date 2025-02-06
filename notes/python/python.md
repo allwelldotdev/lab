@@ -4499,8 +4499,46 @@ csv.register_dialect(
 			- roll two die (each of which can be 1-6)
 			- pick two elements with replacement from {1, 2, 3, 4, 5, 6}
 #### Interval Notation
+`[a, b]` --> `a <= x <= b`
+`(a, b)` --> `a < x < b`
+`(a, b]` --> `a < x <= b`
+`[a, b)` --> `a <= x < b`
+- `[` includes endpoint
+- `(` excludes endpoint
 
-
+### Random Numbers
+#### Random *seed*
+- *seed* is used as a "primer" for different random number sequences
+	- Python automatically sets one based on system time
+		- so every time our program restarts we get different sequences of random numbers
+	- we can *override* the seed value
+		- useful to guarantee repeatability of "random" sequence
+			- testing, debugging
+```python
+random.seed() # uses system (epoch) time
+random.seed(a) # uses value a (system time if `a` is `None`)
+```
+#### The base PRNG
+- there is a *single* pseudo random number generator
+	- - generates and returns the next PRN
+	- `float` in `[0.0, 1.0)`
+	- uniformly distributed
+```python
+random.random()
+```
+- call it repeatedly to get the next number, and the next...
+- other random related functions
+	- all use this one at their base 
+	- random integer generator
+	- random numbers that will display certain distributions (e.g. normal)
+	- shuffling, sampling
+- all use `random()`
+	- all display *same repeatability* for *same seed*
+#### Generating Random Integers
+```python
+randrange(stop)
+randrange(start, stop, step) 
+```
 
 
 
