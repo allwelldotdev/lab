@@ -4566,9 +4566,66 @@ and many more - see the online docs : https://docs.python.org/3/library/random.h
 import random
 ```
 
-
 ### Sampling and Shuffling
-	
+#### Shuffling
+- *in-place* shuffle of items in a *mutable* sequence
+```python
+from random import shuffle
+
+l = [1, 2, 3]
+shuffle(l) # [3, 1, 2]
+```
+- `l` was *mutated*
+#### Choosing a Single Random Element
+- `choice(seq)`
+	- chooses a single random element from `seq`
+	- `seq` can be any sequence type (even immutable)
+	- does not modify `seq` in any way
+```python
+from random import choice
+
+l = [1, 2, 3, 4, 5]
+
+choice(l) # 3
+choice(l) # 5
+choice(l) # 3
+```
+- `choice()` uses unform distribution
+#### Choosing Multiple Random Elements at a Time 
+- `choices(seq, k=...)`
+- choose `k` random elements from some sequence `seq` (*uniform* distribution)
+- *with replacements*
+	- the same element may get picked more than once in each set of `k` elements
+- returns result as a list of `k` elements
+```python
+from random import choices
+
+l = 1, 2, 3, 4, 5, 6
+
+choices(l, k=2) # [6, 5]
+choices(l, k=2) # [1, 3]
+choices(l, k=2) # [2, 2]
+```
+- `k` can be larger than sequence *length* (*guaranteed* to have repeated elements!)
+#### Sampling a Population
+- `sample(population, k)`
+	- population can be a *sequence* or a `set`, and even a `range` object
+	- choose `k` random elements from some `population` (*uniform* distribution)
+	- *without replacements*
+		- the same element *cannot* be picked twice in each set of `k` elements
+		- as you can tell `sample()` is similar to `choices()` only difference is:
+			- `choices()` returns *with replacements*
+			- `sample()` returns *without replacements*
+	- random sampling
+		- `k` is the *sample size*
+	- returns result as list of `k` elements
+	- `k` cannot exceed `len(seq)`
+		- `ValueError` otherwise
+#### Weighted Choices
+```python
+l = [1, 2, 3, 4, 5, 6, 7,]
+```
+
 
 
 
