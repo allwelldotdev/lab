@@ -25,7 +25,7 @@ python3.9 -m venv py39_course
 
 > If using zsh on wsl:ubuntu and you encounter a problem of not seeing the indication of the activated virtual environment via the text in parenthesis next to your user prompt in your terminal (as shown in the image below). Do the following:
 
-![venv indication in python](assets/Pasted%20image%2020241224235005.png)
+![venv indication in python](../assets/Pasted%20image%2020241224235005.png)
 
 1. Open `~/.zshrc` file and check that you have included `virtualenv` in your plugins array, like so:
    ```bash
@@ -67,15 +67,15 @@ source <path_to_venv>/bin/activate
 ## Running python
 ### Python REPL (read-eval-print-loop).
 The Python REPL is the interactive mode of reading, compiling, running your code. This is also known as **interactive mode**.
-![python repl](assets/Pasted%20image%2020241225112258.png)
+![python repl](../assets/Pasted%20image%2020241225112258.png)
 ### Python Script mode.
 This is different from Python REPL mode. Here, in Script mode, you write all your code first then call Python and it runs your code and outputs it to the system.
-![python script mode](assets/Pasted%20image%2020241225112435.png)
+![python script mode](../assets/Pasted%20image%2020241225112435.png)
 ### Jupyter Notebooks
 Jupyter Notebooks is software that has been developed on top of Python that wraps the REPL into a nicer interface. This is not the only one software available that does this. There are others are well.  
 Jupyter Notebooks is a REPL, but browser-based.
 
-![jupyter notebook](assets/Pasted%20image%2020241225115903.png)
+![jupyter notebook](../assets/Pasted%20image%2020241225115903.png)
 
 The files you create and save into your repo locally from Jupyter Notebooks are called '**a notebook**' and they usually use the `.ipynb` extension.
 
@@ -267,7 +267,7 @@ Advice:
 	- easy to understand when `a` and `b` are positive
 - Reality: `a // b` is the floor of `a / b`
 	- `floor(x)` is the *largest* integer number `<= x`
-	![floor in the integer division operator](assets/Pasted%20image%2020241229155420.png)
+	![floor in the integer division operator](../assets/Pasted%20image%2020241229155420.png)
 	- `12 / 5 == 2.4` and `12 // 5 == 2`
 	- While `-12 / 5 == -2.4` then `-12 // 5 == -3`
 
@@ -345,18 +345,18 @@ $$\frac{131}{3} = floor\left(\dfrac{131}{3}\right) + \frac{131mod3}{3}$$
 
 #### The `not` Operator
 - `not` simply reverses the Boolean value
-![truth table](assets/Pasted%20image%2020241230155004.png)
+![truth table](../assets/Pasted%20image%2020241230155004.png)
 
 #### The `and` Operator
 - `a and b` is `True` if and only if both `a` and `b` are `True`
 	- `False` otherwise.
 - if `a` is `False`, then `a and b` is always `False`, no matter what `b` is.
-![truth table for `and` operator](assets/Pasted%20image%2020241230160410.png)
+![truth table for `and` operator](../assets/Pasted%20image%2020241230160410.png)
 
 #### The `or` Operator
 - `a and b` is `False` if and only if both `a` and `b` are `False`
 	- `True` otherwise
-![truth table for `or` operator](assets/Pasted%20image%2020241230160548.png)
+![truth table for `or` operator](../assets/Pasted%20image%2020241230160548.png)
 - If `a` is `True`, then `a or b` is always `True`, no matter what `b` is.
 
 > **Short-Circuited Evaluation** occurs in Python when a the left operand expression in an `and` Boolean operator results to a `False` value, causing Python to skip running the rest of the program and return the result.
@@ -586,7 +586,7 @@ t = 10, 20, 30
 - just like lists, tuples can contain any object
 	- including other tuples or lists
 
-![tuples](assets/Pasted%20image%2020241231211917.png)
+![tuples](../assets/Pasted%20image%2020241231211917.png)
 
 - we can omit the parenthesis on the outer tuple
 ```python
@@ -704,10 +704,10 @@ s = '=' * 10
 	- stops at index `end` (exclusive)
 	- moves *backwards* → so `start` should be greater than `end`
 
-![negative steps - slicing](assets/Pasted%20image%2020250102212933.png)
+![negative steps - slicing](../assets/Pasted%20image%2020250102212933.png)
 
 To recap:
-![slicing summary](assets/Pasted%20image%2020250102213236.png)
+![slicing summary](../assets/Pasted%20image%2020250102213236.png)
 
 ### Manipulating Sequences
 - mutable sequences can be modified
@@ -730,16 +730,16 @@ l[1] = 'hello'
 	- just assign a new collection to the slice
 	- slice will be replaced with elements in RHS
 	- `my_list = [1, 2, 3, 4, 5]`
-	- ![replacing an entire slice in python](assets/Pasted%20image%2020250103152242.png)
+	- ![replacing an entire slice in python](../assets/Pasted%20image%2020250103152242.png)
 - Python uses the *elements* of the sequence in RHS when assigning to a *slice* (but not when assigning using a single index)
 
 > You can also replace an entire slice in reverse order but it acts a bit weird when you do it. Therefore, minimize this application as much as possible. [Learn more](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35150726?start=354#notes).
 
 #### Deleting Elements
 - can delete an element by *index*
-	- ![delete element by index](assets/Pasted%20image%2020250103152640.png)
+	- ![delete element by index](../assets/Pasted%20image%2020250103152640.png)
 - can delete an element by *slice*
-	- ![delete element by slice](assets/Pasted%20image%2020250103152709.png)
+	- ![delete element by slice](../assets/Pasted%20image%2020250103152709.png)
 
 #### Appending Elements
 - we can *append* one element
@@ -748,13 +748,13 @@ l[1] = 'hello'
 	- `my_list` → `[1, 2, 3, 4]`
 - to append multiple elements, we *extend* the sequence
 	- `my_list = [1, 2, 3]`
-	- ![append elements using extend](assets/Pasted%20image%2020250103153028.png)
+	- ![append elements using extend](../assets/Pasted%20image%2020250103153028.png)
 
 #### Inserting an Element
 - instead of appending, we could *insert* at some index
 	- use sparingly - this is much slower than appending or extending
-- ![inserting an element into a sequence](assets/Pasted%20image%2020250103160322.png)
-- ![inserting an element into a sequence - 2](assets/Pasted%20image%2020250103160412.png)
+- ![inserting an element into a sequence](../assets/Pasted%20image%2020250103160322.png)
+- ![inserting an element into a sequence - 2](../assets/Pasted%20image%2020250103160412.png)
 - element is inserted so its position is the *index* - remaining elements are shifted right
 
 > When *inserting* or *appending* items it takes it as is not as a sequence.
@@ -781,13 +781,13 @@ timeit('<add_code_to_run_here>', globals=globals(), number=100_000) # number att
 			- totally new and independent objects
 
 #### Shallow Copy
-- ![shallow copy](assets/Pasted%20image%2020250103163026.png)
+- ![shallow copy](../assets/Pasted%20image%2020250103163026.png)
 - `origial` and `shallow_copy` are *not* the same containers
 - but the elements are referencing the *same* objects
 - add/remove/replace element in one does not affect the other
-	- ![shallow copy 2](assets/Pasted%20image%2020250103163219.png)
+	- ![shallow copy 2](../assets/Pasted%20image%2020250103163219.png)
 - but mutating an element will affect both (since it is a shared reference)
-	- ![shallow copy 3](assets/Pasted%20image%2020250103163329.png)
+	- ![shallow copy 3](../assets/Pasted%20image%2020250103163329.png)
 
 #### Creating Shallow Copies
 - use slicing to slice the entire sequence `my_list[:]`
@@ -823,7 +823,7 @@ c = data[2]
 	- `a, b, c = 'XYZ'`
 - beware!
 	- the number of elements in sequence on RHS must match number of symbols on LHS
-	- ![unpacking sequences](assets/Pasted%20image%2020250103174402.png)
+	- ![unpacking sequences](../assets/Pasted%20image%2020250103174402.png)
 
 #### Swapping Two Variable Values
 - this is a common problem
@@ -879,7 +879,7 @@ a, b, c = (1 + 1, s[::-1], 3.14)
 	- 128 characters 
 		- 95 printable characters (a-z, A-Z, 0-9, * / etc.) 
 		- 33 non-printable characters (control code, esc, newline, tab, etc.)
-	- ![unicode chart](assets/Pasted%20image%2020250104141322.png)
+	- ![unicode chart](../assets/Pasted%20image%2020250104141322.png)
 - attempts were made to extend the ASCII set
 	- still far too limited
 	- standard was poorly followed
@@ -903,7 +903,7 @@ a, b, c = (1 + 1, s[::-1], 3.14)
 > To understand hexadecimal numbers and how to calculate them as well as binary and decimal, [click here](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35150878?start=329#notes).
 
 [See](https://www.compart.com/en/unicode/U+0041) the Unicode Character A for example.
-![unicode character A](assets/Pasted%20image%2020250104143511.png)
+![unicode character A](../assets/Pasted%20image%2020250104143511.png)
 - `ord()` function
 	- returns code point for single character (in decimal)
 	- `ord('A')` → 65
@@ -1796,7 +1796,7 @@ s1 & s2 # {3} : (again, set elements are unique)
 ```
 #### Set Difference
 the *difference* `s1 - s2` of two sets is all the elements of one set minus the elements of the other set.
-![set difference](assets/Pasted%20image%2020250110130939.png)
+![set difference](../assets/Pasted%20image%2020250110130939.png)
 
 > **Caution**: set difference is *not commutative* `s1 - s2 != s2 - s1`
 ```python
@@ -1830,7 +1830,7 @@ Example:
 - given a list of 2D vectors
 	- `[(0, 0), (1, 1), (1, 2), (3, 5)]`
 - create a new list containing the magnitude of each vector
-	- ![magnitude of each vector in comprehensions](assets/Pasted%20image%2020250113112235.png)
+	- ![magnitude of each vector in comprehensions](../assets/Pasted%20image%2020250113112235.png)
 
 ### List Comprehensions
 - a *comprehension* is a way to use one iterable to *create* another
@@ -1844,7 +1844,7 @@ Example:
 - a list comprehension is used to generate a `list` object
 
 The `list` *comprehension* syntax looks like this:
-![list comprehension](assets/Pasted%20image%2020250113112950.png)
+![list comprehension](../assets/Pasted%20image%2020250113112950.png)
 ```python
 # In general, `list` comprehensions look like this:
 [expression for item in iterable]
@@ -1923,13 +1923,13 @@ print(new_l) # [1, 2, 3, 3, 4, 5, 5, 6, 7]
 		- remember literals for dictionaries and sets use `{}`
 			- dictionary elements are *pairs* → `key:value`
 			- set elements are *single* values
-![dictionary comprehensions](assets/Pasted%20image%2020250113120849.png)
+![dictionary comprehensions](../assets/Pasted%20image%2020250113120849.png)
 
 #### Set Comprehensions
 - similar to a dictionary comprehension
 	- but elements are not `key:value` pairs
 		- just the `key` portion
-![set comprehensions](assets/Pasted%20image%2020250113121631.png)
+![set comprehensions](../assets/Pasted%20image%2020250113121631.png)
 
 > The idea of creating a dictionary that contains all the unique keys from a collection and a count for the corresponding value is one way of expressing what's called a mathematical multiset. See how this is calculated below:
 ```python
@@ -2088,7 +2088,7 @@ name = input('Enter name (5 chars min): ')
 #### `try...except...`
 - wrap the code we want to implement an exception handler for inside a `try` block
 - we handle possible exception(s), using `except` blocks (one or more)
-![try-except-block](assets/Pasted%20image%2020250114172023.png)
+![try-except-block](../assets/Pasted%20image%2020250114172023.png)
 #### Handling and re-raising an exception
 - sometimes we want to handle an exception, but then re-raise the same exception or a different exception
 	- often because there's nothing we can do
@@ -2378,7 +2378,7 @@ def function_name():
 	...
 	return <value>
 ```
-![how functions are defined](assets/Pasted%20image%2020250116114922.png)
+![how functions are defined](../assets/Pasted%20image%2020250116114922.png)
 - function body contains valid Python code
 - this creates a function object
 - the function object is associated with the symbol `function_name`
@@ -2403,7 +2403,7 @@ add(10, 1) # returns 11
 ```
 - when we call `add(2, 3)`, how does Python assign `2` to the symbol `a`, and `3` to `b`?
 	- it does this by *position*
-![positional arguments in python function](assets/Pasted%20image%2020250116120859.png)
+![positional arguments in python function](../assets/Pasted%20image%2020250116120859.png)
 - *positional arguments*
 
 > Although the parameters are defined as positional parameters, Python supports **calling** the function with **named** arguments as follows:
@@ -2510,7 +2510,7 @@ def func(a=1): # `a` parameter has a default value of 1
 func() # returns 1 'default value'
 func(10) # returns 10 'argument value'
 ```
-![default values](assets/Pasted%20image%2020250116132425.png)
+![default values](../assets/Pasted%20image%2020250116132425.png)
 - once you specify a positional argument with a default value
 	- all positional parameters after that *must* specify a default value too
 		- with the exception of a *starred* parameter
@@ -2625,7 +2625,7 @@ how are keyword-only (or named) arguments they scooped up?
 def func(a, *, d, **others): # `others` is a dict
 	...
 ```
-![keyword-only arguments](assets/Pasted%20image%2020250116194652.png)
+![keyword-only arguments](../assets/Pasted%20image%2020250116194652.png)
 
 > In the same way we use `*` as a parameter to express that all the parameters *after it* must be keyword-only arguments, we use `/` as a parameter to express that all the parameters *before it* must be positional-only argument (in other words, they cannot be named arguments). Like so:
 ```python
@@ -2660,7 +2660,7 @@ print(f'{{"longitude": {longitude}, "latitude": {latitude}}}') # notice the doub
 ```python
 lambda a, b: a + b # this is a lambda function (an anonymous function)
 ```
-![lambda function](assets/Pasted%20image%2020250116204612.png)
+![lambda function](../assets/Pasted%20image%2020250116204612.png)
 - this expression returns a `function` object
 - we need to assign it to a symbol if we want to use it
 ```python
@@ -2705,7 +2705,7 @@ s # 'word1  word2. word3 word4 word4'
 	- `round(x, -1)` → rounds to the nearest `10` $10^{1}$
 	- `round(x, -2)` → rounds to the nearest `100` $10^{2}$
 - not just rounding things *after* the decimal point but also *before* the decimal point
-![rounding to closest multiple of...](assets/Pasted%20image%2020250119154947.png)
+![rounding to closest multiple of...](../assets/Pasted%20image%2020250119154947.png)
 #### Rounding Ties in Floats
 - technically rounds to closest number that ends with an even digit
 ```python
@@ -2894,14 +2894,14 @@ zip(l1, l2, l3) # (1, 1, 1)
 - function arguments can be functions
 	- the object is passed, not called
 		- so don't use `()` to pass a function, that would pass the result of the function!
-![passing and returning functions](assets/Pasted%20image%2020250122134328.png)
+![passing and returning functions](../assets/Pasted%20image%2020250122134328.png)
 #### Nested Functions
 - function bodies can contain any valid Python code
 	- including defining functions
-![nested functions](assets/Pasted%20image%2020250122134459.png)
+![nested functions](../assets/Pasted%20image%2020250122134459.png)
 #### Returning Functions
 - a function can also return a function
-![returning functions](assets/Pasted%20image%2020250122134639.png)
+![returning functions](../assets/Pasted%20image%2020250122134639.png)
 - silly example
 - that said, often we return a nested function
 ```python
@@ -2993,14 +2993,14 @@ f() # returns 20
 ---
 - but there are some *rules*!
 	- you can always "*read*" a variable from the outer scope
-![closure](assets/Pasted%20image%2020250122150001.png)
+![closure](../assets/Pasted%20image%2020250122150001.png)
 - outer
 	- `{'c': 100, 'inner': <function>}`
 - inner
 	- *closure* `inner`, with `c=100`
 ---
 - but things change if we *set* that symbol to a value in the *inner* scope
-![closure - inner and outer scope](assets/Pasted%20image%2020250122150253.png)
+![closure - inner and outer scope](../assets/Pasted%20image%2020250122150253.png)
 - outer
 	- `{'c': 100, 'inner': <function>}`
 - inner
@@ -3039,7 +3039,7 @@ cubes(3) # 27
 - *filtering* is the selection of a subset of items based on whether some condition is true or not
 - given a list of numbers from 1 to 100, filter this list to contain even numbers only
 - can think of it this way:
-![filtering](assets/Pasted%20image%2020250124184223.png)
+![filtering](../assets/Pasted%20image%2020250124184223.png)
 - apply a function (`is_even`) to every item in the list
 	- only keep items for which function returns `True`
 #### Predicate Function
@@ -3218,7 +3218,7 @@ max(data, key=abs) # -5
 - every time one of those functions is called, we want to produce a *log*
 	- maybe just print to the console that the function was called
 - we could certainly put the "logging" functionality into each function (as seen below)
-![why are decorators useful](assets/Pasted%20image%2020250128113734.png)
+![why are decorators useful](../assets/Pasted%20image%2020250128113734.png)
 - repeating the same code multiple times
 - what if we want to include date/time the call was made
 	- go back and edit logging code inside each function
@@ -3237,7 +3237,7 @@ max(data, key=abs) # -5
 	- run some code
 	- return the result of the call
 - when we call `fun1`, `fun2`, etc
-![why are decorators useful 2?](assets/Pasted%20image%2020250128114451.png)
+![why are decorators useful 2?](../assets/Pasted%20image%2020250128114451.png)
 ### Decorators
 - recall nested functions
 ```python
@@ -3474,7 +3474,7 @@ def fib(n):
 - the context manager is responsible for...
 	- running some code on entry
 	- running some on exit
-![context manager](assets/Pasted%20image%2020250129195529.png)
+![context manager](../assets/Pasted%20image%2020250129195529.png)
 ### Reading Text Files
 #### Opening Files
 - to read or write to a text file, we first need to *open* the file
@@ -3690,7 +3690,7 @@ import math
 - and variable (symbol) `math` is a reference to that module object
 - `math` contains many functions, such as `sqrt`
 - like with any object, we use *dot notation* to reach inside the object
-![modules and imports - dot notation](assets/Pasted%20image%2020250131153929.png)
+![modules and imports - dot notation](../assets/Pasted%20image%2020250131153929.png)
 
 > In general it is customary not to rename (alias) a module, unless there are reasons to do so - like trying to import two modules from different libraries that might be named the same.
 > 
@@ -3777,7 +3777,7 @@ from math import sqrt
 		- work exclusively in UTC *internally*
 		- *display* to user using their preferred *time zone*
 
-![how datetime data is parsed is usually parsed in our program](assets/Pasted%20image%2020250202144449.png)
+![how datetime data is parsed is usually parsed in our program](../assets/Pasted%20image%2020250202144449.png)
 #### Challenges with External Sources of Time Data
 - Python has special data types, for `time`, `date`, and `datetime`
 - *external* sources of time data usually given as *strings*
@@ -3792,7 +3792,7 @@ from math import sqrt
 		- what formatting should we use?
 #### ISO Format
 - *ISO 8601* defines *standards* for string representations of dates and times
-![iso format standard](assets/Pasted%20image%2020250202145413.png)
+![iso format standard](../assets/Pasted%20image%2020250202145413.png)
 ---
 why are time zones important?
 *May 1, 2020, 10:23:35am* in *Eastern Time*
