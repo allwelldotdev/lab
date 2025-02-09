@@ -4623,8 +4623,51 @@ choices(l, k=2) # [2, 2]
 		- `ValueError` otherwise
 #### Weighted Choices
 ```python
-l = [1, 2, 3, 4, 5, 6, 7,]
+l = [1, 2, 3, 4, 5, 6, 7, 8]
+
+choices(l, k=3) # `k` is a kw-only arg 
 ```
+- a list of `k` random elements from `l` 
+- with replacement
+- uniform distribution
+	- for each pick of an element to include in the `k` choices
+	- every element has the *same probability* of being picked
+---
+- but we can change those probabilities
+	- by specifying a sequence of *weights* to assign to each element of the sequence
+	- if specified, `len(weights)` *must equal* `len(sequence)` 
+```python
+l = [1, 2, 3, 4, 5, 6, 7, 8]
+weights = [1, 1, 1, 1, 2, 1, 1, 1]
+
+choices(l, weights=weights, k=3)
+```
+- at every pick of `k` elements
+	- *`5`* has two times chances of being picked than all other elements
+- weights can be floats too
+- no longer a uniform distribution
+
+> Sampling can be quite useful when you are dealing with a huge dataset, but want to perform some quick calculations based on a smaller random sample (or like estimating the population mean with a sample mean).
+
+> Running the `random.sample()` function on a `set`, I received this error message from Python on Jupyter Notebooks: 
+> `DeprecationWarning: Sampling from a set deprecated since Python 3.9 and will be removed in a subsequent version.`
+
+## Math and Statistics Modules
+- already seen `math` module
+	- look at a few more functions in that module
+- `statistics` module
+	- variety of simple stats
+		- means, variances
+		- normal distributions
+### `math` Module
+- `factorial(n)` --> factorial function
+- `perm(n, k)` --> permutations
+- `comb(n, k)` --> combinations
+- `gcd(a, b)` --> greatest common divisor of integers `a` and `b`
+- `fsum(iterable)` --> floating point sum, more accurate than `sum()`
+- `prod(iterable, *, start=1)` --> product of all elements in iterable
+---
+- 
 
 
 
