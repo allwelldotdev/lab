@@ -4850,8 +4850,28 @@ d2 = Decimal('122')
 #### Mathematical Functions
 - standard arithmetic operators and functions:
 ```python
-+, -, *, /, //, %, **, round
++, -, *, /, //, %, **, round, abs, min, max, sum
 ```
+- careful with `math` module
+	- you can use...
+	- `Decimals` get converted to `float`s first
+- `Decimal` objects implement some math functions:
+```python
+d = Decimal('...')
+d.exp()
+d.sqrt()
+d.ln()
+d.log10()
+```
+
+> Learn more about `Decimal` arithmetic and mathematical functions here: https://docs.python.org/3/library/decimal.html#module-decimal
+
+### Arithmetic Contexts
+
+
+## Custom Classes
+
+
 
 
 
