@@ -4688,8 +4688,71 @@ choices(l, weights=weights, k=3)
 
 > For `complex` number math, see `cmath` module: https://docs.python.org/3/library/cmath.html
 
-### `statistics` Module
+> Use like so:
+```python
+import math
+from math import sum, fsum, cos, sin, pi
+```
 
+### `statistics` Module
+#### Measures of Central Location
+- `statistics` module
+- `s` is a non-empty sequence or iterable
+- `mean(s)` --> arithmetic average of an iterable
+- `fmean(s)` --> converts everything to `float`, then calculates mean (faster than `mean`)
+- `median(s)` --> median (may not be an element of the iterable)
+	- To ensure median is an element of the iterable use:
+		- `median_low(s)`
+		- `median_high(s)`
+- `mode(s)` --> applies to numeric or nominal data
+#### Measures of Spread
+- `pstdev(s)` --> population standard deviation
+- `pvariance(s)` --> population variance
+- `stdev(s)` --> sample standard deviation
+- `variance(s)` --> sample variance
+- `quantiles(s, *, n=4, method='exclusive')`
+	- `n=4` for *quartiles*, `n=100` for *percentiles*
+	- `method='exclusive'/'inclusive'`
+		- indicates if `s` is a sample that does / does not include most extreme population values
+#### Normal Distribution
+- `NormalDist` data type (class)
+		- used to *create* and *manipulate* normal distributions of a random variable
+```python
+d = NormalDist(mu=0.0, sigma=1.0)
+d.mean, d.median, d.mode, d.stdev, d.variance
+```
+- `d.pdf(x)` --> probability density function
+- `d.cdf(x)` --> cumulative distribution function
+- `d.inv_cdf(p)` --> inverse CDF (aka quantile function)
+- `d.quantiles(n=4)` --> returns a list of `n-1` cut points for the quantiles
+---
+- `d.overlap(other_normal_dist)` --> calculates area overlap of two distributions
+- `d.samples(n)` --> returns list of `n` random samples
+- supports *arithmetic operations*
+	- `+` or `-` with *constants* --> translate distribution
+	- `*` or `/` with *constants* --> scales distribution
+```python
+d = NormalDist(0, 1)
+d * 5 + 20 # NormalDist(20, 5)
+```
+---
+- can also combine two normal distributions (`+`)
+```python
+d1 = NormalDist(1, 3)
+d2 = NormalDist(2, 5)
+d1 + d2 # NormalDist(3, 5)
+```
+- mean = sum of two means
+	- `1 + 2` --> `3`
+- variance = sum of two variances
+	- `9 + 16 = 25` --> std dev = `5`
+
+> For more functionality of the `statistics` module, check out the Python docs: https://docs.python.org/3/library/statistics.html#module-statistics
+
+> Use like so:
+```python
+import statistics as stats # if you don't want to keep spelling `statistics`
+```
 
 ## Decimal Module
 
