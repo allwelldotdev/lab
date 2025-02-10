@@ -4755,8 +4755,103 @@ import statistics as stats # if you don't want to keep spelling `statistics`
 ```
 
 ## Decimal Module
+- we have seen that floats do not have exact representations
+	- most of the time that's not an issue
+		- often deal transforming data
+			- slight loss of precision, rounding errors, matter
+			- but level of float precision is sufficient
+- you may have cases where the loss of precision is unacceptable
+	- you may have to store decimals *exactly*
+	- addition, subtraction, multiplication have to be *exact*
+		- division is going to suffer from rounding errors
+			- `1/3 = 0.333...`
+				- cannot store infinite decimal numbers
+				- but what precision?
+---
+- `Decimal` objects can store decimal numbers exactly
+	- but at what *cost*?
+		- literals have to use strings to represent numbers - unwieldy
+		- cannot use most `math` functions (they convert to floats)
+			- many *specialized* math functions are defined in `Decimal`
+		- arithmetic operations are *slower* than floats
+		- they use *more memory* than floats
 
+> Learn more about `Decimal` module by checking out Python docs: https://docs.python.org/3/library/decimal.html
 
+- implements IBM General Decimal Arithmetic Specification standard https://speleotrove.com/decimal/decarith.html
+
+### Decimal Objects
+#### The Decimal Data Type
+- `decimal` module
+- `Decimal` data type (class)
+- `Decimal(3)`
+	- take the *integer* `3` and convert it to a `Decimal` object
+- `Decimal(0.1)`
+	- take the *float* `0.1` and convert it to a `Decimal` object
+- do you see the problem here?
+	- `0.1` is a `float`
+		- it is *already inexact*, before we even pass it to `Decimal`
+	- `Decimal('0.1')`
+		- take the *string* `0.1` and convert it to a `Decimal` object
+		- `0.1` will be stored exactly as `0.1` in the `Decimal` type
+```python
+0.1 + 0.1 + 0.1 == 0.3 # False
+Decimal('0.1') + Decimal('0.1') + Decimal('0.1') == Decimal('0.3') # True
+Decimal(1) / Decimal(3) # Decimal('0.3333333333333333333333333333')
+```
+- what precision?
+	- default is `28` *significant digits*
+	- we can override this value
+#### Significant Digits
+- number of digits needed to represent the decimal number
+	- *leading* zeros are *ignored*
+		- `001.2345` --> `5` significant digits
+	- *trailing* zeros are *not*!
+		- `1.2000` --> `5` significant digits
+- important to understand how this affects *arithmetic operations*
+```python
+Decimal('0.15') * Decimal(2) # Decimal('0.30') not 0.3
+Decimal('0.100') * Decimal('0.200') # Decimal('0.020000')
+```
+#### Rounding
+- can use the `round()` function
+	- it will use a special rounding method defined by Decimal objects
+```python
+round(Decimal('1.2335'), 3) # Decimal('1.234')
+round(Decimal('1.2345'), 3) # Decimal('1.234')
+```
+- Banker's rounding (round to closest, ties to closest even)
+	- default
+	- we can specify other types of rounding
+#### Arithmetic Contexts
+- when we perform arithmetic operations on Decimal numbers
+	- precision can affect results
+	- rounding methodology can affect results
+
+Example: suppose we are using a precision of `5`, and Banker's rounding
+```python
+d1 = Decimal('1.2335')
+d2 = Decimal('122')
+# 1.2335 * 122 = 150.3650
+```
+- `d1 * d2` --> `Decimal('150.36')`
+	- only `5` significant numbers - so *had* to round to two decimals
+	- used Banker's rounding --> `150.36`
+---
+- view your current context settings
+	- `decimal.getcontext()`
+		- prec = `28`
+		- rounding = `ROUND_HALF_EVEN` (Bankers rounding)
+- later we'll see how to modify the arithmetic context
+**IMPORTANT**
+- precision of a defined Decimal number is *independent* of context precision
+	- `Decimal(1.23456789')` will be stored *exactly*, even if context precision is `5`
+	- *calculations*, however, will use the *context precision*
+#### Mathematical Functions
+- standard arithmetic operators and functions:
+```python
++, -, *, /, //, %, **, round
+```
 
 
 
