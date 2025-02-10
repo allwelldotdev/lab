@@ -4669,7 +4669,31 @@ choices(l, weights=weights, k=3)
 - `fsum(iterable)` --> floating point sum, more accurate than `sum()`
 - `prod(iterable, *, start=1)` --> product of all elements in iterable
 ---
-- 
+- `dist(p, q)` --> Euclidean distance between `p` and `q` (iterables)
+- `hypot(*coords)` --> Euclidean norm of vector with specified coordinates
+- `sqrt` --> square root
+- `exp(x)` --> exponent (`e ** x`)
+- `log(x)` --> natural log (base `e`)
+- `log10(x)` --> log base `10`
+- `e` --> Euler's constant
+---
+- `degrees(x)`, `radians(x)` --> degree/radian conversions
+- `sin(x)`, `cos(x)`, `tan(x)` --> trig functions
+- `asin(x)`, `acos(x)`, `atan(x)` --> arc functions
+- `sinh(x)`, `cosh(x)`, `tanh(x)` --> hyperbolic functions
+- `asinh(x)`, `acosh(x)`, `atanh(x)` --> ac hyperbolic functions
+- `pi`
+---
+> For full list of functions in `math` module: https://docs.python.org/3/library/math.html
+
+> For `complex` number math, see `cmath` module: https://docs.python.org/3/library/cmath.html
+
+### `statistics` Module
+
+
+## Decimal Module
+
+
 
 
 
