@@ -4866,6 +4866,14 @@ d.log10()
 
 > Learn more about `Decimal` arithmetic and mathematical functions here: https://docs.python.org/3/library/decimal.html#module-decimal
 
+> Using `decimal.getcontext()` gets the global arithmetic context for the Decimal object. Which contains the precision value `prec=28` and rounding type `rounding=ROUND_HALF_EVEN`, as well as other properties.
+```python
+decimal.getcontext()
+# Context(prec=28, rounding=ROUND_HALF_EVEN, Emin=-999999, Emax=999999, capitals=1, clamp=0, flags=[], traps=[InvalidOperation, DivisionByZero, Overflow])
+```
+
+
+
 ### Arithmetic Contexts
 
 
