@@ -4928,7 +4928,35 @@ ctx.prec = current_prec
 #### Using a Context Manager
 - much easier (and safer) to use a *context manager* 
 
+![using a context manager for decimals](../assets/Pasted%20image%2020250212203830.png)
+
+```python
+# create context and enter context manager
+with decimal.localcontext() as ctx:
+	ctx.rounding = decimal.ROUND_HALF_UP # modify the local context
+	print(round(Decimal('1.12345'), 4)) # Decimal('1.1235')
+# after exiting context manager, global context is automatically restored
+```
+
 ## Custom Classes
+- everything in Python is an object
+	- has a *type* (aka *class*)
+	- has *state*
+	- has *functionality*
+- for example, `[1, 2, 3, 4, 5]` is an object
+	- its *type* is `list` --> we say it's an *instance* of a `list`
+	- its *state* are the *elements* in the list
+	- `functionality` such as `.append`
+```python
+l1 = [1, 2, 3]
+l2 = ['a', 'b', 'c']
+```
+- two different objects
+- both instances of the `list` type
+- but different *state*
+```python
+l2.append('d') # affects `l2`, not `l1`
+```
 
 
 
