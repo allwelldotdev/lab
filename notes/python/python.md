@@ -4872,10 +4872,61 @@ decimal.getcontext()
 # Context(prec=28, rounding=ROUND_HALF_EVEN, Emin=-999999, Emax=999999, capitals=1, clamp=0, flags=[], traps=[InvalidOperation, DivisionByZero, Overflow])
 ```
 
+> There is a performance impact when using a `Decimal` objects than `float`s. Also, there is a storage impact - more memory is needed to store a `Decimal` object than a `float`. We can use `sys.getsizeof()` to see this. Like so:
+```python
+from sys import getsizeof
 
+getsizeof(0.1) # 24 bits
+getsizeof(Decimal('0.1')) # 104 bits - more than 4 times a float
+```
 
 ### Arithmetic Contexts
+- arithmetic contexts used in decimal calculations to define many things
+	- precision of intermediate calculations
+	- rounding algorithm
+- `decimal.getcontext()`
+	- returns the current context information
+	- `prec` --> precision (defaults to `28`)
+	- `rounding` --> the rounding algorithm (default `ROUND_HALF_EVEN)` and more...
+- we can change those definitions
+	- *globally*
+	- temporarily just for a section of code (using a context *manager*)
+#### Rounding Methods
+https://docs.python/org/3/library/decimal.html#rounding-modes
+- default is `ROUND_HALF_EVEN`
+	- rounds to nearest, with ties to nearest even integer
+		- `0.135` --> `0.14`
+		- `0.145` --> `0.14`
+- but can define other rounding methods `ROUND_HALF_UP`
+	- rounds to nearest with ties away from zero
+		- `0.135` --> `0.14`
+		- `0.145` --> `0.15`
+#### Global Context Changes
+- can modify `prec` and `rounding` in the *global* context
+	- context settings persist for the remainder of the program
+```python
+ctx = decimal.getcontext()
+ctx.prec = 5
+ctx.rounding = decimal.ROUND_HALF_UP
+```
+#### Temporarily Changing Context Settings
+- sometimes we want to temporarily change the context
+	- perform some operations using that context
+	- revert the context to its previous state
+- could change the *global* context
+```python
+ctx = getcontext()
+current_prec = ctx.prec
 
+ctx.prec = new_prec
+
+# perform operations
+ctx.prec = current_prec
+```
+- cumbersome
+- may even forget to switch back
+#### Using a Context Manager
+- much easier (and safer) to use a *context manager* 
 
 ## Custom Classes
 
