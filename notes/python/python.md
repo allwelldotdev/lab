@@ -5200,8 +5200,74 @@ class Circle:
 c = Circle(10)
 c.__dict___ # {'radius': 10}
 ```
-### Instance Methods
 
+> The instance creation that Python does for us when we write `Person()`, is actually broken down into a few steps:
+> 
+> 1. Python creates a new instance of `Person` - let's call that object `temp`
+> 2. Python calls `temp.__init__()` - i.e. `__init__` is a method bound to the newly created object
+> 
+> What's important to realize is that by the time `temp.__init__` is called, the new object (`temp`) already exists, and the `__init__` function is therefore a method bound to the new object.
+> 
+> So, if `__init__` is a method that is bound to some instance when it is called, how does it know what that instance is?
+> 
+> Python actually **injects** the instance object as the **first** argument of any method - here I called it `self`. This is a convention you should stick to, but we can name it whatever we want.
+
+### Instance Methods
+so far we know we can...
+- create instances from classes by calling them
+	- use `__init__` method to initialize instances
+	- add value attributes using dot notation
+- but how do we add functionality?
+	```python
+	c = Circle(10)
+	c.area() # math.pi * r ** 2
+	```
+	- `area` needs to be a *function* in the class
+		- *bound* to the *instance* when called with a dot notation
+---
+- exactly the same as the `__init__` function
+	- define a *function* in the class
+	- *first argument* will be the *instance*
+```python
+class Person:
+	def __init__(self, name):
+		self.name = name
+	
+	def say_hello(self):
+		return f'Hello, {self.name}'
+
+p = Person('Alex')
+p.say_hello() # 'Hello, Alex'
+```
+---
+- just like `__init__` method we can pass additional parameters to methods
+```python
+class Person:
+	def __init__(self, name):
+		self.name = name
+
+	def eat(self, food):
+		return f'{self.name} is eating {food.lower()}.'
+
+p = Person('Alex')
+p.eat('Broccoli') # 'Alex is eating broccoli.'
+```
+
+> Now we know how to create and initialize classes, as well as implement methods that can be used to calculate things, or even modify the internal state of the object.
+> 
+> This allows us to "package" up related functionality neatly in custom classes. (This is called _encapsulation_)
+
+### Special Methods
+- already seen `__init__`
+	- provides *special behavior* to our custom classes
+- there are many such methods that provide special behaviour
+	- they *start* and *end* with double underscores
+	- often referred to as *dunder* methods (so don't use this convention for your own method names!)
+#### Object String Representations
+```python
+l = [1, 2, 3]
+print()
+```
 
 
 
