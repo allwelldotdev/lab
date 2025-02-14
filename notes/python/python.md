@@ -5410,10 +5410,50 @@ m.pi # calls the method `pi()`, bound to `m` (e.g. `m.pi()`)
 ```python
 class Person:
 	def __init__(self, name):
-		self._name = name # notice the under
+		self._name = name # notice the underscore
+						  # - convention
+						  # - signifies `_name` is a private attribute to the class
+						  # - people using this class should not modify it directly
+
+	@property
+	def name(self):
+		return self._name
+```
+#### Read/Write Property
+- first define a getter
+- then define the setter
+```python
+class Person:
+	def __init__(self, name):
+		self._name = name
+
+	# all the property names 'must' be the same
+	@property
+	def name(self):
+		return self._name
+
+	@name.setter
+	def name(self, value):
+		self._name = value
+```
+#### Calculated Properties
+- properties are very general
+	- they are just methods
+	- they do not have to be be used just to return an attribute
+	- they can just calculate and return some value
+```python
+class Person:
+	def __init__(self, dob):
+		self.dob = dob
+
+	@property
+	def age(self):
+		age = <calc current age>
+		return age
 ```
 
-
+## 3rd Party Libraries
+### The `pytz` Library
 
 
 
