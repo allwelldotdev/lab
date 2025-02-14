@@ -5266,8 +5266,68 @@ p.eat('Broccoli') # 'Alex is eating broccoli.'
 #### Object String Representations
 ```python
 l = [1, 2, 3]
-print()
+print(l) # '[1, 2, 3]'
+
+class Circle:
+	def __init__(self, r):
+		self.radius = r
+
+c = Circle(10)
+print(c) # '<__main__.Circle object at 0x7fc2703b4b20>'
 ```
+- Python's default string representation of our custom objects
+---
+- can *override* this default behaviour
+	- via special dunder methods
+		- `__str__`
+		- `__repr__`
+- `str(c)` --> will call `c.__str__()`
+- `repr(c)` --> will call `c.__repr__()`
+- why two methods?
+	- `__str__` is used for string representation for users
+	- `__repr__` is used for string representation for developers (more details usually)
+- `print(c)` uses `__str__` if present
+	- otherwise `__repr__`
+	- otherwise default (class name & object id)
+#### Object Equality
+```python
+l1 = [1, 2, 3]
+l2 = [1, 2, 3]
+
+# not the same objects
+l1 is l2 # False
+
+# but they are equal
+l1 == l2 # True
+
+class Person:
+	def __init__(self, name):
+		self.name = name
+
+p1 = Person('Alex')
+p2 = Person('Alex')
+
+# not the same objects
+p1 is p2 # False
+p1 == p2 # False - this is incorrect, here we can use the `__eq__` dunder method
+```
+- we can override equality definition for our custom objects
+	- `__eq__` method
+```python
+class Person:
+	def __init__(self, name):
+		self.name = name
+	
+	def __eq__(self, other):
+		return self.name == other.name
+
+p1 = Person('Alex)
+p2 = Person('Alex)
+
+p1 == p2 # True - same as p1.__eq__(p2)
+```
+- in general `a == b` --> `a.__eq__(b)`
+### Properties
 
 
 
