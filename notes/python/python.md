@@ -5033,6 +5033,93 @@ class Person:
 			- `type(p)` --> `Person`
 			- and more
 ### Defining Classes
+- classes are like templates for creating objects
+	- objects has state and functionality
+	- we can define what the state and functionality is using a class
+		- every instance of that class will have that functionality
+		- but every instance has its own state
+---
+- class --> `Circle`
+	- state: `radius`
+	- functionality: `area()`, `perimeter()`
+```python
+circle_1 = Circle(radius=1)
+circle_2 = Circle(radius=2)
+```
+- two different circles
+	- each one has its *own* values for radius
+- but formula to calculate `area` and `perimeter` can be *common*
+	- it just needs access to the instance value for `radius`
+---
+- to define a class we use the `class` keyword
+```python
+class Circle:
+	# definition of class is indented 
+```
+- one (optional) part of the definition of a class is a *docstring*
+	- basically documentation of the class
+```python
+class Circle:
+	"""This class can be used to represent a circle and calculate
+	area and perimeter
+	"""
+```
+- this is a valid Python class
+---
+```python
+class Circle:
+	"""docs for class"""
+```
+- class does not do much
+	- but it still has quite a bit of functionality built in for us in Python
+```python
+Circle.__name__ # 'Cicle'
+Circle.__doc__ # 'docs for class'
+Circle.__class__ # Circle
+Circle.__class__ is Circle # True
+```
+- Python also makes the class *callable*
+---
+- `Circle` can be *called* to create *new instances* of that class
+```python
+c1 = Circle()
+c2 = Circle()
+```
+- two different *instances* of `Circle`
+	- `c1 is c2` --> `False`
+- the *type* of `c1` and `c2` is Circle
+	- `type(c1) is Circle` --> `True`
+- `c1` is an instance of `Circle`
+	- `isinstance(c1, Circle)` --> `True`
+---
+- we can *set* attributes directly on the instances
+```python
+c1 = Circle()
+c1.radius = 10
+
+c2 = Circle()
+c2.radius = 20
+```
+- we can *retrieve* the attribute from each instance
+	- `print(c1.radius)` --> `10`
+	- `print(c2.radius)` --> `20`
+---
+- we create *instances* of a class by *calling* the class
+- we can *set/get attributes* directly on the instances using *dot notation*
+	- to *create* and *initialize* a Circle instance
+  ```python
+	c1 = Circle()
+	c1.radius = 10
+	```
+	- these attributes exist in the instance *namespace* --> normally a *dictionary*
+  ```python
+	c1.__dict__ # {'radius': 10}
+	```
+	- *sometimes* the state is not in that dictionary (this is covered in a more advanced course)
+- but initializing the object state this way is cumbersome
+	- we'll see a better way soon!
+
+### Initializing Classes
 
 
 
