@@ -5120,6 +5120,88 @@ c2.radius = 20
 	- we'll see a better way soon!
 
 ### Initializing Classes
+- we've seen how to define custom classes
+	- we *call* the custom class to create new instances of that class
+	- but can we provide *initial* values when the class is created?
+- we've seen this before!
+	```python
+	d = Decimal('10.1')
+	```
+	- creates new `Decimal` instance
+	- initialized to `10.1`
+	- the initial value was passed in the *same call* used to *create* the instance
+---
+- could mimic this initialization somewhat
+```python
+class Circle:
+	"""Circle class"""
+
+def create_circle(radius):
+	c = Circle() # create the Circle instance (instantiation)
+	c.radius = radius # set the instance radius (initialization)
+	return c # return the initialized instance
+
+c1 = create_circle(10)
+
+type(c1) # Circle
+c1.__dict__ # {'radius': 10}
+```
+#### Recall Methods
+```python
+# two different instances of a list
+l1 = list('abc')
+l2 = list('def')
+
+# same `append` function
+l1.append('d')
+l2.append('g')
+# but operates on two different instances of a list
+l1 # ['a', 'b', 'c', 'd']
+l2 # ['d', 'e', 'f', 'g']
+```
+- `l1.append('d')`
+	- `append` is *bound* to `l1`
+- `l2.append('g')`
+	- `append` is *bound* to `l2`
+- `obj.func()`
+	- `func` is *bound* to `obj`, and is called a *method*
+#### The `__init__` Method
+- the `__init__` function is a special function that is called by Python when we create a new instance of a class
+```python
+class Circle:
+	def __init__(self):
+		print('__init__ called...')
+```
+- class creation: `Circle()` does *two* things
+	- create a *new instance* of the class, let's give it some name, `new_obj`
+	- calls the `__init__`function, passing `new_obj` as the *first argument*
+		- in that sense, `__init__` is a *method bound* to `new_obj`
+---
+- `__init__` is a function defined inside the class
+	- but a function nonetheless
+- we can define additional parameters!
+	- recall what we did here
+  ```python
+	def create_circle(radius):
+		c = Circle()
+		c.radius = 10
+		return c
+	```
+	- *same thing!*
+  ```python
+	class Circle():
+		def __init__(self, radius):
+			self.radius = radius
+	```
+- note that the name `self` is not a special name - it is just convention
+	- could name it anything else
+- specify this additional parameter when we create the instance
+```python
+c = Circle(10)
+c.__dict___ # {'radius': 10}
+```
+### Instance Methods
+
 
 
 
