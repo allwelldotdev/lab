@@ -5327,9 +5327,91 @@ p2 = Person('Alex)
 p1 == p2 # True - same as p1.__eq__(p2)
 ```
 - in general `a == b` --> `a.__eq__(b)`
+
+> There are a lot of these "special" methods and attributes in Python - they are usually called **dunder** methods (they start and end with a double underscore).
+> 
+> For that reason, you should never create custom methods with that naming convention - Python kind of reserves that for itself - you have a lot of choices for your method and attribute names, just stay away from dunder names.
+
 ### Properties
+- we've see how to define custom classes and how to
+	- define instance methods
+	- get/set attributes directly on the instance
+  ```python
+	# these are sometimes called 'bare' attributes
+	c.radius = 10
+	self.radius = 10
+	```
 
+```python
+class Person:
+	def __init__(self, name):
+		self.name = name
 
+	def say_hello(self):
+		return f'Hello, my name is {self.name}'
+
+alex = Person('Alex')
+alex.say_hello() # 'Hello, my name is Alex'
+alex.name = 'Eric'
+alex.say_hello() # 'Hello, my name is Eric'
+```
+---
+- we've been accessing these attribute values *directly*
+	- we have no control over what the assigned values are
+	- we have no control on formatting or modifying attribute when it is read
+- sometimes, we do!
+- we *can* control things in the `__init__` when the instance is *created*
+```python
+class Sale:
+	def __init__(self, quantity):
+		if not isinstance(quantity, int):
+			raise ValueError('Must be an int')
+		self.quantity = quantity
+```
+---
+- *cannot* control how it is set subsequently
+```python
+class Sale:
+	def __init__(self, quantity):
+		if not isinstance(quantity, int):
+			raise ValueError('Must be an int')
+		self.quantity = quantity
+
+s = Sale(10)
+s.quantity = "zero" # this works
+```
+#### Properties
+- a property is like an attribute, but 
+	- the value is set via a method (setter)
+	- the value is retrieved via a method (getter)
+- if `name` is a *property* in the `Person` class, and `p` is an instance
+- `p.name = 'Alex'`
+	- calls the *setter* method for `name`, passing 'Alex'
+- `print(p.name)`
+	- calls the `getter` method for `name`, returning a value
+#### Read-Only Properties
+- can create read-only properties
+	- define a getter method
+	- but don't define a setter
+(write-only properties are possible, but not common, and a little harder to achieve)
+#### Creating a Read-Only Property
+- define a *method*, with the *name* of the property
+- *decorate* the method with `@property`
+```python
+class Math:
+	@property
+	def pi(self): # this is a getter method
+		return 3.14
+
+m = Math()
+m.pi # calls the method `pi()`, bound to `m` (e.g. `m.pi()`)
+```
+
+```python
+class Person:
+	def __init__(self, name):
+		self._name = name # notice the under
+```
 
 
 
