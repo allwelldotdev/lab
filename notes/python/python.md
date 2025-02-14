@@ -4957,6 +4957,82 @@ l2 = ['a', 'b', 'c']
 ```python
 l2.append('d') # affects `l2`, not `l1`
 ```
+#### Methods and Bindings
+- why does `l2.append('d')` not affect `l1`?
+	- `append` is a function that works on a *specific instance* of the class
+		- `append` is called a *method* of the `list` class
+	- when we call the `append` method: `l2.append('d')`
+		- the *method* is *bound* to the object `l2`
+			- basically it will operate on `l2`
+- in general `append` will operate on whatever `list` object is specified before the dot
+	- `l1.append(10)`
+	- `l2.append('c')`
+#### Custom Classes
+- we can define our own custom types (classes)
+	- instances of those classes will have
+		- a *type* (the custom type we created)
+		- some *state* (we can store values specific to the *instance*)
+		- *functionality* (methods that are *functions bound to the instance*)
+#### Initializers (aka. Constructors)
+- when we create a *new instance* of a class
+	- often want to create some initial state
+		- usually by passing arguments to the "creation" phase
+	- this is called the *initialization* phase
+- creation process is started by *calling* the class (type)
+```python
+a = tuple([1, 2, 3])
+```
+- we are *calling* the `tuple` class (using `()`)
+	- passing it an argument: `[1, 2, 3]`
+	- call *returns* a *new* `tuple` instance, *initialized* with the elements `1, 2, 3`
+---
+- every object creation follows this basic principle
+```python
+reader = csv.reader(f, dialect=custom_dialect)
+```
+- *create* an instance of the `csv.reader` class by calling it
+- pass some arguments used for *initialization* (file and dialect)
+- call returns an initialized new *instance* of `reader`
+```python
+d = Decimal('1.2345')
+```
+- *create* an instance of the `Decimal` class by *calling* it
+- pass some arguments used for *initialization* (number string)
+- call returns an initialized new *instance* of `Decimal`
+#### Classes as Blueprints
+- classes are often referred to as *blueprints* for creating objects
+	- a single class can be used to create many instances of that class
+		- each instance will have its *own state*
+		- the functions defined in the class become *methods bound* to the *instance* because these functions are *bound* to the instance
+			- *they can access the state of the instance*
+- suppose we have a `Person` class defined
+	- we wrote our class so the initializer requires first and last names
+```python
+john = Person('John', 'Cleese')
+eric = Person('Eric', 'Idle')
+```
+- we implemented a `greet()` method to say hello
+```python
+john.greet() # 'John says hi!'
+eric.greet() # 'Eric says hi!'
+```
+#### Creating Custom Classes in Python
+- use the `class` keyword
+```python
+class Person:
+	'''A simple Person class'''
+```
+- code above is as simple as a class can be
+	- but Python "injects" a lot of functionality into that class for us
+		- it is *callable*
+			- `p = Person()`
+			- this created a new *instance* of `Person`
+		- `Person` and `p` have some state Python defined for us
+			- `Person.__doc__` --> `'A simple Person class'`
+			- `Person.__name__` --> `'Person'`
+			- `type(p)` --> `Person`
+			- and more
+### Defining Classes
 
 
 
