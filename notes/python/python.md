@@ -5453,6 +5453,50 @@ class Person:
 ```
 
 ## 3rd Party Libraries
+- in this and the next sections we cover some popular 3rd party libraries
+- there are thousands of 3rd party libraries
+	- we cover only a tiny subset
+- those libraries can have a ton of functionality
+	- we only scratch the surface here
+- but, provided are all the tools and knowledge to research further
+	- read the docs
+	- read blog posts and see what other libraries are popular for your needs
+---
+3rd party libraries that are covered:
+- `pytz` --> dealing with time zones and DST
+- `dateutil` --> provides an "intelligent" datetime string parser 
+- `requests` --> used to query web servers and web APIs (over http(s))
+- `numpy` --> highly efficient implementations for array processing and math computations
+- `pandas` --> used for data manipulation and analysis
+- `matplotlib` --> used for creating plots and charts
+---
+- these are 3rd party libraries
+	- they need to be installed
+	  ```python
+		pip install
+		```
+	- to `pip install` you need to know the package name
+		- library docs have that information
+---
+- create a virtual environment
+```python
+# for Linux
+python3 -m venv env_name
+# for Windows
+py -m venv env_name
+```
+- activate virtual environment
+```python
+# for Linux
+source env_name/bin/activate
+# for Windows
+.\env_name\Scripts\activate
+```
+- install 3rd party library into the virtual environment 
+```python
+pip install pytz
+```
+
 ### The `pytz` Library
 
 
