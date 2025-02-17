@@ -4408,7 +4408,7 @@ print('\\') # \
 csv.register_dialect(
 	'pdv',
 	delimiter='|',
-	quotechat="'",
+	quotechar="'",
 	skipinitialspace=True,
 	escapechar='\\'
 )
@@ -4458,7 +4458,7 @@ data = [
 csv.register_dialect(
     'pdv', 
     delimiter='|', 
-    quotechar = "'", 
+    quotechar= "'", 
     escapechar="\\",
     doublequote=False # this enforces the csv.writer to use the `escapechar` instead of the `doublequote` for `quotechar`
 )
