@@ -5800,19 +5800,45 @@ API --> Application Programming Interface
 		- delete customer
 
 ![resources for REST APIs](../assets/Pasted%20image%2020250219143338.png)
-
 #### API Methods
 - since humans design / write these APIs, things are not always consistent!
-	- *GET*
-		- retrieves resource(s)
-		- often used with query args
-	- *POST*
-		- used to create a resource
-		- issuing the same POST request twice can end up creating two resources
-	- *PUT*, *PATCH*
-		- usually used for updating an existing resource
-	- *DELETE*
-		- delete a resource
+- *GET*
+	- retrieves resource(s)
+	- often used with query args
+- *POST*
+	- used to create a resource
+	- issuing the same POST request twice can end up creating two resources
+- *PUT*, *PATCH*
+	- usually used for updating an existing resource
+- *DELETE*
+	- delete a resource
+#### Status Codes
+- making an HTTP request (GET, POST, etc) always returns a *status code*
+	- plus whatever else the API specifies
+- *2xx* --> success
+	- `200` --> OK (request was successful)
+	- `201` --> Created (resource created successfully)
+	- `202` --> Accepted (request accepted, but not finished processing (async))
+- *4xx* --> you did something wrong
+	- `400` --> Bad Request (server did not understand the request)
+	- `401` --> Unauthorized (technically this means "*not authenticated*")
+	- `403` --> Forbidden (this means not authorized)
+	- `404` --> Not Found (server cannot find specific resource)
+- *5xx* --> Server had an issue
+	- usually not your fault!
+- many more here: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+
+> `429` status code is an error code that means "Too Many Requests" - in other words, the user has sent too many requests in a given amount of time. Intended for use with rate-limiting schemes.
+
+#### Finnhub Stock API
+- https://finnhub.io
+- provides free and paid tiers
+	- REST API
+	- uses JSON
+	- mostly GET requests
+- sign up for the free tier and try it out
+### The `requests` Library
+
 
 
 
