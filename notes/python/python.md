@@ -5498,6 +5498,47 @@ pip install pytz
 ```
 
 ### The `pytz` Library
+- used for dealing with time zones
+	- implements the Olson (or IANA) database
+		- supports *DST* (daylight savings times)
+		- uniform naming convention
+		  ```
+			US/Eastern
+			America/New_York
+			Europe/Paris
+			```
+			- *Area*/*Location*
+			- goes back to *1970* (Unix Epoch) 
+---
+- https://pythonhosted.org/pytz/
+- `pip install pytz`
+- `import pytz`
+- `pytz.all_timezones` --> returns a list of all named time zones
+- internally uses Python's `tzinfo`
+	- but with some extras used for DST
+	- a `pytz` timezone can be used instead of a `tzinfo` object
+#### Looking up a Time Zone
+- can retrieve a time zone from its name
+	- `pytz.timezone('US/Eastern')`
+	- `pytz.timezone('UTC')`
+		- `pytz.UTC`
+- can use these time zones instead of Python's `tzinfo`
+```python
+datetime(
+	2020, 5, 15, 10, 0, 0,
+	tzinfo=pytz.timezone('US/Eastern')
+)
+```
+#### Making a naive `datetime` aware
+- use `pytz` time zone's `localize` method
+	```python
+	tz_ny = pytz.timezone('America/New_York')
+	tz_ny.localize(naive_dt)
+	```
+	- `pytz` will figure out if it needs to use DST or not!
+	- this just *attaches* the time zone information to the naive datetime
+		- *it does not convert the datetime to the new timezone*
+		- i.e. it assumes the datetime was given in the timezone that is being attached.
 
 
 
