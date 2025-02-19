@@ -5549,7 +5549,63 @@ datetime(
 <py_tz_timezone>.fromutc(<naive datetime>)
 ```
 
+> In the special case where we are **not** converting a UTC aware datetime to another timezone, we can use a slightly more efficient method in `pytz`, the `fromutc` available in `pytz` time zone objects:
+```python
+import pytz
+from datetime import datetime
+
+tz_chicago = pytz.timezone('US/Chicago')
+tz_chicago.fromutc(datetime.utcnow()) # returns the current datetime converted from a naive utc datetime to an aware chicago datetime
+
+# the benefit of this is that we don't have to localize the naive utc time first
+# before converting its tzinfo
+```
+
 ### The `dateutil` Library
+- https://dateutil.readthedocs.io/en/stable/
+- `pip install python-dateutil`
+- `parser`
+	- ability to automatically parse dates and times from string in various formats
+	- this is what we'll look at in this course
+but it has a lot more...
+- computing dates based on advanced recurrence formulas
+	- generate sequence of dates weekly on Tuesday and Thursday for 5 weeks
+	- generate sequence of dates every weekday for 3 months
+		- very similar to what you might see when you set recurring calendar meetings
+#### Basic Parsing Functionality
+```python
+from dateutil import parser
+
+parser.parse('2020-01-01T10:30:00')
+parser.parse('2020-01-01T10:30:00 am')
+parser.parse('12/31/2020')
+parser.parse('31/12/2020')
+```
+#### Ambiguous Month/Day
+```
+4/3/2020 or 2020/4/3
+```
+- is this *Month/Day* or *Day/Month*?
+- parser *default* assumes *Month/Day*
+	- i.e. month is specified first
+- can override this using `dayfirst` keywork argument
+	```python
+	parser.parse('2020/4/3') # April 3, 2020
+	parser.parse('2020/4/3', dayfirst=True) # March 4, 2020
+	```
+	- raises `ParserError` exception if date is invalid or unrecognizable
+#### Fuzzy Parsing
+- parser can eve attempt parsing strings that contain extra information
+	- *March the 4th, 2020*
+	- default parsing will not work
+- use `fuzzy_with_tokens=True` argument when calling `parse`
+	- returns a tuple *(parsed datetime, ignored text elements)*
+	- raises `ParserError` exception if date is invalid or unrecognizable
+- it's quite good, but cannot handle just anything
+	- *May the fourth, 2020* is not recognized
+
+### JSON Data
+
 
 
 
