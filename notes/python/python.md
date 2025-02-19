@@ -5838,6 +5838,67 @@ API --> Application Programming Interface
 	- mostly GET requests
 - sign up for the free tier and try it out
 ### The `requests` Library
+- python has a module in the standard library for making http requests
+	- slightly low level interface (think time vs datetime)
+	- 3rd party library: *Requests: HTTP for Humans*
+		- pretty much standard
+		- even Python's own docs suggest it!
+- check out the docs: https://requests.readthedocs.io/en/master/
+```
+pip install requests
+```
+#### Making Requests
+- all standard methods/verbs are implements as functions
+```python
+requests.get(...)
+requests.post(...)
+requests.put(...)
+# etc.
+```
+- common arguments
+	- `url` --> the URL request will be sent to
+	- `params` --> dictionary of query parameters (key = value)
+	- `json` --> JSON sent in request (usually for POST, PUT, etc.)
+	- `headers` --> dictionary of headers (key = value)
+	- and many more...
+#### Receiving Responses
+- result of making a request (get, post, etc.) is a `Response` object
+- it has the following properties (amongst others):
+	- `status_code` --> e.g. `200`, `403`
+	- `reason` --> e.g. `OK`, `Forbidden`
+	- `text` --> content of the response
+	- `json` --> returned *deserialized* JSON (if any) --> so a `dict`
+	- `headers` --> dictionary of headers received from server
+	- `cookies` --> cookies received from server
+---
+*Example:* Google search results (HTML response)
+- search:
+	- search terms: python http requests
+	- number of results: 5
+	- https://www.google.com/search?q=python+http+requests&num=5
+- using `requests` library to retrieve the HTML search results
+```python
+response = requests.get(
+	 url='https://www.google.com/search',
+	 params={'q': 'python http requests', 'num': 5}
+)
+
+response.status_code # 200
+response.reason # OK
+response.text # HTML page broswer would display
+```
+- calling an undefined URL
+```python
+response = requests.get(
+	 url='https://www.google.com/search2',
+	 params={'q': 'python http requests', 'num': 5}
+)
+
+response.status_code # 404
+response.reason # Not Found
+```
+
+## NumPy
 
 
 
