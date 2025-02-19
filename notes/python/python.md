@@ -5677,7 +5677,142 @@ since JSON is a standard, Python `loads` can handle any standard JSON object
 		- those are not serialized by default, and if we try, we'll get an exception
 		- there is a way to specify custom encoders
 			- beyond the scope of this course (we'll look at this when we study JSON in-detail as well as Pydantic)
+			- they rely on something called *Inheritance*
+
+> When we use `json.dumps()` there's an `indent` parameter that lets us add whitespace to the display of the serialized JSON data. Like so:
+```python
+print(json.dumps(<dict>, indent=2)) # indents the JSON data for easier human comprehension
+```
+
+> There is a way to specify a simple custom encoder, using the named argument `default` in the `dumps` function. This argument can be used to specify a function that will get called when the default encoder cannot serialize the object. That function should either return the encoded value, or raise a `TypeError`. Like so:
+```python
+d = {
+	"name": "Isaac Newton",
+	"dob": datetime(1643, 1, 4)
+}
+
+def my_encoder(obj):
+    print(f'my_encoder({obj}) called...')
+    if isinstance(obj, datetime):
+        return obj.isoformat()
+    raise TypeError  # only handles datetimes
+
+json.dumps(d, default=my_encoder) # returns...
+# my_encoder(1643-01-04 00:00:00) called...
+# '{"name": "Isaac Newton", "dob": "1643-01-04T00:00:00"}'
+```
+
 ### REST APIs
+#### What is an API?
+API --> Application Programming Interface
+
+![an application programming interface](../assets/Pasted%20image%2020250219135421.png)
+
+- enables your application to *interact* with another application
+- a Python class exposes an API
+	- methods, properties
+
+![python code and class interface](../assets/Pasted%20image%2020250219135459.png)
+
+- these days many applications are "in the cloud"
+	- CRM
+	- Payroll
+	- trading platforms
+	- Automated AI
+- they expose an API available via the web using http(s)
+	- web sites
+		- request data using a URL
+		- this is called a *GET* request (fetches data)
+
+![websites performing get requests to a server](../assets/Pasted%20image%2020250219135818.png)
+
+#### How a browser retrieves a web page 
+
+![browser retrieves webpage](../assets/Pasted%20image%2020250219140026.png)
+
+- also supports *query arguments*
+	- basically like named arguments in Python functions
+	  ```
+		GET https://mysite.com/curentTemp?city=Chicago&units=metric
+		```
+- web server at `mysite.com` waits to receive these requests
+- browser sends request to web server
+- server sends back data (often HTML, but does not have to be!)
+- browser displays returned data
+#### Sending Data
+- can also send data to a web server
+	- e.g. user registration data
+- different methods or verbs --> e.g. *POST*
+- specific "PATH" on web server we need to send the data to (specific *URL*)
+	- data is attached when request is sent by browser
+- web server receives this data and does something with it
+	- and usually return a response of some kind
+#### In general...
+- web servers listen for incoming requests
+- request contains
+	- *method* `GET`, `POST`, ...
+	- *URL* --> specifies exactly what we are trying to "access"
+	- *query arguments* (maybe)
+	- "attached" *data* (maybe)
+- the set of what URLs, query arguments, methods and data a web server understands
+	- is essentially an API
+- data is not necessarily HTML - can be *JSON*, *XML*, ...
+#### REST APIs
+- REST APIs are special types of APIs
+	- REST has to do with how they are implemented and their behaviour
+	- as users of the API we don't actually care if it's REST or something else!
+- one of the fundamental characteristics of a REST API is that calls are independent of each other (**stateless**)
+	- call to API does not rely on remembering how you interacted with it in the past
+	- not quite the same as web sites
+		- log in
+		- now you can access pages on the site
+			- web server remembers who you are 
+				- **stateful**
+#### Authentication / Authorization
+- REST APIs are generally secured
+	- you need to be *authenticated* --> web server needs to know *who you are*
+		- usually a *secret token* you pass in the request
+			- in something called *headers*
+				- just an extra "bucket" of key-value data that can be sent/received along with request
+	- you also need to be *authorized* to perform the request
+		- you may be authorized to read some data
+		- but you may not be authorized to create/delete that data
+*Authentication* --> establishes who you are to the system you are interacting with
+*Authorization* --> governs what you can and cannot do in the system
+#### API Data Formats
+- most modern APIs use *JSON* for sending/receiving data 
+	- sometimes uses *XML*, or even proprietary formats
+
+![api data formats](../assets/Pasted%20image%2020250219142921.png)
+
+#### Resources
+- REST APIs allow us to interact with entities, called *resources*
+	- *bank account*
+		- create new account
+		- list accounts for specific customer
+		- get balance
+		- deposit, withdraw
+		- delete the account
+	- *customer*
+		- create new customer
+		- get customer info
+		- update customer info
+		- delete customer
+
+![resources for REST APIs](../assets/Pasted%20image%2020250219143338.png)
+
+#### API Methods
+- since humans design / write these APIs, things are not always consistent!
+	- *GET*
+		- retrieves resource(s)
+		- often used with query args
+	- *POST*
+		- used to create a resource
+		- issuing the same POST request twice can end up creating two resources
+	- *PUT*, *PATCH*
+		- usually used for updating an existing resource
+	- *DELETE*
+		- delete a resource
 
 
 
