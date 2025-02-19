@@ -4460,7 +4460,7 @@ csv.register_dialect(
     delimiter='|', 
     quotechar= "'", 
     escapechar="\\",
-    doublequote=False # this enforces the csv.writer to use the `escapechar` instead of the `doublequote` for `quotechar`
+    doublequote=False # this enforces the csv.writer to use the `escapechar` instead of the `double-doublequote` for `quotechar`
 )
 ```
 
@@ -5605,6 +5605,81 @@ parser.parse('31/12/2020')
 	- *May the fourth, 2020* is not recognized
 
 ### JSON Data
+- *J*ava*S*cript *O*bject *N*otation
+- it is a *simple* way of representing objects using just strings
+	- very easy to transmit strings
+	- over a network, as a text file, etc.
+- JSON is a lightweight *standard* that we can use
+	- *encode* an object into a string --> *serialization*
+	- *decode* a JSON string into an object --> *deserialization*
+- most often used when transmitting data over the web (e.g. REST APIs)
+---
+- JSON is very simple
+	- easy for humans to read and write JSON
+	- easy for computers to parse and generate
+	- it is a pure text format
+	- language independent (e.g. Python, C++, C#, JavaScript, Java, etc)
+---
+what does JSON consist of? JSON consists of:
+- objects --> *unordered* `key:value` pairs delimited by `{ }` (*dictionary*)
+- array --> *ordered* list elements separated by `,` and delimited by `[ ]` (*list*)
+- values
+	- numbers (integer or with decimal point)
+	- strings, delimited by double quotes `"..."`
+	- boolean `true` or `false` (note the *lowercase*!) 
+	- `null` (*None*)
+	- objects --> so objects can contain other objects, arrays
+	- array --> arrays can contain other arrays, objects
+- basically JSON looks like a Python dictionary!
+Example:
+```python
+''' # it's a string
+{ # root is an object
+	"firstName": "Eric", # key:value pairs, key must be a string
+	"lastName": "Smith", # strings must be double-quote delimited
+	"address": { # value is another object
+		"country": "USA",
+		"state": "New York",
+	},
+	"age": 28,
+	"favouriteNumbers": [42, 3.14], # value is a list
+	"likesSushi": false,
+	"driversLicense": null
+}
+'''
+```
+---
+- white spaces (spaces, tabs, newlines) do not matter
+```python
+'''
+{
+	"firstName": "Eric",
+	"lastName": "Smith"
+}
+'''
+# is the same as...
+'''{"firstName": "Eric", "lastName": "Smith"}'''
+```
+- but which one is more human-readable?
+- note the stylistic difference: `camelCase` vs `snake_case`
+	- of course, they're just strings, so you can use whatever you want
+#### Deserializing JSON (decoding)
+- Python standard library `json` module
+	- `json.loads(json_string)`
+		- *parses* a JSON string and returns a `dict` object
+since JSON is a standard, Python `loads` can handle any standard JSON object
+#### Serializing JSON (encoding)
+- `json.dumps(dict)` --> returns a JSON string
+- have to be more careful here
+- basic JSON data types are very simple: `int`, `float`, `str`, `bool`, `None`
+	- Python has a far richer set of data types
+		- `datetime`, `Decimal`, custom classes, etc.
+		- those are not serialized by default, and if we try, we'll get an exception
+		- there is a way to specify custom encoders
+			- beyond the scope of this course (we'll look at this when we study JSON in-detail as well as Pydantic)
+### REST APIs
+
+
 
 
 
