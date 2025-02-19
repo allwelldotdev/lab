@@ -3996,7 +3996,7 @@ strptime(s, "%m/%d/%Y %I:%M:%S %p") # returns :
 
 > `gmtime` ignores the non-integer portion (fractional seconds) of the argument.
 > 
-> We can access individual fields of this `time_struct` structure, using either positional indexes, or the property names (this structure is something called a **named tuple** - a tuple of values, but where each element of the tuple can be accessed by name also).
+> We can access individual fields of this `time_struct` structure, using either positional indexes, or the property names (this structure is something called a [[advanced_python-functional.md#named tuples|named tuple]] - a tuple of values, but where each element of the tuple can be accessed by name also).
 ```python
 from time import gmtime, time
 current = gmtime(time())
@@ -4199,7 +4199,7 @@ d1.astimezone(timezone.utc) # datetime(2020, 05, 15, 17, 30, 00, tzinfo=timezone
 		- difficult!
 	- Olson Database (or IANA time zone database)
 		- https://en.wikipedia.org/wiki/Tz_database
-	- the `pytz` 3rd party library (we'll come back to this later)
+	- the [`pytz`](#The%20`pytz`%20Library) 3rd party library (we'll come back to this later)
 
 ### Custom Representations
 - recall the `time` module
@@ -4235,7 +4235,7 @@ as well as this:
 
 '2020-05-15T22:30:00-05'
 ```
-> If we try to parse those examples, we'll get an `Invalid isoformat string` `ValueError` message. This is why the `strptime()` method in `datetime.datetime` is useful. That said, there are 3rd party libraries such as `dateutil` that help us handle this much better.
+> If we try to parse those examples, we'll get an `Invalid isoformat string` `ValueError` message. This is why the `strptime()` method in `datetime.datetime` is useful. That said, there are 3rd party libraries such as [`dateutil`](#The%20`dateutil`%20Library) that help us handle this much better.
 
 ## CSV Module
 - [earlier](#Reading%20Text%20Files) we saw how to read and write text files
@@ -5540,7 +5540,17 @@ datetime(
 	- this just *attaches* the time zone information to the naive datetime
 		- *it does not convert the datetime to the new timezone*
 		- i.e. it just assumes the datetime was given in the timezone that is being attached.
-#### 
+#### Converting Aware `datetime` to Other Time Zones
+- once we have an *aware* datetime we can convert it to another timezone
+	- use the `astimezone` method of the `datetime` object
+		- but because we are using `pytz` timezone objects, conversions work fine, including DST calculations
+- if we start with a naive UTC time, we can directly transform it to a specific timezone
+```python
+<py_tz_timezone>.fromutc(<naive datetime>)
+```
+
+### The `dateutil` Library
+
 
 
 
