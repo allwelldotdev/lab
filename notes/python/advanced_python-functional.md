@@ -81,7 +81,7 @@ from inspect import ismethod, isfunction, isroutine # and many more...
 ismethod(obj), isfunction(obj), isroutine(obj)
 ```
 what's the difference between a *function* and a *method*?
-- classes and object have *attributes* - an object that is bound (to the class or the object)
+- classes and objects have *attributes* - an object that is bound (to the class or the object)
 - an attribute that is *callable*, is called a *method*
 ```python
 def my_func():
@@ -126,7 +126,7 @@ def my_func(a, b=1):
 
 inspect.getcomments(my_func) # '# TODO: Implement function\nsome additional notes'
 ```
-- many IDE's support the **TODO** commend to flag functions and other callables
+- many IDE's support the **TODO** comment to flag functions and other callables
 - note that this is not the same as docstrings
 #### Callable Signatures
 ```python

@@ -5337,7 +5337,7 @@ p1 == p2 # True - same as p1.__eq__(p2)
 	- define instance methods
 	- get/set attributes directly on the instance
   ```python
-	# these are sometimes called 'bare' attributes
+	# these are sometimes called 'bare' or 'regular' attributes
 	c.radius = 10
 	self.radius = 10
 	```
@@ -5396,7 +5396,8 @@ s.quantity = "zero" # this works
 (write-only properties are possible, but not common, and a little harder to achieve)
 #### Creating a Read-Only Property
 - define a *method*, with the *name* of the property
-- *decorate* the method with `@property`
+- *decorate* the method with `@
+- `property` is a built-in class for creating *managed* attributes
 ```python
 class Math:
 	@property
@@ -5538,7 +5539,8 @@ datetime(
 	- `pytz` will figure out if it needs to use DST or not!
 	- this just *attaches* the time zone information to the naive datetime
 		- *it does not convert the datetime to the new timezone*
-		- i.e. it assumes the datetime was given in the timezone that is being attached.
+		- i.e. it just assumes the datetime was given in the timezone that is being attached.
+#### 
 
 
 
