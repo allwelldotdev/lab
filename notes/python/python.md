@@ -5989,6 +5989,135 @@ pip install numpy
 
 > Learn more here: https://numpy.org/doc/stable/user/basics.types.html
 
+#### Vectorization
+- suppose we want to multiply every element of one array by the corresponding element in another array
+```python
+a = [1, 2, 3, 4]
+b = [10, 20, 30, 40]
+# where result is [10, 40, 90, 160]
+
+# we can use a loop
+result = []
+for i in range(4):
+	result.append(a[i] * b[i])
+# or a list comprehension
+[x * y for x, y in zip(a, b)]
+```
+- at every loop, Python must:
+	- lookup the operand objects
+	- determine the types
+	- try to perform the operation (if `a * b` does not work, it tries `b * a`)
+- `C` does not have to do all that work --> *significantly faster*
+---
+- NumPy implements things in such a way that
+	- given `a` and `b` are NumPy arrays (`ndarray`)
+	- given a supported function or operator
+		- `a + b` --> `add(a, b)`
+		- `a * b` --> `multiply(a, b)`
+		- `a / b` --> `divide(a, b)`
+		- `sin(a) / sin(b)` --> `divide(sin(a), sin(b))`
+	- NumPy pushes the loop and calculations down into `C`
+	- this is called *vectorization*
+		- these functions are called *universal functions (ufunc)*
+#### Why are Arrays Important?
+- most data we deal with is represented as arrays
+	- often multi-dimensional arrays
+- an image is a 2-dimensional array of colored pixels
+	- each pixel is an array, e.g. `[red, green, blue, alpha]`
+- a video is an array of images (a bit oversimplified)
+- audio is encoded into arrays
+- stock quotes, tick data are arrays of data
+- an Excel spreadsheet is a (2-dimensional) array
+#### NumPy is a Huge Library 
+- lots of universal functions
+	- financial, math, stats, linear algebra, sorting, sampling, Fourier transforms (discrete) and more...
+	- we'll just look at a few of these
+- here, we take an introductory look at array creation and manipulation (indexing, slicing, fancy indexing, masking, reshaping)
+
+> Learn more here: https://numpy.org/doc/stable/
+
+- it also is the foundation of the *Pandas* library (dealing with data sets)
+### Creating Arrays from Lists
+- first, we import NumPy
+```python
+import numpy
+# typically everyone aliases it for less typing
+import numpy as np
+```
+- the array type is `np.ndarray` (n-dimensional array)
+---
+how do we create arrays? we can convert a python list into a numpy array like so:
+```python
+a = np.array([1, 2, 3])
+type(a) # ndarray
+```
+- but what type was used for the elements themselves?
+	- remember that in Python we use the C types, not the Python types
+		- also array is homogeneous, i.e. every element has same data type
+  ```python
+	# to check the C data type of a numpy we use:
+	a.dtype # int64
+	```
+	- NumPy analyzes the data and picks something appropriate
+	- in this case a 64-bit integer
+	- for floats it defaults to 64-bit floats
+#### Specifying the Element Data Type 
+- we can override that default and select a specific type
+```python
+a = np.array([1, 2, 3], dtype=np.int8)
+a.dtype # int8
+```
+- **CAREFUL !!!**
+	- do not use a type that is too restrictive
+	- weird things happen when integer in list is too large for specified `dtype`
+	- floats in a list will be truncated if `dtype` is set to an integer
+- why not just always use `int64`?
+	- memory efficiency for extremely large datasets
+#### Multi-Dimensional Python Lists
+- in this course we'll stick to two-dimensional arrays
+
+![multi-dimensional arrays](../assets/Pasted%20image%2020250220225342.png)
+
+- only using 2 dimensions is not particularly restrictive
+
+![two-dimensional arrays not restrictive](../assets/Pasted%20image%2020250220225415.png)
+
+#### Converting Multi-Dimensional Lists to Arrays 
+- works exactly the same way as with 1-D arrays
+	- but again, remember that *all* elements in the array must be of the *same type*
+```python
+l = [
+	[1, 0, 0],
+	[0, 1, 0],
+	[0, 0, 1]
+]
+
+m = np.array(l)
+m.dtype # int64
+
+m = np.array(l, dtype=np.uint8)
+m.dtype # int8
+```
+#### Array Shape 
+- *shape* of an array is *number of elements* in each *dimension*
+```python
+[
+	[1, 2, 3], 
+	[4, 5, 6]
+]
+# 2 dimensions
+# first dimension has 2 elements
+# second dimention has 3 elements
+# (2, 3)
+
+[1, 2, 3]
+# 1 dimension
+# first dimension has 3 elements
+# (3, )
+```
+- use the `shape` attribute of the `ndarray` objects
+### Creating Arrays from Scratch
+
 
 
 
