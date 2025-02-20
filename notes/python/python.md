@@ -5899,6 +5899,95 @@ response.reason # Not Found
 ```
 
 ## NumPy
+- *NumPy* is a widely used library, mainly used for working with arrays
+	- very fast
+	- memory efficient
+	- very flexible
+```python
+pip install numpy
+```
+
+> Learn more at https://numpy.org/
+
+#### What are Arrays?
+- basically lists
+	- a Python `list` is a type of array
+	- elements are indexed --> `arr[0]`, `arr[1]`, `...`
+	- array can be sliced --> `arr[start:stop:step]`
+	- variable size --> can add/remove elements from array
+	- heterogenous --> elements can have different data types
+- a NumPy array (`ndarray`)
+	- fixed size
+	- homogeneous
+#### Python `list` vs. NumPy `ndarray`
+- these are some of the similarities and differences
+- `ndarray`
+	- fixed size
+	- can be reshaped
+	- homogeneous
+	- elements have specialized, restricted data types
+- `list`
+	- variable size
+	- heterogeneous
+	- elements are Python objects
+
+![python list vs numpy ndarray](../assets/Pasted%20image%2020250220214349.png)
+
+#### NumPy Efficiency
+- more *space efficient* than Python
+- array manipulation and calculations are *much faster*
+	- *vectorization*
+- but at a cost
+	- fixed size
+		- once created, *cannot add/remove* elements
+		- elements *can* be *replaced*
+	- homogeneous
+		-  all elements must be the *same type*
+		- even in multi dimensional arrays (arrays of arrays)
+	- data types
+		- it uses data types from underlying *C* language
+		- memory efficiency and vectorization
+#### Integer Sizes
+- integers are stored as sequences of *bits* (`0`s and `1`s)
+- number of bits determines how large the integer can be
+- 4 bits - largest number --> $1111_{2}$ = $2^{0}$ + $2^{1}$ + $2^{2}$ + $2^{3}$ = $15$
+	- range is: `[0, 15]` (16 numbers) 
+	- but may want *negative* numbers
+	- in that case, one bit is reserved to keep track of the sign
+		- 3 bits --> $(111)_{3}$ = $2^{0}$ + $2^{1}$ + $2^{2}$ = $7$
+		  ```
+			-7, -6, ..., -1, -0, 0, 1, 2, ..., 6, 7
+			```
+		- `0` does not need `-0` ( a negative sign) --> `[-8, 7]`
+---
+```
+# signed integers
+8 bits [-128, 127]
+16 bits [-32_768, 32_767]
+32 bits [-2_147_483_648, 2_147_483_647]
+64 bits [-9_223_372__036_854_775_808, 9_223_372__036_854_775_807]
+
+# unsigned integers
+8 bits [0, 255]
+16 bits [0, 65_535]
+32 bits [0, 4_294_967_295]
+64 bits [0, 18_446_744_073_709_551_615]
+```
+#### Floats
+- Python uses 64 bits to store floats
+	- certain precision and size of exponent
+- C also has 32-bit floats
+	- less precision, smaller exponent
+	- but more efficient storage
+#### NumPy Types
+- in NumPy you choose your data type
+	- if you pick an unsigned integer you can only store numbers in `[0, 255]`
+		- signed integers --> `int8, int16, int32, int64`
+		- unsigned integers --> `uint8, uint16, uint32, uint64`
+		- floats --> `float32, float64` (`float64` is compatible with Python `float`)
+		- complex --> `complex64, complex128` (`complex128` is compatible with Python `complex`)
+
+> Learn more here: https://numpy.org/doc/stable/user/basics.types.html
 
 
 
