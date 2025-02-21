@@ -6195,7 +6195,44 @@ m1 = arr.copy().reshape(3, 4)
 	- stack vertically
 		- `np.vstack((a1, a2, a3))`
 	- stack horizontally
-		- `np.hstack((a1, a2, a3))` ()
+		- `np.hstack((a1, a2, a3))` (remember, the argument is a tuple)
+
+#### Shapes must be Compatible
+- if stacking vertically, same number of columns for each array is required 
+- if stacking horizontally, same number of columns for each array is required
+
+![shapes must be compatible](../assets/Pasted%20image%2020250221205006.png)
+
+#### What happens to `dtype`?
+- can stack arrays with different `dtype`
+	- NumPy will determine a suitable common data type
+		- we cannot control that
+	- stacking `uint8`, `uint16` and `int64`
+		- NumPy picks a `float64` for the stacked array
+
+> In a future version of NumPy (1.20), it will be possible to specify the data type when using the `concatenate` function - which is a more generic form of `vstack` and `hstack`. *Not sure if this is available already, might have to check.*
+#### Casting an Array to another Data Type
+- we can however control the stacked data type by first *converting* the arrays we are stacking to a *common type*
+	- use the `astype` method on an array
+	  ```python
+		arr1.astype(np.int64)
+		```
+	- so we could use this to stack multiple arrays
+	  ```python
+		np.vstack(
+			[
+				arr1.astype(np.int64),
+				arr2.astype(np.int64)
+			]
+		)
+		```
+#### Stacked Arrays are Independent of Original Arrays
+- we saw that a reshaped array is "linked" to the original array
+- this is *not* the case for stacked arrays
+	- modifying an element in the stack does *not* modify original array
+	- modifying element in original array does *not* modify the stack 
+### Indexing
+
 
 
 
