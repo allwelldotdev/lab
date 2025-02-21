@@ -6117,6 +6117,86 @@ m.dtype # int8
 ```
 - use the `shape` attribute of the `ndarray` objects
 ### Creating Arrays from Scratch
+- seen how to create arrays from lists
+	- handy to convert lists of data loaded from a CSV file for example
+		- or retrieved via a web API
+- sometimes we just need to generate specialized arrays
+	- could do it from a Python list
+	- but NumPy has several convenient functions
+#### Array of Zeros
+```python
+np.zeros(size_or_shape, dtype)
+```
+- `size_or_shape`
+	- `size`
+		- single number --> 1-D array of that length
+	- `shape`
+		- tuple --> shape `(rows, colunms)`
+- `dtype`
+	- optionally specify data type
+	- defaults to `float64`
+---
+```python
+np.zeros # arrays filled with zeros
+np.ones # arrays filled with ones
+np.full # arrays filled with some specified constant value
+np.eye # generates identity matrices
+np.arrange # generates 1-D array based on a range (start:stop:step)
+np.linspace # generates evenly spaced numbers between start/stop
+np.random.random # arrays filled with random floats [0, 1)
+np.random.randint # arrays filled with random integers [low, high)
+```
+
+> `np.arange(2, 11, 2)` does the same this as `list(range(2, 11, 2))` - creating an n-dimensional array of numbers.
+
+> We can also transform existing arrays into other arrays by applying functions on them.
+
+### Reshaping Arrays
+#### What is Reshaping?
+```python
+[1, 2, 3, 4, 5, 6] # shape --> (6,)
+```
+- using the same elements we can rearrange them
+
+![reshaping arrays](../assets/Pasted%20image%2020250221203014.png)
+
+#### Reshaping Shares Elements
+reshaping shares elements in the array
+- this is *very important* (and we'll see later this applies to slicing also)
+
+![reshaping shares elements in the array](../assets/Pasted%20image%2020250221203149.png)
+
+#### Making a Copy
+- `arr.copy()`
+	- this will make a *copy* of `arr`
+	- can use to break the tie between an array and the reshaped array
+
+> In Python arrays (n-dimensional arrays), we can reshape the arrays but the slots (the elements) are still linked to each other.
+
+> To ensure that reshaped array does not share slots (or elements) with the original array or other arrays reshaped from the original array, we use the `copy()` method. Like so: 
+```python
+import numpy as np
+
+arr = nd.arange(1, 12) # array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
+m1 = arr.reshape(3, 4).copy() # this reshapes `arr` but also copies it dissociating it from the slots (or elements) in `arr`
+# the above is the same as this...
+m1 = arr.copy().reshape(3, 4)
+```
+
+### Stacking Arrays
+- concept is very straightforward
+	- we can stack arrays on top of each other (`vstack`)
+	- or we can stack them side by side (`hstack`)
+
+![stacking arrays](../assets/Pasted%20image%2020250221204619.png)
+
+#### Stacking
+- `a1`, `a2`, `a3` are arrays
+	- stack vertically
+		- `np.vstack((a1, a2, a3))`
+	- stack horizontally
+		- `np.hstack((a1, a2, a3))` ()
+
 
 
 
