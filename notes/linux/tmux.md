@@ -22,3 +22,13 @@ Some basic tmux commands are;
 - Enter command mode: `Ctrl-b :`
 
 For more on tmux, check out my [Claude chat](https://claude.ai/chat/09865328-1438-4739-805a-b9c99729393d).
+
+Some useful commands you can use in command mode:
+
+- `new-window`: Creates a new window
+- `rename-window name`: Renames the current window
+- `kill-window`: Closes the current window
+- `split-window`: Splits the current pane into two
+- `resize-pane -D 10`: Resizes the current pane down by 10 cells
+- `set mouse on`: Enables mouse support
+- `source-file ~/.tmux.conf`: Reloads your tmux configuration file
