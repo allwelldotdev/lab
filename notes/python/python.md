@@ -6124,6 +6124,13 @@ m.dtype # int8
 	- could do it from a Python list
 	- but NumPy has several convenient functions
 #### Array of Zeros
+
+> For context, `size` is a method on an `ndarray` object that means the number of elements within the array. For ex:
+```python
+m = np.array([1, 2, 3, 4, 5])
+m.size # 5
+```
+
 ```python
 np.zeros(size_or_shape, dtype)
 ```
@@ -6141,7 +6148,7 @@ np.zeros # arrays filled with zeros
 np.ones # arrays filled with ones
 np.full # arrays filled with some specified constant value
 np.eye # generates identity matrices
-np.arrange # generates 1-D array based on a range (start:stop:step)
+np.arange # generates 1-D array based on a range (start:stop:step)
 np.linspace # generates evenly spaced numbers between start/stop
 np.random.random # arrays filled with random floats [0, 1)
 np.random.randint # arrays filled with random integers [low, high)
