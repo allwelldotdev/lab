@@ -20,6 +20,7 @@ Some basic tmux commands are;
 - Close current pane: `Ctrl-b x`
 - Detach from session: `Ctrl-b d`
 - Enter command mode: `Ctrl-b :`
+- Re-run source file: `Ctrl-r`
 
 For more on tmux, check out my [Claude chat](https://claude.ai/chat/09865328-1438-4739-805a-b9c99729393d).
 
