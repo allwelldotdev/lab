@@ -6276,7 +6276,132 @@ arr[0][0] = 100 # arr: [[100, 2], [3, 4]]
 ```
 #### Indexing NumPy Arrays
 - very similar to Python sequence types
-- w
+- with NumPy arrays instead of `[i][j]`, we can use `[(i, j)]`
+	- `(i, j)` is a tuple so we can omit the `( )`. Like so: `[i, j]`
+```python
+# therefore, the both are similar (specific to indexing NumPy arrays)
+arr[0][0], arr[0, 0]
+arr[1][2], arr[1, 2]
+```
+- for 1-D array
+```python
+arr = np.arange(1, 7)
+# both index syntax below are similar
+arr[1] # 2
+arr[(1,)] # 2
+```
+#### Mutating Elements
+- works the same as Python lists
+```python
+arr = np.arange(1, 7)
+arr[2] = 30 # arr: ndarray([1, 2, 30, 4, 5, 6])
+arr = np.arange(1, 7).reshape((2, 3)) # returns...
+# [
+#   [1, 2, 3],
+#   [4, 5, 6]
+# ]
+arr[1, 2] = 60 # returns...
+# [
+#   [1, 2, 3],
+#   [4, 5, 60]
+# ]
+```
+
+> Remember, when assigning or mutating values of an array, ensure the data type of the new value corresponds with the data type `dtype` of the array.
+
+### Slicing
+#### Slicing Python Sequences
+```python
+l = [1, 2, 3, 4, 5]
+l[0:3] # [1, 2, 3]
+```
+- slicing returns a new, independent, list
+```python
+slice_ = l[0:3]
+slice_[1] = 20 # [1, 20, 3]
+l = [1, 2, 3, 4, 5]
+```
+#### Slicing Python 2-D Sequences
+```python
+m = [
+	[1, 2, 3],
+	[4, 5, 6],
+	[7, 8, 9],
+]
+```
+- want to slice in two axes
+	```python
+	m[0:2] # returns...
+	# [
+	#   [1, 2, 3],
+	#   [4, 5, 6]
+	#]
+	```
+	- cannot just use a slice to isolate
+	  ```python
+		[
+			[2, 3],
+			[5, 6],
+		]
+		```
+#### Python Sequence Slice Assignments
+- we can mutate a Python list by using the assignment operator with a slice definition
+```python
+l = [1, 2, 3, 4, 5]
+l[0:3] = [10, 20, 30] # [10, 20, 30, 4, 5]
+```
+- since Python lists are not fixed size, we can also replace the slice with more or less elements
+```python
+l = [1, 2, 3, 4, 5]
+l[0:2] = [10, 20, 30, 40]
+l # [10, 20, 30, 40, 3, 4, 5]
+```
+#### Slicing 1-D NumPy Arrays
+- very similar to slicing lists
+```python
+arr = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8])
+arr[0:3] # nd.array([0, 1, 2])
+```
+- step, negative indexing, etc are all supported, just like `list` slicing
+```python
+arr[2:6:2] # [2, 4]
+arr[1::2] # [1, 3, 5, 7]
+arr[::-1] # [8, 7, 6, 5, 4, 3, 2, 1, 0]
+```
+#### Slicing 2-D NumPy Arrays
+- NumPy provides support for slicing along *multiple axes*
+
+![slicing 2-D NumPy arrays](../assets/Pasted%20image%2020250223225820.png)
+
+- can also write `arr[0:2, 1:3]` as `arr[:2, 1:]`
+---
+- can get even fancier when using steps
+
+![](../assets/Pasted%20image%2020250223230005.png)
+
+- can think of this as the *intersection* of
+	- rows `0, 2, 4` --> `[::2]`
+	- columns `1, 3` --> `[1::2]`
+	- can also be rewritten as:
+		- `arr[::2, 1::2]`
+#### Slicing Assignment in NumPy Arrays
+- works very similarly to assigning to `list` slices
+	- cannot replace with an array that is not the *same shape*
+		- also means we cannot *change size* of the original array
+			- makes sense since NumPy arrays are fixed size
+		- be careful with data types!
+```python
+a = np.array([1, 2, 3, 4, 5])
+a[0:3] = np.array([10, 20, 30])
+a # nd.array([10, 20, 30, 4, 5])
+```
+- can also replace with a `list` or `tuple` - NumPy will handle it
+---
+- can also assign a single value (not an array) to a slice
+- NumPy basically fills the slice with the same value repeated as many times as necessary (this is called broadcasting)
+```python
+arr = np.array([1, 2, 3])
+```
 
 
 
