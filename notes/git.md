@@ -5,5 +5,5 @@ Ensure git outputs color: You need to configure Git to always output color codes
 git config --global color.ui always
 ```
 
-
+Check out this blog for default settings to improve Git: https://blog.gitbutler.com/how-git-core-devs-configure-git/
 
