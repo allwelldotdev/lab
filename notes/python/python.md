@@ -6154,7 +6154,7 @@ np.random.random # arrays filled with random floats [0, 1)
 np.random.randint # arrays filled with random integers [low, high)
 ```
 
-> `np.arange(2, 11, 2)` does the same this as `list(range(2, 11, 2))` - creating an n-dimensional array of numbers.
+> `np.arange(2, 11, 2)` does the same as this `list(range(2, 11, 2))` - creating an n-dimensional array of numbers.
 
 > We can also transform existing arrays into other arrays by applying functions on them.
 
@@ -6217,7 +6217,7 @@ m1 = arr.copy().reshape(3, 4)
 	- stacking `uint8`, `uint16` and `int64`
 		- NumPy picks a `float64` for the stacked array
 
-> In a future version of NumPy (1.20), it will be possible to specify the data type when using the `concatenate` function - which is a more generic form of `vstack` and `hstack`. *Not sure if this is available already, might have to check.*
+> In a future version of NumPy (1.20), it will be possible to specify the data type when using the `concatenate` function - which is a more generic form of `vstack` and `hstack`. *Not sure if this is available already, might have to check.* *Checked: It's available - the current version of NumPy now is 2.2.*\*
 #### Casting an Array to another Data Type
 - we can however control the stacked data type by first *converting* the arrays we are stacking to a *common type*
 	- use the `astype` method on an array
@@ -6238,8 +6238,45 @@ m1 = arr.copy().reshape(3, 4)
 - this is *not* the case for stacked arrays
 	- modifying an element in the stack does *not* modify original array
 	- modifying element in original array does *not* modify the stack 
-### Indexing
 
+> We can easily convert an array from one type to another using the `astype()` method. Like so:
+```python
+import numpy as np
+
+a1 = np.array([1, 2], dtype=uint8) # array([1, 2], dtype=uint8)
+a1.astype(np.float32) # array([1., 2.], dtype=float32)
+```
+
+> **IMPORTANT**: Unlike reshaped arrays, stacked arrays do not "share" their elements with the original arrays.
+
+> In NumPy arrays, selecting/getting/setting an array element is done like so:
+```python
+# let's say we want to select/get or set an element in `a1`
+a1 = np.array([
+	    [1, 2, 3, 4, 5],
+	    [6, 7, 8, 9, 10]
+	])
+
+a1[0, 2] # 3
+a1[1, 2] # 8
+a1[-1, -1] # 10
+a1[-1, 3] = 90 # changes `9` in the array to `90`
+```
+### Indexing
+#### Python Sequence Types
+- recall Python sequence types such as lists and tuples
+- elements are positionally indexed `0, 1, 2, ...`
+- get element at index `i` `lst[i]`
+- replace element at index `i` `lst[i] = x`
+- indexing 2-D lists (a list of lists) works the same
+```python
+arr = [[1, 2], [3, 4]]
+arr[0][1] # 2
+arr[0][0] = 100 # arr: [[100, 2], [3, 4]]
+```
+#### Indexing NumPy Arrays
+- very similar to Python sequence types
+- w
 
 
 
