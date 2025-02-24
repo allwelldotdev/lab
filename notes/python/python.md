@@ -6413,6 +6413,53 @@ arr[::3] = 0 # nd.array([0, 2, 3, 0, 5, 6, 0])
 	- replacing an element in `s` will be "seen" by `arr`
 		- and vice versa
 	- to avoid this, make a copy of the slice
+	  ```python
+		s = arr[0:3].copy()
+		```
+
+> We can also combine indexing along one axis with slicing in another. Like so:
+```python
+arr = np.arange(1, 26).reshape(5, 5)
+arr[2, 1::2] # nd.array([12, 14])
+```
+
+> An interesting question is: how do I pick a slice of the first, second, and fourth rows of `arr`? You can't use a slice with a step for selecting (irregular) rows - a slice cannot slice the rows `0, 1, 3`. So what's the solution? We'll look at that in **Fancy Indexing**.
+
+> Another thing to note is that although an `ndarray` slice is "linked" to the original array, if we replace it with another array, that replaced slice is not linked to that second array. Let's see an example:
+```python
+arr1 = np.array([1, 2, 3, 4, 5])
+arr2 = np.array([10, 20])
+
+arr1[0:2] = arr2
+arr1 # array([10, 20,  3,  4,  5]) - same as nd.array()
+
+arr2[0] = 100
+arr2 # array([100,  20])
+
+arr1 # array([10, 20,  3,  4,  5]) - as you can see, no change!
+```
+
+> If we try assign an array that is not of the same shape, we'll get an exception, even if the total number of elements matches the total number of elements in the slice. Ex:
+```python
+arr = np.arange(9).reshape(3, 3)
+
+arr[:2, 1:] = [[10, 20], [40, 50]] # this works!
+arr[:2, 1:] = [10, 20, 40, 50] # this does not work!
+
+# of course you can reshape array before assignment, like so:
+arr[:2, 1:] = np.array([10, 20, 40, 50]).reshape(2, 2) # this works!
+```
+
+> Again, since NumPy arrays have a fixed homogenous `dtype`, we have to be careful when we mix types. Ex: suppose we have an array of `uint8` (unsigned 8-bit integers), so range is `[0, 255]`:
+```python
+arr = np.array([10, 20, 30, 40, 50], dtype=np.uint8)
+
+arr[:2] = [-100, 300] # as you can imagine, weird things happen...
+arr # array([156,  44,  30,  40,  50], dtype=uint8)
+# the integers wrap around; we've discussed this before; see previous notes for understanding
+```
+
+### Fancy Indexing
 
 
 
