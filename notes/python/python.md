@@ -6460,6 +6460,65 @@ arr # array([156,  44,  30,  40,  50], dtype=uint8)
 ```
 
 ### Fancy Indexing
+- we saw how to use single index values to specify an array item
+	- 1-D --> `arr[3]`
+	- 2-D --> `arr[2, 5]`
+- we saw how to use slicing
+	- 1-D --> `arr[1:3:2]`
+	- 2-D --> `arr[1:3:2, :5]`
+- single items at a time
+- items that can be defined using slicing
+- sometimes not enough - what if we want items (or rows) `1`, `2`, and `4`?
+#### One way of solving that problem...
+```python
+arr = np.array([1, 2, 3, 4, 5, 6])
+```
+- want an array consisting of elements at indices `0`, `1`, `3` and `5`
+```python
+sub = np.array([arr[0], arr[1], arr[3], arr[5]])
+```
+- it works, but a bit clumsy
+- but what we really have is an *array of indices*
+```python
+np.array([0, 1, 3, 5])
+```
+- and NumPy supports specifying elements using an *array of indices* instead of just a single index - that is what is called *Fancy Indexing*
+#### Fancy Indexing
+- use an *array of indices* (an *index array*)
+```python
+arr = np.array([1, 2, 3, 4, 5, 6])
+index_array = np.array([0, 1, 3, 5])
+sub = arr[index_array] # array([1, 2, 4, 6])
+```
+- can also just define the index array inline
+```python
+sub = arr[np.array([0, 1, 3, 5])] # array([1, 2, 4, 6])
+```
+#### Array Index Shape
+- shape of *array index* determines the shape of selection
+```python
+arr = np.array([1, 2, 3, 4, 5, 6])
+arr[np.array([0, 1, 3, 4])] # array([1, 2, 4, 5]) - note here:
+# the array index or index_array shape is (4,)
+# hence the result is 1-D
+
+# let's see another example where the array index shape is 2-D
+arr[np.array([[0, 1], [3, 4]])] # [[1, 2], [4, 5]]
+# here the array index shape is (2, 2)
+```
+#### Fancy Indexing in Multiple Dimensions
+- fancy indexing can be applied to multiple axes
+```python
+row, column
+[index_array, index], [index, index_array]
+[index_array, slice_], [slice_, index_array]
+[index_array, index_array] # this one is most complicated
+```
+Let's see each one and how they work...
+##### `index_array` and `index`
+
+![](../assets/Pasted%20image%2020250224105409.png)
+
 
 
 
