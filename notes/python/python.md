@@ -6563,6 +6563,13 @@ arr # array([10, 20, 30, 40, 50, 60, 70, 80, 90])
 # notice `arr` remains unchanged
 ```
 
+> There are ways you can *vectorize* your own functions in NumPy, but that's beyond the scope of this course.
+> 
+> **What is Vectorization in NumPy?** Since NumPy computes code in low-level C, not Python, vectorization is when mathematical or data transformation functions that execute on NumPy arrays (n-dimensional arrays) also compute code in low-level C and output the result back in Python.
+> 
+> Here is another definition of vectorization:
+> **Vectorization** in NumPy is the process of applying operations to entire arrays at once, rather than using loops to process individual elements. It leverages optimized, low-level C code to perform these operations efficiently, making computations faster and code more concise.
+
 ### Masking
 
 
