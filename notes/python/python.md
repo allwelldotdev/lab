@@ -6571,6 +6571,129 @@ arr # array([10, 20, 30, 40, 50, 60, 70, 80, 90])
 > **Vectorization** in NumPy is the process of applying operations to entire arrays at once, rather than using loops to process individual elements. It leverages optimized, low-level C code to perform these operations efficiently, making computations faster and code more concise.
 
 ### Masking
+#### Boolean Masking
+- use an expression that evaluates to a Boolean for each element of an array
+	- make an array of those `True`/`False` values
+	- use that array to filter elements in another array
+
+![boolean masking](../assets/Pasted%20image%2020250224142326.png)
+
+#### Comparison Functions
+- functions which can be applied to each element of an array
+	- returns an array containing the result of each element
+	  ```python
+		np.less(arr, value)
+		```
+	- looks at every element of `arr` and evaluates `element < value`
+```python
+arr = np.array([1, 2, 3, 4, 5])
+np.less(arr, 4) # array([True, True, True, False, False])
+```
+#### NumPy Logic Functions
+- other functions exist:
+```python
+greater, less_equal, equal, not_equal # and many more...
+```
+
+> Learn more about NumPy logic functions here: https://numpy.org/doc/stable/reference/routines.logic.html
+
+- but we can just use comparison operator symbols
+	- `< <= > >= == !=`
+	- using these will use the NumPy corresponding functions
+
+> NumPy functions allow you to have greater control over how that function is going to get evaluated (being universal functions - in other words, functions that are vectorized).
+
+#### Applying the Mask
+- this array of `True`/`False` values is called a *mask*
+- we can apply this mask to an array (use same shaped arrays)
+	```python
+	arr = np.array([1, 2, 3, 4])
+	mask = np.array([True, True, False, True])
+	```
+	- or just use
+	  ```python
+		mask = arr != 3
+		```
+
+	```python
+	arr[mask] # array([1, 2, 4])
+	```
+
+- can do all this is a single statement
+```python
+arr[arr != 3]
+```
+#### Masking 2-D Arrays
+- masks will return a 1-D array, even if array being masked is 2-D
+	- basically applies mask element by element
+```python
+arr = np.array([[1, 2], [3, 4]])
+mask = arr != 3
+mask # array([[True, True], [False, True]])
+arr[mask] # array([1, 2, 4])
+```
+#### Combining Logical Operators
+- Python uses `and or not`
+- for NumPy we have to use
+	- `&` --> `and`
+	- `|` --> `or`
+	- `~` --> `not` (also called, complement)
+- because of operator precedence, use `( )` to group logic expressions
+```python
+arr = np.arange(-10, 10)
+arr[(arr > 0) & (arr % 2 == 0)] # array([2, 4, 6, 8])
+```
+
+> `and`, `or`, `not` keywords in Python do something different for NumPy arrays. Instead, for and, or, not operations in NumPy, we use `&`, `|`, and `~` for `and`, `or`, and `not` comparisons operators in NumPy.
+
+### Universal Functions (ufunc)
+- earlier we saw that *universal* functions are *vectorized* functions
+	- they apply a function to each element of an array
+	- the loop and function evaluation are done in C, not Python
+	- very fast
+		- we'll see how much faster during code
+	- NumPy has a large number of universal functions
+		- math operations (arithmetic, logs, exponential, sqrt, abs, ...)
+		- trig and hyperbolic
+		- comparison functions (equal, less than, greater than, min/max, ...)
+
+> You can learn more here: https://numpy.org/doc/stable/reference/ufuncs.html#available-ufuncs
+
+#### Universal Functions and Operators
+- `add`, `subtract`, `multiply`, `divide`, `floor_divide`, `mod`, `power`, ...
+- can be called as functions, with at least one argument being an array
+	```python
+	np.add(arr_1, arr_2)
+	np.add(arr_1, scalar)
+	```
+	- or just use the `+` operator
+		- Python will use `np.add()`
+	- similarly with `-`, `*`, `/`, `//`, `%`, `**`
+#### Array and Array
+
+![array and array](../assets/Pasted%20image%2020250224145321.png)
+
+- keep array shapes the same
+	- technically possible to use different shapes
+		- broadcasting
+
+> You can learn more here: https://numpy.org/doc/stable/user/basics.broadcasting.html
+#### Array and Scalar
+- simplest form of broadcasting
+
+![array and scalar](../assets/Pasted%20image%2020250224145447.png)
+
+#### Mismatched Shapes
+- sometimes possible
+	- not going to focus on this here
+
+![mismatched shapes](../assets/Pasted%20image%2020250224145546.png)
+
+### Additional Math and Stats Functions
+
+
+
+
 
 
 
