@@ -6699,6 +6699,83 @@ arr[(arr > 0) & (arr % 2 == 0)] # array([2, 4, 6, 8])
 - NumPy has a host of array manipulation and computational functions
 	- trig/hyperbolic, logs/exponents
 	- linear algebra (matric/vector products, eigenfunctions/values, inverses, etc.)
+	- stats (averages, variances, correlations, histograms)
+	- discrete Fourier transforms
+
+> Find out more here: https://numpy.org/doc/stable/reference/routines.html
+
+- simple financial functions
+	- mainly related to interest calculations
+	- slated to be removed by NumPy
+		- don't use them
+#### Other More Specialized Libraries
+- many more specialized libraries
+	- usually built on top of NumPy and Pandas
+- *SciPy* --> interpolations, optimization, integration, linear algebra, stats ...
+- *statsmodels* --> regression, imputation, models, time series, ...
+- *pyfolio* --> portfolio performance and risk analysis
+- *QuantLib* --> quantitative financial library
+- *Quandl* --> useful for getting financial datasets directly into Python (not all datasets are free)
+#### Axes
+- recall discussion on axes
+
+![axes](../assets/Pasted%20image%2020250224180644.png)
+
+- also called *axes*
+		- rows --> axis 0
+		- columns --> axis 1
+- many of the universal functions in NumPy can operate
+	- on the array as a whole
+	- along an axis
+
+#### Max
+- 1-D is intuitive
+```python
+np.amax(np.array([1, 2, 3])) # 3
+```
+
+![max function in numpy](../assets/Pasted%20image%2020250224184422.png)
+
+- simply runs through all elements of array
+---
+- we can specify an axis
+```python
+np.amax(arr, axis=0) # performs the operation across each row (i.e. for each column)
+```
+
+![axis direction for max math function in NumPy](../assets/Pasted%20image%2020250224184620.png)
+
+---
+```python
+np.amax(arr, axis=1) # performs the operation across each column (i.e. for each row)
+```
+
+![max performed for each column](../assets/Pasted%20image%2020250224184819.png)
+
+#### Other Functions
+- some functions only perform element by element
+	- `sin`, `sinh`, `arcsin`, `arcsinh`, `log`, `exp`, `around`, ...
+- some functions like `amax`, that operate on groups of data, support axes
+	- `amax`, `amin`, `mean`, `median`, `std`, `sum`, `cumsum`, `product`, ...
+
+> Learn more here: https://numpy.org/doc/stable/reference/routines.math.html
+
+#### Histogram
+- `np.histogram`
+	- creates binned frequency distribution
+
+![histogram in NumPy](../assets/Pasted%20image%2020250224185259.png)
+
+- define bin bounds using left edge, and rightmost edge (which is inclusive)
+	- `bins = [0, 3, 8, 10`
+- `np.histogram(a, bins_arr)` --> tuple: (array *frequencies*, *bins* array)
+- `np.histogram(a, int)`
+	- calculates evenly spaced bins in min/max range
+	- tuple: (array *frequencies*, *bins* array)
+- other variants
+
+
+
 
 
 
