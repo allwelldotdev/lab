@@ -6689,8 +6689,16 @@ arr[(arr > 0) & (arr % 2 == 0)] # array([2, 4, 6, 8])
 
 ![mismatched shapes](../assets/Pasted%20image%2020250224145546.png)
 
-### Additional Math and Stats Functions
+> There's a ton more functionality to NumPy that an introductory course cannot cover - but you should have some basic ideas of how NumPy works, and be able to read the NumPy documentation to look for functionality that you may need for your specific problems.
+> 
+> One of the reaons why we study NumPy, is that another library, Pandas, is built on top of NumPy. That library is one that again has a ton of functionality, but focused on data sets, which offer more functionality than just plain multi dimensional arrays. We'll look at the Pandas library a littler later.
 
+> See this [Grok chat](https://grok.com/share/bGVnYWN5_6427fbbf-6238-4bc8-bb96-5b511398702c) to learn about ufunc methods such as `np.add.reduce(arr, axis=(row=0, col=0))`.
+
+### Additional Math and Stats Functions
+- NumPy has a host of array manipulation and computational functions
+	- trig/hyperbolic, logs/exponents
+	- linear algebra (matric/vector products, eigenfunctions/values, inverses, etc.)
 
 
 
