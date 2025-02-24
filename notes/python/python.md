@@ -6400,8 +6400,20 @@ a # nd.array([10, 20, 30, 4, 5])
 - can also assign a single value (not an array) to a slice
 - NumPy basically fills the slice with the same value repeated as many times as necessary (this is called broadcasting)
 ```python
-arr = np.array([1, 2, 3])
+arr = np.array([1, 2, 3, 4, 5, 6, 7])
+arr[::3] # nd.array([1, 4, 7])
+arr[::3] = 0 # nd.array([0, 2, 3, 0, 5, 6, 0])
 ```
+#### Slices are "linked" to Original Array
+- similar to `reshape` we saw earlier
+- a slice is "linked" to the array it was sliced from
+
+	![slices linked to original array](../assets/Pasted%20image%2020250223231130.png)
+
+	- replacing an element in `s` will be "seen" by `arr`
+		- and vice versa
+	- to avoid this, make a copy of the slice
+
 
 
 
