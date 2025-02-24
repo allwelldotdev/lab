@@ -6460,10 +6460,10 @@ arr # array([156,  44,  30,  40,  50], dtype=uint8)
 ```
 
 ### Fancy Indexing
-- we saw how to use single index values to specify an array item
+- saw how to use single index values to specify an array item
 	- 1-D --> `arr[3]`
 	- 2-D --> `arr[2, 5]`
-- we saw how to use slicing
+- saw how to use slicing
 	- 1-D --> `arr[1:3:2]`
 	- 2-D --> `arr[1:3:2, :5]`
 - single items at a time
@@ -6517,7 +6517,55 @@ row, column
 Let's see each one and how they work...
 ##### `index_array` and `index`
 
-![](../assets/Pasted%20image%2020250224105409.png)
+![index array and index](../assets/Pasted%20image%2020250224105409.png)
+
+- notice how the resulting array is 1-D
+##### `index_array` and `slice`
+
+![index array and slice](../assets/Pasted%20image%2020250224105533.png)
+
+##### `index_array` and `index_array`
+- not commonly used - can be confusing for someone reading your code
+- keep index arrays same shape
+
+**1-D and 1-D**
+```python
+arr[np.array([0, 2]), np.array([1, 3])]
+```
+- think of this as zipping the indices from the two axes
+	- `(0, 1), (2, 3)` --> `[2, 14]`
+
+![index_array and index_array](../assets/Pasted%20image%2020250224110104.png)
+
+**2-D and 2-D**
+- again think of this as zipping up indices from both axes
+- but now our "index array" is really 2-D as well
+```python
+arr[np.array([[0, 1], [3, 4]]), np.array([[0, 2], [1, 3]])]
+```
+- zipping them up the arrays for each axes, we get:
+	- `[(0, 0), (1, 2)], [(3, 1), (4, 3)]`
+		- result is --> `[[1, 8], [17, 24]`
+
+![2d and 2d index_array and index_array](../assets/Pasted%20image%2020250224110705.png)
+
+> For more insight, [see this](https://www.udemy.com/course/python3-fundamentals/learn/lecture/35151994?start=802#notes).
+
+> You can retype `arr[np.array([0, 1, 3])]` as `arr[[0, 1, 3]]`, but because of code readability when arrays get complicated, use the former.
+
+> Fancy Indexing is not linked with the original array (different from slicing an array). Ex:
+```python
+arr = np.arange(10, 100, 10)
+sub = arr[[0, 2, 3]] # array([10, 30, 40])
+sub[0] = 100
+sub # array([100, 30, 40])
+arr # array([10, 20, 30, 40, 50, 60, 70, 80, 90])
+# notice `arr` remains unchanged
+```
+
+### Masking
+
+
 
 
 
