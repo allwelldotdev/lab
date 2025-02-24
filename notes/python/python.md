@@ -6708,6 +6708,7 @@ arr[(arr > 0) & (arr % 2 == 0)] # array([2, 4, 6, 8])
 	- mainly related to interest calculations
 	- slated to be removed by NumPy
 		- don't use them
+		- https://numpy.org/neps/nep-0032-remove-financial-functions.html
 #### Other More Specialized Libraries
 - many more specialized libraries
 	- usually built on top of NumPy and Pandas
