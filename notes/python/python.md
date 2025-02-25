@@ -6773,6 +6773,8 @@ np.amax(arr, axis=1) # performs the operation across each column (i.e. for each 
 - `np.histogram(a, int)`
 	- calculates evenly spaced bins in min/max range
 	- tuple: (array *frequencies*, *bins* array)
+- returns
+	- a tuple of `(result, bin_arr)`
 - other variants
 ## Pandas
 
