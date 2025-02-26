@@ -7102,6 +7102,60 @@ new_df = new_york.drop(columns='county')
 ```
 
 ### Selecting Data
+#### DataFrames
+- analogous to a `Series` of `Series`
+
+![data frames axis 0 and 1](../assets/Pasted%20image%2020250226204417.png)
+
+- or a dictionary of lists / dictionaries
+	```python
+	{
+		"col0": {
+			"row0": value,
+			"row1": value
+		},
+		"col1": {
+			"row0": value,
+			"row1": value
+		}
+	}
+	```
+	- a *sequence* of *aligned columns*
+---
+- consider it as a `Series` of `Series`
+
+	![selecting data](../assets/Pasted%20image%2020250226205040.png)
+
+	- all share a common row index `['r1', 'r2', 'r3']` 
+		- `c1` is a series of values
+		- `c2` is a series of values
+		- `c3` is a series of values
+	- `df` is like a Series `[c1, c2, c3]` with index `['c1', 'c2', 'c3']`
+		- or like a like a dictionary `{'c1': c1, 'c2': c2, 'c3': c3}`
+- `df['c1']`
+	- this selects the item with label `'c1'`
+		- the *column* (series) `c1`
+- note that `[ ]` cannot be used with positional indices with `DataFrame` objects
+#### `loc` and `iloc`
+- just like with `Series`, but with 2 axes
+	- `loc` uses the *explicit* index
+	- `iloc` uses the *implicit* (*positional*) index
+- but think of `DataFrame` like a NumPy *array* with *two axes*
+
+![data frames use axis 0 and 1 same as numpy arrays](../assets/Pasted%20image%2020250226205753.png)
+
+- slicing and fancy indexing works the same way as with `Series`, but using 2 axes
+#### Replacing Values
+- can replace using assignment (`==`) operator
+- replace *single* selected cell
+	- with a *scalar* value
+- replace *multiple* cells selected using slicing/fancy indexing
+	- with a 2-D NumPy array / list of lists of *same shape*
+	- with a *scalar* value that will be *broadcast*
+	- with a 1-D NumPy array that will be *broadcast*
+	- can replace with a `Series` or `DataFrame` but indexes can cause issues!
+### Missing Data
+
 
 
 
