@@ -7146,7 +7146,7 @@ new_df = new_york.drop(columns='county')
 
 - slicing and fancy indexing works the same way as with `Series`, but using 2 axes
 #### Replacing Values
-- can replace using assignment (`==`) operator
+- can replace using assignment (`=`) operator
 - replace *single* selected cell
 	- with a *scalar* value
 - replace *multiple* cells selected using slicing/fancy indexing
@@ -7154,25 +7154,37 @@ new_df = new_york.drop(columns='county')
 	- with a *scalar* value that will be *broadcast*
 	- with a 1-D NumPy array that will be *broadcast*
 	- can replace with a `Series` or `DataFrame` but indexes can cause issues!
+
+> You can replace values in the data frame using an assignment operation, just like with `Series` and NumPy arrays. We can also replace with another Pandas `DataFrame` or `Series`, but when we do we have to be careful because of the explicit indexes! Consider this:
+```python
+ser = pd.Series([-10, -20], index=['n1', 'n2'])
+
+# let's replace a slice of same shape in `df`
+df.loc[0:2, 0:2] = ser
+df # returns... (notice the `NaN` values inplace of the assignment values)
+# |c1|c2|c3|
+# |---|---|---|
+# |r1|NaN|NaN|2.0|
+# |r2|NaN|NaN|5.0|
+# |r3|6.0|7.0|8|
+
+# the reason for this is that the index on the series `ser` did not match any index in `df`
+# if we truly want to replace the values without worrying about the index on `ser`,
+# we can do it this way:
+df.loc[0:2, 0:2] = ser.values
+df # returns...
+# |c1|c2|c3|
+# |---|---|---|
+# |r1|-10.0|-20.0|2.0|
+# |r2|-10.0|-20.0|5.0|
+# |r3|6.0|7.0|8.0|
+```
+
+> We can also use boolean masking to select elements but we'll cover that later. Pandas data selection can get more complicated. If you're interested in reading up more on it, you can look at the Pandas docs: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html
+
 ### Missing Data
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#### Python
+- `None` object 
 
 
 
