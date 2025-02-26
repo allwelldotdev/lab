@@ -6777,6 +6777,78 @@ np.amax(arr, axis=1) # performs the operation across each column (i.e. for each 
 	- a tuple of `(result, bin_arr)`
 - other variants
 ## Pandas
+- *Pandas* is built on top of *NumPy*
+	- data manipulation and analysis, focused on tabular and time series data
+		- arrays with rows and columns
+		- but uses *labels* to identify rows and columns
+			- in addition to positional indices
+		- columns in the same array can have *different* data types
+---
+- `Series`
+	- 1-dimensional
+- `DataFrame`
+	- 2-dimensional
+	- a collection of `Series` objects
+- `Index`
+	- used to *index* `Series` and `DataFrame` objects
+	- one of the key differences between Pandas and Numpy
+		- NumPy array elements are indexed (implicitly) by position
+		- in Pandas we can assign our own explicit labels
+
+> Learn more about Pandas here: https://pandas.pydata.org/ and https://pandas.pydata.org/docs/user_guide/index.html
+### Indexes
+#### What is an Index?
+- arrays / lists
+
+![positional index in pandas](../assets/Pasted%20image%2020250226125210.png)
+
+- dictionaries
+
+![dictionaries in pandas](../assets/Pasted%20image%2020250226125303.png)
+
+- an index is a way to "look up" one or more values in an array or dictionary
+
+#### Sequence Types
+- sequence types such as Python lists, tuple and NumPy arrays
+	- have a natural *positional* order to their elements
+	- this forms an *implicit index* on the sequence
+	  ![implicit index on sequences](../assets/Pasted%20image%2020250226125519.png)
+	```python
+	# uses the positional indices
+	l[0]
+	l[1:4]
+	```
+	- with Pandas we can define an *explicit* index (in addition to the implicit index)
+		![explicit indexing](../assets/Pasted%20image%2020250226125721.png)
+		- we'll see how this works later
+#### Pandas Indexes
+- `pd.Index`
+	- most generic type of `Index`
+	- they contain elements
+	- they are based on *NumPy arrays*
+	- they themselves have an *implicit positional index*
+```python
+idx = pd.Index([10, 20, 30, 40]) # Python list, tuple, NumPy array, ...
+idx[0] # 10
+# these ones below return an index object
+idx[1:4] # Index([20, 30])
+idx[[0, 2]] # Index([10, 30])
+idx[idx % 4 == 0] # Index([20, 40])
+```
+#### Specialized Indexes
+- Int64 indexes --> for indexes that contain integer indices
+- Float64 indexes --> for indexes that contain float indices
+- Range indexes --> for integer sequence defined via a range
+	- similar to difference between Python `list` and `range`
+	  ```python
+		[0, 1, 2, 3, 4, 5] # here, sequence is materialized
+		range(6) # here, sequence is not materialized
+		```
+		- elements are produced as requested when iterating
+	- Range indexes can be more efficient (s)
+
+
+
 
 
 
