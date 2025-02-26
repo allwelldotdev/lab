@@ -7069,6 +7069,38 @@ pd.DataFrame(...)
 - `.columns` --> the Index object used to index the columns
 - `.drop()` --> used to drop rows/columns from the data frame
 
+> We can rename the row indices (the labels) of a data frame by using the `rename()` method, where we specify the old label and the new label using a dictionary:
+```python
+import pandas as pd
+
+new_york = pd.DataFrame([countries, populations, gdp, areas])
+
+new_york.rename(
+	# renaming row index
+	index={0: 'county', 1: 'population', 2: 'gdp', 3: 'area'}
+	
+	# renaming column index
+	columns={0: 'county', 1: 'population', 2: 'gdp', 3: 'area'}
+)
+```
+
+> We can set the index (row index) of a data frame using the `set_index()` method. This allows us to pick an existing column to become the row index:
+```python
+new_york.set_index('burroughs') # makes 'burroughs' column to become row index
+```
+
+> Data frames have many properties and methods, some of which we'll study later in this section, but you can read up more on them in the Pandas documentation: 
+> https://pandas.pydata.org/pandas-docs/stable/reference/frame.html
+
+> To drop row or columns in data frames, we use `drop()` method, but this time, we specify `index` to drop row indices and `columns` to drop column indices (same idea goes for the `rename()` method):
+```python
+# dropping row indices
+new_df = new_df.drop(index=['Brooklyn', 'Queens'])
+
+# dropping column indices
+new_df = new_york.drop(columns='county')
+```
+
 ### Selecting Data
 
 
