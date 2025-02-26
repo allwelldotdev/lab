@@ -6836,16 +6836,145 @@ idx[[0, 2]] # Index([10, 30])
 idx[idx % 4 == 0] # Index([20, 40])
 ```
 #### Specialized Indexes
-- Int64 indexes --> for indexes that contain integer indices
-- Float64 indexes --> for indexes that contain float indices
-- Range indexes --> for integer sequence defined via a range
+- Int64 indexes `Int64Index()` --> for indexes that contain integer indices
+- Float64 indexes `Float64Index()` --> for indexes that contain float indices
+- Range indexes `RangeIndex()` --> for integer sequence defined via a range
 	- similar to difference between Python `list` and `range`
 	  ```python
 		[0, 1, 2, 3, 4, 5] # here, sequence is materialized
 		range(6) # here, sequence is not materialized
+
+		# a range index in Pandas is created in one of two ways:
+		pd.Index(range(1, 10, 2)) # via a Python range object
+		pd.RangeIndex(1, 10, 2) # or directly in Pandas
 		```
 		- elements are produced as requested when iterating
-	- Range indexes can be more efficient (s)
+	- Range indexes can be more efficient (storage and computation)
+#### Indexes have Set-Like Properties
+- can find the union and intersection of indexes
+	- `&` --> intersection
+	- `|` --> union
+	- `in` --> element of
+- Pandas will use broadest data type needed for union/intersection
+- `RangeIndex` indexes will try to return a `RangeIndex` as a result of union / intersection
+	- not always possible
+#### String Integer and Float Indexes
+- strings will result in an `Index` object, with an `object` data type (a catchall type)
+```python
+pd.Index(['a', 'b', 'c'])
+```
+ - integers will result in an `Int64Index` object
+```python
+pd.Index([1, 2, 3])
+```
+ - floats will result in a `Float64Index` object
+```python
+pd.Index([0.1, 0.2, 0.3])
+```
+#### Range Indexes
+- can create using the Python `range` object
+```python
+pd.Index(range(1, 10, 2))
+```
+- can use Pandas `RangeIndex` class directly
+```python
+pd.RangeIndex(start, stop, step)
+```
+
+> Not all unions and intersections of ranges can be expressed as a new range, so sometimes we end up with a regular index, not a range index:
+```python
+pd.RangeIndex([1, 10, 2]) | pd.RangeIndex([1, 10, 3]) # returns...
+# Int64Index([1, 3, 4, 5, 7, 9], dtype='int64')
+```
+
+---
+- index values do not have to be unique
+```python
+pd.Index([1, 1, 2, 2]) # perfectly legal
+```
+- but if we associate an index with a sequence, how does a non-unique index work?
+
+![index values do not have to be unique](../assets/Pasted%20image%2020250226131608.png)
+
+### Series
+#### Python Sequences, NumPy Arrays
+- associative arrays
+
+![python sequences](../assets/Pasted%20image%2020250226134645.png)
+
+- there is an association between the index and the values --> *associative arrays*
+	- in Python lists, tuples, NumPy arrays, this positional index is *implicit*
+	- index provides a *unique mapping* between indices and values
+#### Python Dictionaries
+- another type of associative array
+	- mapping between *keys* and *values*
+	- keys are *not* positional based
+		- do not even have to be numbers
+	- but it's still an associative array
+	```python
+	d = {'a': 1, 'b': 2, 'c': 3}
+	# see the index
+	# 'a' --> 1
+	# 'b' --> 2
+	# 'c' --> 3
+	```
+	- *unique* index
+	- no *implicit* positional index
+#### Pandas Series
+- another type of associative array
+	- has some dictionary-like properties
+	- has some sequence-like properties
+- it's a sequence type - so elements have a definite position in collection 
+	- positional index
+- can also define an explicit index
+	- a second index
+
+![pandas series example](../assets/Pasted%20image%2020250226135326.png)
+
+---
+- can reference items by positional indices `[0] [1] ...`
+- or by using the explicit index `['a'] ['b'] ...`
+	- can even use slicing and fancy indexing
+		- even with an explicit index that is not numerical `['a': 'c']`
+---
+- indexing works as expected
+- slicing has a twist
+	- positional index `[0:5]` --> *excludes* endpoint
+	- explicit index `['a':'c']` --> *includes* endpoint
+
+![pandas series and slicing](../assets/Pasted%20image%2020250226135810.png)
+
+#### A point of confusion ...
+```python
+# 0    1    2    3 - implicit index
+[100, 200, 300, 400]
+# 2    3    4    5 - explicit index
+```
+- `[2]` --> is this using implicit index?
+- `[2:3]` --> or explicit index?
+if both implicit and explicit index are integers:
+- `[2]` --> uses *explicit* index
+- `[2:3]` --> uses *implicit* index
+
+#### `loc` and `iloc` Attributes
+- allows us to specifically indicate use of implicit or explicit index
+
+![loc and iloc attributes](../assets/Pasted%20image%2020250226140310.png)
+
+- `s.iloc[2]` --> uses implicit index
+- `s.loc[2]` --> uses explicit index
+	- note the *square* brackets
+#### Deleting Items
+- indexes are immutable
+	- deleting an item would require deleting the corresponding index value
+	- instead use `.drop()` method
+	- returns a *new* series with new explicit index
+#### Creating Series Objects
+```python
+from pandas import Series
+```
+- from a dictionary
+
 
 
 
