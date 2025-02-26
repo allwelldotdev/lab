@@ -6938,6 +6938,7 @@ pd.Index([1, 1, 2, 2]) # perfectly legal
 		- even with an explicit index that is not numerical `['a': 'c']`
 ---
 - indexing works as expected
+- unlike Python `dict` however, the index of a `Series` can contain repeated elements
 - slicing has a twist
 	- positional index `[0:5]` --> *excludes* endpoint
 	- explicit index `['a':'c']` --> *includes* endpoint
@@ -6963,7 +6964,7 @@ if both implicit and explicit index are integers:
 
 - `s.iloc[2]` --> uses implicit index
 - `s.loc[2]` --> uses explicit index
-	- note the *square* brackets
+	- note the *square* brackets `[ ]`, not parenthesis `( )`
 #### Deleting Items
 - indexes are immutable
 	- deleting an item would require deleting the corresponding index value
@@ -6973,7 +6974,103 @@ if both implicit and explicit index are integers:
 ```python
 from pandas import Series
 ```
+
+![creating series objects](../assets/Pasted%20image%2020250226140804.png)
+
 - from a dictionary
+```python
+Series({'a': 1, 'b': 2})
+```
+- from a list, specifying explicit index using another list
+```python
+Series([1, 2], index=['a', 'b'])
+```
+#### Series Attributes and Methods
+- `.index` --> returns the explicit Index object
+- `.values` --> returns a NumPy array of the values
+- `.items` --> zip of explicit index values and array values
+- `.iloc` --> used for indexing using implicit index
+- `.loc` --> used for indexing using explicit index
+- `.drop` --> used to remove an element by explicit index
+
+> We can also use Boolean Masking (which remember will use the values, not the index when calculating conditional logic expressions), so no confusion regarding which index it uses - it does not use any.
+```python
+areas[areas != 'Glasgow']
+```
+
+> We have seen how to select and mutate values in a series. How do we delete an item? It's not as straightforward as you might think, since we also have an (immutable) explicit index associated with the series. Instead, we can use the `drop()` method, specifying the indices we want to drop from the series, which will return a **new** series, but without affecting the original:
+```python
+s = pd.Series([10, 20, 30], index=list('abc'), name='test')
+new = s.drop(['a', 'c']) # returns...
+# b 20
+# Name: test, dtype: int64
+# remember, despite the `drop()` function applied, `s` is untouched
+```
+
+> Can we drop by position? Not directly, no. But we can recover the explicit index value for a specific location. Remember how we studied Indexes in a previous set of lectures? The Index is just another series, with implicit positional indexing.
+```python
+s.index # Index(['a', 'b', 'c'], dtype='object')
+
+# we can get the explicit index value for a specific (or set of specific) positional indices:
+
+s.index([0, 2]) # Index(['a', 'c'], dtype='object')
+
+# we can now use this in our drop() call:
+
+s.drop(s.index([0, 2])) # returns...
+# b    20
+# Name: test, dtype: int64
+
+# again though, the original series `s` is not affected:
+
+s # returns...
+# a    10
+# b    20
+# c    30
+# Name: test, dtype: int64
+```
+
+### DataFrames
+- `Series` --> analogous to 1-D NumPy array with an explicit index
+- `DataFrame` --> analogous to 2-D NumPy array with an explicit index
+	- for the rows
+	- and for the columns
+another way to look at it...
+- a `DataFrame` is a collection of `Series` objects
+	- a *common* explicit index for the rows --> series are *aligned*
+	- the columns (Series) form a Series too
+		- explicit index
+		- column names possibly
+
+![dataframes](../assets/Pasted%20image%2020250226145301.png)
+
+- you can think of it as a Series of Series
+	- or a dictionary of dictionaries
+
+![dictionary of dictionaries](../assets/Pasted%20image%2020250226145406.png)
+
+#### Constructing a `DataFrame`
+```python
+pd.DataFrame(...)
+```
+- from a list of Series objects
+- from a list of lists
+- from a list of dictionaries
+- from a dictionary of Series objects
+- from a dictionary of dictionaries
+	- in some cases row and column explicit indexes are created as expected
+	- in some cases we may have to define these indexes manually
+#### Some `DataFrame` Properties and Methods
+- `.info()` --> prints some useful info about the data frame
+- `.transpose()` --> transposes the data frame, maintaining indexes
+- `.raname()` --> allows us to rename the index labels (rows and/or columns)
+- `.set_index()` --> use an existing column in the data frame as a row index
+- `.index` --> the Index object used to index the rows
+- `.columns` --> the Index object used to index the columns
+- `.drop()` --> used to drop rows/columns from the data frame
+
+### Selecting Data
+
 
 
 
