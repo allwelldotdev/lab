@@ -7183,8 +7183,15 @@ df # returns...
 > We can also use boolean masking to select elements but we'll cover that later. Pandas data selection can get more complicated. If you're interested in reading up more on it, you can look at the Pandas docs: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html
 
 ### Missing Data
-#### Python
-- `None` object 
+#### In Python
+- `None` object
+	- can be used to indicate undefined or missing in a sequence `[1, 2, None, 4]`
+- IEEE standard for floats also has the concept of an *undefined* float
+	- *NaN* (not a number)
+		- `float('nan')`
+		- `math.nan`
+		- `np.nan`
+
 
 
 
