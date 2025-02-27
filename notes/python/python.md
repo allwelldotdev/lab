@@ -7191,6 +7191,84 @@ df # returns...
 		- `float('nan')`
 		- `math.nan`
 		- `np.nan`
+#### Equality of NaN
+- two *NaN* values always compare `False`
+	- cannot compare two undefined (unknown) values...
+	  ```python
+		a = math.nan
+		b = math.nan
+		a == b # False
+		a is b # False
+		```
+	- so how do we test if a number is NaN?
+	  ```python
+		math.isnan()
+		math.isnan(np.nan) # True
+		```
+	- NumPy *universal* function `np.isnan()`
+#### Pandas Series
+- if the series is a series of floats
+	- `nan` --> `nan`
+	- `None` --> `nan`
+```python
+pd.Series([1, 2, None, np.nan]) # [1.0, 2.0, NaN, Nan], dtype=float64
+# notice the series was made into a float
+```
+- if the series is a series of `object` (for example for series of strings)
+```python
+pd.Series(['a', 'b', None, np.nan]) # ['a', 'b', None, NaN], dtype=object
+```
+#### Testing for Missing Data
+- could be `None` --> could be `Nan`
+- `pd.isnull()`
+	- handles *both*
+	- universal function (operates on `Series` or `DataFrames`)
+		- returns element by element comparison
+			- `True` if value is `None` or `NaN`
+- `pd.notnull()`
+	- similar to `isnull()`, but opposite result
+#### Replacing `Series` Missing Data
+- use loops to iterate and replace missing values
+- specialized Pandas functions
+	- `s.fillna(value)` --> replaces any null with specified `value`
+	- `s.fillna(method=...)`
+		- `method=ffill`
+			- forward fill
+				![forward fill](../assets/Pasted%20image%2020250227155223.png)
+				- `null, 1, null, 2, null, null`
+				- `[null, 1, 1, 2, 2, 2]`
+		- `method=bfill`
+			- backward fill
+#### Replacing `DataFrame` Missing Data
+- works same as `Series` replacement
+	- but the `axis` is important for back/forward fills
+
+![replacing dataframes with missing data](../assets/Pasted%20image%2020250227155359.png)
+
+#### Interpolating Missing Data
+- more advanced techniques
+	- linear interpolation
+	- splines ...
+- beyond the scope of this course
+- but we'll look at simple linear interpolation in code 
+
+> To learn more, see here: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.interpolate.html
+
+#### Dropping Data
+- already saw this for `Series` objects 
+- `DataFrame` is 2-D
+
+![dropping data](../assets/Pasted%20image%2020250227155821.png)
+
+- do we deleting rows with missing values?
+- or do we delete columns with missing values?
+	- need to specify an *axis*
+	  ```python
+		df.dropna(axis=0) # default of `axis` is 0 (if not specified)
+		df.dropna(axis=1)
+		```
+		- axis defaults to `0` if not specified
+### Loading Data
 
 
 
