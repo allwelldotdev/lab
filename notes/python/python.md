@@ -7269,6 +7269,59 @@ pd.Series(['a', 'b', None, np.nan]) # ['a', 'b', None, NaN], dtype=object
 		```
 		- axis defaults to `0` if not specified
 ### Loading Data
+- Pandas has built-in functions for loading many types of data
+- in this lecture we'll look at
+	- CSV files 
+	- Excel files
+- many other data sources are supported (SQL, JSON, SAS, SPSS, etc)
+
+> You can learn more here: https://pandas.pydata.org/pandas-docs/stable/reference/io.html
+
+#### Loading CSV File
+- `pd.read_csv(<file_name>)`
+- has many optional arguments
+	- `sep` and `delimiter` (just like Python's `csv.reader`)
+	- `header` row number to use as column labels, otherwise infers them
+	- `usecols` a list of positional indexes indicating which columns to keep
+	- `names` renames the columns
+	- `index_col` specifies (by name or index) which columns to use as the row index
+
+> You can learn more here: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html
+
+#### Loading an Excel File
+- Pandas relies on external 3rd party libraries to read Excel files
+	- many exist, such as `xlrd`, `openpyxl`
+	- need to `pip install` the library in your virtual env
+- `pd.read_excel('file_name')`
+	- `sheet_name` the sheet name or index (zero based) to load
+	- `header`
+	- `usecols`
+	- `names`
+	- `index_col` and more...
+
+> You can learn more here: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_excel.html
+
+### Basic Data Analysis
+- basic facts about a loaded data set
+	- `.info()` --> column names, types, not-null counts
+	- `.describe()` --> mean, min, max, quartiles, std dev
+		- by default only includes numerical columns
+		- `include='all'`
+			- categorical columns
+				- *#* unique values
+				- most frequent value + frequency
+	- output is "print" output
+---
+- equivalent methods to obtain the same data
+	- `.nunique()` --> *#* of unique values
+	- `.unique()` --> array of unique values
+	- `.value_counts()` --> Series of values and their frequency
+	- `.count()`
+	- `.mean()`
+	- `.std()`
+	- `.quantile()`
+### Sorting and Filtering
+
 
 
 
