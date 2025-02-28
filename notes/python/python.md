@@ -7299,7 +7299,11 @@ pd.Series(['a', 'b', None, np.nan]) # ['a', 'b', None, NaN], dtype=object
 	- `names`
 	- `index_col` and more...
 
-> You can learn more here: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_excel.html
+> Spreadsheets often have multiple tabs, so one of the arguments to the `read_excel` function is which tab to use, either by index (starting at `0`, and the default setting), or by name (such as `Sheet1`, etc.).
+> 
+> In order for Pandas to read Excel spreadsheets, an additional library needs to be installed that will handle reading Excel files - one like the `xlrd` library is a possible choice (there are others. You can learn more here: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_excel.html
+
+> Python's `csv` module loads a csv file into a list of lists, Pandas loads a csv file into a `DataFrame`.
 
 ### Basic Data Analysis
 - basic facts about a loaded data set
