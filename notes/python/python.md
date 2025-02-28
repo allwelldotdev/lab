@@ -7329,15 +7329,23 @@ pd.Series(['a', 'b', None, np.nan]) # ['a', 'b', None, NaN], dtype=object
 
 > `DataFrame.head()` displays the first 5 rows of a data frame if `n` value is not passed in.
 
-> When there are just too many columns (based on the setting `pd.options.display.max_info_columns`), you will not see all the columns listed as we have seen before. By default max columns is set to `100`. See:
+> When there are just too many columns (based on the setting `pd.options.display.max_info_columns`), you will not see all the columns listed as we have seen before (using the `.info()` method). By default max columns is set to `100`. See:
 ```python
 import pandas as pd
 pd.options.display.max_info_columns # 100
 
 # two ways we can change this Pandas setting is:
 # 1. using the `set_option` method
-pd.set_option(')
+pd.set_option('display.max_columns', None)
+# 2. reassigning the attribute directly:
+pd.options.display.max_info_columns = None
 ```
+
+> If we don't want to change the `pd.options.display.max_info_columns` value, we can pass `verbose=True` argument into the `.info()` DF method.
+> 
+> Using this method, we may still be missing the null counts for this display. We can specify they be included by using the `show_counts=True` argument (`null_counts=True` was the old argument setting, with new Pandas update the new and accurate argument to use is `show_counts=True`). 
+
+> When we use `DataFrame.describe()`, Pandas does not run analysis for non-numerical data within our dataset. If however, you are interested in categorical data, and understanding the number of unique values in the column, you can tell Pandas to include all columns using the `include='all'` argument.
 
 ### Sorting and Filtering
 
