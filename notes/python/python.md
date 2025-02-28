@@ -7303,6 +7303,8 @@ pd.Series(['a', 'b', None, np.nan]) # ['a', 'b', None, NaN], dtype=object
 > 
 > In order for Pandas to read Excel spreadsheets, an additional library needs to be installed that will handle reading Excel files - one like the `xlrd` library is a possible choice (there are others. You can learn more here: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_excel.html
 
+> There is a whole plethora of different readers available (pickle, csv, etc.) to load data from a variety of sources, which you can see here: [https://pandas.pydata.org/pandas-docs/stable/reference/io.html](https://pandas.pydata.org/pandas-docs/stable/reference/io.html)
+
 > Python's `csv` module loads a csv file into a list of lists, Pandas loads a csv file into a `DataFrame`.
 
 ### Basic Data Analysis
@@ -7323,7 +7325,20 @@ pd.Series(['a', 'b', None, np.nan]) # ['a', 'b', None, NaN], dtype=object
 	- `.count()`
 	- `.mean()`
 	- `.std()`
-	- `.quantile()`
+	- `.quartile()`
+
+> `DataFrame.head()` displays the first 5 rows of a data frame if `n` value is not passed in.
+
+> When there are just too many columns (based on the setting `pd.options.display.max_info_columns`), you will not see all the columns listed as we have seen before. By default max columns is set to `100`. See:
+```python
+import pandas as pd
+pd.options.display.max_info_columns # 100
+
+# two ways we can change this Pandas setting is:
+# 1. using the `set_option` method
+pd.set_option(')
+```
+
 ### Sorting and Filtering
 
 
