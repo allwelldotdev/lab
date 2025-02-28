@@ -7321,11 +7321,11 @@ pd.Series(['a', 'b', None, np.nan]) # ['a', 'b', None, NaN], dtype=object
 - equivalent methods to obtain the same data
 	- `.nunique()` --> *#* of unique values
 	- `.unique()` --> array of unique values
-	- `.value_counts()` --> Series of values and their frequency
+	- `.value_counts()` --> Series of values and their frequency (returns a `Series` containing the frequency of each distinct row in the data frame.)
 	- `.count()`
 	- `.mean()`
 	- `.std()`
-	- `.quartile()`
+	- `.quantile()`
 
 > `DataFrame.head()` displays the first 5 rows of a data frame if `n` value is not passed in.
 
