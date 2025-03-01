@@ -7345,7 +7345,7 @@ pd.options.display.max_info_columns = None
 > 
 > Using this method, we may still be missing the null counts for this display. We can specify they be included by using the `show_counts=True` argument (`null_counts=True` was the old argument setting, with new Pandas update the new and accurate argument to use is `show_counts=True`). 
 
-> When we use `DataFrame.describe()`, Pandas does not run analysis for non-numerical data within our dataset. If however, you are interested in categorical data, and understanding the number of unique values in the column, you can tell Pandas to include all columns using the `include='all'` argument.
+> When we use `DataFrame.describe()`, Pandas does not run analysis for non-numerical data within our dataset. If however, you are interested in categorical data, and understanding the number of unique values in the column, you can tell Pandas to include all columns using the `include='all'` argument. This will show the `unique`: number of unique elements in the column, `top`: the most unique element in the col
 
 ### Sorting and Filtering
 
