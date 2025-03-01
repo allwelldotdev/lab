@@ -7539,7 +7539,7 @@ for _, row_series in sorted_data.iterrows():
 > **Coercing a Series to a numeric type**
 > Often we deal with datasets where columns may contain mostly numeric data, but a few values are not - maybe it's a missing value replaced with some string.
 > 
-> To convert all values within the dataset to numeric type, we use the Pandas method `.to_numeric()`. This can be used as a standalone method under the Pandas' namespace `pd.to_numeric(dataset_or_series, error='coerce')` 
+> To convert all values within the dataset to numeric type, we use the Pandas method `.to_numeric()`. This can be used as a standalone method under the Pandas' namespace `pd.to_numeric(dataset_or_series, error='coerce')` or as a `DataFrame` object method `DataFrame.to_numeric(error='coerce')`.
 
 ## Matplotlib
 
