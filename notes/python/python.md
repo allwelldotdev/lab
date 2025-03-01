@@ -7345,9 +7345,108 @@ pd.options.display.max_info_columns = None
 > 
 > Using this method, we may still be missing the null counts for this display. We can specify they be included by using the `show_counts=True` argument (`null_counts=True` was the old argument setting, with new Pandas update the new and accurate argument to use is `show_counts=True`). 
 
-> When we use `DataFrame.describe()`, Pandas does not run analysis for non-numerical data within our dataset. If however, you are interested in categorical data, and understanding the number of unique values in the column, you can tell Pandas to include all columns using the `include='all'` argument. This will show the `unique`: number of unique elements in the column, `top`: the most unique element in the col
+> When we use `DataFrame.describe()`, Pandas does not run analysis for non-numerical data within our dataset. If however, you are interested in categorical data, and understanding the number of unique values in the column, you can tell Pandas to include all columns using the `include='all'` argument. This will show `unique`: number of unique elements in the column, `top`: unique element in the column with the most count frequency, `count`: most count frequency of unique element.
 
 ### Sorting and Filtering
+#### Filtering
+- boolean masking
+	- works similarly to NumPy and Series masking
+	- create a boolean masking array
+	- apply mask to data frame
+	- use explicit or implicit index
+	  ```python
+		mask = df['col'] >= 0
+		mask = df.iloc[:, 2] >= 0
+		df[mask]
+		```
+#### Sorting
+- sort rows based on the row index labels
+```python
+df.sort_index()
+```
+- sort rows based on values in a column
+```python
+df.sort_values('col label')
+```
+- similarly to Python's `sorted()` function, these support a `key` argument
+#### Reviewing `sorted(key=...)`
+```python
+l = ['Z', 'a', 'b']
+sorted(l, key=lambda x: x.casefold())
+```
+- `key` is a function that transforms each element of `l`, *one by one*
+	```python
+	l = ['Z', 'a', 'b']
+	sort_keys = ['z', 'a', 'b']
+	```
+	- sorting is then based on `sort_keys`
+		- *sort by an associated series of keys*
+#### The `key` Argument for DataFrames
+the `key` argument for data frames is the same thing
+- *sort by an associated series of keys*
+- instead of using a function that generates the keys one by one
+	- use a *vectorized function* that generates the sequence of sort keys all at once
+		- key function *receives* a `Series` as its argument
+		- should *return* a `Series` object with same shape
+		  ```python
+			s = Series([1, -1, 2, -2])
+			key = np.abs(s) # Series([1, 1, 2, 2])
+			```
+#### Sorting by Index
+
+![sorting by index](../assets/Pasted%20image%2020250301095417.png)
+
+```python
+df.sort_index(key=sort_func)
+# or
+df.sort_index(key=lambda ind: ind.str.casefold()) # notice here that
+# `.casefold()` method is abstracted/obfuscated behind the `str` namespace.  
+# this is a similarity drawn across object manipulation methods in Pandas
+```
+#### Sorting by Values
+- same as sorting by index
+	- uses some specified column instead of index
+
+![sorting by values](../assets/Pasted%20image%2020250301095818.png)
+
+```python
+df.sort_values('c1')
+```
+- sorts based on values in `c1`
+
+![sorting by values - index is preserved](../assets/Pasted%20image%2020250301095914.png)
+
+#### Sorting by Values with a `key`
+- `key` function receives the sort by column (`Series`) as its argument
+
+![sorting by values with a key](../assets/Pasted%20image%2020250301100115.png)
+
+```python
+df.sort_values('c1', key=lambda col: np.abs(col))
+```
+- `key` function receives column `c1` as its argument
+	- returns a new `Series` --> `1, 40, 7`
+
+![sorting by values with a key - result](../assets/Pasted%20image%2020250301100315.png)
+
+#### Sorting on Multiple Columns
+- can specify a multi-level sort based on multiple columns
+
+![sorting on multiple columns](../assets/Pasted%20image%2020250301100434.png)
+
+- `df.sort_values('c1')`
+	- stable sort based on `c1` column
+
+![stable sort based on c1 column](../assets/Pasted%20image%2020250301100544.png)
+
+- `df.sort_values(['c1', 'c2'])`
+	- sorts on `c1`, then `c2`
+
+![multi-level sort based on multiple columns](../assets/Pasted%20image%2020250301100755.png)
+
+### Manipulating Data
+
+
 
 
 
