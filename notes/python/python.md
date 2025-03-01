@@ -7528,6 +7528,19 @@ for _, row_series in sorted_data.iterrows():
 		# uses 'inner join' method to concatenate the specified data frames
 		```
 
+> Aggregate functions that worked on NumPy arrays such as `np.mean(arr, axis=0)`, work on Pandas `DataFrame` objects as well, and can even be called as a method to the object (both as a NumPy array or Pandas `Series` or `DataFrame` object).
+> 
+> Operating on `DataFrame` columns works very much the same way as with NumPy arrays - we use universal (or vectorized) functions. For instance:
+> `df['c0'] + df['c1']` or `df.loc[:, 'c0'] + df.iloc[:, 1]`
+> 
+> We can apply regular NumPy functions to entire `DataFrame` objects as well, just as with NumPy arrays:
+> `np.sin(df)`
+
+> **Coercing a Series to a numeric type**
+> Often we deal with datasets where columns may contain mostly numeric data, but a few values are not - maybe it's a missing value replaced with some string.
+> 
+> To convert all values within the dataset to numeric type, we use the Pandas method `.to_numeric()`. This can be used as a standalone method under the Pandas' namespace `pd.to_numeric(dataset_or_series, error='coerce')` 
+
 ## Matplotlib
 
 
