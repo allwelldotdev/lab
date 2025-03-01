@@ -7444,8 +7444,91 @@ df.sort_values('c1', key=lambda col: np.abs(col))
 
 ![multi-level sort based on multiple columns](../assets/Pasted%20image%2020250301100755.png)
 
-### Manipulating Data
+> If you want to iterate through all the rows and columns in data frames, you should know this: data frames consist of columns - not rows - therefore, to iterate through the rows, printing out each column value, use the `iterrows()` method implemented by Pandas to iterate over rows instead of columns. Each row is returned as a `tuple`, containing the (row) index label, and a `Series` object containing the column values:
+```python
+for row_label, row_series in sorted_data.iterrows():
+    print(row_label, type(row_series)) # returns ...
+# 3 <class 'pandas.core.series.Series'>
+# 11 <class 'pandas.core.series.Series'>
+# 27 <class 'pandas.core.series.Series'>
+# 42 <class 'pandas.core.series.Series'>
+# 73 <class 'pandas.core.series.Series'>
+# 144 <class 'pandas.core.series.Series'>
 
+# ignoring the `row_label`, if we print out the `row_series`, we get:
+
+for _, row_series in sorted_data.iterrows():
+	print(row_series)
+	print('-' * 20) # returns ...
+# region      East Asia & Pacific
+# code                        ASM
+# name             American Samoa
+# currency            U.S. dollar
+# Name: 3, dtype: object
+# --------------------
+# region      East Asia & Pacific
+# code                        AUS
+# name                  Australia
+# currency      Australian dollar
+# Name: 11, dtype: object
+# --------------------
+# region      East Asia & Pacific
+# code                        BRN
+# name                     Brunei
+# currency          Brunei dollar
+# Name: 27, dtype: object
+# --------------------
+```
+
+### Manipulating Data
+- vectorized operations similar to NumPy arrays
+	```
+	.count .sum .prod
+	.min .max .mean .std
+	```
+	- works across all elements of `DataFrame`
+	- or along a specified `axis`
+- regular arithmetic operators
+- NumPy universal functions
+---
+- `.transpose()`
+
+![how transpose function works in Pandas](../assets/Pasted%20image%2020250301112324.png)
+
+- `.to_numeric()`
+	- int, float
+		- entries that cannot be converted result in an exception
+		- can override this behaviour using the `errors` argument
+			- `errors = 'coerce'`
+#### Concatenating DataFrames
+- concatenate along an axis
+	```python
+	pd.concat([df1, df2, ...], axis=0) # `axis` can be 0 or 1
+	# axis = 1, means concatenate horizontally
+	# axis = 0, means concatenate vertically
+	```
+	- uses row or column *index* to "*align*" concatenated rows/columns
+	  
+	  ![outer join concatenation in data frames](../assets/Pasted%20image%2020250301112751.png)
+	  
+		- this is known as an *outer join* (similar to the same term in SQL lingo)
+---
+- in an *outer* join "missing" data in the join are replaces with `NaN`
+	- outer joins are the *default*
+
+	![outer joins are default](../assets/Pasted%20image%2020250301113320.png)
+
+- in an *inner* join, missing rows/columns are dropped entirely
+
+	![inner joins example](../assets/Pasted%20image%2020250301113359.png)
+
+	- *inner* joins are specified like so:
+	  ```python
+		pd.concat([df1, df2, ...], axis=1, join='inner')
+		# uses 'inner join' method to concatenate the specified data frames
+		```
+
+## Matplotlib
 
 
 
