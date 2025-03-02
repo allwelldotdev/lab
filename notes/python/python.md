@@ -7542,6 +7542,79 @@ for _, row_series in sorted_data.iterrows():
 > To convert all values within the dataset to numeric type, we use the Pandas method `.to_numeric()`. This can be used as a standalone method under the Pandas' namespace `pd.to_numeric(dataset_or_series, error='coerce')` or as a `DataFrame` object method `DataFrame.to_numeric(error='coerce')`.
 
 ## Matplotlib
+- `matplotlib` is a popular graphing library
+	- see the docs: https://matplotlib.org/
+	- integrates well with Jupyter Notebooks
+	- there are many other available too
+		- `geoplotlib` --> maps, geographical data
+		- `ggplot` --> little simpler than `matplotlib`, not as customizable (based on `matplotlib`)
+		- `plotly` --> interactive plots/web, contour plots, 3D, ...
+		- and more...
+---
+- numerous extension packages to Matplotlib 
+	- financial
+	- maps and map projections
+	- specialty axes (like broken axes)
+	- electronic circuits
+	- Venn diagrams
+	- density maps
+	- statistical maps
+	- ML visualizations
+	- and many more...
+
+> For more info on 3rd party packages, see the docs: https://matplotlib.org/3.1.0/thirdpartypackages/index.html (bear in mind, this link leads to an older version of the site. When you open the link, there's a direction to a newer version of the site.)
+
+---
+ - here, we'll look at how to create and theme various Matplotlib charts
+	 - single plots
+	 - overlayed plots
+	- grid plots
+- we'll look at OHLC plots using the `mplfinance` extension for Matplotlib
+	- learn more about `mplfinance` here: https://github.com/matplotlib/mplfinance
+- install using:
+```bash
+pip install matplotlib
+pip install mplfinance
+```
+### `matplotlib` Basics
+#### Imports
+- two sections of the `matplotlib` library we will use often:
+```python
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+```
+#### Styles
+- `mpl.style.available`
+	- returns a list of various styles available on your system
+		- a list of *strings*
+- `mpl.style.use('...')`
+	- sets your notebook to use a particular style
+- see a preview of various styles here: https://matplotlib.org/3.2.1/gallery/style_sheets/style_sheets_reference.html
+#### Anatomy of Figures
+
+![anatomy of figures for matplotlib](../assets/Pasted%20image%2020250302112051.png)
+
+#### Creating a Figure and Axes
+- simplest is to use `subplots()`function in `pyplot` module
+	```python
+	import matplotlib.pyplot as plt
+	plt.subplots()
+	```
+	- creates a new figure and one `Axes` object
+	- returns it as a `tuple`
+	- and *displays* the figure in Jupyter
+	  ```python
+		fig, ax = plt.subplots()
+		```
+		- results in a blank chart
+#### Plotting Data
+- 
+
+
+
+
+
+
 
 
 
