@@ -7720,23 +7720,40 @@ fig, ax = plt.subplot()
 	- `data` is the data for which we want to generate the histogram
 	- `bins` specifies the number of bins we want to use
 ### Charting with `mplfinance`
+#### `mplfinance`
 
+> See source code here: http://github.com/matplotlib/mplfinance
 
+- add-on to Matplotlib that provides extra plot types
+```python
+pip install mplfinance
+```
+- import it in Jupyter
+```python
+import mplfinance as mpf
+```
+- we'll use it for candlestick/OHLC charts
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#### Plotting OHLC Charts
+- simplest is to arrange a Pandas data frame as follows:
+	- *index* is the *datetime* for each row
+	- five data columns in specified order:
+		- Open, High, Low, Close, Volume
+```python
+mpf.plot(pd.DataFrame)
+```
+#### Additional Plot Arguments
+- `type` --> used to specify chart type (e.g. `'ohlc'`, `'candle'`)
+- `mav` --> used to superimpose one of more moving averages
+	- single value for single mav, tuple of values for multiple
+- `volume` --> `True` to display Volume bar chart (defaults to `False`)
+- `show_nontrading` --> `True` to show non-trading days in chart (gaps), defaults to `False`
+#### Superimposing Plots
+- create subplots (this works a litle differently from Matplotlib despite being an extension of Matplotlib)
+```python
+plots = mpf.make_addplot(...)
+```
+- add them to main plot when creating it
+```python
+mpf.plot(..., addplot=plots)
+```
