@@ -7757,3 +7757,8 @@ plots = mpf.make_addplot(...)
 ```python
 mpf.plot(..., addplot=plots)
 ```
+
+> For charting with `mplfinance`, you can define colors using hex codes (like HTML colors are often coded), or even color palettes such as XKCD (and others). See:
+> - [https://xkcd.com/color/rgb/](https://xkcd.com/color/rgb/) for xkcd colors
+> - [https://htmlcolorcodes.com/](https://htmlcolorcodes.com/) for HTML hex code colors
+
