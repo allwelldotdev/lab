@@ -7663,8 +7663,35 @@ fig, ax = plt.subplot()
 		- `plt.subplots=(figsize=(width, height))`
 	- or specified as a global change
 		- `plt.rcParams['figure.figsize'] = [width, height]`
-### More Plot Types
 
+> The figure size I've noticed works for me is:
+> - `(11, 7)` for normal default plotting
+> - `(13, 8)` for large-size plots
+> - `(17, 10)` for larger-sized plots
+
+### More Plot Types
+#### Plot Styles
+- `plot(...)` --> a line plot
+
+![line plot](../assets/Pasted%20image%2020250303133249.png)
+
+- `bar(...)` --> vertical bar plot
+
+![vertical bar plot](../assets/Pasted%20image%2020250303133322.png)
+
+- `scatter(...)` --> scatter plot
+
+![scatter plot](../assets/Pasted%20image%2020250303133359.png)
+
+- plenty more...
+	- see here: https://matplotlib.org/3.1.1/gallery/index.html
+#### Additional Vertical/Horizontal Lines to Axes
+- sometimes useful to add vertical/horizontal lines to a chart
+	- display info such as mean, median, other important "values"
+```python
+ax.axhline(y=..., xmin=0, xmax=1)
+ax.axvline(x=..., ymin=0, ymax=1)
+```
 
 
 
