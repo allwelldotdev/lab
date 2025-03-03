@@ -6776,6 +6776,19 @@ np.amax(arr, axis=1) # performs the operation across each column (i.e. for each 
 - returns
 	- a tuple of `(result, bin_arr)`
 - other variants
+
+> To explain in more detail, `np.histogram(arr, bins=int)`:
+> The `bins` parameter, when given an `int` like 50, tells `np.histogram` to automatically create 50 equal-width bins spanning the range of `data` (from its minimum to maximum value). If a sequence were passed instead, it would use those specific values as custom bin edges. Here, with `bins=50`, it divides the data’s range into 50 uniform intervals and counts how many values fall into each.
+```python
+data = np.random.normal(0, 1, size=1_000_000)
+freq_, bins_ = np.histogram(data, bins=50)
+
+# in this scenario:
+# `freq_` is an array of the frequency counts (how many values fall into each bin)
+# `bins_` is an array of the bin edges (51 values for 50 bins, defining the intervals)
+# `bins_` will contain a bins array which will contain the rightmost edge in addition to the left edges - remember that the rightmost edge will be omitted when using the bins to do something like charting or plotting on a graph
+```
+
 ## Pandas
 - *Pandas* is built on top of *NumPy*
 	- data manipulation and analysis, focused on tabular and time series data
