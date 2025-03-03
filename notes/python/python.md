@@ -7545,7 +7545,7 @@ for _, row_series in sorted_data.iterrows():
 - `matplotlib` is a popular graphing library
 	- see the docs: https://matplotlib.org/
 	- integrates well with Jupyter Notebooks
-	- there are many other available too
+	- there are many other graphing libraries available too, like:
 		- `geoplotlib` --> maps, geographical data
 		- `ggplot` --> little simpler than `matplotlib`, not as customizable (based on `matplotlib`)
 		- `plotly` --> interactive plots/web, contour plots, 3D, ...
