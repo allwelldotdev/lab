@@ -7636,6 +7636,35 @@ fig, ax = plt.subplot()
 ```
 
 ### Multi Plots
+#### Multiple Plots on Same Axes
+- saw this previously
+	- just keep adding plot to same `Axes` object
+
+![multi plots](../assets/Pasted%20image%2020250303114358.png)
+
+#### Multiple Axes on Same Figure
+- we can also chart *multiple* `Axes` on the *same figure*
+	- grid layout
+		- number of columns
+		- number of rows
+		  ```python
+			plt.subplots(n_rows, m_columns)
+			```
+		- creates the `figure`
+		- creates the `n * m Axes` objects laid out as specified
+		- returns `figure` and a collection of `Axes` as a 2-value tuple
+			- first element is the `figure`
+			- second element is a NumPy `ndarray` with all the `Axes`
+#### Setting Figure Size
+- technically size is defined in width and height in inches
+	- how those sizes work on your screen will depend on *your* device screen resolution (*dpi* - *dots per inch*)
+	- default is `6.4 (w) x 4.8 (h)` (this may have changed or been updated)
+	- can specify for a single figure
+		- `plt.subplots=(figsize=(width, height))`
+	- or specified as a global change
+		- `plt.rcParams['figure.figsize'] = [width, height]`
+### More Plot Types
+
 
 
 
