@@ -6768,7 +6768,7 @@ np.amax(arr, axis=1) # performs the operation across each column (i.e. for each 
 ![histogram in NumPy](../assets/Pasted%20image%2020250224185259.png)
 
 - define bin bounds using left edge, and rightmost edge (which is inclusive)
-	- `bins = [0, 3, 8, 10`
+	- `bins = [0, 3, 8, 10]`
 - `np.histogram(a, bins_arr)` --> tuple: (array *frequencies*, *bins* array)
 - `np.histogram(a, int)`
 	- calculates evenly spaced bins in min/max range
@@ -7688,10 +7688,25 @@ fig, ax = plt.subplot()
 #### Additional Vertical/Horizontal Lines to Axes
 - sometimes useful to add vertical/horizontal lines to a chart
 	- display info such as mean, median, other important "values"
-```python
-ax.axhline(y=..., xmin=0, xmax=1)
-ax.axvline(x=..., ymin=0, ymax=1)
-```
+		```python
+		ax.axhline(y=..., xmin=0, xmax=1)
+		ax.axvline(x=..., ymin=0, ymax=1)
+		```
+		- `xmin`/`xmax`
+			- values between `0` and `1`
+			- `0` indicates *left* edge, `1` indicates *right* edge
+		- `ymin`/`ymax`
+			- values between `0` and `1`
+			- `0` indicates *bottom* edge, `1` indicates *top* edge
+#### Histograms
+- can use `numpy` to generate histogram data, and then use `matplotlib`
+- but this function is also built-in to Matplotlib directly
+	```python
+	ax.hist(data, bins=...)
+	```
+	- `data` is the data for which we want to generate the histogram
+	- `bins` specifies the number of bins we want to use
+### Charting with `mplfinance`
 
 
 
