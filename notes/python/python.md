@@ -7608,7 +7608,35 @@ import matplotlib.pyplot as plt
 		```
 		- results in a blank chart
 #### Plotting Data
-- 
+- we *add* a plot to `Axes`
+	```python
+	ax.plot(x_coords, y_coords, label='...')
+	```
+	- this adds a (line) plot to the `Axes` object, with specified plot name `label` (used in legend)
+	- x and y coordinates can be lists, NumPy arrays, Pandas columns, ...
+	- we can keep adding more plots (using `.plot()`) to the same `Axes`
+	- we have to display the figure to see the result
+		- typically create figure and plots in a single Jupyter cell
+#### Additional Axes Settings
+- `ax.set_xlabel('...')` --> sets the x-axis label
+- `ax.set_ylabel('...')` --> sets the y-axis label
+- `ax.set_title('...')` --> sets the title
+- `ax.legend()` --> creates and adds a legend
+- note how all these are applied to the `Axes` object
+
+> To create a plot we have to create a figure and a set of axes. Each set of axes is basically a plot, and a figure can hold one or more of these axes.
+
+> The simplest way to create a figure `fig` and axes `Axes` or `ax` is to use the `subplots()` function in the `pyplot` module. Like so:
+```python
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+# create and assign a figure and Axes
+fig, ax = plt.subplot()
+```
+
+### Multi Plots
+
 
 
 
