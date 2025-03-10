@@ -5440,7 +5440,7 @@ class Person:
 #### Calculated Properties
 - properties are very general
 	- they are just methods
-	- they do not have to be be used just to return an attribute
+	- they do not have to be used just to return an attribute
 	- they can just calculate and return some value
 ```python
 class Person:
@@ -5848,7 +5848,7 @@ API --> Application Programming Interface
 pip install requests
 ```
 #### Making Requests
-- all standard methods/verbs are implements as functions
+- all standard methods/verbs are implemented as functions
 ```python
 requests.get(...)
 requests.post(...)
