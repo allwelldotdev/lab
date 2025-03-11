@@ -7273,8 +7273,8 @@ pd.Series(['a', 'b', None, np.nan]) # ['a', 'b', None, NaN], dtype=object
 
 ![dropping data](../assets/Pasted%20image%2020250227155821.png)
 
-- do we deleting rows with missing values?
-- or do we delete columns with missing values?
+- do we delete rows with missing values?
+	- or do we delete columns with missing values?
 	- need to specify an *axis*
 	  ```python
 		df.dropna(axis=0) # default of `axis` is 0 (if not specified)
