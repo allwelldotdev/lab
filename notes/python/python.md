@@ -7762,3 +7762,20 @@ mpf.plot(..., addplot=plots)
 > - [https://xkcd.com/color/rgb/](https://xkcd.com/color/rgb/) for xkcd colors
 > - [https://htmlcolorcodes.com/](https://htmlcolorcodes.com/) for HTML hex code colors
 
+## Conclusion
+### What we covered
+- the Python language
+- basic and advanced data types
+- some of the Python standard library
+- some popular 3rd party libraries
+	- `requests` --> Web and API requests, JSON
+	- `NumPy` --> efficient array computations
+	- `Pandas` --> loading and manipulating data
+	- `Matplotlib` --> charting data
+### Important References 
+- [www.python.org](https://www.python.org)
+- [numpy.org](https://numpy.org)
+- [pandas.pydata.org](https://pandas.pydata.org)
+- [matplotlib.org](https://matplotlib.org)
+- [requests.readthedocs.io/en/master/](https://requests.readthedocs.io/en/master/)
+
