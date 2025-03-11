@@ -7778,4 +7778,43 @@ mpf.plot(..., addplot=plots)
 - [pandas.pydata.org](https://pandas.pydata.org)
 - [matplotlib.org](https://matplotlib.org)
 - [requests.readthedocs.io/en/master/](https://requests.readthedocs.io/en/master/)
-
+### Practice!
+- to learn programming: practice, practice, practice
+	- yes, it can be hard
+	- yes, you'll make mistakes
+	- even seasoned devs struggle and make mistakes - often!
+- read (and understand) other peoples' code
+	- if you work with other devs, review each other's code
+	- or find a developer friend who can do that
+	- look at open source projects (GitHub)
+- be patient - don't give up
+	- you won't become an expert in 3 weeks
+	- as you write more code, you'll become more and more proficient 
+### Practice Sites
+- there are many sites where you can practice with coding challenges
+	- [edabit.com](https://edabit.com)
+	- [coderbyte.com](https://coderbyte.com)
+	- [www.codewars.com](https://www.codewars.com)
+	- [www.hackerrank.com](https://www.hackerrank.com)
+### Additional Resources
+- [stackoverflow.com](https://stackoverflow.com)
+	- if you have a coding question
+	- you probably weren't the first person with that question
+	- you will probably find an answer, at least close
+	- if not, you can post your question
+	- just browse questions/answers - incredibly informative
+- [Python Cookbook](https://www.amazon.com/Python-Cookbook-Third-David-Beazley/dp/1449340377/ref=sr_1_1), by Beazley and Jones (O'Reilly Press)
+- [Fluent Python](https://www.amazon.com/Fluent-Python-Concise-Effective-Programming/dp/1492056359/ref=sr_1_1), by Ramalho (O'Reilly Press)
+- [YouTube](https://www.youtube.com/watch?v=Bv25Dwe84g0&list=PLdF50s4uzqzQV2i-dYuz9p17k5PaudwFW&ab_channel=%D0%92%D0%B8%D0%B4%D0%B5%D0%BE%D1%81%D0%BC%D0%B5%D1%80%D0%BE%D0%BF%D1%80%D0%B8%D1%8F%D1%82%D0%B8%D0%B9%7Bspeach%21), experts such as Hettinger, Beazley, Martelli, PyCon talks
+- [Twitter](https://x.com/raymondh), Raymond Hettinger ([@raymondh](https://x.com/raymondh))
+### Coding...
+- try executing these in a Jupyter cell
+```python
+import this
+import __hello__
+import antigravity
+```
+- if you're a dev who would rather use braces `{ }` for code blocks
+```python
+from __future__ import braces
+```
