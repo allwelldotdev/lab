@@ -18,4 +18,7 @@
 
 > Moving to [Rustlings](https://github.com/rust-lang/rustlings): small exercises to get used to reading and writing Rust code.
 
-> 
+> Then, [Rust by Example](https://doc.rust-lang.org/rust-by-example/). RBE is a collection of runnable examples that illustrate various Rust concepts and standard libraries.
+
+> You may also check out [Rust Adventure](https://www.rustadventure.dev/) if you'd fancy a paid subscription of $30/month for a more researched and structured Rust learning track.
+

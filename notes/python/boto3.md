@@ -53,3 +53,4 @@ uv add boto3 # if you're using uv
 	- wait for specific conditions to be met in AWS resources
 - resources
 	- high-level, object-oriented interface to interact with AWS resources
+
