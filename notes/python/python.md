@@ -2995,6 +2995,7 @@ f() # returns 20
 ---
 - but there are some *rules*!
 	- you can always "*read*" a variable from the outer scope
+
 ![closure](../assets/Pasted%20image%2020250122150001.png)
 - outer
 	- `{'c': 100, 'inner': <function>}`
