@@ -34,10 +34,14 @@ Multiprocessing more closely resembles parallelism, whereas multithreading more 
 ## More Helpful Resources
 - looking at Python GIL (Global Interpreter Lock)
 	- https://wiki.python.org/moin/GlobalInterpreterLock
-	- https://python.land/python-concurrency/the-python-gil
+	- https://python.land/python-concurrency/the-python-gil (this one is quite helpful)
 	- David Beazley's "Understanding the Python GIL" Pycon 2010 talk: https://www.youtube.com/watch?v=Obt-vMVdM8s&ab_channel=DavidBeazley
 		- David Beazley's website for more helpful resources: https://www.dabeaz.com/courses.html
 	- https://realpython.com/python-gil/
+	- python GIL developments in 2021
+		- someone revived the discussion by offering a promising proof-of-concept CPython version with the GIL removed
+			- source code on [Github](https://github.com/colesbury/nogil)
+			- comprehensive [Google docs](https://docs.google.com/document/d/18CXhDb1ygxg-YXNBJNzfzZsDFosB5e6BfnXLlejd9l0/edit?tab=t.0) explaining his efforts
 - understanding Python concurrency with `asyncio` library, and `async`/`await` 
 	- https://medium.com/@danielwume/an-in-depth-guide-to-asyncio-and-await-in-python-059c3ecc9d96#:~:text=The%20await%20keyword%20is%20used,awaited%20coroutine%20is%20in%20progress
 	- https://realpython.com/async-io-python/
