@@ -31,3 +31,20 @@ Multiprocessing more closely resembles parallelism, whereas multithreading more 
 
 > Watch this YouTube video by freeCodeCamp on the section on Multithreading and Multiprocessing: https://youtu.be/HGOBQPFzWKo?si=n4MkmL2qN__rqbDO
 
+## More Helpful Resources
+- looking at Python GIL (Global Interpreter Lock)
+	- https://wiki.python.org/moin/GlobalInterpreterLock
+	- https://python.land/python-concurrency/the-python-gil
+	- David Beazley's "Understanding the Python GIL" Pycon 2010 talk: https://www.youtube.com/watch?v=Obt-vMVdM8s&ab_channel=DavidBeazley
+		- David Beazley's website for more helpful resources: https://www.dabeaz.com/courses.html
+	- https://realpython.com/python-gil/
+- understanding Python concurrency with `asyncio` library, and `async`/`await` 
+	- https://medium.com/@danielwume/an-in-depth-guide-to-asyncio-and-await-in-python-059c3ecc9d96#:~:text=The%20await%20keyword%20is%20used,awaited%20coroutine%20is%20in%20progress
+	- https://realpython.com/async-io-python/
+	- Video: https://realpython.com/courses/understanding-global-interpreter-lock-gil/
+	- https://tenthousandmeters.com/blog/python-behind-the-scenes-12-how-asyncawait-works-in-python/
+	- Python docs: https://docs.python.org/3/library/asyncio.html
+	- https://www.reddit.com/r/Python/comments/pdtmtw/how_asyncawait_works_in_python/
+	- https://realpython.com/courses/python-3-concurrency-asyncio-module/
+- other Python learning resources
+	- https://tenthousandmeters.com/tag/python-behind-the-scenes/
