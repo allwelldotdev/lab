@@ -53,3 +53,8 @@ Multiprocessing more closely resembles parallelism, whereas multithreading more 
 	- Speed Up Your Python Program with Concurrency (https://realpython.com/python-concurrency/)
 - other Python learning resources
 	- https://tenthousandmeters.com/tag/python-behind-the-scenes/
+
+## Excerpts from the book: Python Concurrency with asyncio
+The book is Python Concurrency with asyncio. Written by Matthew Fowler. Hosted on orielly.com
+
+> When we refer to an operation as I/O-bound or CPU-bound we are referring to the limiting factor that prevents that operation from running faster.
