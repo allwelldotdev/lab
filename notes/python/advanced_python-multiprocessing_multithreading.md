@@ -50,5 +50,6 @@ Multiprocessing more closely resembles parallelism, whereas multithreading more 
 	- Python docs: https://docs.python.org/3/library/asyncio.html
 	- https://www.reddit.com/r/Python/comments/pdtmtw/how_asyncawait_works_in_python/
 	- https://realpython.com/courses/python-3-concurrency-asyncio-module/
+	- Speed Up Your Python Program with Concurrency (https://realpython.com/python-concurrency/)
 - other Python learning resources
 	- https://tenthousandmeters.com/tag/python-behind-the-scenes/
