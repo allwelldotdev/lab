@@ -59,3 +59,4 @@ The book is Python Concurrency with asyncio. Written by Matthew Fowler. Hosted o
 
 > When we refer to an operation as I/O-bound or CPU-bound we are referring to the limiting factor that prevents that operation from running faster.
 
+New on concurrency...
