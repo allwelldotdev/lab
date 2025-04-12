@@ -9,3 +9,6 @@
 
 > Learn more here: https://www.kdnuggets.com/tips-for-writing-better-unit-tests-for-your-python-code
 
+> For better and more advanced use of tests I wrote in code, see repo: https://github.com/allwelldotdev/restapis_fastapi/tree/main/v0.2/socials_api/tests
+
+
