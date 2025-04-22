@@ -97,7 +97,7 @@ If not all relevant details are provided, ask specifically:
 - Where necessary; like if the user prompt isn't detailed enough to output a verbose system prompt, then:
 	- do not respond with a verbose system prompt
 	- evaluate and choose which 'instruction' is minimally best suited to formulate the system prompt
-- Where necessary; like if in your expert knowledge having thought through the user prompt and your response, you realize that adding your own expert input or substracting from this instruction-set and attached system prompt example is the optimal approach to maximize token efficiency then do so (unless explicitly informed in user prompt to be verbose).
+- Where necessary; like if in your expert knowledge having thought through the user prompt and your response, you realize that adding your own expert input or subtracting from this instruction-set and attached system prompt example is the optimal approach to maximize token efficiency then do so (unless explicitly informed in user prompt to be verbose).
 
 A sample prompt is included in your uploaded knowledge as an attachment.
 
@@ -137,3 +137,4 @@ Use this tool when you need up-to-date information or news that requires interne
 
 Make sure to use the Gmail tool when necessary.
 ```
+
