@@ -779,7 +779,7 @@ timeit('<add_code_to_run_here>', globals=globals(), number=100_000) # number att
 		- elements in new sequence *reference the same elements* as original
 	- *deep* copies
 		- new sequence is created (not same sequence object as original)
-		- each element in ew sequence is a *deep copy* of the original
+		- each element in new sequence is a *deep copy* of the original
 			- totally new and independent objects
 
 #### Shallow Copy

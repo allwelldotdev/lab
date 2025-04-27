@@ -157,8 +157,119 @@ const multiple = function(a, b) { return a * b; }; // Not hoisted
 ```js
 const obj = {
 	value: 42,
-	arrow: () => conso
-}
+	arrow: () => console.log(this.value), // Inherits global this (undefined in strict mode)
+	regular: function() { console.log(this.value); } // Refers to obj
+};
+obj.arrow(); // undefined
+obj.regular(); // 42
+
+function regularFn() { console.log(arguments); } // Logs arguments array
+const arrowFn = () => console.log(arguments); // ReferenceError: arguments is not defined
+regularFn(1, 2, 3); // [1, 2, 3]
 ```
+
+### Arrays
+Ordered, zero-indexed lists for storing multiple values (of any type). Created with `[]` or `new Array()`. Support methods like `push()`, `pop()`, `slice()`, and `forEach()`.
+For example:
+```js
+let arr = [1, "hello", true];
+arr.push(2); // [1, "hello", true, 2]
+```
+#### **Basic Array Operations (Methods)**
+- **`indexOf`**: Returns the index value of element in array 
+- **`push()`**: Adds one or more elements to the end of an array. Returns new length.  
+    Example: `arr.push(4); // [1, 2, 3] → [1, 2, 3, 4]`
+- **`pop()`**: Removes and returns the last element of an array.  
+    Example: `arr.pop(); // [1, 2, 3] → [1, 2]; returns 3`
+- **`shift()`**: Removes and returns the first element of an array.  
+    Example: `arr.shift(); // [1, 2, 3] → [2, 3]; returns 1`
+- **`unshift()`**: Adds one or more elements to the start of an array. Returns new length.  
+    Example: `arr.unshift(0); // [1, 2, 3] → [0, 1, 2, 3]`
+- **`forEach()`**: Executes a function for each array element.  
+    Example: `arr.forEach(num => console.log(num)); // Logs each element`
+- **`map()`**: Creates a new array with results of calling a function on each element.  
+    Example: `arr.map(num => num * 2); // [1, 2, 3] → [2, 4, 6]`
+- **`filter()`**: Creates a new array with elements that pass a test function.  
+    Example: `arr.filter(num => num > 1); // [1, 2, 3] → [2, 3]`
+- **`slice()`**: Returns a shallow copy of a portion of an array (start, end indices).  
+    Example: `arr.slice(1, 3); // [1, 2, 3, 4] → [2, 3]`
+- **`splice()`**: Adds/removes elements at a specific index, modifying the array. Returns removed elements.  
+    Example: `arr.splice(1, 1, 'a'); // [1, 2, 3] → [1, 'a', 3]`
+
+> **1. Does `-1` refer to the last element in a JavaScript array like in Python?**
+> 
+> No. JavaScript arrays are zero-indexed, and negative indices are not supported for direct access. To access the last element, you can use `array[array.length - 1]` or methods like `at(-1)` (introduced in ES2022).
+> 
+> In Python, `list[-1]` accesses the last element, but JavaScript requires explicit length calculation or `at()` for this behavior.
+> 
+> For example:
+```js
+let arr = [1, 2, 3];
+console.log(arr[arr.length - 1]); // 3 (last element)
+console.log(arr.at(-1)); // 3 (last element, modern JS)
+console.log(arr[-1]); // undefined (negative indices don’t work)
+```
+
+> **2. Using `slice()` to select everything from a starting index to the end of the array**
+> 
+> The `slice(start, end)` method returns a shallow copy of a portion of an array from `start` (inclusive) to `end `(exclusive). To select everything from a starting index to the end, use `slice(start)` without specifying an `end` parameter. This implicitly includes all elements until the array’s end. For example:
+```js
+let arr = [1, 2, 3, 4, 5];
+console.log(arr.slice(2)); // [3, 4, 5] (from index 2 to end)
+console.log(arr.slice(1)); // [2, 3, 4, 5] (from index 1 to end)
+```
+> You can also use negative indices with `slice()`, where `-n` counts from the end:
+```js
+console.log(arr.slice(-2)); // [4, 5] (last 2 elements)
+```
+> The original array remains unchanged.
+
+**3. Elaborating on `splice()`**
+
+The splice(start, deleteCount, ...items) method modifies an array by removing, replacing, or adding elements at a specified index. It’s more versatile (and destructive) than slice(), as it changes the original array and returns an array of removed elements.
+
+- **Parameters**:
+    - `start`: Index where modification begins (can be negative to count from the end).
+    - `deleteCount`: Number of elements to remove starting from `start.` If `0`, no elements are removed.
+    - `...items` (optional): Elements to insert at `start` after removal.
+- **Return Value**: An array of the removed elements (empty if none removed).
+- **Key Features**:
+    - Modifies the original array in place.
+    - Can delete, insert, or replace elements in one operation.
+    - Useful for dynamic array manipulation.
+
+```js
+// Removing elements
+let arr = [1, 2, 3, 4];
+let removed = arr.splice(1, 2); // Start at index 1, remove 2 elements
+console.log(arr); // [1, 4] (original array modified)
+console.log(removed); // [2, 3] (removed elements)
+
+// Adding elements
+let arr = [1, 2, 3];
+arr.splice(1, 0, 'a', 'b'); // Start at index 1, remove 0, add 'a', 'b'
+console.log(arr); // [1, 'a', 'b', 2, 3]
+
+// Replacing elements
+let arr = [1, 2, 3];
+arr.splice(1, 1, 'x'); // Start at index 1, remove 1, add 'x'
+console.log(arr); // [1, 'x', 3]
+
+// Using negative indices
+let arr = [1, 2, 3, 4];
+arr.splice(-2, 1, 'y'); // Start at second-to-last, remove 1, add 'y'
+console.log(arr); // [1, 2, 'y', 4]
+```
+
+**Key Notes**:
+
+- `splice()` is memory-efficient for small changes but can be costly for large arrays due to shifting elements.
+- Unlike `slice(),` it’s not used for copying but for direct array modification.
+- Be cautious with `deleteCount`; if omitted, it removes all elements from `start` to the end.
+
+These distinctions make `splice()` a powerful tool for array manipulation, while `slice()` is better for non-destructive extraction.
+
+
+
 
 
