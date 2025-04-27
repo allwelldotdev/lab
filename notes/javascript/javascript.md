@@ -353,6 +353,89 @@ let key = "name";
 console.log(obj[key]); // Bracket with variable: "Alice"
 ```
 
+#### **Object Methods**
+Objects can have methods (also known as functions) as value or keys (or properties) in them. See example:
+```js
+const obj = {
+	firstName: "Allwell",
+	lastName: "Agwu-Okoro",
+	age: 30,
+	calcBirthYear: function() {
+		return 2025 - this.age;
+	}
+}
+obj.calcBirthYear() // Returns: 1995
+```
+
+> For more advanced built-in JS object methods, see [GrokAI](https://grok.com/share/bGVnYWN5_9ea7c4d6-610b-44dd-b861-902dc6b76b67). See link content below:
+
+- **`Object.keys(obj)`**: Returns an array of an object's enumerable property names.
+	- Use: Iterate over or inspect object keys.
+	- Example:
+	  ```js
+		let obj = { name: "Alice", age: 25 };
+		console.log(Object.keys(obj)); // ["name", "age"]
+		```
+- **`Object.values(obj)`**: Returns an array of an object's enumerable property values.
+	- Use: Access all values without needing keys.
+	- Example:
+	  ```js
+		let obj = { name: "Alice", age: 25 };
+		console.log(Object.values(obj)); // ["Alice", 25]
+		```
+- **`Object.entries(obj)`**: Returns an array of an object's enumerable key-value pairs as `[key, value]` arrays.
+	- Use: Iterate over both keys and values.
+	- Example:
+	  ```js
+		let obj = { name: "Alice", age: 25 };
+		console.log(Object.entries(obj)); // [["name", "Alice"], ["age", 25]]
+		for (let [key, value] of Object.entries(obj)) {
+			console.log(`${key}: ${value}`); // name: Alice, age: 25
+		}
+		```
+- **`Object.hasOwnProperty(prop)`**: Checks if an object has a specific property as its own (not inherited).
+	- Use: Verify property existence safely.
+	- Example:
+	  ```js
+		let obj = { name: "Alice" };
+		console.log(obj.hasOwnProperty("name")); // true
+		console.log(obj.hasOwnProperty("toString")); // false (inherited)
+		```
+- **`Object.assign(target, ...sources)`**: Copies enumerable properties from source objects to a target object.
+	- Use: Merge objects or create shallow copies.
+	- Example:
+	  ```js
+		let obj1 = { name: "Alice" };
+		let obj2 = { age: 25 };
+		let merged = Object.assign({}, obj1, obj2);
+		console.log(merged); // { name: "Alice", age: 25 }
+		```
+- **`Object.freeze(obj)`**: Freezes an object, preventing new properties from being added or existing ones from being modified or deleted.
+	- Use: Ensure immutability.
+	- Example:
+	  ```js
+		let obj = { name: "Alice" };
+		Object.freeze(obj);
+		obj.name = "Bob"; // No effect
+		console.log(obj); // { name: "Alice" }
+		```
+- **`Object.create(proto)`**: Creates a new object with the specified prototype object.
+	- Use: Set up inheritance or create objects with specific prototypes.
+	- Example:
+	  ```js
+		let proto = { greet: () => "Hello" };
+		let obj = Object.create(proto);
+		console.log(obj.greet()); // "Hello"
+		```
+
+**Notes**:
+
+- These methods are static (called on the `Object` constructor) except `hasOwnProperty`, which is an instance method.
+- Use `Object.keys`, `values`, and `entries` for iteration or data extraction.
+- `Object.assign` and `freeze` are handy for managing object state.
+- Always consider whether you need to handle inherited properties (use `hasOwnProperty` or `in` operator for checks).
+
+### Iteration: The `for` Loop
 
 
 
