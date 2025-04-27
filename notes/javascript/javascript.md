@@ -110,7 +110,10 @@ x = 5; // Error: x is not declared
 ```
 
 ### Functions
-Reusable blocks of code that perform a task or return a value. Defined using `function` keyword, arrow syntax (`=>`), or function expressions. Can accept parameters and have a return statement. Example:
+- Reusable blocks of code that perform a task or return a value.
+- Defined using `function` keyword, arrow syntax (`=>`), or function expressions.
+- Can accept parameters and have a return statement.
+Example:
 ```js
 function add(a, b) { return a + b; } // Function Declaration
 const subtract = function(a, b) { return a - b; } // Function Expression
@@ -169,32 +172,70 @@ regularFn(1, 2, 3); // [1, 2, 3]
 ```
 
 ### Arrays
-Ordered, zero-indexed lists for storing multiple values (of any type). Created with `[]` or `new Array()`. Support methods like `push()`, `pop()`, `slice()`, and `forEach()`.
+- Ordered, zero-indexed lists for storing multiple values (of any type).
+- Created with `[]` or `new Array()`.
+- Support methods like `push()`, `pop()`, `slice()`, and `forEach()`.
 For example:
 ```js
 let arr = [1, "hello", true];
 arr.push(2); // [1, "hello", true, 2]
 ```
 #### **Basic Array Operations (Methods)**
-- **`indexOf`**: Returns the index value of element in array 
-- **`push()`**: Adds one or more elements to the end of an array. Returns new length.  
-    Example: `arr.push(4); // [1, 2, 3] → [1, 2, 3, 4]`
-- **`pop()`**: Removes and returns the last element of an array.  
-    Example: `arr.pop(); // [1, 2, 3] → [1, 2]; returns 3`
-- **`shift()`**: Removes and returns the first element of an array.  
-    Example: `arr.shift(); // [1, 2, 3] → [2, 3]; returns 1`
-- **`unshift()`**: Adds one or more elements to the start of an array. Returns new length.  
-    Example: `arr.unshift(0); // [1, 2, 3] → [0, 1, 2, 3]`
-- **`forEach()`**: Executes a function for each array element.  
-    Example: `arr.forEach(num => console.log(num)); // Logs each element`
-- **`map()`**: Creates a new array with results of calling a function on each element.  
-    Example: `arr.map(num => num * 2); // [1, 2, 3] → [2, 4, 6]`
-- **`filter()`**: Creates a new array with elements that pass a test function.  
-    Example: `arr.filter(num => num > 1); // [1, 2, 3] → [2, 3]`
-- **`slice()`**: Returns a shallow copy of a portion of an array (start, end indices).  
-    Example: `arr.slice(1, 3); // [1, 2, 3, 4] → [2, 3]`
-- **`splice()`**: Adds/removes elements at a specific index, modifying the array. Returns removed elements.  
-    Example: `arr.splice(1, 1, 'a'); // [1, 2, 3] → [1, 'a', 3]`
+- **`indexOf`**: Returns the index value of element in array. For example:
+```js
+arr.indexOf("hello"); // 2
+arr.indexOf("hi"); // Returns: -1, because element "hi" does not exist in array
+```
+- **`includes()`**: Returns a boolean if argument/element is in array. For example:
+```js
+let arr = [1, "hello", true];
+arr.includes("hello"); // true
+arr.includes(2); // false
+```
+- **`push()`**: Adds one or more elements to the end of an array. Returns new length. For example:
+```js
+let arr = [1, 2, 3]
+arr.push(4); // [1, 2, 3, 4]
+```
+- **`pop()`**: Removes and returns the last element of an array. For example:
+```js
+let arr = [1, 2, 3]
+arr.pop(); // [1, 2]; returns 3
+```
+- **`shift()`**: Removes and returns the first element of an array. For example:
+```js
+let arr = [1, 2, 3]
+arr.shift(); // [2, 3]; returns 1
+```
+- **`unshift()`**: Adds one or more elements to the start of an array. Returns new length. For example:
+```js
+let arr = [1, 2, 3]
+arr.unshift(0); // [0, 1, 2, 3]
+```
+- **`forEach()`**: Executes a function for each array element. For example:
+```js
+arr.forEach(num => console.log(num)); // Logs each element
+```
+- **`map()`**: Creates a new array with results of calling a function on each element. For example:
+```js
+let arr = [1, 2, 3]
+arr.map(num => num * 2); // [2, 4, 6]
+```
+- **`filter()`**: Creates a new array with elements that pass a test function. For example:
+```js
+let arr = [1, 2, 3]
+arr.filter(num => num > 1); // [2, 3]
+```
+- **`slice()`**: Returns a shallow copy of a portion of an array (start, end indices). For example:
+```js
+let arr = [1, 2, 3, 4]
+arr.slice(1, 3); // [2, 3]
+```
+- **`splice()`**: Adds/removes elements at a specific index, modifying the array. Returns removed elements. For example:
+```js
+let arr = [1, 2, 3]
+arr.splice(1, 1, 'a'); // [1, 'a', 3]
+```
 
 > **1. Does `-1` refer to the last element in a JavaScript array like in Python?**
 > 
@@ -268,6 +309,50 @@ console.log(arr); // [1, 2, 'y', 4]
 - Be cautious with `deleteCount`; if omitted, it removes all elements from `start` to the end.
 
 These distinctions make `splice()` a powerful tool for array manipulation, while `slice()` is better for non-destructive extraction.
+
+### Objects
+- Data structures storing key-value pairs. Keys are strings (or symbols), values can be any type (numbers, strings, arrays, functions, etc.).
+- Created using `{}` or `new Object()`.
+Example:
+```js
+let obj = {name: "Alice", age: 25}
+```
+Objects are mutable, reference-based, and support methods and properties.
+
+> Use **arrays** for ordered data and **objects** for unstructured data.
+
+#### **Dot vs. Bracket Notation**
+Key values are also known as 'property' values of objects. Using these key values we can get an object property.
+
+- **Dot Notation**: Accesses object properties using a dot and the property name as an identifier. Faster, cleaner, but only works with valid identifier names (e.g., no spaces or special characters).
+```js
+const obj = {name: "Alice"}
+obj.name // "Alice"
+```
+- **Bracket Notation**: Accesses properties using square brackets and a string or expression. More flexible, handles dynamic keys or invalid identifiers.
+```js
+const obj = {name: "Alice", "full name": "Alice Smith"}
+obj["full name"] // "Alice Smith"
+```
+
+> For more about dot vs. bracket notation, see GrokAI's explanation: https://grok.com/share/bGVnYWN5_725acdde-4991-44dd-9464-ad6e6af78391
+
+**Key Differences**:
+
+- **Use Case**: Dot notation is preferred for static, valid identifiers due to simplicity. Bracket notation is used for dynamic keys, invalid identifiers, or when the property name is computed.
+- **Flexibility**: Bracket notation can handle any key, while dot notation is restricted to valid identifiers.
+- **Performance**: Dot notation is marginally faster, but the difference is negligible in most cases.
+
+```js
+let obj = { name: "Alice", "full name": "Alice Smith" };
+console.log(obj.name); // Dot: "Alice"
+console.log(obj["name"]); // Bracket: "Alice"
+console.log(obj["full name"]); // Bracket: "Alice Smith"
+// console.log(obj.full name); // SyntaxError with dot
+let key = "name";
+console.log(obj[key]); // Bracket with variable: "Alice"
+```
+
 
 
 
