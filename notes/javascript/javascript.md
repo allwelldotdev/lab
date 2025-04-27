@@ -436,6 +436,39 @@ obj.calcBirthYear() // Returns: 1995
 - Always consider whether you need to handle inherited properties (use `hasOwnProperty` or `in` operator for checks).
 
 ### Iteration: The `for` Loop
+A for loop in JavaScript iterates over a block of code a specified number of times. Syntax: `for (initialization; condition; increment/decrement) { code }`.
+
+- **Initialization**: Runs once before the loop starts (e.g., let i = 0).  
+- **Condition**: Checked before each iteration; loop continues if true (e.g., i < 5).  
+- **Increment/Decrement**: Runs after each iteration (e.g., i++).
+
+Example:
+```js
+for (let i = 0; i < 3; i++) {
+	console.log(i); // Outputs: 0, 1, 2
+}
+```
+
+### Iteration: The `while` Loop
+A `while` loop in JavaScript repeatedly executes a block of code as long as a specified condition evaluates to `true`.
+
+Syntax:
+```js
+while (condition) {
+	// code
+}
+```
+
+Example:
+```js
+let i = 0;
+while (i < 3) {
+	console.log(i); // Outputs: 0, 1, 2
+	i++;
+}
+```
+
+The loop stops when the condition becomes `false`. If the condition never changes, it can cause an infinite loop.
 
 
 
