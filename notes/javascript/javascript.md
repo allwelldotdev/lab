@@ -557,6 +557,8 @@ console.log([...oldMap.keys()]);
 console.log([...oldMap.values()]);
 ```
 
+## Working with Arrays
+### `find` Method
 
 
 
