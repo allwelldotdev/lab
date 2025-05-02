@@ -470,6 +470,93 @@ while (i < 3) {
 
 The loop stops when the condition becomes `false`. If the condition never changes, it can cause an infinite loop.
 
+## Data Structures, Modern Operators and Strings
+### The Nullish Coalescing Operator (`??`)
+The **nullish coalescing operator (`??`)** returns the right operand if the left operand is `null` or `undefined`, otherwise returns the left operand.
+
+Example:
+```js
+null ?? 5 // returns `5`
+0 ?? 5 // returns `0`
+```
+
+It ignores falsy values like `0`, `""`, or `false`, unlike the `||` operator.
+
+### Logical Assignment Operators
+Logical assignment operators in JavaScript combine logical operations with assignment. They evaluate the right-hand operand based on the left-hand operand's value and assign the result to the left-hand operand. Introduced in ES2021, they are:
+
+- **Logical AND Assignment (`&&=`)**: Assigns the right-hand value to the left-hand variable only if the left-hand value is truthy. Example: `a &&= b` is equivalent to `a = a && b`.
+- **Logical OR Assignment (`||=`)**: Assigns the right-hand value to the left-hand variable only if the left-hand value is falsy. Example: `a ||= b` is equivalent to `a = a || b`.
+- **Nullish Coalescing Assignment (`??=`)**: Assigns the right-hand value to the left-hand variable only if the left-hand value is `null` or `undefined`. Example: `a ??= b` is equivalent to `a = a ?? b`.
+
+Examples:
+```js
+let x = 0;
+x &&= 10; // x remains 0 (0 is falsy, so 10 isn't assigned)
+x ||= 5;  // x becomes 5 (0 is falsy, so 5 is assigned)
+x ??= 20; // x remains 5 (5 is neither null nor undefined)
+```
+
+If you ever need to assign a value to an object that's already defined, then use the logical AND operator assignment. For instance:
+```js
+const school = {
+	name: 'Britarch',
+	type: 'Montessori'
+}
+school.location &&= 'New location' // this doesn't assign any value
+
+const university = {
+	name: 'UNILAG',
+	type: 'Tetiary',
+	location: 'Akure'
+}
+university.location &&= 'Lagos' // Returns: { location: 'Lagos' }
+```
+
+### Optional Chaining `?.`
+Optional chaining (`?.`) allows safe access to nested object properties or methods without throwing errors if a property is `null` or `undefined`. It short-circuits and returns `undefined` if the chain breaks. 
+
+Example: `obj?.prop?.nested` returns `undefined` if `obj` or `prop` is `null`/`undefined`, instead of crashing.
+
+### Maps
+**Maps** in JavaScript are collections of key-value pairs where keys can be any data type (not just strings like objects). They maintain insertion order and offer methods like `set()`, `get()`, `has()`, `delete()`, and `clear()`.
+
+**Key Features**:
+- Keys can be primitives, objects, or functions.
+- Size accessible via `size` property.
+- Iterable using `for...of` or `forEach`.
+
+Example:
+```js
+let map = new Map();
+// set keys and values in the Map
+map.set("key1", "value1").set(42, "number");
+console.log(map.get("key1")); // "value1"
+console.log(map.get(42)); // "number"
+console.log(map.size); // 2
+
+// another way to set values in a Map is:
+let secondMap = new Map([
+	["key1", "value1"],
+	[42, "number"]
+])
+```
+
+> We can convert an object to a map, like so:
+```js
+// Convert object to map
+const newMap = new Map(Object.entries(oldObject));
+```
+
+```js
+// Converting a map to an array
+console.log([...oldMap]);
+// Converting map keys into an array
+console.log([...oldMap.keys()]);
+// Converting map values into an array
+console.log([...oldMap.values()]);
+```
+
 
 
 
