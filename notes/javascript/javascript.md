@@ -689,7 +689,11 @@ console.log(jessica.__proto__ === PersonCl.prototype); // Returns: true
 
 **Some things to NOTE about classes:**
 1. classes are NOT hoisted
-2. classes 
+2. classes are first-class citizens
+3. classes are executed in strict mode
+
+### Setters and Getters
+
 
 
 
