@@ -692,8 +692,114 @@ console.log(jessica.__proto__ === PersonCl.prototype); // Returns: true
 2. classes are first-class citizens
 3. classes are executed in strict mode
 
-### Setters and Getters
+#### **Setters and Getters**
+This is how getters and setters work for any object in JavaScript:
 
+```js
+const account = {
+	owner: "Jonas",
+	movements: [200, 530, 120, 300],
+
+	// Getter
+	get latest() {
+		return this.movements.slice(-1).pop();
+	},
+
+	// Setter
+	set latest(mov) {
+		this.movements.push(mov);
+	},
+};
+
+// Testing Getter
+console.log(account.latest); // Returns: 300
+
+// Testing Setter
+account.latest = 50;
+console.log(account.movements); // Returns: [200, 530, 120, 300, 50]
+```
+
+In classes:
+
+```js
+class PersonCl {
+	constructor(firstName, birthYear) {
+		this.firstName = firstName;
+		this.birthYear = birthYear;
+	}
+
+	calcAge() {
+		console.log(2037 - this.birthYear);
+	}
+
+	greet() {
+		console.log(`Hey ${this.firstName}`);
+	}
+
+	// If setting a property that already exists
+	set firstName(name) { // Getters and Setters are perfect for validation
+		if (name.includes(' ')) this._firstName = name;
+		else alert(`${name} is not a full name!`);
+	}
+
+	get fullName() {
+		return this._fullName;
+	}
+}
+```
+
+#### **Static Methods**
+static methods are only available on the constructor function. they are not available anywhere else. This is different from instance methods, which are available on each instance of the class or object.
+
+Example:
+```js
+class PersonCl {
+	constructor(firstName, birthYear) {
+		this.firstName = firstName;
+		this.birthYear = birthYear;
+	}
+
+	calcAge() {
+		console.log(2037 - this.birthYear);
+	}
+
+	greet() {
+		console.log(`Hey ${this.firstName}`);
+	}
+
+	// If setting a property that already exists
+	set firstName(name) { // Getters and Setters are perfect for validation
+		if (name.includes(' ')) this._firstName = name;
+		else alert(`${name} is not a full name!`);
+	}
+
+	get fullName() {
+		return this._fullName;
+	}
+
+	static hey() {
+		console.log('Hey there 👋🏾');
+	}
+}
+```
+
+#### **`Object.create()`**
+This is another way of creating objects. Unlike ES6 classes and through using constructor functions, `Object.create()` lets you perform object inheritance - create an instance object that inherits properties and methods from another object.
+
+Example:
+```js
+const PersonProto = {
+	calcAge() {
+		console.log(2037 - this.birthYear);
+	},
+};
+
+const steven = Object.create(PersonProto);
+console.log(steven);
+steven.name = 'Steven';
+steven.birthYear = 2002;
+steven.calcAge
+```
 
 
 
