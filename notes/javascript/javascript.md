@@ -624,6 +624,37 @@ how do we create prototypes or link objects to prototypes? how can we create new
 3. `Object.create()`
 	- the easiest and most straightforward way of linking an object to a prototype object
 
+### Prototypes
+
+> Never create methods inside constructor functions, like this:
+> 
+> Instead, use prototypal inheritance.
+```js
+const Person = function (firstName, birthYear) {
+	// Instance properties
+	this.firstName = firstName;
+	this.birthYear = birthYear;
+	
+	// Never do this:
+	this.calcAge = function () {
+		console.log(2037 - this.birthYear);
+	}
+}
+```
+
+**What happens when the `new` operator is called?**
+1. An empty object is created `{}`
+2. `this` keyword in constructor function call is set to the new object
+3. The new object is linked (`__proto__` property) to the constructor function's prototype property
+4. The new object is returned from the constructor function call
+
+### The Prototype Chain
+
+![prototype chain](../assets/Pasted%20image%2020250504125406.png)
+
+
+
+
 
 
 
