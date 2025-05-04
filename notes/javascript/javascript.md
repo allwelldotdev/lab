@@ -561,5 +561,72 @@ console.log([...oldMap.values()]);
 ### `find` Method
 
 
+## Object-Oriented Programming (OOP)
+- Object-oriented programming (OOP) is a programming paradigm based on the concept of objects
+- we use objects to **model** (describe) real-world or abstract features
+- objects may contain data (properties) and code (methods). By using objects, we pack **data and the corresponding behaviour** into one block
+- in OOP, objects are **self-contained** pieces/blocks of code
+- objects are building blocks of applications, and **interact** with one another
+- interactions happen through a **public interface** (API): methods that the code **outside** of the object can access and use to communicate with the object;
+- OOP was developed with the goal of organizing code, to make it **more flexible and easier to maintain** (avoid "spaghetti code").
+
+### Four Fundamental OOP Principles
+these principles guide you in your creation of classes. they are:
+1. Abstraction
+2. Encapsulation
+3. Inheritance
+4. Polymorphism
+
+#### **Abstraction**
+Hiding away low-level implementations of a class or blueprint that do not matter to the end user of the class or blueprint.
+
+![js abstraction](../assets/Pasted%20image%2020250504114801.png)
+
+#### **Encapsulation**
+Keeping certain properties and methods **private** inside the class. This way, they are **not accessible outside the class**. Some methods can be **exposed** as a public interface (API).
+
+![js encapsulation](../assets/Pasted%20image%2020250504114936.png)
+
+#### **Inheritance**
+Making all properties and methods or a certain (parent) class **available to a child class**, forming a hierarchical relationship between classes. This allows us to **reuse common logic** and to model real-world relationships.
+
+![js inheritance](../assets/Pasted%20image%2020250504115201.png)
+
+#### **Polymorphism**
+A child class can **overwrite** a method it inherited from a parent class [it's more complex than that, but enough for now].
+
+![js polymorphism](../assets/Pasted%20image%2020250504115502.png)
+
+### OOP in JavaScript: Prototypes
+#### **Classical OOP: Classes**
+- objects (instances) are **instantiated** from a class, which functions like a blueprint;
+
+![classical oop](../assets/Pasted%20image%2020250504120214.png)
+
+#### **OOP in JS: Prototypes**
+- objects are **linked** to a prototype object
+- prototypal inheritance: the prototype contains methods (behaviour) that are **accessible to all objects linked to that prototype**
+- in other programming languages like Python, a class inherits from another class. In JavaScript, an instance (object) inherits from a class (or prototype)
+- behaviour is **delegated** to the linked prototype object
+
+![oop in js - prototypes](../assets/Pasted%20image%2020250504120737.png)
+
+### 3 Ways of Implementing Prototypal Inheritance in JavaScript
+how do we create prototypes or link objects to prototypes? how can we create new objects, without having classes?
+
+1. Constructor Functions
+	- technique to create objects from a function
+	- this is how built-in objects like arrays, maps or sets are actually implemented
+2. ES6 Classes
+	- modern alternative to constructor function syntax
+	- "syntactic sugar" behind the scenes, ES6 classes work exactly like constructor functions
+	- ES6 classes do **NOT** behave like classes in "classical OOP"
+3. `Object.create()`
+	- the easiest and most straightforward way of linking an object to a prototype object
+
+
+
+
+
 
 
