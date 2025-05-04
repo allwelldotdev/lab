@@ -652,9 +652,44 @@ const Person = function (firstName, birthYear) {
 
 ![prototype chain](../assets/Pasted%20image%2020250504125406.png)
 
+### ES6 Classes
+- classes can be represented through an expression or declaration
+- when methods are defined inside classes they are available as object prototypes to the instances of the class instead of as a `hasOwnProperty === true` object of the instance
 
 
+```js
+// Class expression
+const PersonCl = class {
+	...
+}
 
+// Class declaration
+class PersonCl {
+	// Constructor function, called with `new` keyword
+	constructor(firstName, birthYear) {
+		this.firstName = firstName;
+		this.birthYear = birthYear;
+	}
+
+	// Methods
+	calcAge() {
+		console.log(2037 - this.birthYear);
+	}
+
+	greet() {
+		console.log(`Hey ${this.firstName}`);
+	}
+}
+
+const jessica = new PersonCl('Jessica', 1996);
+
+// Showing that instance prototype is the same as the class prototype object
+console.log(jessica.__proto__ === PersonCl.prototype); // Returns: true
+```
+
+**Some things to NOTE about classes:**
+1. classes are NOT hoisted
+2. classes 
 
 
 
