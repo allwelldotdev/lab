@@ -848,23 +848,115 @@ const Person = function (firstName, birthYear) {
 	this.birthYear = birthYear;
 };
 
+// Person prototype method
 Person.prototype.calcAge = function () {
 	console.log(2037 - this.birthYear);
 };
 
+// Student constructor function
 const Student = function (firstName, birthYear, course) {
 	this.firstName = firstName;
 	this.birthYear = birthYear;
 	this.course = course;
 };
 
+// Student prototype method
 Student.prototype.introduce = function () {
-	console.log(`My name is ${this.firstName} and I studey ${})
+	console.log(`My name is ${this.firstName} and I study ${this.course}`);
 }
 
 const mike = new Student('Mike', 2020, 'Computer Science');
-mike.introduce();
-
-
+mike.introduce(); // Calls inherited function 'introduce' from Student prototype
 ```
 
+If we wanted to make `Student` object inherit from `Person` object, we cannot do this:
+```js
+// Student constructor function
+const Student = function (firstName, birthYear, course) {
+	Person(firstName, birthYear); // this will not work
+	// the above code will not work because Person object is a constructor
+	// function and therefore will need the 'new' keyword at the beginning
+	// of it to return;
+	// Otherwise, it will return 'undefined'. And the 'this' keyword will
+	// not work well with 'undefined'.
+	this.course = course;
+};
+
+// The next step...
+
+// Student constructor function
+const Student = function (firstName, birthYear, course) {
+	new Person(firstName, birthYear); // yet this will not work either, why?
+	// because we need to set the 'this' keyword to call on the Student
+	// object. For this to work, we do the next step.
+	this.course = course;
+};
+
+// The right way...
+
+// Student constructor function
+const Student = function (firstName, birthYear, course) {
+	Person.call(this, firstName, birthYear); // this call the Person
+	// constructor function on the 'this' keyword of Student.
+	this.course = course;
+};
+```
+
+This is the idea of the *Prototype Chain* for inheritance between classes.
+
+![prototype chain in constructor functions](../assets/Pasted%20image%2020250505092600.png)
+
+To make `Student` inherit from `Person` we use the `Object.create()` function. Like so:
+
+```js
+// Creating class object via Constructor Functions
+const Person = function (firstName, birthYear) {
+	this.firstName = firstName;
+	this.birthYear = birthYear;
+};
+
+// Person prototype method
+Person.prototype.calcAge = function () {
+	console.log(2037 - this.birthYear);
+};
+
+// Student constructor function
+const Student = function (firstName, birthYear, course) {
+	this.firstName = firstName;
+	this.birthYear = birthYear;
+	this.course = course;
+};
+
+Student.prototype = Object.create(Person.prototype); // this works
+// Student.prototype = Person.prototype; // this will not work because it
+// doesn't create a prototype chain between 'Student' and 'Person'
+
+// Student prototype method
+Student.prototype.introduce = function () {
+	console.log(`My name is ${this.firstName} and I study ${this.course}`);
+}
+
+const mike = new Student('Mike', 2020, 'Computer Science');
+mike.introduce(); // Calls inherited function 'introduce' from Student prototype
+mike.calcAge(); // 'mike' object now has access to the 'Person' prototype method
+
+console.log(mike.__proto__); // Returns: Points to 'Person' constructor function
+// but is 'Student' prototype (needs to point to 'Student' constructor func)
+// see fix below
+console.log(mike.__proto__.__proto__); // Returns: 'Person' prototype
+
+// Fix: make 'Student' prototype point to 'Student' constructor function
+Student.prototype.constructor = Student
+
+// Now, 'mike.__proto__' points to 'Student' constructor function
+
+console.log(mike instanceof Student); // Returns: true
+console.log(mike instanceof Person); // Returns: true
+console.log(mike instanceof Object); // Returns: true
+```
+
+![correct prototypal inheritance initiated between Student and Person objects](../assets/Pasted%20image%2020250505093132.png)
+
+> To learn more about inheritance between classes via constructor functions, see [Udemy notes](https://www.udemy.com/course/the-complete-javascript-course/learn/lecture/22649085?start=797#notes).
+
+### Inheritance between Classes via ES6 Classes
