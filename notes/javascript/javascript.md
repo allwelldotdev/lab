@@ -960,3 +960,109 @@ console.log(mike instanceof Object); // Returns: true
 > To learn more about inheritance between classes via constructor functions, see [Udemy notes](https://www.udemy.com/course/the-complete-javascript-course/learn/lecture/22649085?start=797#notes).
 
 ### Inheritance between Classes via ES6 Classes
+In ES6 classes, to make the `Student` class inherit from the `Person` class, we use the `extends` keyword. Like so:
+
+```js
+class StudentCl extends PersonCl {
+	constructor(fullName, birthYear, course) {
+		// Always needs to happen first. Why?
+		// So the 'this' keyword would be available
+		super(fullName, birthYear); // Calls the constructor function of the
+		// parent class, which in this case is 'PersonCl'
+		this.course = course;
+	}
+
+	introduce() {
+		console.log(`My name is ${this.fullName} and I study ${this.course}`);
+	}
+}
+
+const martha = new StudentCl('Martha Jones', 2012, 'Computer Science');
+martha.introduce(); // this works as an instance method
+martha.calcAge(); // this works as an inherited class method (inherited from
+// 'PersonCl' class object).
+```
+
+> Quick one: Simply using the `extends` keyword already performs the class inheritance in the case of ES6 classes without the need to write the constructor function.
+> The constructor function is usually written if you want to specify or add additional methods to the `StudentCl` class or overwrite existing attributes or methods already in the `PersonCl` parent class. For example:
+```js
+class StudentCl extends PersonCl
+
+const martha = new StudentCl('Martha Jones', 2012); // Now, 'martha' is an
+// instance of the 'StudentCl' class, which inherits from 'PersonCl' class.
+```
+
+Now, let's override one of the instance methods of the parent class `calcAge()`.
+
+```js
+class StudentCl extends PersonCl {
+	constructor(fullName, birthYear, course) {
+		super(fullName, birthYear);
+		this.course = course;
+	}
+
+	introduce() {
+		console.log(`My name is ${this.fullName} and I study ${this.course}`);
+	}
+
+	// Overriding the 'calcAge()' instance method in the 'PersonCl' parent class
+	calcAge() {
+		console.log(`I'm ${2037 - this.birthYear} years old, but as a student I feel more like ${2037 - this.birthYear + 10}`);
+	}
+}
+
+const martha = new StudentCl('Martha Jones', 2012, 'Computer Science');
+
+martha.calcAge(); // Returns 'calcAge()' method in 'StudentCl' class which
+// overrides 'calcAge()' method in 'PersonCl' class.
+```
+
+### Inheritance between Classes via `Object.create()`
+Performing class inheritance using the `Object.create()` method draws from the knowledge of using `Object.create()` to create classes. See our [last example](javascript.md#**`Object.create()`**) on `Object.create()`.
+
+```js
+const PersonProto = {
+	calcAge() {
+		console.log(2037 - this.birthYear);
+	},
+
+	init(firstName, birthYear) {
+		this.firstName = firstName;
+		this.birthYear = birthYear;
+	},
+};
+
+const steven = Object.create(PersonProto); // 'steven' inherits from
+// 'PersonProto' class
+
+const StudentProto = Object.create(PersonProto); // 'StudentProto' inherits from
+// 'PersonProto' class
+const jay = Object.create(StudentProto); // 'jay' inherits from 'StudentProto'
+// class
+
+// Now, let's set up an 'init' method in StudentProto so we don't have to
+// manually set the properties of 'jay'
+
+StudentProto.init = function (firstName, birthYear, course) {
+	PersonProto.init.call(this, firstName, birthYear);
+	this.course = course;
+}
+
+// Now we can call...
+jay.init('Jay', 2010, 'Computer Science');
+
+// Let's add some other methods to the 'StudentProto' class object
+
+StudentProto.introduce = function () {
+	console.log(`My name is ${this.fullName} and I study ${this.course}`);
+}
+
+// Now we can call...
+jay.introduce(); // this will work
+jay.calcAge(); // this will also work, because it inherits 'calcAge()' from
+// parent class 'PersonProto'
+```
+
+In this case, we don't use or worry about `constructor` objects anymore, prototype properties (like `.prototype`) , or the `new` keyword. That's the major difference between this method and constructor functions or ES6 classes.
+
+### Encapsulation: Private Class Fields and Methods
