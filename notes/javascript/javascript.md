@@ -1213,4 +1213,54 @@ In other words, we're returning the object itself on each of the methods which w
 ![es6 classes summary](../assets/Pasted%20image%2020250505131209.png)
 
 ## Asynchronous JavaScript
+Asynchronous JavaScript allows code to run non-blocking operations, enabling tasks like fetching data or timers to execute without halting the main program flow. It leverages the event loop, call stack, and callback queue to handle tasks in the background and process results when ready.
+
+**Key Concepts**:
+
+- **Event Loop**: Continuously checks the call stack and callback queue, moving completed asynchronous tasks to the stack for execution.
+- **Callbacks**: Functions passed as arguments to run after an async operation completes. Example: `setTimeout(() => console.log("Delayed"), 1000)`.
+- **Promises**: Objects representing eventual completion (or failure) of an async operation, with `.then()` for success and `.catch()` for errors. Example: `fetch(url).then(response => response.json())`.
+- **Async/Await**: Syntactic sugar for Promises, allowing async code to look synchronous. Example: `const data = await fetch(url).then(res => res.json())`.
+
+Example:
+```js
+async function getData() {
+	try {
+		const response = await fetch("https://api.example.com/data");
+		const data = await response.json();
+		console.log(data);
+	} catch (error) {
+		console.error("Error": error);
+	}
+}
+
+getData();
+console.log("Runs immediately"); // Output: "Runs immediately" logs first,
+// then 'data' when the fetch completes.
+```
+
+Asynchronous JavaScript ensures efficient handling of I/O-bound tasks, keeping applications responsive.
+
+### AJAX Calls
+What are AJAX Calls?
+*A*synchronous *J*avaScript *A*nd *X*ML: Allows us to communicate with remote servers in an *asynchronous way*. With AJAX calls, we can *request data* from web servers dynamically.
+
+![ajax calls](../assets/Pasted%20image%2020250505134813.png)
+
+### APIs
+- Application Programming Interface: Piece of software that can be used by another piece of software, in order to allow applications to talk to each other
+- There are many types of APIs in web development:
+	- DOM API
+	- Geolocation API
+	- Own Class API
+	- "Online" API or "Web" API or just API
+- "Online" API: Application running on a server, that receives requests for data, and sends data back as response
+- We can build our own APIs (requires back-end development, e.g. with Node.JS) or use **3rd-party** APIs
+
+Here are some of the things you can do with APIs:
+
+![api uses](../assets/Pasted%20image%2020250505135655.png)
+
+XML (Extensible Markup Language) format for data transfer used to be popular back in the day but today JSON (JavaScript Object Notation) is most popular.
+
 
