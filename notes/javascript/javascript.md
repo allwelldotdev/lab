@@ -723,9 +723,10 @@ In classes:
 
 ```js
 class PersonCl {
-	constructor(firstName, birthYear) {
+	constructor(firstName, birthYear, fullName) {
 		this.firstName = firstName;
 		this.birthYear = birthYear;
+		this.fullName = fullName;
 	}
 
 	calcAge() {
@@ -737,8 +738,8 @@ class PersonCl {
 	}
 
 	// If setting a property that already exists
-	set firstName(name) { // Getters and Setters are perfect for validation
-		if (name.includes(' ')) this._firstName = name;
+	set fullName(name) { // Getters and Setters are perfect for validation
+		if (name.includes(' ')) this._fullName = name;
 		else alert(`${name} is not a full name!`);
 	}
 
@@ -754,9 +755,10 @@ static methods are only available on the constructor function. they are not avai
 Example:
 ```js
 class PersonCl {
-	constructor(firstName, birthYear) {
+	constructor(firstName, birthYear, fullName) {
 		this.firstName = firstName;
 		this.birthYear = birthYear;
+		this.fullName = fullName;
 	}
 
 	calcAge() {
@@ -768,8 +770,8 @@ class PersonCl {
 	}
 
 	// If setting a property that already exists
-	set firstName(name) { // Getters and Setters are perfect for validation
-		if (name.includes(' ')) this._firstName = name;
+	set fullName(name) { // Getters and Setters are perfect for validation
+		if (name.includes(' ')) this._fullName = name;
 		else alert(`${name} is not a full name!`);
 	}
 
@@ -784,7 +786,7 @@ class PersonCl {
 ```
 
 #### **`Object.create()`**
-This is another way of creating objects. Unlike ES6 classes and through using constructor functions, `Object.create()` lets you perform object inheritance - create an instance object that inherits properties and methods from another object.
+This is another way of creating objects. Unlike ES6 classes and through using constructor functions, `Object.create()` lets you perform object inheritance - create an instance object that inherits properties and methods from another object (usually specified as one of the arguments in the `Object.create()` function.
 
 Example:
 ```js
@@ -803,8 +805,66 @@ steven.calcAge();
 console.log(steven.__proto__ === PersonProto);
 ```
 
+- Think of `Object.create()` as linking directly the prototype (class/object attributes, properties, and methods NOT the constructor function attributes/objects/properties) of an object or class to another object or class.
+- Making the object or class which `Object.create()` has been called on to become the inherited object or class of the passed in prototype.
+- This is otherwise known in JavaScript as *Prototypal Inheritance*.
+
+##### MANUALLY INITIALIZE OBJECTS AND PROPERTIES OR ATTRIBUTES ON `Object.create()` OBJECTS
+
+To manually add objects and properties or attributes on `Object.create()` objects, we do the following:
+
+```js
+// Instead of doing this...
+const steven Object.create(PersonProto);
+steven.name = 'Steven';
+steven.birthYear = 2002;
+steven.calcAge(); // Returns: 2038 - 2002 = 35
+
+// Do this...
+const PersonProto = {
+	calcAge() {
+		console.log(2037 - this.birthYear);
+	},
+	init(firstName, birthYear) {
+		this.firstName = firstName;
+		this.birthYear = birthYear;
+	},
+};
+
+const sarah = Object.create(PersonProto);
+sarah.init('Sarah', 1979);
+sarah.calcAge(); // Returns: 2037 - 1979 = 58
+```
+
+### Inheritance between Classes: Constructor Functions
+We use `Object.create()` to create prototypal inheritance between objects or classes built with constructor functions.
+
+![constructor functions](../assets/Pasted%20image%2020250505090819.png)
+
+```js
+// Creating class object via Constructor Functions
+const Person = function (firstName, birthYear) {
+	this.firstName = firstName;
+	this.birthYear = birthYear;
+};
+
+Person.prototype.calcAge = function () {
+	console.log(2037 - this.birthYear);
+};
+
+const Student = function (firstName, birthYear, course) {
+	this.firstName = firstName;
+	this.birthYear = birthYear;
+	this.course = course;
+};
+
+Student.prototype.introduce = function () {
+	console.log(`My name is ${this.firstName} and I studey ${})
+}
+
+const mike = new Student('Mike', 2020, 'Computer Science');
+mike.introduce();
 
 
-
-
+```
 
