@@ -1066,3 +1066,151 @@ jay.calcAge(); // this will also work, because it inherits 'calcAge()' from
 In this case, we don't use or worry about `constructor` objects anymore, prototype properties (like `.prototype`) , or the `new` keyword. That's the major difference between this method and constructor functions or ES6 classes.
 
 ### Encapsulation: Private Class Fields and Methods
+Four types of encapsulation of private class fields and methods in JavaScript are:
+1. Public fields
+2. Private fields
+3. Public methods
+4. Private methods
+There are also *STATIC* versions of these four fields but we'll not talk about them yet.
+
+Using an `Account` class to show examples:
+
+```js
+class Account {
+	// Fields must end with ';'
+	locale = navigator.language; // Public field
+	bank = 'Bankist';
+	#movements = []; // Private field
+	#pin;
+
+	constructor(owner, currency, pin) {
+		this.owner = owner;
+		this.currency = currency;
+		this.#pin = pin;
+
+		console.log(`Thanks for opening account, ${owner}`);
+	}
+
+	// Public interface
+	getMovements() { // Public methods
+		return this.#movements;
+	}
+
+	
+	deposit(val) {
+		this.#movements.push(val);
+	}
+
+	withdraw(val) {
+		this.deposit(-val);
+	}
+
+	#approveLoan(val) { // Private method
+		return true;
+	}
+
+	requestLoan(val) {
+		if (this.#approveLoan(val)) {
+			this.deposit(val);
+			console.log(`Loan approved`);
+		}
+	}
+
+	static test() { // Public static method
+		console.log('I\'m, a public static method.');
+	}
+
+	static #privateTest() {
+		console.log('I\'m, a private static method.');
+	}
+}
+
+const acc1 = new Account('Jonas', 'EUR', 1111);
+acc1.deposit(300); // this works
+acc1.withdraw(100); // this works as well
+acc1.movements = []; // this will NOT affect the private 'movements' field in
+// 'Account' class
+
+acc1.test(); // this will NOT work, because 'test' function is a static method
+// meaning, it can only be called on the class (not the instance object)
+Account.test(); // this will work: Returns: "I'm a public static method."
+Account.#privateTest(); // this will NOT work: Error: 'cannot access private
+// field'
+```
+
+#### **Enable Method Chaining**
+To enable method chaining in your ES6 classes, as is possible in JavaScript, simply return the class object via the `this` keyword. Therefore, `return this;`.
+
+```js
+// To enable method chaining, as exemplified like so:
+acc1
+	.deposit(300)
+	.withdraw(100)
+	.withdraw(50)
+	.requestLoan(25000)
+	.withdraw(4000)
+	.getMovements()
+
+// In the class 'Account' return the class using 'this' for every function
+// that manipulates or sets a value on the class object. Like so:
+
+class Account {
+	// Fields must end with ';'
+	locale = navigator.language; // Public field
+	bank = 'Bankist';
+	#movements = []; // Private field
+	#pin;
+
+	constructor(owner, currency, pin) {
+		this.owner = owner;
+		this.currency = currency;
+		this.#pin = pin;
+
+		console.log(`Thanks for opening account, ${owner}`);
+	}
+
+	// Public interface
+	getMovements() { // Public methods
+		return this.#movements;
+	}
+
+	deposit(val) {
+		this.#movements.push(val);
+		return this;
+	}
+
+	withdraw(val) {
+		this.deposit(-val);
+		return this;
+	}
+
+	#approveLoan(val) { // Private method
+		return true;
+	}
+
+	requestLoan(val) {
+		if (this.#approveLoan(val)) {
+			this.deposit(val);
+			console.log(`Loan approved`);
+		}
+		return this;
+	}
+
+	static test() { // Public static method
+		console.log('I\'m, a public static method.');
+	}
+
+	static #privateTest() {
+		console.log('I\'m, a private static method.');
+	}
+}
+```
+
+In other words, we're returning the object itself on each of the methods which we want to be chainable.
+
+### ES6 Classes Summary
+
+![es6 classes summary](../assets/Pasted%20image%2020250505131209.png)
+
+## Asynchronous JavaScript
+
