@@ -1263,4 +1263,97 @@ Here are some of the things you can do with APIs:
 
 XML (Extensible Markup Language) format for data transfer used to be popular back in the day but today JSON (JavaScript Object Notation) is most popular.
 
+### AJAX Calls with `XMLHttpRequest`
+in the early times of JavaScript, developers used `new XMLHttpRequest()` class object to make asynchronous web or online API calls which lead to a phenomenon known as *Callback Hell*.
+
+Example:
+```js
+const request = new XMLHttpRequest();
+request.open('GET', "https://countries-api-836d.onrender.com/countries/");
+request.send();
+console.log(request); // Returns nothing: because request does not have a result
+// yet. Think of it as a Future or Promise. It has not returned yet.
+
+// We add a load event listener that grabs the returns the result/value of
+// 'request' when it becomes available/set.
+request.addEventListener('load', function () {
+	console.log(this.responseText); // At this point, 'request' would return
+	// a value
+	const data = JSON.parse(this.responseText)
+
+	// Render logic...
+})
+```
+
+> Learn more about using the `new XMLHttpRequest()` class object. See [here](https://www.udemy.com/course/the-complete-javascript-course/learn/lecture/22649289?start=586#notes).
+
+### Callback Hell
+Callback Hell is a phenomenon that is created during attempts to return asynchronous function results sequentially. In code, it bears a triangular shape.
+
+Example:
+```js
+const request = new XMLHttpRequest();
+request.open('GET', `https://countries-api-836d.onrender.com/countries/name/${country}`);
+request.send();
+
+const renderCountry = function (...args) {...}; // Build function to render
+// country HTML & CSS on frontend
+
+request.addEventListener('load', function () {
+	const [data] = JSON.parse(this.responseText)
+	console.log(data);
+	
+	// Render country 1
+	renderCountry(data); // Render logic...
+
+	// Get neighbouring country (2)
+	const [neighbour] = data.borders;
+
+	if (!neighbour) return;
+
+	// AJAX call country 2
+	const request2 = new XMLHttpRequest();
+	request2.open('GET', `https://countries-api-836d.onrender.com/countries/alpha/${neighbour}`);
+	request2.send();
+
+	request2.addEventListener('load', function () {
+		// another callback function
+		// Code block ...
+	
+		let neighbour2
+		const request3 = new XMLHttpRequest();
+		request3.open('GET', `https://countries-api-836d.onrender.com/countries/name/${neighbour2}`);
+		request3.send();
+
+		request3.addEventListener('load', function () {
+			// This is Callback Hell
+			// Code block ...
+		})
+	});
+});
+```
+
+### Promises and `fetch` API
+A Promise in JavaScript is synonymous with a Future in Python. A promise is a container for a future value. An object that is used as a placeholder for the future result of an asynchronous operation.
+- when we use a promise to get a result, it is known as *consuming* a promise
+- we *consume* a promise when we get a result from a promise
+- in order for a promise to be consumed it must be built. This is known as building a promise.
+
+#### **The Promise Lifecycle**
+
+![the promise lifecycle](../assets/Pasted%20image%2020250506154834.png)
+
+### Consuming Promises
+To consume a promise, we use `.then()` to handle success returns and `.catch()` to handle error returns. Like so:
+
+```js
+const getCountryData = function (country) {
+	fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`))
+		.then(function (response) {
+			console.log(response);
+			return response.js
+		})
+}
+```
+
 
