@@ -1451,4 +1451,10 @@ fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`))
 3. The *Event Loop* constantly checks the Callback Queue for callbacks. When a callback function is spotted by the Event Loop, it is sent to the *Call Stack*.
 4. The Call Stack executes the callback function. This process exemplifies JavaScript's ability to run asynchronous code concurrently in a non-blocking fashion despite being a single-threaded application.
 
-> Callback functions in promise methods like `.then()` and others, when returned, are not sent to the Callback Queue instead they are sent to the *Microtasks Queue*. The Microtasks Queue takes first priority over the Callback Queue. Therefore, 
+> Callback functions in promise methods like `.then()` and others, when returned, are not sent to the Callback Queue instead they are sent to the *Microtasks Queue*. The Microtasks Queue takes first priority over the Callback Queue. Therefore, if there are any callbacks (also referred to as callback functions) in the Microtasks Queue, the Event Loop will perform an *Event Loop Tick* (in other words, pick them up and send them to the Call Stack) first before the Callback Queue.
+> 
+> That said, *does the event loop get slowed down by performing Event Loop Ticks on numerous callbacks in the Microtasks Queue before Callback Queue?* The simple answer is no. It's not a consequential degradation in time.
+
+
+
+
