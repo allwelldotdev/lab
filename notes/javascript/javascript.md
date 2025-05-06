@@ -1349,11 +1349,47 @@ To consume a promise, we use `.then()` to handle success returns and `.catch()` 
 ```js
 const getCountryData = function (country) {
 	fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`))
-		.then(function (response) {
+		.then(function (response) { // using '.then()' to retrieve future value
+		// of 'fetch()'
 			console.log(response);
-			return response.js
+			return response.json(); // '.json()' is also an async function
+			// which returns another promise, therefore we must use
+			// '.then()' to await or retrieve it's future value.
 		})
-}
+		.then(function (data) {
+			console.log(data);
+			renderCountry(data[0]);
+		});
+};
+getCountryData('portugal');
 ```
 
+We can rewrite the bogus code above to something simpler like this:
 
+```js
+const getCountryData = function (country) {
+	fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`))
+		.then((response) => response.json())
+		.then((data) => renderCountry(data[0]));
+}
+getCountryData('portugal');
+```
+
+We can chain promises as we perform multiple advanced functions and return within the `.then()` or `.catch()` function. Like so:
+
+```js
+const getCountryData = function (country) {
+	fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`))
+		.then((response) => response.json())
+		.then((data) => {
+			renderCountry(data[0]);
+			const neighbour = data[0]?.borders[0]'
+			
+			if (!neighbour) return;
+		
+			// Country 2
+			return fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`)
+		});
+}
+getCountryData('portugal');
+```
