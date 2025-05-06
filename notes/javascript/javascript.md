@@ -1343,7 +1343,7 @@ A Promise in JavaScript is synonymous with a Future in Python. A promise is a co
 
 ![the promise lifecycle](../assets/Pasted%20image%2020250506154834.png)
 
-### Consuming Promises
+#### **Consuming Promises**
 To consume a promise, we use `.then()` to handle success returns and `.catch()` to handle error returns. Like so:
 
 ```js
@@ -1388,8 +1388,67 @@ const getCountryData = function (country) {
 			if (!neighbour) return;
 		
 			// Country 2
-			return fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`)
-		});
-}
+			return fetch(`https://countries-api-836d.onrender.com/countries/alpha/${neighbour}`); // Returns another operation
+		})
+		// Chains the previous operation which we added
+		.then((response) => response.json())
+		.then((data) => renderCountry(data, 'neighbour'));
+};
 getCountryData('portugal');
 ```
+
+#### **Handle Rejected Promises**
+- A promise in which an error happens is a *Rejected* promise.
+- to handle the error of rejected promises there are two methods:
+	- passing a second argument to `.then()` function - which takes in the error. Like so:
+	  ```js
+		fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`))
+			.then(
+				(response) => response.json(),
+				(error) => console.log('Error': error)
+			)
+		```
+	- collecting error using the `.catch()` function. Like so:
+	  ```js
+		fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`))
+			.then((response) => response.json())
+			.catch((error) => console.log('Error': error))
+			.finally(() => console.log("I always return something!"));
+		```
+- things to note about return promise values and promise methods
+	- when an error occurs within a promise it will travel down promise chain until it is caught by the `.catch()` method. If not caught, it will become an `Uncaught Exception/Error`.
+	- only one `.catch()` method is needed in the promise chain. Inversely, the `.then()` method can be used multiple times along the promise chain
+	- the `.finally()` method works in JavaScript just like it does in Python's `try...except...finally` block. The `.finally()` promise method always returns no matter what error was catch or uncaught by the `.catch()` method in the promise chain
+
+### Throwing Errors Manually
+Throwing error manually in JavaScript is similar to raising exceptions in Python. Difference is just in the syntax.
+
+Example:
+```js
+fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`))
+	.then((response) => {
+		console.log(response);
+	
+		// Here we throw a new error using the 'throw' keyword and 'Error' class
+		if (!response.ok)
+			throw new Error(`Country not found (${response.status})`);
+
+		return response.json();
+	})
+	.catch((err) => {
+		// Error is caught here and handled by logging to console
+		console.log(`Something went wrong: ${err.message}. Try again!`);
+	})
+	.finally(() => console.log("I always return something!"));
+```
+
+### Asynchronous BTS: The Event Loop
+
+> Learn in detail the overview of how asynchronous programming works in JavaScript. See [here](https://www.udemy.com/course/the-complete-javascript-course/learn/lecture/22649347?start=655#notes).
+
+1. When an async function is run like `fetch()`, `setTimeout()`, or `DOM()` methods (like `.addEventListener()`), it is run in the background within the Web API environment until a result is returned or value/data is loaded. The callback function attached to the async function is also stored in the Web API environment.
+2. Once data is loaded or returned, the callback function is put into the *Callback Queue*.
+3. The *Event Loop* constantly checks the Callback Queue for callbacks. When a callback function is spotted by the Event Loop, it is sent to the *Call Stack*.
+4. The Call Stack executes the callback function. This process exemplifies JavaScript's ability to run asynchronous code concurrently in a non-blocking fashion despite being a single-threaded application.
+
+> Callback functions in promise methods like `.then()` and others, when returned, are not sent to the Callback Queue instead they are sent to the *Microtasks Queue*. The Microtasks Queue takes first priority over the Callback Queue. Therefore, 
