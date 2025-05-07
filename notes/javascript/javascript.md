@@ -1543,4 +1543,21 @@ Promise.resolve('abc').then((x) => console.log(x));
 Promise.reject(new Error('Problem!')).catch((err) => console.error(err));
 ```
 
+> See [an example](https://www.udemy.com/course/the-complete-javascript-course/learn/lecture/22649363?start=753#notes) of promisifying a web feature such as the Geolocation API.
+
+### Consuming Promises using `async`/`await`
+- `async`/`await` for consuming promises in JavaScript is similar to its use in Python as well.
+- core difference is, in JavaScript, `async`/`await` is simply syntactic sugar over the use of the `.then` promise method for consuming promises
+- `async`/`await` allows the code to look synchronous while running asynchronously in the background
+- `await` pauses the function to resolve the promise and return it's result (which is usually contained inside a variable)
+
+Example:
+
+```js
+const whereAmI = async function () {
+	
+}
+```
+
+### Error Handling using `try...catch` block
 
