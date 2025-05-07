@@ -1495,9 +1495,52 @@ const lotteryPromise = new Promise(function (resolve, reject) {
 	}, 2000);
 });
 
-// Consume 
+// Consume resolve return with '.then()' promise method OR
+// Consume reject return with '.catch()' promise method
 lotteryPromise.then((res) => console.log(res)).catch((err) => console.error(err));
 ```
 
+- In practice, most times, all we do is consume promises (using `.then()` and `.catch()` methods)
+- we usually only build promises to wrap old callback-based functions into promises. This is a process called *Promisifying*.
+- Promisifying means to convert callback-based asynchronous behaviour to promise-based
+
+Let's see an example of promisifying a callback-based function:
+
+```js
+// Promisifying setTimeout
+const wait = function (seconds) {
+	return new Promise(function (resolve) {
+		setTimeout(resolve, seconds * 1000);
+	});
+}; // 'wait' function has been promisified
+
+wait(2)
+	.then(() => {
+		console.log('I waited for 1 second');
+		return wait(1);
+	})
+	.then(() => {
+		console.log('I waited for 2 seconds');
+		return wait(1);
+	})
+	.then(() => {
+		console.log('I waited for 3 seconds');
+		return wait(1);
+	})
+	.then(() => console.log('I waited for 4 seconds'));
+	
+// Returns:
+// I waited for 1 second
+// I waited for 2 seconds
+// I waited for 3 seconds
+// I waited for 4 seconds
+```
+
+As opposed to using the executor function to insert both `resolve` and `reject` arguments, we can use the `.resolve` or `.reject` promise static methods. Like so:
+
+```js
+Promise.resolve('abc').then((x) => console.log(x));
+Promise.reject(new Error('Problem!')).catch((err) => console.error(err));
+```
 
 
