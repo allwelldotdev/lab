@@ -1453,8 +1453,51 @@ fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`))
 
 > Callback functions in promise methods like `.then()` and others, when returned, are not sent to the Callback Queue instead they are sent to the *Microtasks Queue*. The Microtasks Queue takes first priority over the Callback Queue. Therefore, if there are any callbacks (also referred to as callback functions) in the Microtasks Queue, the Event Loop will perform an *Event Loop Tick* (in other words, pick them up and send them to the Call Stack) first before the Callback Queue.
 > 
-> That said, *does the event loop get slowed down by performing Event Loop Ticks on numerous callbacks in the Microtasks Queue before Callback Queue?* The simple answer is no. It's not a consequential degradation in time.
+> That said, *does the event loop get slowed down by performing Event Loop Ticks on numerous callbacks in the Microtasks Queue before Callback Queue?* The simple answer is no. It's not a consequential degradation in time. That said, the Microtasks Queue CAN starve the Callback Queue if there are many callbacks to run within the Microtasks Queue. Even though that may be the case, this is never really a significant problem. 
 
+#### **The Event Loop in Practice**
+
+```js
+// Determine which logs display first
+console.log('Test start'); // Logs first: 1st
+setTimeout(() => console.log('0 sec timer'), 0); // Logs fifth: 5th
+Promise.resolve('Resolve promise 1').then((res) => console.log(res)); // Logs
+// third: 3rd
+
+Promise.resolve('Resolved promise 2').then((res) => {
+	for (let i = 0; i < 1_000_000_000; i++) {};
+	console.log(res);
+}); // Logs fourth: 4th
+
+console.log('Test end'); // Logs second: 2nd
+```
+
+- The fourth log takes a while to compute and return which prolongs the fifth log's return even though the fifth log is set to a timer of 0 second.
+
+### Building a Promise
+- a promise is constructed using the `new Promise()` constructor
+- the `new Promise()` constructor takes in an *Executor* argument
+- the *Executor* function takes in two arguments: `resolve` and `reject`
+- `resolve` and `reject` as arguments passed into the Executor function are both functions to be called inside the Executor function
+
+Let's have an example by simulating getting a lottery ticket:
+
+```js
+// Build a promise using the 'new Promise()' constructor
+// pass in the executor function, which takes in two arguments:
+// 'resolve' for a successful return
+// and 'reject' for an error or exception return
+const lotteryPromise = new Promise(function (resolve, reject) {
+	console.log('Lottery draw is happening 🔮');
+	setTimeout(function () { // Using a timeout to simulate an async operation
+		if (Math.random >= 0.5) resolve('You Win 💰');
+		else reject(new Error('You lost your money 💩'));
+	}, 2000);
+});
+
+// Consume 
+lotteryPromise.then((res) => console.log(res)).catch((err) => console.error(err));
+```
 
 
 
