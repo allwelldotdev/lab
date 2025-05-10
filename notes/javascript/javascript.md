@@ -267,7 +267,7 @@ console.log(arr.slice(-2)); // [4, 5] (last 2 elements)
 
 **3. Elaborating on `splice()`**
 
-The splice(start, deleteCount, ...items) method modifies an array by removing, replacing, or adding elements at a specified index. It’s more versatile (and destructive) than slice(), as it changes the original array and returns an array of removed elements.
+The `splice(start, deleteCount, ...items)` method modifies an array by removing, replacing, or adding elements at a specified index. It’s more versatile (and destructive) than slice(), as it changes the original array and returns an array of removed elements.
 
 - **Parameters**:
     - `start`: Index where modification begins (can be negative to count from the end).
