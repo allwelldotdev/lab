@@ -1453,7 +1453,7 @@ fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`))
 
 > Callback functions in promise methods like `.then()` and others, when returned, are not sent to the Callback Queue instead they are sent to the *Microtasks Queue*. The Microtasks Queue takes first priority over the Callback Queue. Therefore, if there are any callbacks (also referred to as callback functions) in the Microtasks Queue, the Event Loop will perform an *Event Loop Tick* (in other words, pick them up and send them to the Call Stack) first before the Callback Queue.
 > 
-> That said, *does the event loop get slowed down by performing Event Loop Ticks on numerous callbacks in the Microtasks Queue before Callback Queue?* The simple answer is no. It's not a consequential degradation in time. That said, the Microtasks Queue CAN starve the Callback Queue if there are many callbacks to run within the Microtasks Queue. Even though that may be the case, this is never really a significant problem. 
+> That said, *does the event loop get slowed down by performing Event Loop Ticks on numerous callbacks in the Microtasks Queue before Callback Queue?* The simple answer is no. It's not a consequential degradation in time. That said, the Microtasks Queue CAN starve the Callback Queue if there are many callbacks to run within the Microtasks Queue. Even though that may be the case, this is rarely a significant problem. 
 
 #### **The Event Loop in Practice**
 
@@ -1472,7 +1472,7 @@ Promise.resolve('Resolved promise 2').then((res) => {
 console.log('Test end'); // Logs second: 2nd
 ```
 
-- The fourth log takes a while to compute and return which prolongs the fifth log's return even though the fifth log is set to a timer of 0 second.
+- The fourth log takes a while to compute and return which prolongs the fifth log's return even though the fifth log is set to a timer of `0` second.
 
 ### Building a Promise
 - a promise is constructed using the `new Promise()` constructor
@@ -1516,10 +1516,6 @@ const wait = function (seconds) {
 
 wait(2)
 	.then(() => {
-		console.log('I waited for 1 second');
-		return wait(1);
-	})
-	.then(() => {
 		console.log('I waited for 2 seconds');
 		return wait(1);
 	})
@@ -1527,13 +1523,17 @@ wait(2)
 		console.log('I waited for 3 seconds');
 		return wait(1);
 	})
-	.then(() => console.log('I waited for 4 seconds'));
+	.then(() => {
+		console.log('I waited for 4 seconds');
+		return wait(1);
+	})
+	.then(() => console.log('I waited for 5 seconds'));
 	
 // Returns:
-// I waited for 1 second
 // I waited for 2 seconds
 // I waited for 3 seconds
-// I waited for 4 seconds
+// I waited for 3 seconds
+// I waited for 5 seconds
 ```
 
 As opposed to using the executor function to insert both `resolve` and `reject` arguments, we can use the `.resolve` or `.reject` promise static methods. Like so:
