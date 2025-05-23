@@ -1,6 +1,7 @@
 Learning Linux from the Linux Foundation.
 LFS101x
-INTRODUCTION TO LINUX
+### Introduction To Linux
 https://www.edx.org/school/linuxfoundationx
 https://training.linuxfoundation.org
+
 
