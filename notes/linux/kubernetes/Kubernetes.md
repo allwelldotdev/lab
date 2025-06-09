@@ -8,3 +8,8 @@ Four ways you can access a pod/container in Kubernetes/k8s:
 4. LoadBalancer.
 
 Learn [[Helm]], Kubernetes package manager.
+
+Learning about **Kubernetes Cluster Federation**. Use these links:
+- https://kubernetes.io/blog/2016/12/cluster-federation-in-kubernetes-1-5/
+- https://g.co/gemini/share/8d2800240eef
+- 
