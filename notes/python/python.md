@@ -614,7 +614,7 @@ t = ()
 
 > Tuples are handy. They are often used to return multiple values from a function.
 
->An, interesting thing to note about the `tuple()` function is that we can pass it any sequence, and it will take each element of that sequence and create a tuple containing the same elements. We can also use the `list()` function the same way.
+>An interesting thing to note about the `tuple()` function is that we can pass it any sequence, and it will take each element of that sequence and create a tuple containing the same elements. We can also use the `list()` function the same way.
 >
 >We could be faced with a tuple that we want to mutate. We can't mutate the tuple - but we can easily transform it into a list, and then mutate the list. And if we really want to, we could create a tuple from a list and re-assign it to the symbol `t`.
 
