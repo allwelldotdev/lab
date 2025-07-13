@@ -281,7 +281,7 @@ $$\frac{131}{3} = floor\left(\dfrac{131}{3}\right) + \frac{131mod3}{3}$$
 - In other words: `a / b = a // b + (a % b)/b`
 - Rewriting through algebraic manipulation:
 	- 1st iteration: `a % b = b (a / b - a // b)`
-	- Final iteration: `a % b = a - b (a // b)` *this value here is what modulus us defined as* ^787ec5
+	- Final iteration: `a % b = a - b (a // b)` *this value here is what modulus is defined as* ^787ec5
 - Therefore, `a % b` is defined as the value that satisfies [the above equation](#^787ec5).
 	- and that's how `a % b` is well defined for negative values.
 	- and even for `floats`!
