@@ -74,7 +74,7 @@ This is different from Python REPL mode. Here, in Script mode, you write all you
 
 ![python script mode](../assets/Pasted%20image%2020241225112435.png)
 ### Jupyter Notebooks
-Jupyter Notebooks is software that has been developed on top of Python that wraps the REPL into a nicer interface. This is not the only one software available that does this. There are others are well.  
+Jupyter Notebooks is software that has been developed on top of Python that wraps the REPL into a nicer interface. This is not the only one software available that does this. There are others as well (a good example is [Google Colab](https://colab.google/)).  
 Jupyter Notebooks is a REPL, but browser-based.
 
 ![jupyter notebook](../assets/Pasted%20image%2020241225115903.png)
@@ -125,7 +125,7 @@ jupyter notebook <path/to/open/in/notebook>
  - `floats` are represented by using powers of 2 and fractions of powers of 2
 
 $$\begin{align}
-\frac{1}{2^2}+\frac{0}{2^2}+\frac{1}{2^3}&=\frac{1}{2}+\frac{0}{4}+\frac{1}{8} \\
+\frac{1}{2^1}+\frac{0}{2^2}+\frac{1}{2^3}&=\frac{1}{2}+\frac{0}{4}+\frac{1}{8} \\
 &= 0.5 + 0 + 0.125 = 0.625
 \end{align}$$
 
