@@ -759,7 +759,7 @@ l[1] = 'hello'
 - ![inserting an element into a sequence - 2](../assets/Pasted%20image%2020250103160412.png)
 - element is inserted so its position is the *index* - remaining elements are shifted right
 
-> When *inserting* or *appending* items it takes it as is not as a sequence.
+> When *inserting* or *appending* items, it takes it as not a sequence.
 > For example:
 > using *append* `[1, 2, 3, 4].append('python')` → `[1, 2, 3, 4, 'python']`
 > using *insert* `[1, 2, 3, 4].insert(0, 'abc')` → `['abc', 1, 2, 3, 4]` 
@@ -1372,7 +1372,7 @@ print('done')
 found = False
 
 for el in my_list:
-	if el == 'Python'
+	if el == 'Python':
 		found = True
 		print('found')
 		break
