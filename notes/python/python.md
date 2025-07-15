@@ -1961,6 +1961,7 @@ print(freq) # freq = {
 			# }
 
 #2. using set comprehensions
+# this is not set comprehension per say but dictionary comprehension
 freq = {
 		element: len([char for char in data if char == element])
 		for element in set(data)
