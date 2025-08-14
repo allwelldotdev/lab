@@ -22,3 +22,12 @@
 
 > You may also check out [Rust Adventure](https://www.rustadventure.dev/) if you'd fancy a paid subscription of $30/month for a more researched and structured Rust learning track.
 
+---
+- A *bit* is the smallest unit of data in computing, a binary value of either `0` or `1`.
+- A *byte* is a sequence of **8 bits** (e.g. the binary sequence `01000001` represents the uppercase letter 'A' in ASCII, and takes up one byte of memory). This is a fundamental unit of storing data.
+- A *hexadecimal* (base-16) is a way to express binary data in a more compact and human-readable format.
+	- Using 16 as its base, with digits `0-9` and `A-F` (where `A=10`, `B=11`, `C=12`, `D=13`, `E=14`, `F=15`).
+	- Each hexadecimal digit corresponds to four binary digits (a nibble), making it efficient for representing memory addresses, colors, and other binary data.
+		- For example: the character 'H' is encoded as `0x48` (1 byte); while '🌍' is encoded as `0xF09F8C8D` (4 bytes). See link for more info.
+- A `char` is a single Unicode scalar value, which is **always 4 bytes** in size.
+- A `String` is a growable, heap allocated, UTF-8 encoded sequence of bytes.
