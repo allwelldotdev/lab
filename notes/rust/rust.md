@@ -23,6 +23,10 @@
 > You may also check out [Rust Adventure](https://www.rustadventure.dev/) if you'd fancy a paid subscription of $30/month for a more researched and structured Rust learning track.
 
 ---
+## Google Searches on New Topics
+
+#### What's the difference between a *bit* and a *byte*, and their relationship with the `String` & `char` type in Rust?
+
 - A *bit* is the smallest unit of data in computing, a binary value of either `0` or `1`.
 - A *byte* is a sequence of **8 bits** (e.g. the binary sequence `01000001` represents the uppercase letter 'A' in ASCII, and takes up one byte of memory). This is a fundamental unit of storing data.
 - A *hexadecimal* (base-16) is a way to express binary data in a more compact and human-readable format.
@@ -54,5 +58,27 @@ Operator Overloading as Ad-hoc Polymorphism:
 	- Rust implements operator overloading through traits in the `std::ops` module (e.g., `Add` for `+`, `Mul` for `*`). To overload an operator for a custom type, one must implement the corresponding trait for that type. This also falls under ad-hoc polymorphism, as the behavior of an operator is defined specifically for certain types by implementing a trait.
 
 In essence, while polymorphism is a general principle, operator overloading is a specific mechanism that realizes ad-hoc polymorphism by allowing operators to exhibit different behaviors based on the types they operate on.
+
+---
+#### What are *invariants* in programming?
+
+In programming, an invariant is a condition or property that is always true for a specific part of a program's state, or for a particular data structure, at certain defined points during its execution. It represents a fundamental truth or assumption about the system that must consistently hold.
+
+Key aspects of invariants in programming:
+
+- **Always True (at specific points):**
+	- While an invariant might be temporarily violated during the execution of an operation (e.g., within a function that modifies a data structure), it must be restored to a true state before the operation completes and control is returned to the calling code. This ensures that external users of the code or data structure always observe the invariant holding true.
+- **Ensuring Correctness:**
+	- Invariants are crucial for ensuring the correctness and reliability of software. By defining what must always be true, developers can reason about the behavior of their code and identify potential bugs if an invariant is violated.
+- **Guiding Design and Implementation:**
+	- Invariants help guide the design of data structures and algorithms. They define the constraints and relationships that must be maintained, influencing how operations are implemented to preserve these conditions.
+
+- **Types of Invariants:**
+	- **Class Invariants:** Conditions that are always true for every instance of a particular class. For example, in a `BankAccount` class, an invariant might be that the balance is never negative.
+    - **Loop Invariants:** Conditions that are true at the beginning of every iteration of a loop, and often also at the end of every iteration. They are fundamental for proving the correctness of iterative algorithms.
+    - **Data Structure Invariants:** Properties that must always hold true for a specific data structure to maintain its integrity and functionality (e.g., in a sorted list, elements are always in ascending order).
+
+**Example:**
+Consider a `Stack` data structure. A key invariant for a `Stack` is that it follows a Last-In, First-Out (LIFO) principle. This means that the element most recently added is always the first one to be removed. Any `push` or `pop` operation must maintain this invariant for the `Stack` to function correctly.
 
 ---
