@@ -82,3 +82,27 @@ Key aspects of invariants in programming:
 Consider a `Stack` data structure. A key invariant for a `Stack` is that it follows a Last-In, First-Out (LIFO) principle. This means that the element most recently added is always the first one to be removed. Any `push` or `pop` operation must maintain this invariant for the `Stack` to function correctly.
 
 ---
+#### What is the Halting Problem?
+*Discovered when studying The Rust Book, chapter 15.5.*
+
+The Halting Problem is ==a fundamental concept in computer science that asks whether it's possible to create a general algorithm that can determine if any given program will eventually halt (finish running) or run forever (an infinite loop)==. The answer, proven by Alan Turing, is no; such a general algorithm cannot exist. 
+
+Here's a breakdown:
+
+- **The Problem:**
+	- Given a program and its input, the halting problem asks if we can create a universal "halting checker" program that can always correctly predict whether the given program will stop or run forever. 
+- **The Solution:**
+	- Turing proved that this "halting checker" program is impossible to create [according to Wikipedia](https://en.wikipedia.org/wiki/Halting_problem). 
+- **Proof by Contradiction:**
+	- The proof typically uses a technique called "proof by contradiction". It assumes such a halting checker program exists and then demonstrates that this assumption leads to a logical contradiction. 
+- **Why it Matters:**
+	- The Halting Problem highlights the limits of what computers can do and the inherent limitations of algorithms. It's a key concept in understanding the nature of computation and decidability in mathematics. 
+- **Analogy:**
+	- Imagine a program that analyzes other programs and predicts if they'll halt. If you could build such a program, you could then create another program that does the opposite of what the analyzer predicts for itself. This would lead to a contradiction, proving the analyzer (and thus the halting checker) cannot exist.
+- **Who solved the Halting Problem?**
+	- [Alan Turing](https://www.udiprod.com/halting-problem/#:~:text=The%20video%20informally%20presents%20Alan,(i.e.%2C%20via%20computation).)
+		- The video informally presents Alan Turing’s halting theorem from 1936. This is a highly influential result which plays an important role in computer science and in some branches of mathematics. It shows that some problems cannot be solved algorithmically (i.e., via computation).
+
+---
+
+
