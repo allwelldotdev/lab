@@ -105,4 +105,31 @@ Here's a breakdown:
 
 ---
 
+---
+## More Q&A
 
+##### Why do structs derive both the `Clone` and `Copy` trait as in the example below with the `AccessLogger` struct?
+
+```rust
+use std::ops::Deref;
+
+#[derive(Clone, Copy)]
+struct AccessLogger(i32);
+
+impl Deref for AccessLogger {
+	type Target = i32;
+	fn deref(&self) -> &Self::Target {
+		println!("deref");
+		&self.0
+	}
+}
+
+fn main() {
+	let n = AccessLogger(-1);
+	let x = *n + 1;
+	let n2 = n;
+	println!("{} {}", x, *n)
+}
+```
+
+When a struct derives both `Clone` and `Copy`, it's because `Copy` has `Clone` as a supertrait - meaning any type that implements `Copy` must also implement `Clone`.
