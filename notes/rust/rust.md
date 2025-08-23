@@ -133,3 +133,4 @@ fn main() {
 ```
 
 When a struct derives both `Clone` and `Copy`, it's because `Copy` has `Clone` as a supertrait - meaning any type that implements `Copy` must also implement `Clone`.
+
