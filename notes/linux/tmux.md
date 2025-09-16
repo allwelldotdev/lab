@@ -1,4 +1,4 @@
-tmux is a terminal multiplexer. It allows you to;
+	tmux is a terminal multiplexer. It allows you to;
 
 - Create multiple terminal sessions within a single window.
 - Split your terminal into pages.
