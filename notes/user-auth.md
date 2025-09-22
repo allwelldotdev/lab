@@ -10,9 +10,9 @@ Some technologies to know:
 - User clicks **login** button
 - Your app sends user to OAuth Provider login page (Google account login page)
 - Once user authenticates they are redirected back to your application with an **authorization code**.
-- Your app now needs to exchange this **authorization code** for *refresh* and *access* tokens. (The API in your backend will facilitate this by proxying a request to the authorization provider)
+- Your app now needs to exchange this **authorization code** for *refresh* and *access* tokens. (The API in your backend will facilitate this by proxying a request to the authorization OAuth provider)
 - The *access* token is what your app includes in backend requests as proof of the user's identity.
-	- Your backend can validate this token without having the contact the authorization provider.
+	- Your backend can validate this token without having to contact the authorization provider.
 	- This is what JWTs does.
 
 > In the step-by-step process, you can see how the technologies **OAuth2** and **JWT** are used and work together.
