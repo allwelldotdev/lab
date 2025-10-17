@@ -104,6 +104,12 @@ Here's a breakdown:
 		- The video informally presents Alan Turing’s halting theorem from 1936. This is a highly influential result which plays an important role in computer science and in some branches of mathematics. It shows that some problems cannot be solved algorithmically (i.e., via computation).
 
 ---
+## Rust GitHub Gists
+
+- Heapless vector type
+	- See gist link: https://gist.github.com/rust-play/a32ad95d9ad32d06d69bb7a612e57c4b
+- Niche Optimization
+	- See gist link: https://gist.github.com/rust-play/92cc73f49556dfffba09477f78c201d6
 
 ---
 ## More Q&A
