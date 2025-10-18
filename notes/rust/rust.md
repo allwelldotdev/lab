@@ -110,6 +110,8 @@ Here's a breakdown:
 	- See gist link: https://gist.github.com/rust-play/a32ad95d9ad32d06d69bb7a612e57c4b
 	- With `MaybeUninit<T>` for uninitialized elements.
 		- See gist link: https://gist.github.com/rust-play/862fe7541fb5d626aa4463da0edc68cb
+		- See personal gist public link: https://gist.github.com/allwelldotdev/9f0b30dabea98b1ff22fbfc3ea774d8e
+		- 
 - Niche Optimization
 	- See gist link: https://gist.github.com/rust-play/92cc73f49556dfffba09477f78c201d6
 
