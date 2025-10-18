@@ -108,6 +108,8 @@ Here's a breakdown:
 
 - Heapless vector type
 	- See gist link: https://gist.github.com/rust-play/a32ad95d9ad32d06d69bb7a612e57c4b
+	- With `MaybeUninit<T>` for uninitialized elements.
+		- See gist link: https://gist.github.com/rust-play/862fe7541fb5d626aa4463da0edc68cb
 - Niche Optimization
 	- See gist link: https://gist.github.com/rust-play/92cc73f49556dfffba09477f78c201d6
 
