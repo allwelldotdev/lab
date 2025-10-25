@@ -111,9 +111,10 @@ Here's a breakdown:
 	- With `MaybeUninit<T>` for uninitialized elements.
 		- See gist link: https://gist.github.com/rust-play/862fe7541fb5d626aa4463da0edc68cb
 		- See personal gist public link: https://gist.github.com/allwelldotdev/9f0b30dabea98b1ff22fbfc3ea774d8e
-		- 
+		- Final version with `IntoIterator`, `FromIterator`, and `Extend` implemented.
+			- See gist link: https://gist.github.com/rust-play/7b80863ed153627d1d86a6ee41a42167
 - Niche Optimization
-	- See gist link: https://gist.github.com/rust-play/92cc73f49556dfffba09477f78c201d6
+	- See gist link: https://gist.github.com/rust-play/2cf0df267cb59f5c488285a7cc16fcd6
 
 ---
 ## More Q&A
