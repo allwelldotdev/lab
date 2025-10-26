@@ -129,4 +129,18 @@ ArrayVec { values: [Some(10), Some(11), Some(12), Some(13), Some(14)], len: 5 }
 
 We can see that `Option<T>` works as the optional type that holds a valid value when we have successfully pushed a value, `T`, and `None` when we haven't. So what is the performance overhead caused by `Option<T>` here? 
 
-Again, working in a limited environment like that of embedded systems, we really want to conservative with our use of storage (if any) and memory space. That means storing `None` in, for example, an array of `1_000_000` `N` values, where each `None` is double the size of `T` 
+Again, working in a limited environment like that of embedded systems, we really want to be conservative with our use of storage (if any) and memory space. That means storing `None` in, for example, an array of `1_000_000` `N` values, where each `None` is byte-aligned to the size of `T` if `T` does not allow *niche optimization* for `Option<T>`, is wasteful compared to the alternative and carries performance overhead for the array, and thus our `ArrayVec` implementation.
+
+> For brevity, I'm not going to talk about type alignment and layout in Rust but it goes a long way to help you comprehend, for example, what it means for "`None` to be byte-aligned to the size of `T`." Therefore, if you don't know about it I highly recommend you learn of it.
+
+> Niche optimization is an optimization technique deployed by the Rust compiler `rustc` on `Option<T>` if `T` cannot be null or zeroed. It's a technique where the wrapper `Option` type uses the same size as `T` by assigning it's `None` with the `0` bit. That way if `T` is 8 bytes, `Option<T>` will also be 8 bytes instead of 16 bytes.
+
+If the previous paragraph was tough to understand, It might help to study type alignment and layout in Rust, as well as niche optimization in more detail.
+
+You can experiment with the code for `Option<T>` on the Rust playground via the link: https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&gist=a32ad95d9ad32d06d69bb7a612e57c4b
+
+You can also find the whole code on this GitHub Gist: https://gist.github.com/allwelldotdev/10630be265c9548bfb0c591767afedf2
+
+Let's look at the more performant but unsafe alternative with `MaybeUninit<T>`.
+
+### Using `MaybeUninit<T>`
