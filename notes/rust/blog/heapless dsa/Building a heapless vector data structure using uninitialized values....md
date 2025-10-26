@@ -50,9 +50,83 @@ Despite these differences and limitations between `array` and `Vec<T>`, as the m
 ## Building a Heapless Vector Type
 Now you understand *the what* and *the why*, let's talk about *the how*.
 
-To build a *heapless vector* we must allocate memory upfront in the form of the `N` size of elements in `[T; N]`
+To build a *heapless vector* you must allocate enough memory upfront (in the form of the `N` size of elements in a `[T; N]` array)--either in static memory or in a function's stack frame--for the largest number of elements you expect the vector to be able to hold, and then augment it with a `usize` that tracks how many elements it currently holds. To push to the vector, you write to the next element in the (statically sized) array and increment a variable that tracks the number of elements. If the vector's length ever reaches the static size, the next push fails.
 
+First, we'll do this using `Option<T>` to depict allocating memory upfront using safe Rust with a potentially minimal performance overhead compared to the next option (as time-space complexity is dependent on `N` elements). Then, using `MaybeUninit<T>` with uninitialized memory, using unsafe Rust, but much faster performance overall. In both cases, we'll work with `const` generics. Finally, let's dig into some code.
 
+### Using `Option<T>`
 
+```rust
+#[derive(Debug)]
+pub struct ArrayVec<T, const N: usize>
+where
+    T: Copy
+{
+    values: [Option<T>; N],
+    len: usize,
+}
 
+impl<T, const N: usize> ArrayVec<T, N>
+where
+    T: Copy
+{
+    pub fn new() -> Self {
+        ArrayVec {
+            values: [None; N],
+            len: 0,
+        }
+    }
+    
+    pub fn try_push(&mut self, t: T) -> Result<(), T> {
+        if self.len == N {
+            return Err(t);
+        }
+        self.values[self.len] = Some(t);
+        self.len += 1;
+        Ok(())
+    }
+}
+```
 
+`ArrayVec` is generic over both the type of its elements, `T`, and the maximum number of elements, `N`, and then the vector is represented as an array of `N` optional `T`s. This structure always stores `N` `Option<T>`, so it has a known size at compile time (enforced by the `const` generic) and can be stored on the stack, but it can still act like a vector by using runtime information to inform how we access the array.
+
+Testing `ArrayVec` with some code, we can see how it works and how to interact with it.
+
+```rust
+const SIZE: usize = 5;
+
+fn main() {
+	let mut arr_vec1 = ArrayVec::<i32, SIZE>::new();
+    println!("{:?}", arr_vec1); // view ArrayVec after init
+    
+    let mut count = 0;
+    
+    for i in 0..SIZE {
+        count = 10 + i as i32;
+        arr_vec1.try_push(count).unwrap();
+    }
+    println!("{:?}", arr_vec1); // view ArrayVec after pushing elements
+    
+    // Pushing elements beyond ArrayVec len; should return Err
+    let err = arr_vec1.try_push(count + 1);
+    println!("{:?}", err);
+    
+    // arr_vec does not change
+    println!("{:?}", arr_vec1);
+}
+```
+
+Running the code above returns:
+
+```bash
+ArrayVec { values: [None, None, None, None, None], len: 0 }
+ArrayVec { values: [Some(10), Some(11), Some(12), Some(13), Some(14)], len: 5 }
+Err(15)
+ArrayVec { values: [Some(10), Some(11), Some(12), Some(13), Some(14)], len: 5 }
+```
+
+> Notice in our code, we haven't added the `#![no_std]` crate attribute yet. We will do that when we talk about `MaybeUninit<T>`.
+
+We can see that `Option<T>` works as the optional type that holds a valid value when we have successfully pushed a value, `T`, and `None` when we haven't. So what is the performance overhead caused by `Option<T>` here? 
+
+Again, working in a limited environment like that of embedded systems, we really want to conservative with our use of storage (if any) and memory space. That means storing `None` in, for example, an array of `1_000_000` `N` values, where each `None` is double the size of `T` 
