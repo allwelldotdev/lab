@@ -125,7 +125,7 @@ Err(15)
 ArrayVec { values: [Some(10), Some(11), Some(12), Some(13), Some(14)], len: 5 }
 ```
 
-> Notice in our code, we haven't added the `#![no_std]` crate attribute yet. We will do that in the next section on `MaybeUninit<T>`.
+> Notice in our code, we haven't added the `#![no_std]` crate attribute yet. We will do that in the next section on  `MaybeUninit<T>`.
 
 We can see that `Option<T>` works as the optional type that holds a valid value when we have successfully pushed a value, `T`, and `None` when we haven't. So what is the performance overhead caused by `Option<T>` here? 
 
@@ -133,7 +133,7 @@ Again, working in a limited environment like that of embedded systems, we really
 
 > For brevity, I'm not going to talk about type alignment and layout in Rust but it goes a long way to help you comprehend, for example, what it means for "`None` to be byte-aligned to the size of `T`." Therefore, if you don't know about it I highly recommend you learn of it.
 
-> Niche optimization is an optimization technique deployed by the Rust compiler `rustc` on `Option<T>` if `T` cannot be null or zeroed. It's a technique where the wrapper `Option` type uses the same size as `T` by assigning it's `None` with the `0` bit. That way if `T` is 8 bytes, `Option<T>` will also be 8 bytes instead of 16 bytes.
+> Niche optimization is an optimization technique implemented by the Rust compiler `rustc` on `Option<T>` if `T` cannot be null or zeroed. It's a technique where the wrapper `Option` type uses the same size as `T` by assigning it's `None` with the `0` bit. That way if `T` is 8 bytes, `Option<T>` will also be 8 bytes instead of 16 bytes.
 
 If the previous paragraph was tough to understand, It might help to study type alignment and layout in Rust, as well as niche optimization in more detail.
 
@@ -144,3 +144,5 @@ You can also find the whole code on this GitHub Gist: https://gist.github.com/al
 Let's look at the more performant but unsafe alternative with `MaybeUninit<T>`.
 
 ### Using `MaybeUninit<T>`
+`MaybeUninit<T>` is a `union` type, and `union` types in Rust are rare and mostly used for interfacing with `C` code in FFI interfaces. Accessing the field of a `union` in Rust is unsafe, which is what we're going to do therefore we'll encounter the use unsafe code implementing `MaybeUninit<T>`.
+
