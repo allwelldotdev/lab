@@ -179,7 +179,7 @@ appropriate value. `i8::MAX` is 127. */
 
 Therefore, in a nutshell, uninitialized memory are regions that haven't been filled with valid data yet. Accessing uninitialized memory through normal types like `i32` or `String` leads to UB because the compiler assumes all values are properly initialized (e.g., references are not null, `bool`s are `true` or `false`, and padding bytes in structs are not garbage).
 
-Another definition that fits with our context is: `MaybeUninit<T>` lets you represent potentially uninitialized data without immediate UB. It's a `union` type with `#[repr(transparent)]`, meaning it has the *exact same size, alignment, and ABI* as T—no overhead. Unlike Option, it doesn't track initialization at runtime (no discriminant), so you must manually ensure safety via invariants (promises you make in unsafe code). Dropping a MaybeUninit never calls T's destructor; that's your job if it's initialized.
+Here's another definition that fits our context: `MaybeUninit<T>` lets you represent potentially uninitialized data without immediate UB. It's a `union` type with `#[repr(transparent)]`, meaning it has the *exact same size, alignment, and application binary interface (ABI)* as T—no overhead. Unlike `Option<T>`, it doesn't track initialization at runtime (no discriminant), so you must manually ensure safety via invariants (promises you make in unsafe code). Dropping a `MaybeUninit<T>` never calls `T`'s destructor; that's your job if it's initialized.
 
 According to stdlib docs, "`MaybeUninit<T>` serves to enable unsafe code to deal with uninitialized data. It is a signal to the compiler **indicating that the data here might _not_ be initialized**. The compiler then knows to not make any incorrect assumptions or optimizations on this code. You can think of `MaybeUninit<T>` as being a bit like `Option<T>` but without any of the run-time tracking and without any of the safety checks."
 Learn more about `MaybeUninit<T>` from the [stdlib docs](https://doc.rust-lang.org/std/mem/union.MaybeUninit.html).
@@ -233,7 +233,7 @@ Following similar implementations on `ArrayVec` with `Option<T>`, with `MaybeUni
 	- When you declare a field like `values: [MaybeUninit<T>; N]` in a struct, Rust doesn't require (or perform) any explicit initialization of the array's contents to a "valid" state for `T` at construction time. Instead the array starts in a raw, uninitialized memory state (i.e., whatever **garbage bytes** happen to be on the stack at that moment), and the `MaybeUninit<T>` wrapper semantically interprets those bytes as "uninitialized" without any runtime cost or safety violation. Hence why, I used the safe variant instead and commented the unsafe variant. Meaning the unsafe variant was safe to use in that context. Other places where I use `unsafe`, I document (i.e. comment) the safety invariants that make using the `unsafe` code safe.
 - `try_push` acts like `.push` on `Vec<T>`, takes in and writes `T` directly to uninitialized memory in the array (if all `N` elements have not been initialized, otherwise returns `Err(T)`) and increments `len`.
 
-In full vector style, let's add more useful methods to `ArrayVec` like `get`, `pop`, and a getter `len`.
+In full vector style, we'll add more useful methods to `ArrayVec` like `get`, `pop`, and a getter `len`.
 
 ```rust
 // ...earlier code.
