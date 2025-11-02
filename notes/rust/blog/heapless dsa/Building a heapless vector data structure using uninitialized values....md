@@ -177,3 +177,69 @@ uninit_var = 255; /* ❌ ERROR: You must initialize `uninit_var` with the
 appropriate value. `i8::MAX` is 127. */
 ```
 
+Therefore, in a nutshell, uninitialized memory are regions that haven't been filled with valid data yet. Accessing uninitialized memory through normal types like `i32` or `String` leads to UB because the compiler assumes all values are properly initialized (e.g., references are not null, `bool`s are `true` or `false`, and padding bytes in structs are not garbage).
+
+According to stdlib docs, "`MaybeUninit<T>` serves to enable unsafe code to deal with uninitialized data. It is a signal to the compiler **indicating that the data here might _not_ be initialized**. The compiler then knows to not make any incorrect assumptions or optimizations on this code. You can think of `MaybeUninit<T>` as being a bit like `Option<T>` but without any of the run-time tracking and without any of the safety checks."
+Learn more about `MaybeUninit<T>` from the [stdlib docs](https://doc.rust-lang.org/std/mem/union.MaybeUninit.html).
+
+Having understood what `MaybeUninit<T>` is, let's see it's function in building a heapless vector type.
+
+We rewrite our earlier implementation of `ArrayVec` from using `Option<T>` to `MaybeUninit<T>`:
+
+```rust
+#![no_std] // Explicity stating this crate does not use `std`
+
+mod arrayvec {
+	use core::mem::MaybeUninit;
+
+	#[derive(Debug)]
+	pub struct ArrayVec<T, const N: usize> {
+		values: [MaybeUninit<T>; N],
+		len: usize,
+	}
+	
+	impl<T, const N: usize> ArrayVec<T, N> {
+		/// Creates a new empty ArrayVec with and array of uninitialized `T`
+		/// and `len` = 0.
+		pub fn new() -> Self {
+			ArrayVec {
+				// values: unsafe { MaybeUninit::uninit().assume_init() },
+				// Below is same as the commented code above but safer.
+				values: [const { MaybeUninit::uninit() }; N],
+				len: 0,
+			}
+		}
+		
+		/// Pushes `T` if all `N` elements have not been initialized;
+		/// else returns `Err(T)`.
+		pub fn try_push(&mut self, value: T) -> Result<(), T> {
+			if self.len == N {
+				return Err(value);
+			}
+			self.values[self.len].write(value);
+			self.len += 1;
+			Ok(())
+		}
+		
+		/// Returns a reference to the element at `index` if within bounds
+		/// and initialized.
+		///
+		/// SAFETY: Unsafe internally: Assumes the first `len` slots are
+		/// initialized.
+		pub fn get(&self, index: usize) -> Option<&T> {
+			if index >= self.len {
+				return None;
+			}
+			unsafe { Some(&*self.values[index].as_ptr()) }
+		}
+		
+		/// Pops the last value, if any, returning owned value (or `None` if empty).
+		///
+		/// SAFETY: Uses `.assume_init_read()` to extract (read) and mark
+		/// memory as uninitialized.
+		pub fn pop(&mut self) -> Option<T> {
+			
+		}
+	}
+}
+```
