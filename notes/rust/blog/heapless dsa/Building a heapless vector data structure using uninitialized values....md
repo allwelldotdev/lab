@@ -179,6 +179,8 @@ appropriate value. `i8::MAX` is 127. */
 
 Therefore, in a nutshell, uninitialized memory are regions that haven't been filled with valid data yet. Accessing uninitialized memory through normal types like `i32` or `String` leads to UB because the compiler assumes all values are properly initialized (e.g., references are not null, `bool`s are `true` or `false`, and padding bytes in structs are not garbage).
 
+Another definition that fits with our context is: `MaybeUninit<T>` lets you represent potentially uninitialized data without immediate UB. It's a `union` type with `#[repr(transparent)]`, meaning it has the *exact same size, alignment, and ABI* as T—no overhead. Unlike Option, it doesn't track initialization at runtime (no discriminant), so you must manually ensure safety via invariants (promises you make in unsafe code). Dropping a MaybeUninit never calls T's destructor; that's your job if it's initialized.
+
 According to stdlib docs, "`MaybeUninit<T>` serves to enable unsafe code to deal with uninitialized data. It is a signal to the compiler **indicating that the data here might _not_ be initialized**. The compiler then knows to not make any incorrect assumptions or optimizations on this code. You can think of `MaybeUninit<T>` as being a bit like `Option<T>` but without any of the run-time tracking and without any of the safety checks."
 Learn more about `MaybeUninit<T>` from the [stdlib docs](https://doc.rust-lang.org/std/mem/union.MaybeUninit.html).
 
@@ -220,6 +222,25 @@ mod arrayvec {
 			self.len += 1;
 			Ok(())
 		}
+	}
+}
+```
+
+First, notice the newly added crate attribute `#![no_std]` that signifies this source code should be built for an environment that does not support the Rust standard library. Next, we move `ArrayVec` and its impls into a `mod` to mimic an organized project structure and visibility. `values` is now an array of `N` maybe uninitialized type-values `MaybeUninit<T>`. `len` continues to track number of initialized elements.
+
+Following similar implementations on `ArrayVec` with `Option<T>`, with `MaybeUninit<T>`;
+- `new` introduces allocation to static memory with `const` and the `MaybeUninit::uninit()` associated function to return an array of uninitialized instances of `T` to the `values` field. Instead of the safe variant we could have used `unsafe` with `.assume_init()` on `MaybeUninit<T>` to create and assign an array of `N` uninitialized instances of `T` to the `values` field, as seen in the commented code, because it returns the same value. Let me explain.
+	- When you declare a field like `values: [MaybeUninit<T>; N]` in a struct, Rust doesn't require (or perform) any explicit initialization of the array's contents to a "valid" state for `T` at construction time. Instead the array starts in a raw, uninitialized memory state (i.e., whatever **garbage bytes** happen to be on the stack at that moment), and the `MaybeUninit<T>` wrapper semantically interprets those bytes as "uninitialized" without any runtime cost or safety violation. Hence why, I used the safe variant instead and commented the unsafe variant. Meaning the unsafe variant was safe to use in that context. Other places where I use `unsafe`, I document (i.e. comment) the safety invariants that make using the `unsafe` code safe.
+- `try_push` acts like `.push` on `Vec<T>`, takes in and writes `T` directly to uninitialized memory in the array (if all `N` elements have not been initialized, otherwise returns `Err(T)`) and increments `len`.
+
+In full vector style, let's add more useful methods to `ArrayVec` like `get`, `pop`, and a getter `len`.
+
+```rust
+// ...earlier code.
+
+mod arrayvec {
+	impl<T, const N: usize> ArrayVec<T, N> {
+		// ...earlier code.
 		
 		/// Returns a reference to the element at `index` if within bounds
 		/// and initialized.
@@ -233,13 +254,47 @@ mod arrayvec {
 			unsafe { Some(&*self.values[index].as_ptr()) }
 		}
 		
-		/// Pops the last value, if any, returning owned value (or `None` if empty).
+		/// Pops the last value, if any, returning owned `T` (or `None`
+		/// if empty).
 		///
 		/// SAFETY: Uses `.assume_init_read()` to extract (read) and mark
 		/// memory as uninitialized.
 		pub fn pop(&mut self) -> Option<T> {
-			
+			if self.len == 0 {
+				return None;
+			}
+			self.len -= 1;
+			Some(unsafe { self.values[self.len].assume_init_read() })
+		}
+		
+		/// Getter for current length.
+		pub fn len(&self) -> usize {
+			self.len
 		}
 	}
 }
 ```
+
+...
+
+```rust
+// ...earlier code.
+
+mod arrayvec {
+	// ...earlier code.
+	
+	// Implement Drop for ArrayVec to safely deallocate initialized elements.
+	impl<T, const N: usize> Drop for ArrayVec<T, N> {
+		fn drop(&mut self) {
+			/* SAFETY: Explicitly drops the first `len` initialized elements.
+			Therefore, no double frees. */
+			for i in 0..self.len {
+				unsafe {
+					self.values[i].assume_init_drop();
+				}
+			}
+		}
+	}
+}
+```
+
