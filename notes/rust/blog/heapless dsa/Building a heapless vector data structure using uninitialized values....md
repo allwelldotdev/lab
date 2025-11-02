@@ -228,17 +228,19 @@ mod arrayvec {
 
 First, notice the newly added crate attribute `#![no_std]` that signifies this source code should be built for an environment that does not support the Rust standard library. Next, we move `ArrayVec` and its impls into a `mod` to mimic an organized project structure and visibility. `values` is now an array of `N` maybe uninitialized type-values `MaybeUninit<T>`. `len` continues to track number of initialized elements.
 
-Following similar implementations on `ArrayVec` with `Option<T>`, with `MaybeUninit<T>`;
+Following similar implementations on `ArrayVec` with `Option<T>`, now with `MaybeUninit<T>`:
 - `new` introduces allocation to static memory with `const` and the `MaybeUninit::uninit()` associated function to return an array of uninitialized instances of `T` to the `values` field. Instead of the safe variant we could have used `unsafe` with `.assume_init()` on `MaybeUninit<T>` to create and assign an array of `N` uninitialized instances of `T` to the `values` field, as seen in the commented code, because it returns the same value. Let me explain.
 	- When you declare a field like `values: [MaybeUninit<T>; N]` in a struct, Rust doesn't require (or perform) any explicit initialization of the array's contents to a "valid" state for `T` at construction time. Instead the array starts in a raw, uninitialized memory state (i.e., whatever **garbage bytes** happen to be on the stack at that moment), and the `MaybeUninit<T>` wrapper semantically interprets those bytes as "uninitialized" without any runtime cost or safety violation. Hence why, I used the safe variant instead and commented the unsafe variant. Meaning the unsafe variant was safe to use in that context. Other places where I use `unsafe`, I document (i.e. comment) the safety invariants that make using the `unsafe` code safe.
-- `try_push` acts like `.push` on `Vec<T>`, takes in and writes `T` directly to uninitialized memory in the array (if all `N` elements have not been initialized, otherwise returns `Err(T)`) and increments `len`.
+- `try_push` acts like `.push` on `Vec<T>`, takes in and writes `T` directly to uninitialized memory in the array (if all `N` elements have not been initialized, otherwise returns `Err(T)`) and increments `len` to track number of initialized elements.
 
-In full vector style, we'll add more useful methods to `ArrayVec` like `get`, `pop`, and a getter `len`.
+In full vector style, let's add more useful methods to `ArrayVec` like `get`, `pop`, and a getter `len`.
 
 ```rust
 // ...earlier code.
 
 mod arrayvec {
+	// ...earlier code.
+	
 	impl<T, const N: usize> ArrayVec<T, N> {
 		// ...earlier code.
 		
@@ -275,7 +277,9 @@ mod arrayvec {
 }
 ```
 
-...
+While implementing `get` and `pop` methods on `ArrayVec`, we use `unsafe` and document safety invariants or guarantees that describe safety rules we upheld to ensure a safe implementation of unsafe code, and we introduce methods like `.as_ptr()` and `.assume_init_read()` that allow us to reach into the *initialized instances* of `MaybeUninit<T>` and perform computation on them.
+
+On `get` we take in an index value that points to the array data we want to get. Before we perform the get operation on the `values` array we ensure we're only getting initialized indexed values by using the `if` statement to return `None`
 
 ```rust
 // ...earlier code.
