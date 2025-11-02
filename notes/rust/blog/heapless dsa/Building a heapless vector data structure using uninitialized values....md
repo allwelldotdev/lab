@@ -144,5 +144,36 @@ You can also find the whole code on this GitHub Gist: https://gist.github.com/al
 Let's look at the more performant but unsafe alternative with `MaybeUninit<T>`.
 
 ### Using `MaybeUninit<T>`
-`MaybeUninit<T>` is a `union` type, and `union` types in Rust are rare and mostly used for interfacing with `C` code in FFI interfaces. Accessing the field of a `union` in Rust is unsafe, which is what we're going to do therefore we'll encounter the use unsafe code implementing `MaybeUninit<T>`.
+`MaybeUninit<T>` is a `union` type, and `union` types in Rust are rare and mostly used for interfacing with `C` code in foreign function interfaces (FFI). Accessing the field of a `union` in Rust is unsafe, therefore, we'll be introducing the use of unsafe code to implement `MaybeUninit<T>`.
+
+What is the function of `MaybeUninit<T>`, how is it useful in the concept of building a heapless vector type?
+
+According to stdlib docs, `MaybeUninit<T>` is a wrapper type to construct uninitialized instances of `T`. What does "uninitialized" mean? I'll use the example of `let` value-to-variable assignment to illustrate the meaning of initialized and uninitialized instances to help you *really* understand what `MaybeUninit<T>` does.
+
+```rust
+let init_var: i32 = 10; /* `init_var` is a variable that holds a 32-bit signed integer and is immediately initialized to the value of 10. */
+
+let uninit_var; /* In contrast, `uninit_var` is a variable that, at this point,
+holds nothing (actually holds what are known as "garbage bytes" - invalid,
+overwritable data in memory). Meaning, `uninit_var` points to *uninitialized*
+memory.
+
+At this point of the code, in safe code, Rust would not allow you use
+`uninit_var` in any kind of computation that requires `uninit_var` to
+be initialized. The compiler to complain that `uninit_var` is uninitialized,
+using it would result in unexpected/undefined behaviour (UB). To use
+`uninit_var`, we must initialize it with appropriate value. */
+
+uninit_var: u8 = 255; /* Finally, we initialize `uninit_var` with an 8-bit
+unsigned integer of value 255. Rust powerful type inference sets `uniniti_var`
+to be of type `u8`. If you try to assign `uninit_var` to a value of the wrong
+type, the compiler will error. */
+
+/* Below is another example of Rust's type inference enforcing appropriate value
+assignment. */
+let uninit_var: i8; /* Variable holds no value, points to unitialized memory of
+type 8-bit signed integer. */
+uninit_var = 255; /* ❌ ERROR: You must initialize `uninit_var` with the
+appropriate value. `i8::MAX` is 127. */
+```
 
