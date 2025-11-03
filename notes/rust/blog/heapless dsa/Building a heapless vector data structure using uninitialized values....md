@@ -353,9 +353,79 @@ ArrayVec { values: [MaybeUninit<u16>, MaybeUninit<u16>, MaybeUninit<u16>, MaybeU
 
 Notice how the size of the array is `5` yet the number of initialized elements is `3`, and we cannot see the values pushed into the array instead we see `MaybeUninit<u16>`. That is precisely the reason why we need to be able to convert `ArrayVec` to a `slice` so we can peep into it's initialized values and debug what was inserted or computed in there.
 
-> What is a `slice`? A `slice` is a primitive type in Rust
+> What's a `slice`? A `slice` is a primitive type in Rust that is a *dynamically-sized* view into a contiguous sequence, denoted by `[T]`. Yes a slice is dynamically-sized though that has nothing to do with heap allocation. A slice is dynamically-sized because a slice is a fat (or wide) pointer that holds information about a location in memory and a length. In other words, a slice is a view into a block of memory represented as a pointer and a length. Learn more about `slice`s in Rust via the [stdlib docs](https://doc.rust-lang.org/std/primitive.slice.html).
 
-#### Testing
+Using a `slice`, we can take a view into `ArrayVec` for its initialized elements. To do that, we implement methods on `ArrayVec` that allow us convert it into a slice.
+
+```rust
+// ...earlier code.
+
+mod arrayvec {
+	// ...earlier code.
+	
+	// Add methods to convert ArrayVec into a slice.
+	impl<T, const N: usize> ArrayVec<T, N> {
+		// ...earlier code.
+		
+		/// Return a slice using `slice::from_raw_parts()`. Returns a slice
+		/// over initialized elements (i.e. first `self.len` slots).
+		///
+		/// SAFETY: Unsafe internally, but safe API: assumes invariant holds.
+		/// Length points to valid length of init elements.
+		pub fn as_slice(&self) -> &[T] {
+			unsafe {
+				core::slice::from_raw_parts(
+					self.values.as_ptr() as *const T, self.len
+				)
+			}
+		}
+		
+		/// Returns a mutable slice over initialized elements.
+		pub fn as_mut_slice(&mut self) -> &mut [T] {
+			unsafe {
+                core::slice::from_raw_parts_mut(
+                    self.values.as_mut_ptr() as *mut T, self.len
+                )
+            }
+		}
+	}
+}
+```
+
+`core::slice::from_raw_parts()` and `core::slice::from_raw_parts_mut()` are unsafe functions so must call them inside `unsafe` blocks. Both take in a raw pointer (immutable and mutable respectively) and the length of the slice which corresponds, in our case, with the length of initialized elements which we track with `self.len`.
+
+Now, if we modify the `main()` function from before slightly (as below) we'll be able to debug the values pushed in.
+
+```rust
+// ...earlier code.
+
+fn main() {
+	/* ...earlier code.
+	After creating ArrayVec and pushing values into it.
+	See similar earlier code for this missing section. */
+	
+	// Repeat initial ArrayVec print.
+	std::println!("{:?}", arr_vec);
+
+	// Print ArrayVec *now as slice* to stdout for debugging.
+	std::println!("---\nInit values: {:?}", arr_vec.as_slice());
+}
+```
+
+Returns:
+
+```bash
+# Stdout:
+ArrayVec { values: [MaybeUninit<u16>, MaybeUninit<u16>, MaybeUninit<u16>, MaybeUninit<u16>, MaybeUninit<u16>], len: 3 }
+---
+Init values: [10, 11, 12]
+```
+
+We can now properly debug values pushed in or computed in `ArrayVec`.
+
+Let's conclude with some final tests on `ArrayVec`.
+
+#### Final Testing
 Let's test our heapless vector data structure so far.
 
 
