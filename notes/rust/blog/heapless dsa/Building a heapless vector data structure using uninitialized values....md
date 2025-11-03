@@ -2,7 +2,7 @@
 
 In this article, I'll teach you how to build a heapless vector data structure with the example of one I already built. I'll share the performance benefits and unsafety to look out for and avoid when using `MaybeUninit<T>` over `Option<T>`. Lastly, I'll show you how to build safe APIs on top of unsafe Rust code to ensure "safe unsafe code" in Rust.
 
-A little primer on Rust memory models before we begin. Though to fully comprehend this article you may require practical understanding of Rust memory models--what's stored where, how, and what for--here's a little primer incase you're new to this.
+A little primer on Rust memory models before we begin. Though to fully comprehend this article you may require practical understanding of Rust memory models—what's stored where, how, and what for—here's a little primer incase you're new to this.
 
 ## Rust's Memory Model
 Rust models memory in three main spaces or regions; the *stack*, the *heap*, and *static memory*.
@@ -32,7 +32,7 @@ By default, Rust comes packaged with the standard library `std` and library prel
 
 `alloc` is Rust's dynamic memory allocation library. It's what makes heap allocation data types like `Box<T>` and `Vec<T>` work by either manually implementing a memory allocator with the `GlobalAlloc` trait or using the system allocator (which is usually the one dictated by the standard C library). Without `alloc`, collections, smart pointers, and dynamically-allocated strings `String` in the standard library `std` won't work.
 
-The `core` library sits at the bottom of the Rust library pyramid and contains functionality that only depends on the Rust language itself and the hardware the Rust program is running on--meaning `core` doesn't depend on anything else. `alloc` sits on top of `core` in the Rust library hierarchy. So you can begin to see the order of library dependency:
+The `core` library sits at the bottom of the Rust library pyramid and contains functionality that only depends on the Rust language itself and the hardware the Rust program is running on—meaning `core` doesn't depend on anything else. `alloc` sits on top of `core` in the Rust library hierarchy. So you can begin to see the order of library dependency:
 `std -[depends on]-> alloc -[depends on]-> core`.
 
 When we use the crate attribute `#![no_std]`, we are saying we want to change default action of Rust to instead remove access to `std` and `alloc` and only keep `core`. This ensures `std` is not compiled with source code and changes the Rust library prelude from `std::prelude` to `core::prelude`. This doesn't mean you can't access `std` in a `#![no_std]` environment, you still can using `extern crate std` but accessing `std` will have to be explicit and dependent on if the target platform (i.e. the environment where your Rust code will run) allows `std`. The same rule applies for `alloc` in the sense that Rust allows you the ability to dynamically allocate memory in a `#![no_std]` environment, that said, this action also has to be explicit and is dependent on two things:
@@ -45,12 +45,12 @@ Now you see, in embedded environments (i.e. microcontrollers and SoCs) where lim
 - `array` creates a fixed-size contiguous space where each space is data stored in the stack memory, while `Vec<T>` allocates memory in the heap and returns a pointer (off on a tangent here: understanding the difference between a value, variable, and pointer in Rust greatly contributes to improving your understanding of pointers),
 - plus a couple more differences that are not important to our use case otherwise would mention where applicable.
 
-Despite these differences and limitations between `array` and `Vec<T>`, as the more similar data structures, it'd be nice to be able be create a vec-like data structure that fundamentally functions like an array (therefore, without needing heap allocation) but inherits (not to be confused with OOP Inheritance as Rust doesn't do that) some functionality of `Vec<T>`--a *heapless vector* data structure. That's what we'll build next.
+Despite these differences and limitations between `array` and `Vec<T>`, as the more similar data structures, it'd be nice to be able be create a `Vec`-like data structure that fundamentally functions like an array (therefore, without needing heap allocation) but inherits (not to be confused with OOP Inheritance as Rust doesn't do that) some functionality of `Vec<T>`—a *heapless vector* data structure. That's what we'll build next.
 
 ## Building a Heapless Vector Type
 Now you understand *the what* and *the why*, let's talk about *the how*.
 
-To build a *heapless vector* you must allocate enough memory upfront (in the form of the `N` size of elements in a `[T; N]` array)--either in static memory or in a function stack frame--for the largest number of elements you expect the vector to be able to hold, and then augment it with a `usize` that tracks how many elements it currently holds. To push to the vector, you write to the next element in the (statically sized) array and increment a variable that tracks the number of elements. If the vector's length ever reaches the static size, the next push fails.
+To build a *heapless vector* you must allocate enough memory upfront (in the form of the `N` size of elements in a `[T; N]` array)—either in static memory or in a function stack frame—for the largest number of elements you expect the vector to be able to hold, and then augment it with a `usize` that tracks how many elements it currently holds. To push to the vector, you write to the next element in the (statically sized) array and increment a variable that tracks the number of elements. If the vector's length ever reaches the static size, the next push fails.
 
 First, we'll do this using `Option<T>` to depict allocating memory upfront using safe Rust with a minimal performance overhead compared to the next option (as time-space complexity is dependent on `N` elements). Then, using `MaybeUninit<T>` with uninitialized memory, using unsafe Rust, with better performance. In both cases, we'll work with `const` generics. Finally, let's dig into some code.
 
@@ -119,6 +119,7 @@ fn main() {
 Running the code above returns:
 
 ```bash
+# Stdout:
 ArrayVec { values: [None, None, None, None, None], len: 0 }
 ArrayVec { values: [Some(10), Some(11), Some(12), Some(13), Some(14)], len: 5 }
 Err(15)
@@ -133,22 +134,23 @@ Again, working in a limited environment like that of embedded systems, we really
 
 > For brevity, I'm not going to talk about type alignment and layout in Rust but it goes a long way to help you comprehend, for example, what it means for "`None` to be byte-aligned to the size of `T`." Therefore, if you don't know about it I highly recommend you learn of it.
 
-> Niche optimization is an optimization technique implemented by the Rust compiler `rustc` on `Option<T>` if `T` cannot be null or zeroed. It's a technique where the wrapper `Option` type uses the same size as `T` by assigning it's `None` with the `0` bit. That way if `T` is 8 bytes, `Option<T>` will also be 8 bytes instead of 16 bytes.
+Niche optimization is an optimization technique implemented by the Rust compiler `rustc` on `Option<T>` if `T` cannot be null or zeroed. It's a technique where the wrapper `Option` type uses the same size as `T` by assigning it's `None` with the `0` bit. That way if `T` is 8 bytes, `Option<T>` will also be 8 bytes instead of 16 bytes.
 
-If the previous paragraph was tough to understand, It might help to study type alignment and layout in Rust, as well as niche optimization in more detail.
+If the previous paragraphs were tough to understand, It might help to study type alignment and layout in Rust, as well as niche optimization by the Rust Compiler (`rustc`) in more detail.
 
-You can experiment with the code for `Option<T>` on the Rust playground via the link: https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&gist=a32ad95d9ad32d06d69bb7a612e57c4b
-
-You can also find the whole code on this GitHub Gist: https://gist.github.com/allwelldotdev/10630be265c9548bfb0c591767afedf2
+- You can experiment with the code of a **heapless vector type** with `Option<T>` on the Rust playground via the link: https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&gist=a32ad95d9ad32d06d69bb7a612e57c4b
+- You can also find the whole code on this GitHub Gist: https://gist.github.com/allwelldotdev/10630be265c9548bfb0c591767afedf2
 
 Let's look at the more performant but unsafe alternative with `MaybeUninit<T>`.
 
 ### Using `MaybeUninit<T>`
-`MaybeUninit<T>` is a `union` type, and `union` types in Rust are rare and mostly used for interfacing with `C` code in foreign function interfaces (FFI). Accessing the field of a `union` in Rust is unsafe, therefore, we'll be introducing the use of unsafe code to implement `MaybeUninit<T>`.
+`MaybeUninit<T>` is a `union` type, and `union` types in Rust are rare and mostly used for interfacing with `C` code through foreign function interfaces (FFI). Accessing the field of a `union` in Rust is unsafe, therefore, we'll be introducing the use of unsafe code to implement `MaybeUninit<T>`.
 
 What is the function of `MaybeUninit<T>`, how is it useful in the concept of building a heapless vector type?
 
-According to stdlib docs, `MaybeUninit<T>` is a wrapper type to construct uninitialized instances of `T`. What does "uninitialized" mean? I'll use the example of `let` value-to-variable assignment to illustrate the meaning of initialized and uninitialized instances to help you *really* understand what `MaybeUninit<T>` does.
+According to stdlib docs, `MaybeUninit<T>` is a wrapper type to construct uninitialized instances of `T`. What does "uninitialized" mean? I'll use the example of `let` value-to-variable assignment to illustrate the meaning of initialized vs. uninitialized instances to help you *really* understand what `MaybeUninit<T>` does.
+
+Check out the code below.
 
 ```rust
 let init_var: i32 = 10; /* `init_var` is a variable that holds a 32-bit signed integer and is immediately initialized to the value of 10. */
@@ -158,20 +160,20 @@ holds nothing (actually holds what are known as "garbage bytes" - invalid,
 overwritable data in memory). Meaning, `uninit_var` points to *uninitialized*
 memory.
 
-At this point of the code, in safe code, Rust would not allow you use
+At this point of the code, in safe code, Rust would *not* allow you use
 `uninit_var` in any kind of computation that requires `uninit_var` to
-be initialized. The compiler to complain that `uninit_var` is uninitialized,
-using it would result in unexpected/undefined behaviour (UB). To use
-`uninit_var`, we must initialize it with appropriate value. */
+be initialized. The compiler will complain that `uninit_var` is uninitialized
+and using it would result in unexpected/undefined behaviour (UB). To use
+`uninit_var`, we must initialize it with the appropriate value. */
 
 uninit_var: u8 = 255; /* Finally, we initialize `uninit_var` with an 8-bit
-unsigned integer of value 255. Rust powerful type inference sets `uniniti_var`
+unsigned integer of value 255. Rust's powerful type inference sets `uninit_var`
 to be of type `u8`. If you try to assign `uninit_var` to a value of the wrong
-type, the compiler will error. */
+type, the compiler will panic. */
 
 /* Below is another example of Rust's type inference enforcing appropriate value
 assignment. */
-let uninit_var: i8; /* Variable holds no value, points to unitialized memory of
+let uninit_var: i8; /* Variable holds no value and points to unitialized memory of
 type 8-bit signed integer. */
 uninit_var = 255; /* ❌ ERROR: You must initialize `uninit_var` with the
 appropriate value. `i8::MAX` is 127. */
@@ -179,14 +181,14 @@ appropriate value. `i8::MAX` is 127. */
 
 Therefore, in a nutshell, uninitialized memory are regions that haven't been filled with valid data yet. Accessing uninitialized memory through normal types like `i32` or `String` leads to UB because the compiler assumes all values are properly initialized (e.g., references are not null, `bool`s are `true` or `false`, and padding bytes in structs are not garbage).
 
-Here's another definition that fits our context: `MaybeUninit<T>` lets you represent potentially uninitialized data without immediate UB. It's a `union` type with `#[repr(transparent)]`, meaning it has the *exact same size, alignment, and application binary interface (ABI)* as T—no overhead. Unlike `Option<T>`, it doesn't track initialization at runtime (no discriminant), so you must manually ensure safety via invariants (promises you make in unsafe code). Dropping a `MaybeUninit<T>` never calls `T`'s destructor; that's your job if it's initialized.
+Here's another a more elaborate definition: `MaybeUninit<T>` lets you represent potentially uninitialized data without immediate UB. It's a `union` type with `#[repr(transparent)]`, meaning it has the *exact same size, alignment, and application binary interface (ABI)* as T—no overhead. Unlike `Option<T>`, it doesn't track initialization at runtime (no discriminant), so you must manually ensure safety via invariants (promises you make in unsafe code). Dropping a `MaybeUninit<T>` never calls `T`'s destructor; that's your job if it's initialized.
 
 According to stdlib docs, "`MaybeUninit<T>` serves to enable unsafe code to deal with uninitialized data. It is a signal to the compiler **indicating that the data here might _not_ be initialized**. The compiler then knows to not make any incorrect assumptions or optimizations on this code. You can think of `MaybeUninit<T>` as being a bit like `Option<T>` but without any of the run-time tracking and without any of the safety checks."
 Learn more about `MaybeUninit<T>` from the [stdlib docs](https://doc.rust-lang.org/std/mem/union.MaybeUninit.html).
 
 Having understood what `MaybeUninit<T>` is, let's see it's function in building a heapless vector type.
 
-We rewrite our earlier implementation of `ArrayVec` from using `Option<T>` to `MaybeUninit<T>`:
+Rewriting the earlier implementation of `ArrayVec` from `Option<T>` to `MaybeUninit<T>`:
 
 ```rust
 #![no_std] // Explicity stating this crate does not use `std`
@@ -201,7 +203,7 @@ mod arrayvec {
 	}
 	
 	impl<T, const N: usize> ArrayVec<T, N> {
-		/// Creates a new empty ArrayVec with and array of uninitialized `T`
+		/// Creates a new empty ArrayVec with an array of uninitialized `T`
 		/// and `len` = 0.
 		pub fn new() -> Self {
 			ArrayVec {
