@@ -425,9 +425,89 @@ Init values: [10, 11, 12]
 
 As you can see, now we can properly debug values pushed or computed in `ArrayVec`.
 
-Let's conclude with some final tests on `ArrayVec`.
+Let's conclude with a couple final tests on `ArrayVec` to showcase its function.
 
-#### Final Testing
-Let's test our heapless vector data structure so far.
+#### Testing
+Let's test our heapless vector type so far.
+
+```rust
+#![no_std]
+extern crate std;
+use arrayvec::ArrayVec;
+
+mod arrayvec { /* ...`ArrayVec` implementation. */ }
+
+const CAP: usize = 5;
+
+fn main() {
+	let mut arr_vec = ArrayVec::<i32, CAP>::new();
+	std::println!("{:?}", arr_vec); // View init ArrayVec
+
+	let mut count;
+
+	// Push a few elements
+	for i in 0..(CAP - 2) {
+		count = 1 + i as i32;
+		arr_vec.try_push(count).unwrap()
+	}
+	std::println!("{:?}", arr_vec); // View pushed elements
+
+	// Return elements in initialized index.
+	let arr_els = arr_vec.as_slice();
+	std::println!("---\nInit values: {:?}", arr_els);
+
+	// Pop from MaybeUninit ArrayVec; if uninit, return None.
+	std::println!("---\nArrayVec `len` before pop: {}", arr_vec.len());
+	std::println!("Popped value: {:?}", arr_vec.pop());
+	std::println!("ArrayVec `len` after pop: {}", arr_vec.len());
+
+	// TEST: Add more elements beyond `CAP` size for ArrayVec;
+	// `try_push` should escape and return with Err.
+	let arr_len = arr_vec.len();
+	count = *arr_vec.get(arr_len - 1).unwrap(); /* I can deref the pointer
+	for the value here without moving the value because I know it's a
+	primitive value which enables bitwise copy. */
+	let mut arr_err_els: ArrayVec<Result<(), i32>, CAP> =
+		ArrayVec::new();
+
+	for _ in arr_len..(CAP * 2) {
+		count += 1;
+		if let Err(value) = arr_vec.try_push(count) {
+			arr_err_els.try_push(Err(value)).unwrap();
+		}
+	}
+	std::println!("---\nFilled ArrayVec: {:?}", arr_vec.as_slice());
+	std::println!("Err beyond ArrayVec: {:?}", arr_err_els.as_slice());
+}
+```
+
+Returns:
+
+```
+ArrayVec { values: [MaybeUninit<i32>, MaybeUninit<i32>, MaybeUninit<i32>, MaybeUninit<i32>, MaybeUninit<i32>], len: 0 }
+ArrayVec { values: [MaybeUninit<i32>, MaybeUninit<i32>, MaybeUninit<i32>, MaybeUninit<i32>, MaybeUninit<i32>], len: 3 }
+---
+Init values: [1, 2, 3]
+---
+ArrayVec `len` before pop: 3
+Popped value: Some(3)
+ArrayVec `len` after pop: 2
+---
+Filled ArrayVec: [1, 2, 3, 4, 5]
+Err beyond ArrayVec: [Err(6), Err(7), Err(8), Err(9), Err(10)]
+```
+
+## In conclusion
+We've come a long way to learn how to build a heapless vector data structure using uninitialized values. From understanding how Rust models memory regions, to learning about how to configure Rust for unorthodox or constrained environments using the Rust without the Standard Library `#![no_std]` practice, to building a heapless vector type `ArrayVec` using `Option<T>`, and then to optimizing `ArrayVec` further by replacing `Option<T>` default values with `MaybeUninit<T>` uninitialized values in the array.
+
+In optimizing `ArrayVec` to `MaybeUninit<T>` from `Option<T>`, here are some of the advantages and tradeoffs.
+
+**Advantages**
+- **Performance:**
+	- **Reduced memory footprint**. Exact `size_of::<T>()` per element/index in array (no discriminant overhead); halves space for non-niche types like `i32` (4 bytes vs. 8 bytes), cutting cache misses in large arrays.
+	- **Faster Access & No Branching**. Direct `ptr` reads/writes via `unsafe { Some(&*self.values[index].as_ptr()) }`; skips `Option`'s runtime `is_some()` checks. According to benchmark tests, this yields 1.5–2x speed in loops (e.g., 23ms vs. 62ms for 100M elements in an array).
+- 
+
+This effort shows you can build sophisticated data structures using only the stack and static memory, omitting heap allocation. This kind of data structure is useful in embedded programming where heap allocation is often unavailable.
 
 
