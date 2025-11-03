@@ -118,7 +118,7 @@ fn main() {
 
 Running the code above returns:
 
-```bash
+```
 # Stdout:
 ArrayVec { values: [None, None, None, None, None], len: 0 }
 ArrayVec { values: [Some(10), Some(11), Some(12), Some(13), Some(14)], len: 5 }
@@ -314,7 +314,7 @@ mod arrayvec {
 
 We implement a destructor for `ArrayVec` that the compiler calls to drop (i.e. free or deallocate) `ArrayVec` when it goes out of scope.
 
-Inside the `drop` function, we iterate through the `self.values` array and call `.assume_init_drop()` on each *initialized instance* of `MaybeUninit<T>` which drops the contained value `T` in place. The safety invariant satisfied here is we explicitly drop only the first `self.len` initialized elements, we don't touch the uninitialized `T`. Because calling `.assume_init_drop()` when `T` is not yet fully initialized caused UB.
+Inside the `drop` function, we iterate through the `self.values` array and call `.assume_init_drop()` on each *initialized instance* of `MaybeUninit<T>` which drops the contained value `T` in place. The safety invariant satisfied here is we explicitly drop only the first `self.len` initialized elements, we don't touch the uninitialized `T`. Because calling `.assume_init_drop()` when `T` is not yet fully initialized causes UB.
 
 #### Converting to a `slice`
 We come quite far already but there's just a little more to do to enable us debug the values pushed into `ArrayVec`. If we try to use `ArrayVec` as it is in this moment, we'll receive an incoherent output. To help your understanding, here's a code example:
@@ -346,12 +346,12 @@ fn main() {
 
 If I ran this code with `cargo run` I'd get the following output:
 
-```bash
+```
 # Stdout:
 ArrayVec { values: [MaybeUninit<u16>, MaybeUninit<u16>, MaybeUninit<u16>, MaybeUninit<u16>, MaybeUninit<u16>], len: 3 }
 ```
 
-Notice how the size of the array is `5` yet the number of initialized elements is `3`, and we cannot see the values pushed into the array instead we see `MaybeUninit<u16>`. That is precisely the reason why we need to be able to convert `ArrayVec` to a `slice` so we can peep into it's initialized values and debug what was inserted or computed in there.
+Notice how the size of the array is `5` yet the number of initialized elements is `3` (tracked by the `len` field of `ArrayVec`), and we cannot see the values pushed into the array instead we see `MaybeUninit<u16>`. That is precisely the reason why we need to be able to convert `ArrayVec` to a `slice` so we can peep into it's initialized values and debug what was inserted or computed in there.
 
 > What's a `slice`? A `slice` is a primitive type in Rust that is a *dynamically-sized* view into a contiguous sequence, denoted by `[T]`. Yes a slice is dynamically-sized though that has nothing to do with heap allocation. A slice is dynamically-sized because a slice is a fat (or wide) pointer that holds information about a location in memory and a length. In other words, a slice is a view into a block of memory represented as a pointer and a length. Learn more about `slice`s in Rust via the [stdlib docs](https://doc.rust-lang.org/std/primitive.slice.html).
 
@@ -381,6 +381,8 @@ mod arrayvec {
 		}
 		
 		/// Returns a mutable slice over initialized elements.
+		///
+		/// SAFETY: Length param is valid length of init elements.
 		pub fn as_mut_slice(&mut self) -> &mut [T] {
 			unsafe {
                 core::slice::from_raw_parts_mut(
@@ -392,9 +394,9 @@ mod arrayvec {
 }
 ```
 
-`core::slice::from_raw_parts()` and `core::slice::from_raw_parts_mut()` are unsafe functions so must call them inside `unsafe` blocks. Both take in a raw pointer (immutable and mutable respectively) and the length of the slice which corresponds, in our case, with the length of initialized elements which we track with `self.len`.
+`core::slice::from_raw_parts()` and `core::slice::from_raw_parts_mut()` are unsafe functions therefore you must call them inside `unsafe` blocks. Both take in a raw pointer (immutable and mutable respectively) and the length of the slice which corresponds, in our case, to the length of initialized elements which we track with `self.len`.
 
-Now, if we modify the `main()` function from before slightly (as below) we'll be able to debug the values pushed in.
+Modifying the `main()` function from before slightly (as seen below) we'll be able to debug the values pushed in.
 
 ```rust
 // ...earlier code.
@@ -414,14 +416,14 @@ fn main() {
 
 Returns:
 
-```bash
+```
 # Stdout:
 ArrayVec { values: [MaybeUninit<u16>, MaybeUninit<u16>, MaybeUninit<u16>, MaybeUninit<u16>, MaybeUninit<u16>], len: 3 }
 ---
 Init values: [10, 11, 12]
 ```
 
-We can now properly debug values pushed in or computed in `ArrayVec`.
+As you can see, now we can properly debug values pushed or computed in `ArrayVec`.
 
 Let's conclude with some final tests on `ArrayVec`.
 
