@@ -279,7 +279,11 @@ mod arrayvec {
 
 While implementing `get` and `pop` methods on `ArrayVec`, we use `unsafe` and document safety invariants or guarantees that describe safety rules we upheld to ensure a safe implementation of unsafe code, and we introduce methods like `.as_ptr()` and `.assume_init_read()` that allow us to reach into the *initialized instances* of `MaybeUninit<T>` and perform computation on them.
 
-On `get` we take in an index value that points to the array data we want to get. Before we perform the get operation on the `values` array we ensure we're only getting initialized indexed values by using the `if` statement to return `None`
+On `get` we take in an index value that points to the array data we want to get. Before we perform the get operation on the `values` array we ensure we're only getting initialized indexed values by using the `if` statement to return `None` otherwise. After returning the initialized indexed value from `values` array, we obtain it's immutable raw pointer using `.as_ptr()`, dereference the raw pointer to access its value using `*`, then return a shared reference `&` of the value in the `Some` variant.
+
+`pop` takes a mutable reference of `self` because it mutates `len`, checks before popping if the array is empty (returns `None` if empty), decrements `len` to track the un-initialization of formerly initialized memory caused by the `.assume_init_read()` method call on `MaybeUninit<T>`. `.assume_init_read()` is an unsafe function that acts similar to `core::ptr::read` or `std::ptr::read` in that it performs a bitwise copy of `T` whether `T` is `Copy` or not. This means if `T` is not `Copy` it moves `T`. Such that if the memory location of `T` is accessed after `.assume_init_read()` was called on that same memory location, it will result in UB (similar to a use-after-free error). This is why `.assume_init_read()` if perfect for an array pop operation on `MaybeUninit<T>` values and returns owned `T` in a `Some` variant. To ensure the use of `unsafe` code is safe, we first check that the array is not empty guaranteeing it contains initialized instances of `T` that we can call `.assume_init_read()` on to extract `T`.
+
+Lastly, remember what I said earlier in the article when I described `MaybeUninit<T>`, I said, "dropping a `MaybeUninit<T>` never calls `T`'s destructor; that's your job if it's initialized." In light of this, next, we implement `Drop` for `ArrayVec` to deallocate the `N` initialized instances of `MaybeUninit<T>` in the `values` array.
 
 ```rust
 // ...earlier code.
@@ -301,4 +305,5 @@ mod arrayvec {
 	}
 }
 ```
+
 
