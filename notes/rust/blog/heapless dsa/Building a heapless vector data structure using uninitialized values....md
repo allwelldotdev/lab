@@ -148,6 +148,7 @@ Let's look at the more performant but unsafe alternative with `MaybeUninit<T>`.
 
 What is the function of `MaybeUninit<T>`, how is it useful in the concept of building a heapless vector type?
 
+#### What does *uninitialized* mean?
 According to stdlib docs, `MaybeUninit<T>` is a wrapper type to construct uninitialized instances of `T`. What does "uninitialized" mean? I'll use the example of `let` value-to-variable assignment to illustrate the meaning of initialized vs. uninitialized instances to help you *really* understand what `MaybeUninit<T>` does.
 
 Check out the code below.
@@ -235,6 +236,7 @@ Following similar implementations on `ArrayVec` with `Option<T>`, now with `Mayb
 	- When you declare a field like `values: [MaybeUninit<T>; N]` in a struct, Rust doesn't require (or perform) any explicit initialization of the array's contents to a "valid" state for `T` at construction time. Instead the array starts in a raw, uninitialized memory state (i.e., whatever **garbage bytes** happen to be on the stack at that moment), and the `MaybeUninit<T>` wrapper semantically interprets those bytes as "uninitialized" without any runtime cost or safety violation. Hence the reason I used the safe variant instead and commented the unsafe variant. Meaning the unsafe variant was safe to use in that context anyway but I chose to go with safe Rust. Other places where I use `unsafe`, I document (i.e. comment) the safety invariants that make using the `unsafe` code safe.
 - `try_push` acts like `.push` on `Vec<T>`, takes in and writes `T` directly to uninitialized memory in the array (if all `N` elements have not been initialized, otherwise returns `Err(T)`) and increments `len` to track number of initialized elements.
 
+#### Add `get` and `pop` Methods
 In full vector style, let's add more useful methods to `ArrayVec` like `get`, `pop`, and a getter `len`.
 
 ```rust
@@ -247,7 +249,7 @@ mod arrayvec {
 		// ...earlier code.
 		
 		/// Returns a reference to the element at `index` if within bounds
-		/// and initialized.
+		/// and initialized; else returns `None`.
 		///
 		/// SAFETY: Unsafe internally: Assumes the first `len` slots are
 		/// initialized.
@@ -262,7 +264,8 @@ mod arrayvec {
 		/// if empty).
 		///
 		/// SAFETY: Uses `.assume_init_read()` to extract (read) and mark
-		/// memory as uninitialized.
+		/// memory as uninitialized (this is also helped by the
+		/// decrementing of `self.len` for the next `try_push`).
 		pub fn pop(&mut self) -> Option<T> {
 			if self.len == 0 {
 				return None;
@@ -279,13 +282,14 @@ mod arrayvec {
 }
 ```
 
-While implementing `get` and `pop` methods on `ArrayVec`, we use `unsafe` and document safety invariants or guarantees that describe safety rules we upheld to ensure a safe implementation of unsafe code, and we introduce methods like `.as_ptr()` and `.assume_init_read()` that allow us to reach into the *initialized instances* of `MaybeUninit<T>` and perform computation on them.
+While implementing `get` and `pop` methods on `ArrayVec`, we use `unsafe` and document safety invariants (i.e. guarantees) that describe safety rules we upheld to ensure a safe implementation of unsafe code, and we introduced methods like `.as_ptr()` and `.assume_init_read()` that allow us to reach into the *initialized instances* of `MaybeUninit<T>` and perform computation on them.
 
-On `get` we take in an index value that points to the array data we want to get. Before we perform the get operation on the `values` array we ensure we're only getting initialized indexed values by using the `if` statement to return `None` otherwise. After returning the initialized indexed value from `values` array, we obtain it's immutable raw pointer using `.as_ptr()`, dereference the raw pointer to access its value using `*`, then return a shared reference `&` of the value in the `Some` variant.
+In `get` we take in an index value that points to the array data we want to get. Before we perform the get operation on the `values` array we ensure we're only getting initialized indexed values by using the `if` statement to return `None` otherwise. After returning an initialized indexed value from the `values` array, we obtain it's immutable raw pointer using `.as_ptr()`, dereference the raw pointer to access its value using `*` (this action requires `unsafe`), then return a shared reference `&` of the value in the `Some` variant.
 
-`pop` takes a mutable reference of `self` because it mutates `len`, checks before popping if the array is empty (returns `None` if empty), decrements `len` to track the un-initialization of formerly initialized memory caused by the `.assume_init_read()` method call on `MaybeUninit<T>`. `.assume_init_read()` is an unsafe function that acts similar to `core::ptr::read` or `std::ptr::read` in that it performs a bitwise copy of `T` whether `T` is `Copy` or not. This means if `T` is not `Copy` it moves `T`. Such that if the memory location of `T` is accessed after `.assume_init_read()` was called on that same memory location, it will result in UB (similar to a use-after-free error). This is why `.assume_init_read()` if perfect for an array pop operation on `MaybeUninit<T>` values and returns owned `T` in a `Some` variant. To ensure the use of `unsafe` code is safe, we first check that the array is not empty guaranteeing it contains initialized instances of `T` that we can call `.assume_init_read()` on to extract `T`.
+`pop` takes a mutable reference of `self` because it mutates `self.len`, checks before popping if the array is empty (returns `None` if empty), and decrements `self.len` to track the un-initialization of formerly initialized memory caused by the `.assume_init_read()` method call on `MaybeUninit<T>`. `.assume_init_read()` is an unsafe function that acts similar to `core::ptr::read` or `std::ptr::read` in that it performs a bitwise copy of `T` whether `T` is `Copy` or not. This means if `T` is not `Copy` it moves `T`. Such that if the memory location of `T` is accessed after `.assume_init_read()` was called on that same memory location, it will result in UB (similar to a use-after-free error). This is why `.assume_init_read()` is perfect for an array pop operation on `MaybeUninit<T>` values and returns owned `T` in a `Some` variant. To ensure the use of `unsafe` code is safe, we first check the array is not empty guaranteeing it contains initialized instances of `T` that we can call `.assume_init_read()` on to extract `T`.
 
-Lastly, remember what I said earlier in the article when I described `MaybeUninit<T>`, I said, "dropping a `MaybeUninit<T>` never calls `T`'s destructor; that's your job if it's initialized." In light of this, next, we implement `Drop` for `ArrayVec` to deallocate the `N` initialized instances of `MaybeUninit<T>` in the `values` array.
+#### Add Destructor
+Lastly, remember what I said earlier in the article when I described `MaybeUninit<T>`, I said, "dropping a `MaybeUninit<T>` never calls `T`'s destructor; that's your job if it's initialized." Using this knowledge, next, we implement `Drop` for `ArrayVec` to deallocate the `N` initialized instances of `MaybeUninit<T>` in the `values` array.
 
 ```rust
 // ...earlier code.
@@ -307,5 +311,51 @@ mod arrayvec {
 	}
 }
 ```
+
+We implement a destructor for `ArrayVec` that the compiler calls to drop (i.e. free or deallocate) `ArrayVec` when it goes out of scope.
+
+Inside the `drop` function, we iterate through the `self.values` array and call `.assume_init_drop()` on each *initialized instance* of `MaybeUninit<T>` which drops the contained value `T` in place. The safety invariant satisfied here is we explicitly drop only the first `self.len` initialized elements, we don't touch the uninitialized `T`. Because calling `.assume_init_drop()` when `T` is not yet fully initialized caused UB.
+
+#### Converting to a `slice`
+We come quite far already but there's just a little more to do to enable us debug the values pushed into `ArrayVec`. If we try to use `ArrayVec` as it is in this moment, we'll receive an incoherent output. To help your understanding, here's a code example:
+
+```rust
+#![no_std]
+extern crate std;
+use arrayvec::ArrayVec;
+
+mod arrayvec { /* ...`ArrayVec` implementation. */ }
+
+const CAP: usize = 5;
+
+fn main() {
+	// Create ArrayVec with 16-bit unsigned integer and array of `CAP` size.
+	let mut arr_vec = ArrayVec::<u16, CAP>::new();
+	let mut count: u16 = 0;
+	
+	// Iterate and push values into ArrayVec.
+	for i in 0..(CAP - 2) {
+		count = 10 + i as u16;
+		arr_vec.try_push(count).unwrap();
+	}
+	
+	// Print ArrayVec to stdout for debugging.
+	std::println!("{:?}", arr_vec);
+}
+```
+
+If I ran this code with `cargo run` I'd get the following output:
+
+```bash
+# Stdout:
+ArrayVec { values: [MaybeUninit<u16>, MaybeUninit<u16>, MaybeUninit<u16>, MaybeUninit<u16>, MaybeUninit<u16>], len: 3 }
+```
+
+Notice how the size of the array is `5` yet the number of initialized elements is `3`, and we cannot see the values pushed into the array instead we see `MaybeUninit<u16>`. That is precisely the reason why we need to be able to convert `ArrayVec` to a `slice` so we can peep into it's initialized values and debug what was inserted or computed in there.
+
+> What is a `slice`? A `slice` is a primitive type in Rust
+
+#### Testing
+Let's test our heapless vector data structure so far.
 
 
