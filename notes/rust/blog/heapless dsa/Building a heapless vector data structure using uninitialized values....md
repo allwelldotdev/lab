@@ -1,6 +1,8 @@
-**Title:** Building a heapless vector data structure using uninitialized values with `MaybeUninit<T>` instead of default values with `Option<T>`. Creating safe abstractions over unsafe code with safe APIs.
+**Title:** How to build a Heapless Vector using `MaybeUninit<T>` for Better Performance.
+**Sub Title**: Finally understand `MaybeUninit<T>` and why it offers better performance over `Option<T>`, and learn to safeguard unsafe Rust with safe APIs.
 
 > **TLDR**: Heapless Vector in no_std  Rust.
+> 
 > Rust stores data on the stack (fast, fixed-size), heap (growable but needs alloc), or static (program-long); for memory-tight embedded systems, use `#![no_std]` to ditch heap-alloc like `Vec<T>` and build a "heapless vector" on stack with a fixed-size array `[T; N]` tracked by `len`. Start safe with `Option<T>` (extra space for None tracking), then optimize to `MaybeUninit<T>` (exact T size, no overhead) using unsafe methods like `write()`, `as_ptr()`, `assume_init_read()`, and custom `Drop`—gains 1.5–2x speed and half memory overhead, but requires careful invariants in unsafe Rust to avoid undefined behaviour. (Generated with AI, Grok.)
 
 In this article, I'll teach you how to build a heapless vector data structure with the example of one I already built. I'll share the performance benefits and unsafety to look out for and avoid when using `MaybeUninit<T>` over `Option<T>`. Lastly, I'll show you how to build safe APIs on top of unsafe Rust code to ensure "safe unsafe code" in Rust.
@@ -133,7 +135,7 @@ ArrayVec { values: [Some(10), Some(11), Some(12), Some(13), Some(14)], len: 5 }
 
 We can see that `Option<T>` works as the optional type that holds a valid value when we have successfully pushed a value, `T`, and `None` when we haven't. So what is the performance overhead caused by `Option<T>` here? 
 
-Again, working in a limited environment like that of embedded systems, we really want to be conservative with our use of storage (if any) and memory space. That means storing `None` in, for example, an array of `1_000_000` `N` values, where each `None` is byte-aligned to the size of `T` if `T` does not allow *niche optimization* for `Option<T>`, is wasteful compared to the alternative and carries performance overhead for the array, and thus our `ArrayVec` implementation.
+Working in a limited environment like that of embedded systems, we really want to be conservative with our use of storage (if any) and memory space. That means storing `None` in, for example, an array of `1_000_000` `N` values, where each `None` is byte-aligned to the size of `T` if `T` does not allow *niche optimization* for `Option<T>`, is wasteful compared to the alternative and carries performance overhead for the array, and thus our `ArrayVec` implementation.
 
 > For brevity, I'm not going to talk about type alignment and layout in Rust but it goes a long way to help you comprehend, for example, what it means for "`None` to be byte-aligned to the size of `T`." Therefore, if you don't know about it I highly recommend you learn of it.
 
@@ -157,7 +159,8 @@ According to stdlib docs, `MaybeUninit<T>` is a wrapper type to construct uninit
 Check out the code below.
 
 ```rust
-let init_var: i32 = 10; /* `init_var` is a variable that holds a 32-bit signed integer and is immediately initialized to the value of 10. */
+let init_var: i32 = 10; /* `init_var` is a variable that holds a 32-bit signed
+integer and is immediately initialized to the value of 10. */
 
 let uninit_var; /* In contrast, `uninit_var` is a variable that, at this point,
 holds nothing (actually holds what are known as "garbage bytes" - invalid,
@@ -431,7 +434,7 @@ As you can see, now we can properly debug values pushed or computed in `ArrayVec
 Let's conclude with a couple final tests on `ArrayVec` to showcase its function.
 
 #### Testing
-Let's test our heapless vector type so far.
+Let's test our heapless vector type altogether now.
 
 ```rust
 #![no_std]
