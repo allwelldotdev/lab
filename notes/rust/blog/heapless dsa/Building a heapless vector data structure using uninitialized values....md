@@ -320,7 +320,7 @@ We implement a destructor for `ArrayVec` that the compiler calls to drop (i.e. f
 Inside the `drop` function, we iterate through the `self.values` array and call `.assume_init_drop()` on each *initialized instance* of `MaybeUninit<T>` which drops the contained value `T` in place. The safety invariant satisfied here is we explicitly drop only the first `self.len` initialized elements, we don't touch the uninitialized `T`. Because calling `.assume_init_drop()` when `T` is not yet fully initialized causes UB.
 
 #### Converting to a `slice`
-We come quite far already but there's just a little more to do to enable us debug the values pushed into `ArrayVec`. If we try to use `ArrayVec` as it is in this moment, we'll receive an incoherent output. To help your understanding, here's a code example:
+We've come quite far already but there's just a little more to do to enable us debug the values pushed into `ArrayVec`. If we try to use `ArrayVec` as it is in this moment, we'll receive an incoherent output. To help your understanding, here's a code example:
 
 ```rust
 #![no_std]
