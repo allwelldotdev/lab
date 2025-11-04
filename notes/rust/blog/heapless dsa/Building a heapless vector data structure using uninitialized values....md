@@ -1,5 +1,8 @@
 **Title:** Building a heapless vector data structure using uninitialized values with `MaybeUninit<T>` instead of default values with `Option<T>`. Creating safe abstractions over unsafe code with safe APIs.
 
+> **TLDR**: Heapless Vector in no_std  Rust.
+> Rust stores data on the stack (fast, fixed-size), heap (growable but needs alloc), or static (program-long); for memory-tight embedded systems, use `#![no_std]` to ditch heap-alloc like `Vec<T>` and build a "heapless vector" on stack with a fixed-size array `[T; N]` tracked by `len`. Start safe with `Option<T>` (extra space for None tracking), then optimize to `MaybeUninit<T>` (exact T size, no overhead) using unsafe methods like `write()`, `as_ptr()`, `assume_init_read()`, and custom `Drop`—gains 1.5–2x speed and half memory overhead, but requires careful invariants in unsafe Rust to avoid undefined behaviour. (Generated with AI, Grok.)
+
 In this article, I'll teach you how to build a heapless vector data structure with the example of one I already built. I'll share the performance benefits and unsafety to look out for and avoid when using `MaybeUninit<T>` over `Option<T>`. Lastly, I'll show you how to build safe APIs on top of unsafe Rust code to ensure "safe unsafe code" in Rust.
 
 A little primer on Rust memory models before we begin. Though to fully comprehend this article you may require practical understanding of Rust memory models—what's stored where, how, and what for—here's a little primer incase you're new to this.
@@ -506,8 +509,25 @@ In optimizing `ArrayVec` to `MaybeUninit<T>` from `Option<T>`, here are some of 
 - **Performance:**
 	- **Reduced memory footprint**. Exact `size_of::<T>()` per element/index in array (no discriminant overhead); halves space for non-niche types like `i32` (4 bytes vs. 8 bytes), cutting cache misses in large arrays.
 	- **Faster Access & No Branching**. Direct `ptr` reads/writes via `unsafe { Some(&*self.values[index].as_ptr()) }`; skips `Option`'s runtime `is_some()` checks. According to benchmark tests, this yields 1.5–2x speed in loops (e.g., 23ms vs. 62ms for 100M elements in an array).
-- 
+- **Ergonomic**:
+	- **Simpler hot-path code**. Cleaner push/pop without enum wrapping/unwrapping.
+- **Other**:
+	- **Heapless/Embedded Fit**. Zero-cost abstraction for `#![no_std]`; enables const init and SIMD-friendly uninit masking, ideal for real-time systems.
 
-This effort shows you can build sophisticated data structures using only the stack and static memory, omitting heap allocation. This kind of data structure is useful in embedded programming where heap allocation is often unavailable.
+**Tradeoffs**
+- **Safety risk**. Introduces unsafe code; UB if invariants violated (e.g., reading uninit slots)—needs Miri testing vs. `Option`'s compile-time guards.
+- **Ergonomic: More boilerplate.** Manual drops (with `assume_init_drop()`) and init tracking (with `self.len`); less intuitive for beginners than `Option`'s automatic discriminant and destructor (`Drop`).
+- **Maintenance overhead**. Needing explicit lifetime management (with `impl<T, const N: usize> Drop for ArrayVec<T, N>`).
 
+This effort shows you can build sophisticated data structures using only the stack and static memory, omitting heap allocation. This kind of data structure is useful in embedded systems programming where heap allocation is often unavailable.
+
+- You can experiment with the code of a **heapless vector type** with `MaybeUninit<T>` on the Rust playground via the link (PS. In the code file, you'll see I've added more features to `ArrayVec` like the ability for iteration and so on): https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&gist=7b80863ed153627d1d86a6ee41a42167
+- You can also find the whole code on this GitHub Gist: https://gist.github.com/allwelldotdev/39c817ca8d40fe5aeb808eb6301a18ff
+
+In another article, I'll extend this knowledge by sharing how to make `ArrayVec` and its fundamental types (`&ArrayVec` and `&mut ArrayVec`) iterable (i.e. how to use `ArrayVec` in a `for` loop in Rust and more). Stay connected for that!
+
+---
+👏🏾 Kudos for finishing the article.
+
+Hi there!  I'm Allwell, a passionate Rust developer currently working from Lagos, Nigeria. You can connect with me on X ([`@allwelldotdev`](https://x.com/allwelldotdev/)) or LinkedIn ([Allwell Agwu-Okoro](https://linkedin.com/in/allwelldotdev/)). Let's build and learn Rust together.
 
