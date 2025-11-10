@@ -202,8 +202,19 @@ mod arrayvec {
 }
 ```
 
-With this implementation in place, when we call `ArrayVec::iter` and `ArrayVec::iter_mut`, we'll get a type that is `Iterator` and allows us iterate through elements of `ArrayVec`.
+With this implementation in place, when we call `ArrayVec::iter` or `ArrayVec::iter_mut`, we'll get a type that is `Iterator` and allows us iterate through elements of `ArrayVec`.
 
+Three things must happen before we can successfully implement `IntoIterator` on `ArrayVec`:
+1. Provide `IntoIterator::IntoIter` associated type for `ArrayVec` by creating `ArrayVecIntoIter` type.
+2. Implement `Iterator` for `ArrayVecIntoIter`.
+3. Implement `Drop` for `ArrayVecIntoIter`. *You'll see why we do this later.*
+
+**1. Create `ArrayVecIntoIter` Type**
+```rust
+// ...earlier code.
+
+mod arrayve
+```
 
 
 Starting off with easier implementations, we'll implement `IntoIterator` on fundamental types of `ArrayVec`, that is, `&ArrayVec` and `&mut ArrayVec`.
