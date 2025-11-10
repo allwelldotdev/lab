@@ -174,6 +174,7 @@ fn main() {
 	}
 }
 ```
+*Figure 1: Complete primer implementation of `ArrayVec`*
 
 Having understood the implementation and functionality of `ArrayVec`, next we implement `IntoIterator` on `ArrayVec`.
 
@@ -201,6 +202,7 @@ mod arrayvec {
 	}
 }
 ```
+*Figure 2: Converting slices of `ArrayVec` into iterators.*
 
 With this implementation in place, when we call `ArrayVec::iter` or `ArrayVec::iter_mut`, we'll get a type that is `Iterator` and allows us iterate through elements of `ArrayVec`.
 
@@ -228,6 +230,7 @@ mod arrayvec {
     }
 }
 ```
+*Figure 3: Creating `ArrayVecIntoIter`—`ArrayVec`'s iterator.*
 
 Notice `ArrayVecIntoIter` is similar in structure to `ArrayVec`, only difference being the `index` field. This field would be used to track how many initialized elements in `values: [MaybeUninit<T>; N]` array have been iterated over.
 
@@ -260,6 +263,7 @@ mod arrayvec {
     }
 }
 ```
+*Figure 4: Implementing `Iterator` for `ArrayVecIntoIter`.*
 
 `Iterator::Item` associated type for `ArrayVecIntoIter<T, N>` is `T`. We setup two methods, `next` and `size_hint`. `next` is a required `Iterator` method and we set it up to return `Option<Self::Item>` in other words `Option<T>` for `ArrayVecIntoIter<T, N>`.
 
@@ -296,6 +300,7 @@ mod arrayvec {
     }
 }
 ```
+*Figure 5: Implementing `Drop` for `ArrayVecIntoIter`.*
 
 Next, we implement `Drop` for `ArrayVecIntoIter` to deallocate initialized elements that have yet to be iterated over, if any. Hence why in the `for` loop, we iterate over `usize` range of `self.index..self.len`. In a scenario where we've iterated through all initialized elements (`self.index == self.len`) then `.assume_init_drop()` will not be called (therefore no double-frees).
 
@@ -337,10 +342,11 @@ mod arrayvec {
     }
 }
 ```
+*Figure 6: Implementing `IntoIterator` for `ArrayVec`*
 
-First observation is that `into_iter` consumes `self` and returns and iterator: `Self::IntoIter` which is `<ArrayVec as IntoIterator>::IntoIter` which points to `ArrayVecIntoIter`. This is precisely why we first needed to create the iterator for `ArrayVec`—`ArrayVecIntoIter`.
+First observation is that `into_iter` consumes `self` and returns an iterator: `Self::IntoIter` which is `<ArrayVec as IntoIterator>::IntoIter` which points to `ArrayVecIntoIter`. This is precisely why we first needed to create the iterator, `ArrayVecIntoIter`, for `ArrayVec`.
 
-As `self` is consumed, if we tried perform a simpler operation by transferring ownership of `self`'s values the compiler would have panicked with the following error:
+As `self` is consumed, if we tried to perform a simpler operation by transferring ownership of `self`'s values the compiler would have panicked with the following error:
 
 ```rust
 // ...earlier code.
@@ -348,9 +354,23 @@ As `self` is consumed, if we tried perform a simpler operation by transferring o
 mod arrayvec {
 	// ...earlier code.
 	
-	
+	impl<T, const N: usize> IntoIterator for ArrayVec<T, N> {
+		type Item = T;
+        type IntoIter = ArrayVecIntoIter<T, N>;
+
+        fn into_iter(self) -> Self::IntoIter {
+			ArrayVecIntoIter {
+				values: self.values,
+				len: self.len,
+				index: 0,
+			}
+        }
+	}
 }
 ```
+*Figure 7: *
+
+Panics with error:
 
 ```bash
   Compiling playground v0.0.1 (/playground)
@@ -367,6 +387,12 @@ For more information about this error, try `rustc --explain E0509`.
 error: could not compile `playground` (bin "playground") due to 1 previous error
 ```
 
+This error states that the compiler cannot move out of `self` because `self` (`ArrayVec`) implements `Drop`.
 
+Remember, in the `Drop` implementation of `ArrayVec`, we iterated through a range that had `self.len` as the upper bound, and within the iteration we called `.assume_init_drop()` on the initialized elements of the `self.values` array. Accessing fields of `ArrayVec` in `drop` is the reason why the error code above occurs in a simple operation as the earlier code shared.
+
+Because `ArrayVec` implements `Drop` and, in the implementation, accesses its fields, when we attempt to move out of `self` in `<ArrayVec as IntoIterator>::into_iter` the compiler panics saying, "Hey, `self.values` will be moved out here which means by the time I call `drop` on `ArrayVec` which is `self` when `into_iter` finishes running, in `<ArrayVec as Drop>::drop` I'll be accessing fields of `self` that have had their values moved therefore causing undefined behaviour UB. I cannot allow memory safety errors and UB therefore this is an error and you have to fix this code." Just imagine the compiler was a real person and had this conversation with you.
+
+How do we fix that error? By wrapping `self` (i.e. `ArrayVec`) in `core::mem::ManuallyDrop<T>`. `ManuallyDrop` wraps `ArrayVec` to suppress its `Drop` impl during the transfer, then we `unsafe`-read fields, using `core::ptr::read` (similar in function to `MaybeUninit::assume_init_read`), into `ArrayVecIntoIter` (the iterator, which takes full ownership). *This is why we implemented the `Drop` trait for `ArrayVecIntoIter`.* Finally, `ArrayVecIntoIter`'s `Drop` and `next` handle dropping iterator consumed/unconsumed elements correctly—no leaks, no doubles.
 
 Starting off with easier implementations, we'll implement `IntoIterator` on fundamental types of `ArrayVec`, that is, `&ArrayVec` and `&mut ArrayVec`.
