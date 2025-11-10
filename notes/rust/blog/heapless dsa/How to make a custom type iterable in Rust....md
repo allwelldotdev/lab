@@ -88,49 +88,120 @@ mod arrayvec {
 		pub fn len(&self) -> usize {
 			self.len
 		}
+		
+		/// Return a slice using `slice::from_raw_parts()`. Returns a slice
+		/// over initialized elements (i.e. first `self.len` slots).
+		///
+		/// SAFETY: Unsafe internally, but safe API: assumes invariant holds.
+		/// Length points to valid length of init elements.
+		pub fn as_slice(&self) -> &[T] {
+			unsafe {
+				core::slice::from_raw_parts(
+					self.values.as_ptr() as *const T, self.len
+				)
+			}
+		}
+		
+		/// Returns a mutable slice over initialized elements.
+		///
+		/// SAFETY: Length param is valid length of init elements.
+		pub fn as_mut_slice(&mut self) -> &mut [T] {
+			unsafe {
+                core::slice::from_raw_parts_mut(
+                    self.values.as_mut_ptr() as *mut T, self.len
+                )
+            }
+		}
+	}
+	
+	// Implement Drop for ArrayVec to safely deallocate initialized elements.
+	impl<T, const N: usize> Drop for ArrayVec<T, N> {
+		fn drop(&mut self) {
+			/* SAFETY: Explicitly drops the first `len` initialized elements.
+			Therefore, no double frees. */
+			for i in 0..self.len {
+				unsafe {
+					self.values[i].assume_init_drop();
+				}
+			}
+		}
 	}
 }
 
 const CAP: usize = 5;
 
 fn main() {
-	let mut arr_vec = ArrayVec::<i32, CAP>::new();
-	std::println!("{:?}", arr_vec); // View init ArrayVec
-
-	let mut count;
-
-	// Push a few elements
-	for i in 0..(CAP - 2) {
-		count = 1 + i as i32;
-		arr_vec.try_push(count).unwrap()
-	}
-	std::println!("{:?}", arr_vec); // View pushed elements
-
-	// Return elements in initialized index.
-	let arr_els = arr_vec.as_slice();
-	std::println!("---\nInit values: {:?}", arr_els);
-
-	// Pop from MaybeUninit ArrayVec; if uninit, return None.
-	std::println!("---\nArrayVec `len` before pop: {}", arr_vec.len());
-	std::println!("Popped value: {:?}", arr_vec.pop());
-	std::println!("ArrayVec `len` after pop: {}", arr_vec.len());
-
-	// TEST: Add more elements beyond `CAP` size for ArrayVec;
-	// `try_push` should escape and return with Err.
-	let arr_len = arr_vec.len();
-	count = *arr_vec.get(arr_len - 1).unwrap(); /* I can deref the pointer
-	for the value here without moving the value because I know it's a
-	primitive value which enables bitwise copy. */
-	let mut arr_err_els: ArrayVec<Result<(), i32>, CAP> =
-		ArrayVec::new();
-
-	for _ in arr_len..(CAP * 2) {
-		count += 1;
-		if let Err(value) = arr_vec.try_push(count) {
-			arr_err_els.try_push(Err(value)).unwrap();
+	{
+		// A:
+		let mut arr_vec = ArrayVec::<i32, CAP>::new();
+		std::println!("{:?}", arr_vec); // View init ArrayVec
+	
+		let mut count;
+	
+		// Push a few elements
+		for i in 0..(CAP - 2) {
+			count = 1 + i as i32;
+			arr_vec.try_push(count).unwrap()
 		}
+		std::println!("{:?}", arr_vec); // View pushed elements
+	
+		// Return elements in initialized index.
+		let arr_els = arr_vec.as_slice();
+		std::println!("---\nInit values: {:?}", arr_els);
+	
+		// Pop from MaybeUninit ArrayVec; if uninit, return None.
+		std::println!("---\nArrayVec `len` before pop: {}", arr_vec.len());
+		std::println!("Popped value: {:?}", arr_vec.pop());
+		std::println!("ArrayVec `len` after pop: {}", arr_vec.len());
+	
+		// TEST: Add more elements beyond `CAP` size for ArrayVec;
+		// `try_push` should escape and return with Err.
+		let arr_len = arr_vec.len();
+		count = *arr_vec.get(arr_len - 1).unwrap(); /* I can deref the pointer
+		for the value here without moving the value because I know it's a
+		primitive value which enables bitwise copy. */
+		let mut arr_err_els: ArrayVec<Result<(), i32>, CAP> =
+			ArrayVec::new();
+	
+		for _ in arr_len..(CAP * 2) {
+			count += 1;
+			if let Err(value) = arr_vec.try_push(count) {
+				arr_err_els.try_push(Err(value)).unwrap();
+			}
+		}
+		std::println!("---\nFilled ArrayVec: {:?}", arr_vec.as_slice());
+		std::println!("Err beyond ArrayVec: {:?}", arr_err_els.as_slice());
 	}
-	std::println!("---\nFilled ArrayVec: {:?}", arr_vec.as_slice());
-	std::println!("Err beyond ArrayVec: {:?}", arr_err_els.as_slice());
 }
 ```
+
+Having understood the implementation and functionality of `ArrayVec`, next we implement `IntoIterator` on `ArrayVec`.
+
+#### Implementing `IntoIterator` on `ArrayVec`
+`ArrayVec` has two methods, `as_slice` and `as_mut_slice`, that return a slice of the array. A cool thing about `slice` types is they implement methods, `iter` and `iter_mut`, that let you return an iterator over the slice elements; immutably and mutably referenced, respectively. Let's start by implementing `iter` and `iter_mut` methods on `ArrayVec` to return iterators from slices of `ArrayVec`.
+
+```rust
+// ...earlier code.
+
+mod arrayvec {
+	// ...earlier code.
+	
+	impl<T, const N: usize> ArrayVec<T, N> {
+		// ...earlier code.
+		
+		/// Use slice iterator for immutable iteration of ArrayVec.
+		pub fn iter(&self) -> core::slice::Iter<'_, T> {
+			self.as_slice.iter()
+		}
+		
+		/// Use slice iterator for mutable iteration of ArrayVec.
+		pub fn iter_mut(&mut self) -> core::slice::IterMut<'_, T> {
+			self.as_mut_slice.iter_mut()
+		}
+	}
+}
+```
+
+
+
+Starting off with easier implementations, we'll implement `IntoIterator` on fundamental types of `ArrayVec`, that is, `&ArrayVec` and `&mut ArrayVec`.
