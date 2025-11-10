@@ -3,7 +3,7 @@
 
 > **TLDR**: Heapless Vector in no_std  Rust.
 > 
-> Rust stores data on the stack (fast, fixed-size), heap (growable but needs alloc), or static (program-long); for memory-tight embedded systems, use `#![no_std]` to ditch heap-alloc like `Vec<T>` and build a "heapless vector" on stack with a fixed-size array `[T; N]` tracked by `len`. Start safe with `Option<T>` (extra space for None tracking), then optimize to `MaybeUninit<T>` (exact T size, no overhead) using unsafe methods like `write()`, `as_ptr()`, `assume_init_read()`, and custom `Drop`—gains 1.5–2x speed and half memory overhead, but requires careful invariants in unsafe Rust to avoid undefined behaviour. (Generated with AI, Grok.)
+> Rust stores data on the stack (fast, fixed-size), heap (growable but needs alloc), or static (program-long); for memory-tight embedded systems, use `#![no_std]` to ditch heap-alloc like `Vec<T>` and build a "heapless vector" on stack with a fixed-size array `[T; N]` tracked by `len`. Start safe with `Option<T>` (extra space for `None` tracking), then optimize to `MaybeUninit<T>` (exact `T` size, no overhead) using unsafe methods like `write()`, `as_ptr()`, `assume_init_read()`, and custom `Drop`—gains 1.5–2x speed and half memory overhead, but requires careful invariants in unsafe Rust to avoid undefined behaviour. (Generated with AI, Grok.)
 
 In this article, I'll teach you how to build a heapless vector data structure with the example of one I already built. I'll share the performance benefits and unsafety to look out for and avoid when using `MaybeUninit<T>` over `Option<T>`. Lastly, I'll show you how to build safe APIs on top of unsafe Rust code to ensure "safe unsafe code" in Rust.
 
