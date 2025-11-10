@@ -209,12 +209,98 @@ Three things must happen before we can successfully implement `IntoIterator` on 
 2. Implement `Iterator` for `ArrayVecIntoIter`.
 3. Implement `Drop` for `ArrayVecIntoIter`. *You'll see why we do this later.*
 
-**1. Create `ArrayVecIntoIter` Type**
+**1. Create `ArrayVecIntoIter` Type.**
+
 ```rust
 // ...earlier code.
 
-mod arrayve
+mod arrayvec {
+	// ...earlier code.
+	
+	// Build out iterator type for ArrayVec as ArrayVecIntoIter<T, N>
+    // Consuming iterator (by-value): Moves out owned T.
+    // But will provide iterators for fundamental types: & and &mut
+    #[derive(Debug)]
+    pub struct ArrayVecIntoIter<T, const N: usize> {
+        values: [MaybeUninit<T>; N],
+        len: usize,
+        index: usize,
+    }
+}
 ```
+
+Notice `ArrayVecIntoIter` is similar in structure to `ArrayVec`, only difference being the `index` field. This field would be used to track how many initialized elements in `values: [MaybeUninit<T>; N]` array have been iterated over.
+
+**2. Implement `Iterator` for `ArrayVecIntoIter`.**
+
+```rust
+// ...earlier code.
+
+mod arrayvec {
+	// ...earlier code.
+	
+	// Implement Iterator trait on ArrayVecIntoIter making it an iterator.
+    impl<T, const N: usize> Iterator for ArrayVecIntoIter<T, N> {
+        type Item = T;
+
+        fn next(&mut self) -> Option<Self::Item> {
+            if self.index >= self.len {
+                return None;
+            }
+            let i = self.index; 
+            self.index += 1;
+            // SAFETY: i < len, so slot is init
+            Some(unsafe { self.values[i].assume_init_read() })
+        }
+
+        fn size_hint(&self) -> (usize, Option<usize>) {
+            let remaining = self.len.saturating_sub(self.index);
+            (remaining, Some(remaining))
+        }
+    }
+}
+```
+
+`Iterator::Item` associated type for `ArrayVecIntoIter<T, N>` is `T`. We setup two methods, `next` and `size_hint`. `next` is a required `Iterator` method and we set it up to return `Option<Self::Item>` in other words `Option<T>` for `ArrayVecIntoIter<T, N>`.
+
+In `next`, we check if the iterator index tracker (`self.index`) value equates to the vector initialized element tracker (`self.len`), if yes, we return `None` immediately because that means, we've reached the end of iteration. That way we create a safe API over unsafe code by not reading uninitialized values (which is undefined behaviour UB). `.assume_init_read()` reads the initialized values and returns them owned. This is why we get the return type of `Option<Self::Item>`. `Self::Item`, which is `T`, is an owned value.
+
+> Review the [previous article](https://allwell.hashnode.dev/how-to-build-a-heapless-vector-using-maybeuninitt-for-better-performance#heading-add-get-and-pop-methods) to understand, in detail, what `.assume_init_read()` does as it dereferences and reads the value behind the `MaybeUninit<T>`.
+
+`size_hint` as a the name suggests is a method that computes and returns bounds on the remaining length of the iterator. It returns a tuple where the first element is the lower bound, and the second element is the upper bound. I won't go into detail about size hint but if you want to learn more about it, see the [stdlib docs on `Iterator` methods](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.size_hint). We use the value retrieved from this method later on (I'll call your attention back to this then).
+
+With these two methods implemented, `ArrayVecIntoIter` is now an iterator for `ArrayVec`.
+
+**3. Implement `Drop` for `ArrayVecIntoIter`.**
+
+```rust
+// ...earlier code.
+
+mod arrayvec {
+	// ...earlier code.
+	
+	// Implement Drop trait to safely deallocate initialized elements
+    // from ArrayVecIntoIter<T, N> MaybeUninit<T> values
+    impl<T, const N: usize> Drop for ArrayVecIntoIter<T, N> {
+        fn drop(&mut self) {
+            // Drop remaining init elements (from index to len)
+            // SAFETY: Invariant holds for those slots.
+            for i in self.index..self.len {
+                unsafe {
+                    self.values[i].assume_init_drop();
+                }
+            }
+            // Uninit slots auto-drop as MaybeUninit: meaning as "garbage"
+            // bytes they are overwritten by the next write.
+        }
+    }
+}
+```
+
+Next, we implement `Drop` for `ArrayVecIntoIter` to deallocate initialized elements that have yet to be iterated over, if any. Hence why in the `for` loop, we iterate over `usize` range of `self.index..self.len`. In a scenario where we've iterated through all initialized elements (`self.index == self.len`) then `.assume_init_drop()` will not be called (therefore no double-frees).
+
+Why is it important though to implement `Drop` for `ArrayVecIntoIter` especially since we already implemented `Drop` for `ArrayVec`?
+The answer or reason is because when we convert `ArrayVec` into its iterator `ArrayVecIntoIter`, due to the move, the compiler would want to call `drop` on 
 
 
 Starting off with easier implementations, we'll implement `IntoIterator` on fundamental types of `ArrayVec`, that is, `&ArrayVec` and `&mut ArrayVec`.
