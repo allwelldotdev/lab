@@ -178,7 +178,7 @@ fn main() {
 Having understood the implementation and functionality of `ArrayVec`, next we implement `IntoIterator` on `ArrayVec`.
 
 #### Implementing `IntoIterator` on `ArrayVec`
-`ArrayVec` has two methods, `as_slice` and `as_mut_slice`, that return a slice of the array. A cool thing about `slice` types is they implement methods, `iter` and `iter_mut`, that let you return an iterator over the slice elements; immutably and mutably referenced, respectively. Let's start by implementing `iter` and `iter_mut` methods on `ArrayVec` to return iterators from slices of `ArrayVec`.
+`ArrayVec` has two methods, `as_slice` and `as_mut_slice`, that return a slice of the array. A cool thing about `slice` types is they implement methods, `iter` and `iter_mut`, that let you return an iterator over the slice elements; immutably `&` and mutably `&mut` referenced, respectively. Let's start by implementing `iter` and `iter_mut` methods on `ArrayVec` to return iterators from slices of `ArrayVec`.
 
 ```rust
 // ...earlier code.
@@ -201,6 +201,8 @@ mod arrayvec {
 	}
 }
 ```
+
+With this implementation in place, when we call `ArrayVec::iter` and `ArrayVec::iter_mut`, we'll get a type that is `Iterator` and allows us iterate through elements of `ArrayVec`.
 
 
 
