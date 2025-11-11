@@ -368,7 +368,7 @@ mod arrayvec {
 	}
 }
 ```
-*Figure 7: *
+*Figure 7: Rewriting code in Figure 6 in a simpler operation.*
 
 Panics with error:
 
@@ -386,6 +386,7 @@ error[E0509]: cannot move out of type `arrayvec::ArrayVec<T, N>`, which implemen
 For more information about this error, try `rustc --explain E0509`.
 error: could not compile `playground` (bin "playground") due to 1 previous error
 ```
+*Figure 8: Compiler error panic from running code in Figure 7.*
 
 This error states that the compiler cannot move out of `self` because `self` (`ArrayVec`) implements `Drop`.
 
