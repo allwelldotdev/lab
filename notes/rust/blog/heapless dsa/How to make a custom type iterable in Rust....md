@@ -17,7 +17,7 @@ Let's describe what these traits mean and do in Rust and why they're important i
 ### `IntoIterator`
 The `IntoIterator` trait is the foundation for making your custom type (in our case, `ArrayVec`) iterable in `for` loops (e.g., `for item in &vec { ... }`) and compatible with iterator methods like `map`, `filter`, etc. It defines how to convert your type *into* an iterator, with an associated `Item` type (such as `T` for by-value, `&T` for by-reference, or `&mut T` for by-mutable-reference) and `IntoIter` type (the actual iterator type of your custom type, also known as *concrete iterator*).
 
-Let me simplify the `IntoIter` associated type of the `IntoIterator` trait and a snippet from the former paragraph: "the actual iterator type of your custom type." For example, to make `ArrayVec` iterable, we implement `IntoIter` on `ArrayVec` and set the `IntoIter` associated type to something like `ArrayVecIntoIter`. Why? Because when we call `into_iter()` on `ArrayVec` it returns `ArrayVecIntoIter`, an iterator (i.e. a type that implements the `Iterator` trait). How do we make `ArrayVecIntoIter` an iterator? By creating a new type, `ArrayVecIntoIter`, that mirrors important iterable and utility fields on `ArrayVec` and implements `Iterator`. So we make `ArrayVecIntoIter` an iterator by implementing the required `next` method on it, along with other provided methods if we need them. That way, when you call `into_iter()` on `ArrayVec` and get `ArrayVecIntoIter`, you can continuously call `next()` on `ArrayVecIntoIter` to iterate through the values held in `ArrayVec`. That's, in a nutshell, how you make `ArrayVec` iterable using `IntoIterator`.
+Let's elaborate a little further on the meaning of the `IntoIterator::IntoIter` associated type and the *concrete iterator* it points to: To make `ArrayVec` iterable, we implement `IntoIterator` on `ArrayVec` and set the `IntoIter` associated type to something like `ArrayVecIntoIter`. Why? Because when we call `into_iter()` on `ArrayVec` it returns, `ArrayVecIntoIter`, an iterator (i.e. a type that implements the `Iterator` trait). How do we make `ArrayVecIntoIter` an iterator? By creating a new type, `ArrayVecIntoIter`, that mirrors iterable and utility fields on `ArrayVec` and implements `Iterator`. So we make `ArrayVecIntoIter` an iterator by implementing the required `next` method on it, along with other provided methods if we need them. That way, when you call `into_iter()` on `ArrayVec` and get `ArrayVecIntoIter`, you can continuously call `next()` on `ArrayVecIntoIter` to iterate through the values in `ArrayVec`. That, in a nutshell, is how you make `ArrayVec` iterable using `IntoIterator`.
 
 Before putting all this into practice, below is the code that implements `ArrayVec` and it's functionality (as built in [the previous article](https://allwell.hashnode.dev/how-to-build-a-heapless-vector-using-maybeuninitt-for-better-performance)). After going through the code and understanding it, we'll start making `ArrayVec` iterable.
 
@@ -174,12 +174,12 @@ fn main() {
 	}
 }
 ```
-*Figure 1: Complete primer implementation of `ArrayVec`*
+*Figure 1: Complete former implementation of `ArrayVec`*
 
 Having understood the implementation and functionality of `ArrayVec`, next we implement `IntoIterator` on `ArrayVec`.
 
 #### Implementing `IntoIterator` on `ArrayVec`
-`ArrayVec` has two methods, `as_slice` and `as_mut_slice`, that return a slice of the array. A cool thing about `slice` types is they implement methods, `iter` and `iter_mut`, that let you return an iterator over the slice elements; immutably `&` and mutably `&mut` referenced, respectively. Let's start by implementing `iter` and `iter_mut` methods on `ArrayVec` to return iterators from slices of `ArrayVec`.
+`ArrayVec` has two methods, `as_slice` and `as_mut_slice`, that return a slice of the array. A cool thing about `slice` types is they implement methods, `iter` and `iter_mut`, that let you return an iterator over the slice elements; immutably `&` or mutably `&mut` referenced, respectively. Let's start by implementing `iter` and `iter_mut` methods on `ArrayVec` to return iterators from slices of `ArrayVec`.
 
 ```rust
 // ...earlier code.
@@ -271,7 +271,7 @@ In `next`, we check if the iterator index tracker (`self.index`) value equates t
 
 > Review the [previous article](https://allwell.hashnode.dev/how-to-build-a-heapless-vector-using-maybeuninitt-for-better-performance#heading-add-get-and-pop-methods) to understand, in detail, what `.assume_init_read()` does as it dereferences and reads the value behind the `MaybeUninit<T>`.
 
-`size_hint` as a the name suggests is a method that computes and returns bounds on the remaining length of the iterator. It returns a tuple where the first element is the lower bound, and the second element is the upper bound. I won't go into detail about size hint but if you want to learn more about it, see the [stdlib docs on `Iterator` methods](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.size_hint). We use the value retrieved from this method later on (I'll call your attention back to this then).
+`size_hint` as the name suggests is a method that computes and returns bounds on the remaining length of the iterator. It returns a tuple where the first element is the lower bound, and the second element is the upper bound. To learn more about `size_hint`, see the [stdlib docs on `Iterator` methods](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.size_hint). We use the value retrieved from this method later on (I'll call your attention back to this then).
 
 With these two methods implemented, `ArrayVecIntoIter` is now an iterator for `ArrayVec`.
 
@@ -306,7 +306,7 @@ Next, we implement `Drop` for `ArrayVecIntoIter` to deallocate initialized eleme
 
 > **Why is it important though to implement `Drop` for `ArrayVecIntoIter` especially since we already implemented `Drop` for `ArrayVec`?**
 >
-> The answer or reason is because when we convert `ArrayVec` into its iterator `ArrayVecIntoIter`, fields of `ArrayVec` will be moved in the `<ArrayVec as IntoIterator>::into_iter` method into similar fields in `ArrayVecIntoIter`. Therefore, we need to, as we did for `ArrayVec`, manually drop the uninitialized values now moved to `ArrayVecIntoIter`. More on this later.
+> The reason is because when we convert `ArrayVec` into its iterator `ArrayVecIntoIter`, fields of `ArrayVec` will be moved in the `<ArrayVec as IntoIterator>::into_iter` method into similar fields in `ArrayVecIntoIter`. Therefore, we need to, as we did for `ArrayVec`, manually drop the uninitialized values now moved to `ArrayVecIntoIter`. More on this later.
 
 Now, we can successfully implement `IntoIterator` on `ArrayVec`.
 
@@ -344,9 +344,9 @@ mod arrayvec {
 ```
 *Figure 6: Implementing `IntoIterator` for `ArrayVec`*
 
-First observation is that `into_iter` consumes `self` and returns an iterator: `Self::IntoIter` which is `<ArrayVec as IntoIterator>::IntoIter` which points to `ArrayVecIntoIter`. This is precisely why we first needed to create the iterator, `ArrayVecIntoIter`, for `ArrayVec`.
+First observation is that `into_iter` consumes `self` and returns an iterator: `Self::IntoIter` (i.e. `<ArrayVec as IntoIterator>::IntoIter`) which points to `ArrayVecIntoIter`. This is precisely why we first needed to create the iterator, `ArrayVecIntoIter`, for `ArrayVec`.
 
-As `self` is consumed, if we tried to perform a simpler operation by transferring ownership of `self`'s values the compiler would have panicked with the following error:
+As `self` is consumed, if we tried to perform a simpler operation by transferring ownership of `self`'s values, the compiler would have panicked with an error. Below is an example.
 
 ```rust
 // ...earlier code.
@@ -390,10 +390,16 @@ error: could not compile `playground` (bin "playground") due to 1 previous error
 
 This error states that the compiler cannot move out of `self` because `self` (`ArrayVec`) implements `Drop`.
 
-Remember, in the `Drop` implementation of `ArrayVec`, we iterated through a range that had `self.len` as the upper bound, and within the iteration we called `.assume_init_drop()` on the initialized elements of the `self.values` array. Accessing fields of `ArrayVec` in `drop` is the reason why the error code above occurs in a simple operation as the earlier code shared.
+Remember, in the `Drop` implementation of `ArrayVec`, we iterated through a range that had `self.len` as the upper bound, and within the iteration we called `.assume_init_drop()` on the initialized elements of the `self.values` array. Accessing fields of `ArrayVec` in `drop` is the reason why the error code in *Figure 8* occurs in a simple operation in *Figure 7*.
 
 Because `ArrayVec` implements `Drop` and, in the implementation, accesses its fields, when we attempt to move out of `self` in `<ArrayVec as IntoIterator>::into_iter` the compiler panics saying, "Hey, `self.values` will be moved out here which means by the time I call `drop` on `ArrayVec` which is `self` when `into_iter` finishes running, in `<ArrayVec as Drop>::drop` I'll be accessing fields of `self` that have had their values moved therefore causing undefined behaviour UB. I cannot allow memory safety errors and UB therefore this is an error and you have to fix this code." Just imagine the compiler was a real person and had this conversation with you.
 
-How do we fix that error? By wrapping `self` (i.e. `ArrayVec`) in `core::mem::ManuallyDrop<T>`. `ManuallyDrop` wraps `ArrayVec` to suppress its `Drop` impl during the transfer, then we `unsafe`-read fields, using `core::ptr::read` (similar in function to `MaybeUninit::assume_init_read`), into `ArrayVecIntoIter` (the iterator, which takes full ownership). *This is why we implemented the `Drop` trait for `ArrayVecIntoIter`.* Finally, `ArrayVecIntoIter`'s `Drop` and `next` handle dropping iterator consumed/unconsumed elements correctly—no leaks, no doubles.
+The way to fix that error is the reason for the implementation in *Figure 7*: by wrapping `self` (i.e. `ArrayVec`) in `core::mem::ManuallyDrop<T>`.
+
+`ManuallyDrop` wraps `ArrayVec` to suppress its `Drop` impl during the transfer, then we `unsafe`-read fields, using `core::ptr::read` (similar in function to `MaybeUninit::assume_init_read`), into `ArrayVecIntoIter` (the iterator, which takes full ownership). Then we implement `Drop` for `ArrayVecIntoIter` to deallocate owned values. Finally, `ArrayVecIntoIter`'s `Drop` and `next` handle dropping iterator consumed/unconsumed elements correctly—no leaks, no doubles.
+
+---
+
+A lot has been explained already but we've only just made owned values of `ArrayVecIntoIter` iterable
 
 Starting off with easier implementations, we'll implement `IntoIterator` on fundamental types of `ArrayVec`, that is, `&ArrayVec` and `&mut ArrayVec`.
