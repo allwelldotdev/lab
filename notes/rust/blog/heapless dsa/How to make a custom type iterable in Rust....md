@@ -174,7 +174,7 @@ fn main() {
 	}
 }
 ```
-*Figure 1: Complete former implementation of `ArrayVec`*
+<small>Figure 1: Complete former implementation of `ArrayVec`.</small>
 
 Having understood the implementation and functionality of `ArrayVec`, next we implement `IntoIterator` on `ArrayVec`.
 
@@ -202,7 +202,7 @@ mod arrayvec {
 	}
 }
 ```
-*Figure 2: Converting slices of `ArrayVec` into iterators.*
+***Figure 2: Converting slices of `ArrayVec` into iterators.***
 
 With this implementation in place, when we call `ArrayVec::iter` or `ArrayVec::iter_mut`, we'll get a type that is `Iterator` and allows us iterate through elements of `ArrayVec`.
 
@@ -230,7 +230,7 @@ mod arrayvec {
     }
 }
 ```
-*Figure 3: Creating `ArrayVecIntoIter`—`ArrayVec`'s iterator.*
+***Figure 3: Creating `ArrayVecIntoIter`—`ArrayVec`'s iterator.***
 
 Notice `ArrayVecIntoIter` is similar in structure to `ArrayVec`, only difference being the `index` field. This field would be used to track how many initialized elements in `values: [MaybeUninit<T>; N]` array have been iterated over.
 
@@ -263,7 +263,7 @@ mod arrayvec {
     }
 }
 ```
-*Figure 4: Implementing `Iterator` for `ArrayVecIntoIter`.*
+***Figure 4: Implementing `Iterator` for `ArrayVecIntoIter`.***
 
 `Iterator::Item` associated type for `ArrayVecIntoIter<T, N>` is `T`. We setup two methods, `next` and `size_hint`. `next` is a required `Iterator` method and we set it up to return `Option<Self::Item>` in other words `Option<T>` for `ArrayVecIntoIter<T, N>`.
 
@@ -300,7 +300,7 @@ mod arrayvec {
     }
 }
 ```
-*Figure 5: Implementing `Drop` for `ArrayVecIntoIter`.*
+***Figure 5: Implementing `Drop` for `ArrayVecIntoIter`.***
 
 Next, we implement `Drop` for `ArrayVecIntoIter` to deallocate initialized elements that have yet to be iterated over, if any. Hence why in the `for` loop, we iterate over `usize` range of `self.index..self.len`. In a scenario where we've iterated through all initialized elements (`self.index == self.len`) then `.assume_init_drop()` will not be called (therefore no double-frees).
 
@@ -342,7 +342,7 @@ mod arrayvec {
     }
 }
 ```
-*Figure 6: Implementing `IntoIterator` for `ArrayVec`*
+***Figure 6: Implementing `IntoIterator` for `ArrayVec`.***
 
 First observation is that `into_iter` consumes `self` and returns an iterator: `Self::IntoIter` (i.e. `<ArrayVec as IntoIterator>::IntoIter`) which points to `ArrayVecIntoIter`. This is precisely why we first needed to create the iterator, `ArrayVecIntoIter`, for `ArrayVec`.
 
@@ -368,7 +368,7 @@ mod arrayvec {
 	}
 }
 ```
-*Figure 7: Rewriting code in Figure 6 in a simpler operation.*
+***Figure 7: Rewriting code in Figure 6 in a simpler operation.***
 
 Panics with error:
 
@@ -386,7 +386,7 @@ error[E0509]: cannot move out of type `arrayvec::ArrayVec<T, N>`, which implemen
 For more information about this error, try `rustc --explain E0509`.
 error: could not compile `playground` (bin "playground") due to 1 previous error
 ```
-*Figure 8: Compiler error panic from running code in Figure 7.*
+***Figure 8: Compiler error panic from running code in Figure 7.***
 
 This error states that the compiler cannot move out of `self` because `self` (`ArrayVec`) implements `Drop`.
 
@@ -433,7 +433,7 @@ mod arrayvec {
     }
 }
 ```
-*Figure 9: Implementing `IntoIterator` on fundamental types of `ArrayVec`.*
+***Figure 9: Implementing `IntoIterator` on fundamental types of `ArrayVec`.***
 
 As you can see, it's a much simpler implementation to that of owned values. In real-word use cases, iterating over borrowed values or values that exist in the buffer, in embedded contexts usually fulfills 80% of your needs. Since in embedded contexts, due to limited compute resources, consumption (or in Rust terms, moving) of values is discouraged while reusing the buffer is encouraged.
 
@@ -513,7 +513,7 @@ fn main() {
 	}
 }
 ```
-*Figure 10: Testing the iteration of `ArrayVec` in a `for` loop for fundamental types and owned values.*
+***Figure 10: Testing the iteration of `ArrayVec` in a `for` loop for fundamental types and owned values.***
 
 In Scope `B`, we test for iteration through fundamentals types. While in Scope `C`, we test for iteration over owned values.
 
@@ -534,7 +534,7 @@ ArrayVecIntoIter { values: [MaybeUninit<u8>, MaybeUninit<u8>, MaybeUninit<u8>, M
 ArrayVecIntoIter { values: [MaybeUninit<u8>, MaybeUninit<u8>, MaybeUninit<u8>, MaybeUninit<u8>, MaybeUninit<u8>], len: 4, index: 4 }
 [Some(1), Some(2), Some(3), Some(4), None]
 ```
-*Figure 11: Terminal return from running code in Figure 10.*
+***Figure 11: Terminal return from running code in Figure 10.***
 
 In Scope `C`, when we call `into_iter()` on `arr_vec`, `arr_vec` is moved yet there's no panic for a `Drop` on `arr_vec` because we wrapped `arr_vec` in a `ManuallyDrop<T>` in the `<ArrayVec as IntoIterator>::into_iter` method. Because the consumption of `self`, the invariants in `into_iter` are upheld because `arr_vec` can no longer be used after the move. This is one of the awesome characteristics of the Rust programming language. Its ability to enforce memory safety through types and the borrow checker.
 
@@ -588,7 +588,7 @@ mod arrayvec {
 	}
 }
 ```
-*Figure 12: Implementing `FromIterator` for `ArrayVec`.*
+***Figure 12: Implementing `FromIterator` for `ArrayVec`.***
 
 The `FromIterator` implementation is a little more generic compared to the `IntoIterator` impl for `ArrayVec`. Here, `FromIterator` is generic over `T` which means the output of the iterator must be the same type as the elements inserted in the `ArrayVec` collection.
 
@@ -627,7 +627,7 @@ fn main() {
 	}
 }
 ```
-*Figure 13: Testing `FromIterator` implementation on `ArrayVec`.*
+***Figure 13: Testing `FromIterator` implementation on `ArrayVec`.***
 
 Returns:
 
@@ -637,7 +637,7 @@ Returns:
 [-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4]
 [-3, -2, -1, 0, 1]
 ```
-*Figure 14: Terminal return from running code in Figure 13.*
+***Figure 14: Terminal return from running code in Figure 13.***
 
 Notice in *Figure 13* that `from_iter` can be used either indirectly through `collect` or directly as an associated function (i.e. `<YourCustomType as FromIterator>::from_iter`).
 
@@ -663,7 +663,7 @@ mod arrayvec {
     }
 }
 ```
-*Figure 15: Implementing `Extend` for `ArrayVec`.*
+***Figure 15: Implementing `Extend` for `ArrayVec`.***
 
 The `Extend::extend` method takes a mutable reference of self (`&mut self`) and a type that is iterable (`iter`), iterates through `iter` and pushes its items into `self`. Pretty straight forward right? Told you.
 
@@ -671,7 +671,151 @@ Before testing `Extend`, I want to add a functionality to `ArrayVec` that allows
 
 > To understand why we're trying to see the initialized and uninitialized values of `ArrayVec`, see [the previous article](https://allwell.hashnode.dev/how-to-build-a-heapless-vector-using-maybeuninitt-for-better-performance#heading-using-maybeuninit) to learn more.
 
-The only caveat of `show_init` is that it only works where `T` in `ArrayVec<T, N>` is copyable (`T: Copy`). This is the norm for primitive types but not more so for heap-alloc values. Fortunately for us, we're working in a no_std/embedded context where heap-alloc values are mostly prohibited. The reason for this constraint on `show_init` is because within its implementation, we dereference `T` to perform a bitwise copy of its value to memory location. If `T` is not copyable (i.e. `T: Clone`), `T` will be moved, which is UB and introductory to use-after-free or double-free errors.
+The only caveat of `show_init` is that it only works where `T` in `ArrayVec<T, N>` is copyable (`T: Copy`). This is the norm for primitive types but not more so for heap-alloc values. Fortunately for us, we're working in a no_std/embedded context where heap-alloc values are mostly prohibited. The reason for this constraint on `show_init` is because within its implementation, we dereference `T` to perform a bitwise copy of its value to another memory location. If `T` is not copyable (i.e. `T: Clone`), `T` will be moved, which is UB and foundational to use-after-free or double-free errors. We want to avoid that and enforce only copyable types in our code, therefore we add a trait bound in a where clause, `T: Copy`.
+
+```rust
+// ...earlier code.
+
+mod arrayvec {
+	// ...earlier code.
+	
+	// Implement these only where `T` is `Copy`.
+    /* Better this way because in some impls we dereference `T`;
+    if `T` is not `Copy` we'll be creating a use-after-free or
+    double-free which is UB.
+    */
+	impl<T, const N: usize> ArrayVec<T, N>
+	where
+		T: Copy,
+	{
+		/// Returns Self with a view of initialized and uninitialized
+        /// accesses of memory.
+		pub fn show_init<'a>(&self, other: &'a mut ArrayVec<Option<T>, N>)
+		-> &'a [Option<T>]
+		{
+			let mut count = 0;
+            
+            for item in self {
+                let _ = other.try_push(Some(*item)); /* deref `T` to copy
+                primitive value.
+                */
+                count += 1;
+            }
+            while count < N {
+                let _ = other.try_push(None);
+                count += 1;
+            }
+            other.as_slice()
+		}
+	}
+}
+```
+***Figure 16: Adding `show_init` method to `ArrayVec` for improved testing utility.***
+
+I won't go into the depth of explaining lifetimes in Rust and why `show_init` is generic for the lifetime `'a` , but I'll say this much: the lifetime of the return type of `show_init` is valid for as long as the owned type passed into the `other` argument is valid (in other words, for as long as the lifetime of `T` in `other: &mut T` is valid).
+
+> To fully understand lifetimes in Rust, I recommend reading [the lifetime chapter in TRPL Book](https://rust-book.cs.brown.edu/ch10-03-lifetime-syntax.html) and [lifetime variance in the Rustonomicon](https://doc.rust-lang.org/nomicon/subtyping.html).
+
+#### Testing
+With all this in place, let's test our `Extend` implementation.
+
+```rust
+#![no_std]
+extern crate std;
+use arrayvec::ArrayVec;
+
+mod arrayvec { /* ...`ArrayVec` implementation. */ }
+
+const CAP: usize = 5;
+
+fn main() {
+	// { /* A: ...earlier code */ }
+	// { /* B: ...earlier code */ }
+	// { /* C: ...earlier code */ }
+	// { /* D: ...earlier code */ }
+	{
+		// E:
+		// Test Extend implementation with iterators on ArrayVec.
+        
+        /* Testing for two scenarios;
+        
+        1. `arr_vec1` has more CAP (array "capacity" - N) than `arr_vec2`
+        has elements to fill it. Meaning, `arr_vec1` will retain spare CAP.
+        
+        2. `arr_vec1` has less CAP (array "capacity" - N) than `arr_vec2`
+        has elements to fill it. Meaning, `arr_vec1` will max it's CAP
+        without extending all of `arr_vec2`s elements.
+        */
+		
+		// Scenario 1:
+		type ArrayVecCap10<T> = ArrayVec<T, 10>;
+        type ArrayVecCap5<T> = ArrayVec<T, 5>;
+        
+        let mut arr_vec1: ArrayVecCap10<u8> = ArrayVec::new();
+        let mut count;
+        for i in 0..3 { // Add elements to `arr_vec1`.
+            count = 1 + i as u8;
+            arr_vec1.try_push(count).unwrap();
+        }
+        
+        let mut arr_vec2: ArrayVecCap5<u8> = ArrayVec::new();
+        for i in 0..2 { // Add elements to `arr_vec2`.
+            count = 1 + i as u8;
+            arr_vec2.try_push(count).unwrap();
+        }
+        
+        arr_vec1.extend(arr_vec2); // Extend moves `arr_vec2`.
+        
+        let mut empty_arr_vec: ArrayVecCap10<Option<u8>> = ArrayVec::new();
+        std::println!("---\n{:?}", arr_vec1.show_init(&mut empty_arr_vec));
+        drop(empty_arr_vec); /* Choosing to explicity drop (or free, or
+        deallocate) the stack memory consumed by `empty_arr_vec` here
+        as it's no longer in use.
+        */
+        
+        // Scenario 2:
+        let mut arr_vec1: ArrayVecCap5<i8> = ArrayVec::new();
+        for i in -2..0 { arr_vec1.try_push(i as i8).unwrap(); }
+        
+        let mut arr_vec2: ArrayVecCap10<i8> = ArrayVec::new();
+        for i in -5..0 { arr_vec2.try_push(i as i8).unwrap(); }
+        
+        arr_vec1.extend(arr_vec2); // Extend moves `arr_vec2`.
+        
+        let mut empty_arr_vec: ArrayVecCap5<Option<i8>> = ArrayVec::new();
+        std::println!("{:?}", arr_vec1.show_init(&mut empty_arr_vec));
+        /* Don't need to explicity drop `empty_arr_vec` here as before
+        because this is the end of the scope, and the Rust Compiler (rustc)
+        will call the drop method in ArrayVec's destructor `Drop`
+        to drop `empty_arr_vec` implicity.
+        */
+	}
+}
+```
+***Figure 17: Testing the implementation of `Extend` for `ArrayVec`, and a few other examples.***
+
+Returns:
+
+```bash
+# ...earlier output.
+---
+[Some(1), Some(2), Some(3), Some(1), Some(2), None, None, None, None, None]
+[Some(-2), Some(-1), Some(-5), Some(-4), Some(-3)]
+```
+***Figure 18: Terminal return from running code in Figure 17.***
+
+We introduce type aliasing in Rust using `ArrayVecCap10<T>` and `ArrayVecCap5<T>`, reducing repeatability, improving readability.
+
+In `Scenario 1`, we extend `arr_vec1` with `arr_vec2` but not fill it up, leaving some slots uninitialized, therefore `show_init` returns a shared slice displaying `Some(u8)` for initialized slots and `None` for uninitialized slots, as planned and implemented. All's good.
+
+In `Scenario 2`, we do the opposite extending `arr_vec1` with `arr_vec2` filling it up but not iterating over all the items of `arr_vec2` as `arr_vec1`'s capacity buffer had been reached. Showing our implementation of `Extend::extend` works.
+
+Test successful.
+
+
+
+
+
 
 
 
