@@ -557,7 +557,7 @@ Seeing the code will help you understand it better.
 mod arrayvec {
 	// ...earlier code.
 	
-	impl<T, const N: usize> FromIterator<T> ArrayVec<T, N> {
+	impl<T, const N: usize> FromIterator<T> for ArrayVec<T, N> {
 		fn from_iter<I>(iter: I) -> Self
 		where
 			I: IntoIterator<Item = T>
@@ -588,5 +588,90 @@ mod arrayvec {
 	}
 }
 ```
+*Figure 12: Implementing `FromIterator` for `ArrayVec`.*
 
 The `FromIterator` implementation is a little more generic compared to the `IntoIterator` impl for `ArrayVec`. Here, `FromIterator` is generic over `T` which means the output of the iterator must be the same type as the elements inserted in the `ArrayVec` collection.
+
+We see the use of the `size_hint` method as it's used to check the lower bound of the iterator (`iter`); if more than `N`, we take `N` capacity from it otherwise we simply iterate through `iter`, fill and return `Self`.
+
+#### Testing
+Testing `FromIterator` will be the shortest test because it's s straight forward, simpler process, but one that will help you understand how `collect` works under the hood.
+
+```rust
+#![no_std]
+extern crate std;
+use arrayvec::ArrayVec;
+
+mod arrayvec { /* ...`ArrayVec` implementation. */ }
+
+const CAP: usize = 5;
+
+fn main() {
+	// { /* A: ...earlier code */ }
+	// { /* B: ...earlier code */ }
+	// { /* C: ...earlier code */ }
+	{
+		// D:
+		// Test FromIterator implementation with iterators on ArrayVec.
+		
+		// Using collect:
+        let arr_vec = (-10..10).collect::<ArrayVec<i8, 15>>();
+        std::println!("---\n{:?}", arr_vec.as_slice());
+        
+        // Using from_iter:
+        let arr_vec = ArrayVec::<_, 5>::from_iter(-3..5 as i8); /* Using
+        type inference for `T` in `ArrayVec<T, N>` helped by type cast
+        on iterator.
+        */
+        std::println!("{:?}", arr_vec.as_slice());
+	}
+}
+```
+*Figure 13: Testing `FromIterator` implementation on `ArrayVec`.*
+
+Returns:
+
+```bash
+# ...earlier code.
+---
+[-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4]
+[-3, -2, -1, 0, 1]
+```
+*Figure 14: Terminal return from running code in Figure 13.*
+
+Notice in *Figure 13* that `from_iter` can be used either indirectly through `collect` or directly as an associated function (i.e. `<YourCustomType as FromIterator>::from_iter`).
+
+### `Extend`
+`Extend` is a shorter implementation compared to `FromIterator` that also benefits from `IntoIterator`. `Extend` is pretty intuitive for its use in that it enables you extend a collection with the contents of an iterator.
+
+```rust
+// ...earlier code.
+
+mod arrayvec {
+	// ...earlier code.
+	
+	impl<T, const N: usize> Extend<T> for ArrayVec<T, N> {
+        fn extend<I: IntoIterator<Item = T>>(&mut self, iter: I) {
+            for item in iter { // Stops iterating when `iter` is consumed
+                if let Err(_) = self.try_push(item) { /* break if
+                `self` is full
+                */
+                    break;
+                }
+            }
+        }
+    }
+}
+```
+*Figure 15: Implementing `Extend` for `ArrayVec`.*
+
+The `Extend::extend` method takes a mutable reference of self (`&mut self`) and a type that is iterable (`iter`), iterates through `iter` and pushes its items into `self`. Pretty straight forward right? Told you.
+
+Before testing `Extend`, I want to add a functionality to `ArrayVec` that allows us to see which elements in the array are initialized, represented as `Some(T)`, and which are uninitialized, represented as `None`. If you recognized it, you're right. It's similar to the function of the `as_slice` method in `ArrayVec` but slightly different in that it doesn't add uninitialized slots to the slice (as it shouldn't). With this new function, which I want to call `show_init`, we'll be able to see both initialized and uninitialized slots of the `ArrayVec` fixed-size array, as `Some(T)` and `None` respectively.
+
+> To understand why we're trying to see the initialized and uninitialized values of `ArrayVec`, see [the previous article](https://allwell.hashnode.dev/how-to-build-a-heapless-vector-using-maybeuninitt-for-better-performance#heading-using-maybeuninit) to learn more.
+
+The only caveat of `show_init` is that it only works where `T` in `ArrayVec<T, N>` is copyable (`T: Copy`). This is the norm for primitive types but not more so for heap-alloc values. Fortunately for us, we're working in a no_std/embedded context where heap-alloc values are mostly prohibited. The reason for this constraint on `show_init` is because within its implementation, we dereference `T` to perform a bitwise copy of its value to memory location. If `T` is not copyable (i.e. `T: Clone`), `T` will be moved, which is UB and introductory to use-after-free or double-free errors.
+
+
+
