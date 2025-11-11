@@ -400,6 +400,121 @@ The way to fix that error is the reason for the implementation in *Figure 7*: by
 
 ---
 
-A lot has been explained already but we've only just made owned values of `ArrayVecIntoIter` iterable
+A lot has been explained already but we've only just iterated over owned values of `ArrayVec`. We also need to be able to iterate over borrowed values. Usually known as fundamental types (`&` and `&mut`). Let's do that next.
 
-Starting off with easier implementations, we'll implement `IntoIterator` on fundamental types of `ArrayVec`, that is, `&ArrayVec` and `&mut ArrayVec`.
+#### Implementing `IntoIterator` on `&ArrayVec` and `&mut ArrayVec`
+This is simpler than enabling iteration for owned values. Here, we simply call the `iter` and `iter_mut` methods on `ArrayVec` and return a slice iterator.
+
+```rust
+// ...earlier code.
+
+mod arrayvec {
+	// ...earlier code.
+	
+	// Implement IntoIterator for fundamental types of ArrayVec: & and &mut.
+    // By reference: yields &T
+    impl<'a, T, const N: usize> IntoIterator for &'a ArrayVec<T, N> {
+        type Item = &'a T;
+        type IntoIter = core::slice::Iter<'a, T>;
+
+        fn into_iter(self) -> Self::IntoIter {
+            self.as_slice().iter()
+        }
+    }
+
+    // By mutable reference: yields &mut T
+    impl<'a, T, const N: usize> IntoIterator for &'a mut ArrayVec<T, N> {
+        type Item = &'a mut T;
+        type IntoIter = core::slice::IterMut<'a, T>;
+
+        fn into_iter(self) -> Self::IntoIter {
+            self.as_mut_slice().iter_mut()
+        }
+    }
+}
+```
+*Figure 9: Implementing `IntoIterator` on fundamental types of `ArrayVec`.*
+
+As you can see, it's a much simpler implementation to that of owned values. In real-word use cases, iterating over borrowed values or values that exist in the buffer, in embedded contexts usually fulfills 80% of your needs. Since in embedded contexts, due to limited compute resources, consumption (or in Rust terms, moving) of values is discouraged while reusing the buffer is encouraged.
+
+#### Testing
+With the previous implementations, `ArrayVec` is now iterable in a `for` loop. Let's test it.
+
+```rust
+#![no_std]
+extern crate std;
+use arrayvec::ArrayVec;
+
+mod arrayvec { /* ...`ArrayVec` implementation. */ }
+
+const CAP: usize = 5;
+
+fn main() {
+	// { /* A: ...earlier code */ }
+	{
+		// B:
+		// Iterating over ArrayVec through fundamental types: & and &mut
+		
+		// Shared iteration
+		let mut arr_vec = ArrayVec::<u8, CAP>::new();
+        let mut count;
+        for i in 0..CAP {
+            count = 1 + i as u8;
+            arr_vec.try_push(count).unwrap(); // Init values on ArrayVec
+        }
+        std::println!("---");
+        count = 0;
+        for i in &arr_vec {
+            std::println!("ArrayVec at index {}: {}", count, i);
+            count += 1;
+        }
+        
+        // Mutable iteration
+        for value in &mut arr_vec {
+            *value += 10;
+        }
+        std::println!("---\nMutated ArrayVec: {:?}", arr_vec.as_slice());
+	}
+	
+	{
+		// C:
+		// Iterating over owned values of ArrayVec by calling `into_iter`
+		let mut arr_vec = ArrayVec::<u8, CAP>::new();
+        let mut count;
+        for i in 0..(CAP - 1) {
+            count = 1 + i as u8;
+            arr_vec.try_push(count).unwrap();
+        }
+        let mut arr_iter = arr_vec.into_iter(); // move arr_vec
+        // std::println!("{:?}", arr_vec); // should return move error
+        /* Above code confirms `impl IntoIterator for ArrayVec` safety
+        invariants.
+        */
+        std::println!("---\n{:?}", arr_iter); /* View created
+        ArrayVecIntoIter. See `len` and `index` fields.
+        */
+        
+        let mut arr_vec2 = ArrayVec::<Option<u8>, CAP>::new();
+        loop { /* Loop through calls to `next()` to iterate through
+        ArrayVecIntoInter.
+        */
+            match arr_iter.next() {
+                Some(val) => arr_vec2.try_push(Some(val)).unwrap(),
+                None => {
+                    arr_vec2.try_push(None).unwrap();
+                    break;
+                }
+            }
+        }
+        std::println!("{:?}", arr_iter); /* Review `len` and `index` fields.
+        Notice index incr caused by calling `next()` on ArrayVecIntoIter.
+        */
+        std::println!("{:?}", arr_vec2.as_slice());
+	}
+}
+```
+*Figure 10: Testing the iteration of `ArrayVec` in a `for` loop for fundamental types and owned values.*
+
+In Scope `B`, we test for iteration through fundamentals types. While in Scope `C`, we test for iteration over owned values.
+
+
