@@ -517,4 +517,76 @@ fn main() {
 
 In Scope `B`, we test for iteration through fundamentals types. While in Scope `C`, we test for iteration over owned values.
 
+After running the code in *Figure 10* with `cargo run`, we get:
 
+```bash
+# ...earlier output.
+---
+ArrayVec at index 0: 1
+ArrayVec at index 1: 2
+ArrayVec at index 2: 3
+ArrayVec at index 3: 4
+ArrayVec at index 4: 5
+---
+Mutated ArrayVec: [11, 12, 13, 14, 15]
+---
+ArrayVecIntoIter { values: [MaybeUninit<u8>, MaybeUninit<u8>, MaybeUninit<u8>, MaybeUninit<u8>, MaybeUninit<u8>], len: 4, index: 0 }
+ArrayVecIntoIter { values: [MaybeUninit<u8>, MaybeUninit<u8>, MaybeUninit<u8>, MaybeUninit<u8>, MaybeUninit<u8>], len: 4, index: 4 }
+[Some(1), Some(2), Some(3), Some(4), None]
+```
+*Figure 11: Terminal return from running code in Figure 10.*
+
+In Scope `C`, when we call `into_iter()` on `arr_vec`, `arr_vec` is moved yet there's no panic for a `Drop` on `arr_vec` because we wrapped `arr_vec` in a `ManuallyDrop<T>` in the `<ArrayVec as IntoIterator>::into_iter` method. Because the consumption of `self`, the invariants in `into_iter` are upheld because `arr_vec` can no longer be used after the move. This is one of the awesome characteristics of the Rust programming language. Its ability to enforce memory safety through types and the borrow checker.
+
+Some other things you also see in play after the test like the `index` field of the `ArrayVec` iterator (`ArrayVecIntoIter`).
+
+---
+
+We've learned about `IntoIterator` and `Iterator`, and how to implement them. Next, we'll look at `FromIterator` and `Extend`.
+
+### `FromIterator`
+The `FromIterator` trait, when implemented on your custom type, allows you to fill your custom *collection* type with output from another iterator. It does this by showing your custom *collection* type how to fill itself with outputs from another iterator, of course this is implemented in code.
+
+A simple way to understand this is the `collect` method on `T`, where `T: Iterator`. The `collect` method *collects* outputs of an iterator into a collection type (like `Vec<T>`, etc.). The `collect` method actually uses the `FromIterator` trait behind the scenes by calling the `FromIterator::from_iter` method on the *collection* type it's collecting the iterator outputs into, thereby filling the type.
+
+Seeing the code will help you understand it better.
+
+```rust
+// ...earlier code.
+
+mod arrayvec {
+	// ...earlier code.
+	
+	impl<T, const N: usize> FromIterator<T> ArrayVec<T, N> {
+		fn from_iter<I>(iter: I) -> Self
+		where
+			I: IntoIterator<Item = T>
+		{
+			let mut arr_vec = Self::new();
+			let iter = iter.into_iter();
+			
+			// Optimize: If hinted size > N, take only N to skip
+			// early access.
+			let (lower, _) = iter.size_hint();
+			if lower > N {
+				for item in iter.take(N) {
+                    let _ = arr_vec.try_push(item); /* Won't fail as
+                    len < N.
+                    */
+                }
+                return arr_vec;
+			}
+			
+			// General case: Push until full (truncates excess).
+            for item in iter {
+                let _ = arr_vec.try_push(item); /* Err(item) dropped
+                if full.
+                */
+            }
+            arr_vec
+		}
+	}
+}
+```
+
+The `FromIterator` implementation is a little more generic compared to the `IntoIterator` impl for `ArrayVec`. Here, `FromIterator` is generic over `T` which means the output of the iterator must be the same type as the elements inserted in the `ArrayVec` collection.
