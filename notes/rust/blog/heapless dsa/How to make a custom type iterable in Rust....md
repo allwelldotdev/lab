@@ -812,6 +812,20 @@ In `Scenario 2`, we do the opposite extending `arr_vec1` with `arr_vec2` filling
 
 Test successful.
 
+## In conclusion
+I wasn't planning for this article to be 5,000+ words (as [the previous article](https://allwell.hashnode.dev/how-to-build-a-heapless-vector-using-maybeuninitt-for-better-performance)), well, here we are 😅, but I'm happy I divulged as much useful information as possible, here, to help you improve your understanding of iterators in Rust. If you read till the end give yourself a pat on the back, and thank you for reading my content.
+
+This article ends the experiment of building heapless data structures and learning from them. There is a well known Rust crate that takes the concepts we've implemented here and in the previous article to build and offer battle-tested heapless data structures useful in no_std and embedded environments. The Rust crate is called [`heapless`](https://crates.io/crates/heapless).
+
+- You can find and play around with the full code on Rust Playground via this link: [https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&gist=7b80863ed153627d1d86a6ee41a42167](https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&gist=7b80863ed153627d1d86a6ee41a42167)
+- You can also find the whole code on this GitHub Gist: [https://gist.github.com/allwelldotdev/39c817ca8d40fe5aeb808eb6301a18ff](https://gist.github.com/allwelldotdev/39c817ca8d40fe5aeb808eb6301a18ff)
+
+---
+
+👏🏾 Kudos for finishing the article.
+
+Hi there! I'm Allwell, a passionate Rust developer currently working from Lagos, Nigeria. You can connect with me on X ([`@allwelldotdev`](https://x.com/allwelldotdev/)) or LinkedIn ([Allwell Agwu-Okoro](https://linkedin.com/in/allwelldotdev/)). Let's build and learn Rust together.
+
 
 
 
