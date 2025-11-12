@@ -178,7 +178,7 @@ fn main() {
 
 Having understood the implementation and functionality of `ArrayVec`, next we implement `IntoIterator` on `ArrayVec`.
 
-#### Implementing `IntoIterator` on `ArrayVec`
+#### Implementing `IntoIterator` for `ArrayVec`
 `ArrayVec` has two methods, `as_slice` and `as_mut_slice`, that return a slice of the array. A cool thing about `slice` types is they implement methods, `iter` and `iter_mut`, that let you return an iterator over the slice elements; immutably `&` or mutably `&mut` referenced, respectively. Let's start by implementing `iter` and `iter_mut` methods on `ArrayVec` to return iterators from slices of `ArrayVec`.
 
 ```rust
@@ -402,7 +402,7 @@ The way to fix that error is the reason for the implementation in *Figure 7*: by
 
 A lot has been explained already but we've only just iterated over owned values of `ArrayVec`. We also need to be able to iterate over borrowed values. Usually known as fundamental types (`&` and `&mut`). Let's do that next.
 
-#### Implementing `IntoIterator` on `&ArrayVec` and `&mut ArrayVec`
+#### Implementing `IntoIterator` for `&ArrayVec` and `&mut ArrayVec`
 This is simpler than enabling iteration for owned values. Here, we simply call the `iter` and `iter_mut` methods on `ArrayVec` and return a slice iterator.
 
 ```rust
