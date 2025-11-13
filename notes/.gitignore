@@ -1,2 +1,2 @@
 # ignore all '.obsidian' files
-.obsidian*
+#.obsidian* # Update: Upload .obsidian directory as it track vault settings.
