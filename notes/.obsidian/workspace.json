@@ -50,7 +50,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -170,13 +170,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "rust/blog/heapless dsa/How to make a custom type iterable in Rust....md",
+                "file": "rust/blog/heapless dsa/Building a heapless vector data structure using uninitialized values....md",
                 "followCursor": true,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of How to make a custom type iterable in Rust..."
+              "title": "Outline of Building a heapless vector data structure using uninitialized values..."
             }
           },
           {
@@ -218,11 +218,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "3d9051d2f3ac673a",
+  "active": "49a2387f38a93c6b",
   "lastOpenFiles": [
+    "blockchain.md",
     "rust/blog/heapless dsa/Building a heapless vector data structure using uninitialized values....md",
     "rust/blog/heapless dsa/How to make a custom type iterable in Rust....md",
-    "blockchain.md",
     "user-auth.md",
     "javascript/javascript.md",
     "linux/kubernetes/LFS259.md",

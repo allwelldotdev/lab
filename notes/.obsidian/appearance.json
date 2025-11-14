@@ -1,4 +1,6 @@
 {
   "theme": "system",
-  "showRibbon": false
+  "showRibbon": false,
+  "textFontFamily": "",
+  "monospaceFontFamily": "Source Code Pro"
 }
