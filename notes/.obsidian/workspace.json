@@ -50,7 +50,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -170,13 +170,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "rust/blog/heapless dsa/Building a heapless vector data structure using uninitialized values....md",
+                "file": "rust/blog/heapless dsa/How to make a custom type iterable in Rust....md",
                 "followCursor": true,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Building a heapless vector data structure using uninitialized values..."
+              "title": "Outline of How to make a custom type iterable in Rust..."
             }
           },
           {
@@ -218,10 +218,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "49a2387f38a93c6b",
+  "active": "3d9051d2f3ac673a",
   "lastOpenFiles": [
-    "rust/blog/heapless dsa/How to make a custom type iterable in Rust....md",
     "rust/blog/heapless dsa/Building a heapless vector data structure using uninitialized values....md",
+    "rust/blog/heapless dsa/How to make a custom type iterable in Rust....md",
     "blockchain.md",
     "user-auth.md",
     "javascript/javascript.md",
