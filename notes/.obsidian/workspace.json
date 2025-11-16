@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "rust/blog/heapless dsa/How to make a custom type iterable in Rust....md",
+                "file": "git/git_commit_message_tip.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "How to make a custom type iterable in Rust..."
+              "title": "git_commit_message_tip"
             }
           }
         ],
@@ -170,13 +170,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "rust/blog/heapless dsa/How to make a custom type iterable in Rust....md",
+                "file": "git/git_commit_message_tip.md",
                 "followCursor": true,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of How to make a custom type iterable in Rust..."
+              "title": "Outline of git_commit_message_tip"
             }
           },
           {
@@ -220,9 +220,11 @@
   },
   "active": "3d9051d2f3ac673a",
   "lastOpenFiles": [
+    "git/git.md",
+    "git/git_commit_message_tip.md",
+    "rust/blog/heapless dsa/How to make a custom type iterable in Rust....md",
     "rust/blog/heapless dsa/Building a heapless vector data structure using uninitialized values....md",
     "blockchain.md",
-    "rust/blog/heapless dsa/How to make a custom type iterable in Rust....md",
     "user-auth.md",
     "javascript/javascript.md",
     "linux/kubernetes/LFS259.md",
@@ -260,8 +262,6 @@
     "javascript",
     "python/ai/langchain.md",
     "python/ai",
-    "python/logging.md",
-    "python/pytest.md",
     "go",
     "rust",
     "python",
