@@ -163,16 +163,25 @@ Command line completion with `CTRL-D` and `<TAB>`
 ## Text objects
 
 for words…
-- `daw` = delete a word
-- `ciw` = change inner word.
+- `daw` = delete *around* word
+- `ciw` = change *in* word.
+- `viw` = visually highlight *in* word
 
 for sentences…
-- `das` = delete a sentence
-- `cis` = change inner sentence.
+- `das` = delete *around* sentence
+- `cis` = change *in* sentence
+- `vis` = visually highlight *in* sentence
 
 for paragraphs…
-- `dap` = delete a paragraph
-- `cip` = change inner paragraph.
+- `dap` = delete *around* paragraph
+- `cip` = change *in* paragraph
+- `vip` = visually highlight *in* paragraph
+
+for functions...
+- `dif`  = delete *in* function
+- `cif`  = change *in* function
+- `vif` = visually highlight *in* function.
+
 ## Navigational key-bindings for zsh
 
 ```bash
