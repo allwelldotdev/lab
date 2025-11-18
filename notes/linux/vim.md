@@ -4,8 +4,11 @@ Learned from:
 ## Cursor location and file status
 
 - `CTRL-G` displays your location in the file and the file status.
+- `G CTRL-G` add word and byte count to the display of `CTRL-G`.
 - `G` moves to the end of the file.
 - `<line-number> G` moves to that line number.
+- `<line-number> gg` moves to that line number.
+- `<line-percentage> %` moves to the line percentage.
 - `gg` moves to the first line.
 
 ## Navigation commands
@@ -13,6 +16,11 @@ Learned from:
 - `W` move forward one *word* at a time (excluding punctuation marks).
 - `b` move backward one *word* at a time (including punctuation marks).
 - `B` move backward one *word* at a time (excluding punctuation marks).
+
+- `CTRL-F` move forward one page.
+- `CTRL-B` move backward one page.
+- `Z ENTER` move position of cursor on line to the top.
+- `ZZ` move position of cursor on line to the center.
 ## Search command
 
 - `/` followed by a phrase searched FORWARD for the phrase.
@@ -68,6 +76,13 @@ Learned from:
 > Pressing `v` starts Visual selection. You can move the cursor around to make the selection bigger or smaller. Then you can use an operator to do something with the text. For example, `d` deletes the text.
 
 `v` motion `:w <FILENAME>` saves the visually selected lines in file 'FILENAME'.
+
+## Deleting text
+
+- `x` delete text (each char).
+	- `x` in visual mode deletes the selection (same as `d`).
+- `dd` delete one line of text.
+- `2dd` delete two lines of text.
 ## Retrieving and merging files
 
 > You can also read the output of an external command. For example, `:r !ls` reads the output of the `ls` command and puts it below the cursor.
