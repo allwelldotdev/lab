@@ -7,6 +7,12 @@ Learned from:
 - `G` moves to the end of the file.
 - `<line-number> G` moves to that line number.
 - `gg` moves to the first line.
+
+## Navigation commands
+- `w` move forward one *word* at a time (including punctuation marks).
+- `W` move forward one *word* at a time (excluding punctuation marks).
+- `b` move backward one *word* at a time (including punctuation marks).
+- `B` move backward one *word* at a time (excluding punctuation marks).
 ## Search command
 
 - `/` followed by a phrase searched FORWARD for the phrase.
