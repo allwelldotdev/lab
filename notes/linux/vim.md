@@ -114,17 +114,36 @@ Learned from:
 
 ## Registers
 Registers in Vim are similar to clipboards.
-### Register Types
+### Register types
 - Unnamed
 	- `""`
 	- `""` holds text from `d`, `c`, `s`, `x`, and `y` operations.
+	- `""` contains last operated on text.
 - Numbered
 	- `"0 "1 ... "9`
 	- `"0` holds last text yanked (`y`).
 	- `"1` holds last text deleted (`d`) or changed (`C`).
 	- They shift with each `d` or `c`.
 - Named
+	- `"[custom]` this is when you custom name the register when using `y`, or `p`
+	- e.g. `"a yy`: `"a` is a custom register.
+	- `"a` ...`"z` an example of named registers.
 
+### Register commands
+- In `NORMAL` mode
+	- `"2 yy` yanks line into `"2` register
+	- `"1 p` puts (pastes) text from `"1` register
+- In `INSERT` mode
+	- `CTRL-R "2 p` puts (pastes) text from `"2` register
+
+- `:reg` list all registers.
+- `:reg [register(s)]` list one or more registers.
+	- `:reg z` list everything in `z` registers.
+	- `:reg 1az` list everything in `1`, `a`, and `z` registers.
+
+### Repeating with Registers
+- `[count][register]operator` OR
+- `[register][count]operator`
 
 ## Set option
 
