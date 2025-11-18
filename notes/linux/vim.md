@@ -111,6 +111,21 @@ Learned from:
 - `p` puts (pastes) text.
 
 > You can also use `y` as an operator: `yw` yanks one word, `yy` yanks the whole line, then `p` puts that line.
+
+## Registers
+Registers in Vim are similar to clipboards.
+### Register Types
+- Unnamed
+	- `""`
+	- `""` holds text from `d`, `c`, `s`, `x`, and `y` operations.
+- Numbered
+	- `"0 "1 ... "9`
+	- `"0` holds last text yanked (`y`).
+	- `"1` holds last text deleted (`d`) or changed (`C`).
+	- They shift with each `d` or `c`.
+- Named
+
+
 ## Set option
 
 `:set xxx` sets the option `xxx`.
