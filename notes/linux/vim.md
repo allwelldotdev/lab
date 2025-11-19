@@ -35,11 +35,18 @@ Learned from:
 - `t` followed by a search character searches FORWARD for the character within a line and positions the cursor before the character you searched for.
 - `T` followed by a search character searches BACKWARD for the character within a line and positions the cursor before the character you searched for.
 - To repeat the search function or motion across the line use `;` to repeat FORWARD and `,` to repeat BACKWARD.
+
+- You can also use `[counts]` together with these too like `2f Space` to find the next `Space` after `2` places. These are motions and can also be used with *as motions* with operators. Like below:
+- `dtw` deletes text from the cursor to the beginning of `w` in the line.
+- `d2tw` adds `[count]` by deleting text 2 counts from the cursor to the beginning of `w` in the line.
 ---
 - `incsearch` incremental search.
 - `hlsearch` or `hls` highlight search.
 - `:set hlsearch?` to check `hlsearch` setting. If output is `nohlsearch` then `hlsearch` is off.
 - `:set hls` or `:hls` or `:hlsearch` set `hlsearch` to on.
+---
+- `d/<search-term>` deletes text/lines from the cursor position to the end of the search term `<search-term>` whether on the same line or on a different line.
+- `"a y /<search-term>` yanks all text from current cursor position up to the search term. Typing `:reg a` will should the text yanked into the `"a` register.
 
 >A neat trick for search, replace, and repeat incrementally is `/search-term` to search a word or character, `cw` to change the word, `n` to move to the next similar search-term, and `.` to automatically repeat the `cw` action.
 ## Matching parenthesis search
@@ -49,9 +56,14 @@ Learned from:
 
 >This command does the same thing 'find and replace' does. It searches for a string or character and replaces it with another.
 
-- `:s/thee/the <ENTER>` only substitutes the first occurrence of “thee” in the line.
-- `:s/thee/the/g <ENTER>` substitutes globally in the line.
+- `:s/old/new <ENTER>` only substitutes the first occurrence of “thee” in the line.
+- `:s/old/new/g <ENTER>` substitutes globally in the line.
 - `:#,#s/old/new/g` where #,# are the line numbers of the range of lines where the substitution is to be done.
+	- You could also use special symbols that represent the line number in the file, like:
+		- `.` represents current line
+		- `$` represents end of file
+			- `.,$s/old/new/g` `<ENTER>` substitutes from current line to end of file.
+		- `%` represents all lines or whole file.
 - `:%s/old/new/g` to change every occurrence in the whole file.
 - `:%s/old/new/gc` to find every occurrence in the whole file, with a prompt whether to substitute or not.
 ## Executing external commands
@@ -123,6 +135,10 @@ Learned from:
 - `gUU` toggles the letter case of words in a line to *UPPERCASE*.
 - `guw` toggles the letter case of words to *lowercase*, with the `w` word motion, starting from the position of the cursor.
 - `guu` toggles the letter case of words in a line to *lowercase*.
+
+## Joining
+- `J` joins two lines together. It's smart about this procedure. First, it appends a space to the end of the line before appending the new line. Second, if the presiding line has a period `.` it appends two spaces.
+- `gJ` joins two lines without appending any space.
 
 ## Copy and paste text
 
