@@ -93,6 +93,13 @@ Learned from:
 
 - `o` to open a line BELOW the cursor and start Insert mode.
 - `O` to open a line ABOVE the cursor.
+
+## Insert mode
+- `i` lets you insert text before the cursor.
+- `Shift-i` or `I` lets you insert text at the beginning of the line.
+
+> A neat trick with `i`/`INSERT` mode is you can combine count with it. See this example: If you want to create a text of multiple asterisks `*`, say 5, use the command `5i`, during `INSERT` mode type `*` then `Esc`. You'll see 5 asterisks.
+
 ## The append command
 
 > `a`, `i` and `A` all go to the same Insert mode, the only difference is where the characters are inserted.
@@ -104,7 +111,19 @@ Learned from:
 
 > Replace mode is like Insert mode, but every typed character deletes an existing character.
 
-`R` enters replace mode until `ESC` is pressed.
+- `r` lets you replace a single text.
+- `R` lets you enter replace mode until `ESC` is pressed.
+
+## UPPERCASE & lowercase
+- `~` toggles the case of a letter.
+- `g~w` toggles the letter case of words starting from the position of the cursor.
+- `g~~` toggles the letter case of words in a line.
+
+- `gUw` toggles the letter case of words to *UPPERCASE*, with the `w` word motion, starting from the position of the cursor.
+- `gUU` toggles the letter case of words in a line to *UPPERCASE*.
+- `guw` toggles the letter case of words to *lowercase*, with the `w` word motion, starting from the position of the cursor.
+- `guu` toggles the letter case of words in a line to *lowercase*.
+
 ## Copy and paste text
 
 - `y` operator yanks (copies) text
@@ -144,6 +163,8 @@ Registers in Vim are similar to clipboards.
 ### Repeating with Registers
 - `[count][register]operator` OR
 - `[register][count]operator`
+
+> A cool example with registers and other commands like `cw` is we can change a word and use the changed word elsewhere by appending a named (custom) register to the `cw` command. Like so: `"a cw` this changes a word and puts the changed word in the `"a` register for later use.
 
 ## Set option
 
