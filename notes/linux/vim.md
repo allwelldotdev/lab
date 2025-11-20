@@ -330,6 +330,24 @@ The only limitation is that you can't make an existing macro record a new macro.
 > Recorded registers can be appended to using `q` and the capital letter of the register. For example, if the register was `a`, it'll be `A`, if `b` it'll be `B` and vice versa.
 > The command is `qC` to append to keystrokes in the `"c` register.
 
+Remember, macros just replay what's in the register. Meaning, you can edit the content in the register by;
+- pasting it `"a p`,
+- editing it,
+- and yanking it `"a yy` or cutting it `"a dd`
+back into the same named register.
+Only make sure you understand the representation of the symbols so you'll be editing it correctly without errors when the macro is replayed.
+
+Macros are quite powerful when used correctly across texts with the same pattern.
+
+### Saving Macros
+- You can save your macros for future use in the `~/.viminfo` file.
+	- `_viminfo` for Windows.
+- It stores history and non-empty registers.
+- Read when vim starts.
+- Can easily overwrite registers.
+- A more reliable place to store your macros for future use is the `~/.vimrc` file (which is also used for Vim configurations).
+	- `_vimrc` for Windows.
+
 ## Navigational key-bindings for zsh
 
 ```bash
