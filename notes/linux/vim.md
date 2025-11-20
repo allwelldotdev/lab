@@ -30,6 +30,11 @@ Learned from:
 - `CTRL-O` takes you back to older positions,
 - `CTRL-I` to newer positions.
 ---
+- `*` cycles (i.e. searches) forward through instances of a word the cursor is under within a file.
+	- `n` and `N` then move the cursor to the next search.
+- `#` cycles (i.e. searches) backward through instances of a word the cursor is under within a file.
+	- `n` and `N` then move the cursor to the next search.
+---
 - `f` followed by a search character searches FORWARD for the character within a line.
 - `F` followed by a search character searches BACKWARD for the character within a line.
 - `t` followed by a search character searches FORWARD for the character within a line and positions the cursor before the character you searched for.
@@ -289,6 +294,16 @@ for functions...
 - `dif`  = delete *in* function
 - `cif`  = change *in* function
 - `vif` = visually highlight *in* function.
+
+for grouped items
+- `di[` = delete *in* brackets `[...]`
+- `ci(` = change *in* parenthesis `(...)`
+- `vi{` = visually highlight in braces `{...}`
+
+for HTML tags
+- `dat` = delete *around* tag
+- `cit` = change *in* tag
+- `vit` = visually highlight *in* tag
 
 ## Navigational key-bindings for zsh
 
