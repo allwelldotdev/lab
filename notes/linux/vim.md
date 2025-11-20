@@ -348,6 +348,25 @@ Macros are quite powerful when used correctly across texts with the same pattern
 - A more reliable place to store your macros for future use is the `~/.vimrc` file (which is also used for Vim configurations).
 	- `_vimrc` for Windows.
 
+You can save macros into the `~/.vimrc` file like so:
+```bash
+# Everything in '...' is the macro.
+let @d = ':s/"/'/g^M:s/(//^M:s/)//^M:s/ =>/,/^M$vi'gUj'
+```
+To type `Escape` in `INSERT` mode in Vim, use `Ctrl-v`, then key press the region on the keyboard and it'll fill it up in text like `^[` for `Escape`.
+
+> In case you're wondering there's no specified way to "delete" named registers from the `:registers` list, however you can clear or empty the register using:
+>
+> - `qaq`
+> - `:let @a = ''`
+> - `:call setreg('a', '')`
+
+Remember,
+- macros are a recorded series of keystrokes,
+- macros use registers,
+- repeating a macro: `[count]@[REGISTER]`
+- saving macros in `~/.vimrc` file: `let @[REGISTER] = 'keystrokes'`
+
 ## Navigational key-bindings for zsh
 
 ```bash
