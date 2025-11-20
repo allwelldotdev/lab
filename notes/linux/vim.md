@@ -388,6 +388,8 @@ superrito.com
 teleworm.us
 ```
 
+A much quicker way to achieve the same result as above is this macro: `df@f<cf>^M^[`
+
 The power of macros!
 ## Navigational key-bindings for zsh
 
