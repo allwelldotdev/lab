@@ -201,6 +201,8 @@ Registers in Vim are similar to clipboards.
 
 > A cool example with registers and other commands like `cw` is we can change a word and use the changed word elsewhere by appending a named (custom) register to the `cw` command. Like so: `"a cw` this changes a word and puts the changed word in the `"a` register for later use.
 
+> You can append to named registers by starting the command with the capital letter of the register. For instance; `"Fyy` appends the newly yanked text to the text in `"f` register.
+
 ## Set option
 
 `:set xxx` sets the option `xxx`.
@@ -325,7 +327,8 @@ The only limitation is that you can't make an existing macro record a new macro.
 	- `j`.
 	- Always end on a new line.
 
-
+> Recorded registers can be appended to using `q` and the capital letter of the register. For example, if the register was `a`, it'll be `A`, if `b` it'll be `B` and vice versa.
+> The command is `qC` to append to keystrokes in the `"c` register.
 
 ## Navigational key-bindings for zsh
 
