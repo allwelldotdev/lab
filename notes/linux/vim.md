@@ -64,6 +64,20 @@ Learned from:
 		- `$` represents end of file
 			- `.,$s/old/new/g` `<ENTER>` substitutes from current line to end of file.
 		- `%` represents all lines or whole file.
+			- `%` could also be `1,$` as in from line `1` to end of file `$`.
+		- `/<search-term-1>/,/<search-term-2>/s/old/new/g` substitutes from lines that fall between `search-term-1` and `search-term-2`.
+			- This method can be combined with other symbols too like:
+			  `/<search-term>/,$s/old/new/g` substitutes from lines that fall between `search-term` and end of file `$`.
+
+> Want to substitute **`/var/spool/mail`** to **`/usr/local/mail`**?
+> 
+> You could use a backslash (`\`) to escape the forward slashes (`/`) - this is the hard way. Or you could use a different method which constitutes as the easier way. Below's an example:
+> 
+> - **the hard way**
+> 	- `:s/\/var\/spool/\/usr\/local/`
+> - **the easy way**
+> 	- `:s#/var/spool#/usr/local#`
+
 - `:%s/old/new/g` to change every occurrence in the whole file.
 - `:%s/old/new/gc` to find every occurrence in the whole file, with a prompt whether to substitute or not.
 ## Executing external commands
@@ -194,6 +208,8 @@ Some options are:
 Prepend "`no`" to switch an option off: `:set noic`
 
 > If you want to ignore case for just one search command, use `\\c` in the phrase: `/ignore\\c <ENTER>`
+
+> You can toggle an option using `!` at the end of the option like `:set nu!` to toggle on page numbers if they are initially off and `:set nu!` to toggle off page numbers if they are initially on.
 ## Get help
 
 Vim has a comprehensive on-line help system. To get started, try one of these three:
