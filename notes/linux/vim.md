@@ -308,6 +308,25 @@ for HTML tags
 > Did you know, text objects also work with yanking and registers? Yes, they do. Here's an example:
 > `"l yit` yanks text *in* tag into the `l` register. 
 
+## Macros
+Macros in Vim allow you to record keystrokes (which are saved in registers) and play them back again thereby making repeated changes across your files.
+The only limitation is that you can't make an existing macro record a new macro.
+
+- `q` followed by a register `a` (or `b` or any alphabet) starts recording a macro into the register. `q` stops the recording. Now the recorded keystrokes can be found at `"a` register (or the register it was recorded into).
+- `@a` replays the recorded keystrokes in register `"a`.
+- `@@` replays the most recently executed macro.
+
+### Macro Best Practices
+- Normalise the cursor position.
+	- `0`. 
+	- Always start your macros off at the right cursor position.
+- Perform edits and operations.
+- Position your macros to enable easy replays.
+	- `j`.
+	- Always end on a new line.
+
+
+
 ## Navigational key-bindings for zsh
 
 ```bash
