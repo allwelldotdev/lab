@@ -366,7 +366,29 @@ Remember,
 - macros use registers,
 - repeating a macro: `[count]@[REGISTER]`
 - saving macros in `~/.vimrc` file: `let @[REGISTER] = 'keystrokes'`
+---
+This is a cool macro `0f@lv/<^Mhy0Pldatf<,i^M^[` that allows you turn this blob of text:
 
+```
+<a href="#">@armyspy.com</a><a href="#">@cuvox.de</a><a href="#">@dayrep.com    </a><a href="#">@einrot.com</a><a href="#">@fleckens.hu</a><a href="#">@gust    r.com</a><a href="#">@jourrapide.com</a><a href="#">@rhyta.com</a><a href="#    ">@superrito.com</a><a href="#">@teleworm.us</a>
+```
+
+into this: (*To get desired result, type this to replay macro:* `10@<macro-register>` *or* `10@@`)
+
+```
+armyspy.com
+cuvox.de
+dayrep.com
+einrot.com
+fleckens.hu
+gustr.com
+jourrapide.com
+rhyta.com
+superrito.com
+teleworm.us
+```
+
+The power of macros!
 ## Navigational key-bindings for zsh
 
 ```bash
