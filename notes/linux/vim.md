@@ -305,6 +305,9 @@ for HTML tags
 - `cit` = change *in* tag
 - `vit` = visually highlight *in* tag
 
+> Did you know, text objects also work with yanking and registers? Yes, they do. Here's an example:
+> `"l yit` yanks text *in* tag into the `l` register. 
+
 ## Navigational key-bindings for zsh
 
 ```bash
