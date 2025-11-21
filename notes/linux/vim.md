@@ -433,6 +433,9 @@ You can also use visual mode with command mode `:` by highlighting the text you 
 - `normal <command>` to run normal-mode commands on highlighted text. Commands include:
 	- `@<register>` to apply a macro on the highlighted text
 
+## Vim settings, preferences and customizations
+- `~/.vimrc` Vim's system 
+
 ## Navigational key-bindings for zsh
 
 ```bash
