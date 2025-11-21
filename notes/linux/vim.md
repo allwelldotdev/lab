@@ -398,7 +398,33 @@ Visual mode in Vim allows you to highlight series of text just like you would wi
 2. Line-wise visual mode; started with `V`
 3. Block-wise visual mode; started with `Ctrl-v`
 
+You can use motions to expand the visual area.
+You can also use text objects to expand the visual area.
 
+Some objects you can use in visual mode include:
+- `~` - Switch case
+- `c` - Change
+- `d` - Delete
+- `y` - Yank
+- `r` - Replace
+- `x` - Delete
+- `I` - Insert
+- `A` - Append
+- `J` - Join
+- `u` - Make lowercase
+- `U` - Make uppercase
+- `>` - Shift right
+- `<` - Shift left
+
+> To improve your understanding of visual mode check out this video lecture again: https://www.udemy.com/course/vim-commands-cheat-sheet/learn/lecture/6593354#overview
+
+> When you perform a shiftwidth operation using either `>` or `<` it shifts text by the shiftwidth setting, which you can find using `:set shiftwidth?`. The setting defaults to `8`, which means each time you shift text it's shifted by 8 characters, on most Vim instances.
+> 
+> Also by default, the `tabstop` setting is set to `8` as well. The `tabstop` setting is the number of spaces a tab character in a file counts for (said another way, `tabstop` is the width of a tab).
+> 
+> Another setting that involves tabs is the `expandtab` setting. The `expandtab` setting by default is also set to `noexpandtab` meaning it's disabled by default. When enabled, it inserts the appropriate number of spaces instead of an actual tab character.
+> 
+> To make tabs easy to spot turn on `list` mode using `:set list <ENTER>`. This setting shows the tab and space characters.
 
 ## Navigational key-bindings for zsh
 
