@@ -426,6 +426,13 @@ Some objects you can use in visual mode include:
 > 
 > To make tabs easy to spot turn on `list` mode using `:set list <ENTER>`. This setting shows the tab and space characters.
 
+You can also use visual mode with command mode `:` by highlighting the text you want to apply your command to and pressing `:`. This outputs `:'<,'>` in the command section of vim. Now any setting or command you input here would affect the highlighted text. Some command examples you can append to `:'<,'>` are:
+- `center` or `ce` or `center <width>` or `ce<width>`
+- `left` or `le` or `left <width>` or `le<width>`
+- `right` or `ri` or `right <width>` or `ri<width>`
+- `normal <command>` to run normal-mode commands on highlighted text. Commands include:
+	- `@<register>` to apply a macro on the highlighted text
+
 ## Navigational key-bindings for zsh
 
 ```bash
