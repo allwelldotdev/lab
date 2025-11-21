@@ -442,7 +442,13 @@ You can also use visual mode with command mode `:` by highlighting the text you 
 	- Each line is executed as a command
 		- `set ruler` = `:set ruler`
 	- To see options that have been set to a value other than their default value, type `:set <ENTER>`.
-	- 
+	- You can also map keys and keystrokes using the `map` command, like so: `map <KEY> <KEYSTROKES>`. Here's some keystrokes you can include in your map command.
+		- ![map command in Vim](../assets/Pasted%20image%2020251121162620.png)
+		- Check out this video for details on mapping keys in Vim: https://www.udemy.com/course/vim-commands-cheat-sheet/learn/lecture/6598102#overview
+	- To prevent custom mapped keys from clashing with Vim system keys, you can use the default `<leader>` key provided by Vim as a prepend to your custom keys.
+		- The default leader key provided by Vim is `\`.
+		- Setting `map <leader>w :w!<CR>` which maps the "write to file" `:w! <ENTER>` to `\w`
+		- If you don't want to the default leader key provided by Vim, you can always remap to 
 
 
 ## Navigational key-bindings for zsh

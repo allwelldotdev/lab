@@ -173,7 +173,7 @@
                 "file": "linux/vim.md",
                 "followCursor": true,
                 "showSearch": true,
-                "searchQuery": "visual"
+                "searchQuery": ""
               },
               "icon": "lucide-list",
               "title": "Outline of vim"
@@ -218,8 +218,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "3688840e0d682bbb",
+  "active": "3d9051d2f3ac673a",
   "lastOpenFiles": [
+    "assets/Pasted image 20251121162620.png",
     "git/git_commit_message_tip.md",
     "git/git.md",
     "rust/blog/heapless dsa/How to make a custom type iterable in Rust....md",
@@ -260,7 +261,6 @@
     "obsidian.md",
     "js.md",
     "javascript",
-    "python/ai/langchain.md",
     "python/ai",
     "go",
     "rust",
