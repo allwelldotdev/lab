@@ -434,7 +434,16 @@ You can also use visual mode with command mode `:` by highlighting the text you 
 	- `@<register>` to apply a macro on the highlighted text
 
 ## Vim settings, preferences and customizations
-- `~/.vimrc` Vim's system 
+- `~/.vimrc` Vim's user-wide config file
+	- rc = run commands
+	- System-wide vimrc and personal vimrc
+	- Unix/Linux/Mac file location: `~/.vimrc`
+	- Windows file location: `$HOME/_vimrc`
+	- Each line is executed as a command
+		- `set ruler` = `:set ruler`
+	- To see options that have been set to a value other than their default value, type `:set <ENTER>`.
+	- 
+
 
 ## Navigational key-bindings for zsh
 
