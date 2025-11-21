@@ -448,7 +448,32 @@ You can also use visual mode with command mode `:` by highlighting the text you 
 	- To prevent custom mapped keys from clashing with Vim system keys, you can use the default `<leader>` key provided by Vim as a prepend to your custom keys.
 		- The default leader key provided by Vim is `\`.
 		- Setting `map <leader>w :w!<CR>` which maps the "write to file" `:w! <ENTER>` to `\w`
-		- If you don't want to the default leader key provided by Vim, you can always remap to 
+		- If you don't want to use the default leader key provided by Vim, you can always remap to another key, like so: `let mapleader=","` to remap to `,` as the new leader key.
+		- To learn more on the topic: `:h mapping`
+		- Watch this to learn some advanced Vim settings like `mkvimrc`, `vmap`, `nmap`, `vnoremap`, and `inoremap`: https://www.udemy.com/course/vim-commands-cheat-sheet/learn/lecture/6598102?start=541#notes
+
+## Buffers
+When you open a file Vim reads the content of the file you see into a *buffer*. This is a temporary location. 
+- `:buffers`, `:files`, `:ls` displays a list of files in the buffer
+- `:bnext` or `:bn` moves to the next file in the buffer
+- `:bprevious` or `:bp` moves to the previous file in the buffer
+- `:blast` or `:bl` moves to the last file in the buffer
+- `:bfirst` or `:bf` moves to the first file in the buffer
+- `:b2` moves to the 2nd buffer in the buffer list
+- `Ctrl-Shift-6` switches between the previous and current buffers in the buffer list
+
+- When you display a buffer with `:ls`, `%a` shows the active buffer, `#` shows the alternate buffer (the buffer you'd switched from).
+	- You can take advantage of this and use `:b#` to explicitly move to the alternate buffer.
+
+- A buffer can be in one of three states:
+	- active `%a`
+	- hidden `#h`
+	- inactive (i.e. not loaded into memory)
+
+- The `|` pipe command in Vim is the command separator.
+- `E` or `Explore` lets you open the explore tab where you can view files.
+
+## Windows
 
 
 ## Navigational key-bindings for zsh
