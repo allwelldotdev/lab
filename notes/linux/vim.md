@@ -391,6 +391,15 @@ teleworm.us
 A much quicker way to achieve the same result as above is this macro: `df@f<cf>^M^[`
 
 The power of macros!
+
+## Visual mode
+Visual mode in Vim allows you to highlight series of text just like you would with a mouse. There are 3 types of visual mode:
+1. Character-wise visual mode; started with `v`
+2. Line-wise visual mode; started with `V`
+3. Block-wise visual mode; started with `Ctrl-v`
+
+
+
 ## Navigational key-bindings for zsh
 
 ```bash
