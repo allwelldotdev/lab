@@ -492,6 +492,22 @@ Resizing the shape of windows:
 - `Ctrl-w |` maximizes the height of a window
 - `Ctrl-w _` maximizes the width of a window
 - `Ctrl-w =` equalizes the size of all windows.
+---
+Rearranging windows:
+- `Ctrl-w r` rotates the windows in a left to right direction
+- `Ctrl-w R` rotates the windows in the opposite direction (from right to left)
+- `Ctrl-w H/J/K/L` moves the focused window to the side of `H`, `J`, `K`, or `L`
+---
+Buffer and Windows commands:
+- `:ba` or `:ball` opens all the buffers into their own windows. If there's not enough space for windows, Vim will open as many as possible and tell you there isn't enough on your screen for the others.
+- `:bufdo` lets you execute commands on all of your buffers.
+	- `:windo` does something similar but with windows.
+---
+Finding help on `Ctrl-w` commands:
+- `:h ^ww <ENTER>` takes you to help manual.
+
+## Explore mode
+
 
 ## Navigational key-bindings for zsh
 

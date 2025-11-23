@@ -172,7 +172,7 @@
               "state": {
                 "file": "linux/vim.md",
                 "followCursor": true,
-                "showSearch": true,
+                "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
@@ -218,7 +218,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "3d9051d2f3ac673a",
+  "active": "3688840e0d682bbb",
   "lastOpenFiles": [
     "assets/Pasted image 20251121162620.png",
     "git/git_commit_message_tip.md",
