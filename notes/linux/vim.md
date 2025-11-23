@@ -474,7 +474,24 @@ When you open a file Vim reads the content of the file you see into a *buffer*. 
 - `E` or `Explore` lets you open the explore tab where you can view files.
 
 ## Windows
-
+In Vim, a window is a view of a buffer.
+- `:split` or `:sp` or `Ctrl-w s` Splits the window in two horizontally.
+	- `:sp <filename>` splits windows horizontally with the new window opening the file indicated by `filename`.
+- `:vsplit` or `:vs` or `Ctrl-w v` Splits the window in two vertically.
+	- `:vs <filename>` splits windows vertically with the new window opening the file indicated by `filename`.
+- `:q` or `Ctrl-w q` while focusing on a window, closes the window.
+- `Ctrl-w Ctrl-w` switches between windows.
+- `Ctrl-w h/j/k/l` switches between windows in direction of `h`, `j`, `k`, or `l`.
+- `:on` or `:only` or `Ctrl-w o` closes every other open window except the current window (i.e. the window in focus).
+---
+Resizing the shape of windows:
+- `Ctrl-w +` increases the height of a window
+- `Ctrl-w -` decreases the width of a window
+- `Ctrl-w <` increases the width of a window to the left
+- `Ctrl-w >` increases the width of a window to the right
+- `Ctrl-w |` maximizes the height of a window
+- `Ctrl-w _` maximizes the width of a window
+- `Ctrl-w =` equalizes the size of all windows.
 
 ## Navigational key-bindings for zsh
 
