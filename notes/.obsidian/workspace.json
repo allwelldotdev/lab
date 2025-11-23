@@ -218,14 +218,15 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "3688840e0d682bbb",
+  "active": "3d9051d2f3ac673a",
   "lastOpenFiles": [
+    "blockchain.md",
+    "linux/vim.md",
     "assets/Pasted image 20251121162620.png",
     "git/git_commit_message_tip.md",
     "git/git.md",
     "rust/blog/heapless dsa/How to make a custom type iterable in Rust....md",
     "rust/blog/heapless dsa/Building a heapless vector data structure using uninitialized values....md",
-    "blockchain.md",
     "user-auth.md",
     "javascript/javascript.md",
     "linux/kubernetes/LFS259.md",
@@ -236,7 +237,6 @@
     "python/boto3.md",
     "linux/tmux.md",
     "linux/zsh.md",
-    "linux/vim.md",
     "linux/kubernetes/LFS250.md",
     "digital_marketing/google",
     "digital_marketing",
@@ -253,7 +253,6 @@
     "assets/Pasted image 20250528133330.png",
     "assets/Pasted image 20250528132723.png",
     "assets/Pasted image 20250527153211.png",
-    "assets/Pasted image 20250527104856.png",
     "n8n.md",
     "linux/linux.md",
     "javascript/typescript.md",

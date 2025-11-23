@@ -512,6 +512,21 @@ Finding help on `Ctrl-w` commands:
 On Zed:
 From what I found on Zed, the options of `:Explore` in Vim are not fully *explored* in Zed and perhaps for good reason (as fully exploring them may hamper the use of Zed's own settings).
 
+## Neovim
+
+---
+- `:set wrap` and `:set nowrap` to enable and disable text wrapping.
+---
+Horizontal scrolling commands:
+
+Once `nowrap` is set, you can use the following commands to scroll horizontally:
+- `zh`: Scrolls the view one character to the left, effectively moving the text one character to the right.
+- `zl`: Scrolls the view one character to the right, effectively moving the text one character to the left.
+- `zH`: Scrolls the view half a screen width to the left.
+- `zL`: Scrolls the view half a screen width to the right.
+- `zs`: Scrolls the view so the cursor is at the start (left edge) of the window.
+- `ze`: Scrolls the view so the cursor is at the end (right edge) of the window.
+
 ## Navigational key-bindings for zsh
 
 ```bash
