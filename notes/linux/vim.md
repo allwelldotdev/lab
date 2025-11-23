@@ -508,6 +508,9 @@ Finding help on `Ctrl-w` commands:
 
 ## Explore mode
 
+---
+On Zed:
+From what I found on Zed, the options of `:Explore` in Vim are not fully *explored* in Zed and perhaps for good reason (as fully exploring them may hamper the use of Zed's own settings).
 
 ## Navigational key-bindings for zsh
 
