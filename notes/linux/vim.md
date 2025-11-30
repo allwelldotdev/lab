@@ -537,6 +537,26 @@ Once `nowrap` is set, you can use the following commands to scroll horizontally:
 	- `zM` folds the *multi-buffer*.
 	- `zR` unfolds the *multi-buffer*.
 - `g/` global symbol search across project/directory
+	- You can do some things in global search using regex. Learn more here: https://youtu.be/ltE30UmsBlY?t=478
+- `[[` or `]]` to navigate through functions or classes.
+---
+How Vim keys work with Zed and Git:
+- `dO` stages a change. Pressing it again unstages the change.
+- `do` shows diff of staged change.
+- `[c` or `]c` to navigate through chunks of git changes.
+	- You can even use the `.` command to "repeat" a Git staging action.
+- `:G` or `Ctrl-Shift-g` opens the git window.
+	- `Alt-y` stage highlighted file
+	- `Shift-Alt-y` unstage highlighted file
+	- `Ctrl-space` stage all
+	- `Shift-Ctrl-space` unstage all
+	- `Ctrl-w l` or `Ctrl-w h` moves sideways between Git window and Git file.
+	- `Ctrl-enter` to bring up or enlarge the edit box.
+		- Same command to commit after inserting commit message.
+		- `Shift-Ctrl-enter` to amend previous commit with new commit.
+	- `Alt-l` to autocomplete with AI
+
+> Not a bad Git workflow with Zed.
 
 ## Navigational key-bindings for zsh
 
