@@ -513,6 +513,7 @@ On Zed:
 From what I found on Zed, the options of `:Explore` in Vim are not fully *explored* in Zed and perhaps for good reason (as fully exploring them may hamper the use of Zed's own settings).
 
 ## Neovim
+These settings also work on **Zed**, the programming IDE, as well.
 
 ---
 - `:set wrap` and `:set nowrap` to enable and disable text wrapping.
@@ -526,6 +527,16 @@ Once `nowrap` is set, you can use the following commands to scroll horizontally:
 - `zL`: Scrolls the view half a screen width to the right.
 - `zs`: Scrolls the view so the cursor is at the start (left edge) of the window.
 - `ze`: Scrolls the view so the cursor is at the end (right edge) of the window.
+---
+- `:cpplink` lets you copy the line of the code on GitHub for sharing (if the project has been pushed to GitHub).
+- `gA` shows all references of a particular symbol
+- `gd` go to definition of a particular symbol.
+- `*` or `Shift-8` select/highlight the symbol the cursor on top of, then travel/move your cursor across representations of the same symbol. This opens a *multi-buffer* in Zed.
+	- `Shift-8` or `*` or `f3` circles through the selections.
+	- `Shift-n` or `Shift-f3` circles backwards through the selections.
+	- `zM` folds the *multi-buffer*.
+	- `zR` unfolds the *multi-buffer*.
+- `g/` global symbol search across project/directory
 
 ## Navigational key-bindings for zsh
 
