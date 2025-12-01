@@ -581,6 +581,11 @@ Working with the AI panel in Zed:
 	- `Ctrl-Alt-b` or `Ctrl-Shift-/` does the same thing with slight differences.
 		- `Ctrl-Alt-b` toggles focus between the AI panel and editor window, closing the AI panel as it leaves focus.
 		- `Ctrl-Shift-/` toggles focus between the AI panel and editor window, NOT closing the AI panel as it leaves focus (instead leaving the window open). Interestingly, this is what `:AI` does too.
+- Bear in mind, AI mode has Vim mode as well.
+- `@` gives options of numerous inserts to be used with AI mode.
+- `Ctrl-Alt-/` brings up different AI models.
+- `Ctrl-Shift-.` or `Ctrl->` after highlighting some lines of code forwards those lines to AI panel for inference.
+- `Ctrl-x Ctrl-a`, while in Vim `INSERT` mode in the editor, opens the generate inline editor. 
  
 ## Navigational key-bindings for zsh
 
