@@ -48,21 +48,9 @@
               "icon": "lucide-file",
               "title": "vim"
             }
-          },
-          {
-            "id": "8b2890c36a9fbd7f",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.10.6"
-              },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.10.6"
-            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -182,12 +170,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "linux/vim.md",
                 "followCursor": true,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of vim"
             }
           },
           {
@@ -229,7 +218,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "8b2890c36a9fbd7f",
+  "active": "3d9051d2f3ac673a",
   "lastOpenFiles": [
     "rust/blog/heapless dsa/Building a heapless vector data structure using uninitialized values....md",
     "blockchain.md",

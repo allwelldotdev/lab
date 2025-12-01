@@ -558,6 +558,11 @@ How Vim keys work with Zed and Git:
 
 > Not a bad Git workflow with Zed.
 
+- `mb` marks a spot in the code file which you can return to again with `back-tick b`. Like as below:
+  ```
+  `b
+  ```
+- Important to note that `:vsplit` and `:split` work also in Zed. To open a file in the split, type absolute file
 ## Navigational key-bindings for zsh
 
 ```bash
