@@ -512,6 +512,13 @@ Finding help on `Ctrl-w` commands:
 On Zed:
 From what I found on Zed, the options of `:Explore` in Vim are not fully *explored* in Zed and perhaps for good reason (as fully exploring them may hamper the use of Zed's own settings).
 
+Commands that work on Explore mode in Vim and also on Zed:
+- `d` create a new directory
+- `%` create a new file
+- `-` move cursor to parent directory
+- `D` delete a file (not sure of deleting a directory - will have to confirm)
+- 
+
 ## Neovim
 These settings also work on **Zed**, the programming IDE, as well.
 
@@ -539,6 +546,7 @@ Once `nowrap` is set, you can use the following commands to scroll horizontally:
 - `g/` global symbol search across project/directory
 	- You can do some things in global search using regex. Learn more here: https://youtu.be/ltE30UmsBlY?t=478
 - `[[` or `]]` to navigate through functions or classes.
+- `[m` or `]m` to navigate to the previous and next method definition.
 ---
 How Vim keys work with Zed and Git:
 - `dO` stages a change. Pressing it again unstages the change.
@@ -562,7 +570,18 @@ How Vim keys work with Zed and Git:
   ```
   `b
   ```
-- Important to note that `:vsplit` and `:split` work also in Zed. To open a file in the split, type absolute file
+- Important to note that `:vsplit` and `:split` work also in Zed. To open a file in the split, type absolute file path relative to project root. For instance:
+  ```
+  :vsplit backend/src/utils/aiUtils.ts <ENTER>
+  ```
+- `[x` or `]x` increments or decrements the selection.
+---
+Working with the AI panel in Zed:
+- `:AI` toggles focus on the AI panel.
+	- `Ctrl-Alt-b` or `Ctrl-Shift-/` does the same thing with slight differences.
+		- `Ctrl-Alt-b` toggles focus between the AI panel and editor window, closing the AI panel as it leaves focus.
+		- `Ctrl-Shift-/` toggles focus between the AI panel and editor window, NOT closing the AI panel as it leaves focus (instead leaving the window open). Interestingly, this is what `:AI` does too.
+ 
 ## Navigational key-bindings for zsh
 
 ```bash
