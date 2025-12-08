@@ -586,6 +586,8 @@ Working with the AI panel in Zed:
 - `Ctrl-Alt-/` brings up different AI models.
 - `Ctrl-Shift-.` or `Ctrl->` after highlighting some lines of code forwards those lines to AI panel for inference.
 - `Ctrl-x Ctrl-a`, while in Vim `INSERT` mode in the editor, opens the generate inline editor. 
+---
+To learn about the use of debuggers in Zed, check out: https://youtu.be/ltE30UmsBlY?t=1574
  
 ## Navigational key-bindings for zsh
 
