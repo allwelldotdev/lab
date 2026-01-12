@@ -414,7 +414,7 @@ Some objects you can use in visual mode include:
 - `u` - Make lowercase
 - `U` - Make uppercase
 - `>` - Shift right
-- `<` - Shift left
+- `<` - Shift left.
 
 > To improve your understanding of visual mode check out this video lecture again: https://www.udemy.com/course/vim-commands-cheat-sheet/learn/lecture/6593354#overview
 

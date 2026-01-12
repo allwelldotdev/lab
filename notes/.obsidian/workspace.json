@@ -42,7 +42,7 @@
               "type": "markdown",
               "state": {
                 "file": "linux/vim.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
@@ -185,8 +185,8 @@
             "state": {
               "type": "git-history-view",
               "state": {},
-              "icon": "lucide-ghost",
-              "title": "git-history-view"
+              "icon": "history",
+              "title": "History"
             }
           },
           {
@@ -195,12 +195,12 @@
             "state": {
               "type": "git-view",
               "state": {},
-              "icon": "lucide-ghost",
-              "title": "git-view"
+              "icon": "git-pull-request",
+              "title": "Source Control"
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
@@ -218,7 +218,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "3d9051d2f3ac673a",
+  "active": "b4adc8f8bf772da5",
   "lastOpenFiles": [
     "rust/rust.md",
     "rust/blog/heapless dsa/Building a heapless vector data structure using uninitialized values....md",
