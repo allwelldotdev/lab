@@ -200,7 +200,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
@@ -218,12 +218,15 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "3688840e0d682bbb",
+  "active": "b4adc8f8bf772da5",
   "lastOpenFiles": [
-    "rust/rust.md",
+    "blockchain.md",
     "rust/blog/heapless dsa/Building a heapless vector data structure using uninitialized values....md",
     "linux/vim.md",
-    "blockchain.md",
+    "python/advanced_python-functional.md",
+    "python/advanced_python-multiprocessing_multithreading.md",
+    "python/python.md",
+    "rust/rust.md",
     "assets/Pasted image 20251121162620.png",
     "git/git_commit_message_tip.md",
     "git/git.md",
@@ -240,8 +243,6 @@
     "linux/kubernetes/LFS250.md",
     "digital_marketing/google",
     "digital_marketing",
-    "python/python.md",
-    "python/advanced_python-functional.md",
     "assets/Pasted image 20250611144102.png",
     "assets/Pasted image 20250611133308.png",
     "assets/Pasted image 20250611133119.png",
