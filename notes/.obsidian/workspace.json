@@ -172,8 +172,8 @@
               "state": {
                 "file": "linux/vim.md",
                 "followCursor": true,
-                "showSearch": false,
-                "searchQuery": ""
+                "showSearch": true,
+                "searchQuery": "ma"
               },
               "icon": "lucide-list",
               "title": "Outline of vim"
