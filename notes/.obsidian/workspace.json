@@ -63,8 +63,7 @@
               "title": "python"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "vertical"
@@ -184,13 +183,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "python/python.md",
+                "file": "blockchain.md",
                 "followCursor": true,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of python"
+              "title": "Outline of blockchain"
             }
           },
           {
@@ -232,14 +231,14 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "acee236e5a5fa1a7",
+  "active": "a209810b9029d3d9",
   "lastOpenFiles": [
     "linux/vim.md",
-    "blockchain.md",
     "rust/blog/heapless dsa/Building a heapless vector data structure using uninitialized values....md",
+    "blockchain.md",
+    "python/python.md",
     "python/advanced_python-functional.md",
     "python/advanced_python-multiprocessing_multithreading.md",
-    "python/python.md",
     "rust/rust.md",
     "assets/Pasted image 20251121162620.png",
     "git/git_commit_message_tip.md",
