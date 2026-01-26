@@ -22,6 +22,18 @@
             }
           },
           {
+            "id": "1cfbf132f03d3e01",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.11.5"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.11.5"
+            }
+          },
+          {
             "id": "49a2387f38a93c6b",
             "type": "leaf",
             "state": {
@@ -63,7 +75,8 @@
               "title": "python"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -183,13 +196,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "blockchain.md",
                 "followCursor": true,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of blockchain"
+              "title": "Outline"
             }
           },
           {
@@ -231,7 +243,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "a209810b9029d3d9",
+  "active": "1cfbf132f03d3e01",
   "lastOpenFiles": [
     "linux/vim.md",
     "rust/blog/heapless dsa/Building a heapless vector data structure using uninitialized values....md",
