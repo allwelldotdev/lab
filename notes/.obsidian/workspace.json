@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ai/agents/doc_template.md",
-                "mode": "preview",
+                "file": "ai/agents/reusable_modular_ai_prompts.md",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "doc_template"
+              "title": "reusable_modular_ai_prompts"
             }
           }
         ],
@@ -221,8 +221,9 @@
   },
   "active": "3d9051d2f3ac673a",
   "lastOpenFiles": [
-    "blockchain.md",
     "ai/agents/doc_template.md",
+    "ai/agents/reusable_modular_ai_prompts.md",
+    "blockchain.md",
     "linux/vim.md",
     "ai/agents",
     "ai",
@@ -262,7 +263,6 @@
     "linux/linux.md",
     "javascript/typescript.md",
     "javascript/nodejs.md",
-    "obsidian.md",
     "javascript",
     "python/ai",
     "go",
