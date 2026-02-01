@@ -8,7 +8,7 @@ These prompts work well with the following LLMs and Agentic IDEs:
 > Start by reading the docs in *[placeholder: e.g. `./.agent` directory]* to get yourself abreast of all functionality and metadata on the codebase. Then accurately perform the following task: 
 > ...
 
- > 
+ > Make sure you get it right. If you're unsure of steps to take reread the docs for direction, or ask questions before you proceed. If you fail stupendously, you WILL get fired from your job.
 ### For short, straight-to-the-point, responses
 
 Great for lower token consumption.
