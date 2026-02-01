@@ -5,6 +5,10 @@ These prompts work well with the following LLMs and Agentic IDEs:
 
 > To ensure you have the right, comprehensive, and up-to-date knowledge of the codebase and instructions, read the docs in *[placeholder: e.g. `./.agent` directory]*. After reading, test yourself to confirm to yourself that you have read and do understand all the relevant, up-to-date information on the code. Then, we may proceed.
 
+> Start by reading the docs in *[placeholder: e.g. `./.agent` directory]* to get yourself abreast of all functionality and metadata on the codebase. Then accurately perform the following task: 
+> ...
+
+ > 
 ### For short, straight-to-the-point, responses
 
 Great for lower token consumption.
