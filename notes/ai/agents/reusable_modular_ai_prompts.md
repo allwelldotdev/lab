@@ -27,3 +27,5 @@ For Antigravity `browser_subagent` website testing:
 
 Gemini 3 Flash works well here.
 > See diff between index files and last commit and suggest a git commit title and message, then MR request title and message. Don't respond verbose.
+
+> Check diff between the current working directory files (including untracked files, if any) and the last commit and suggest a git commit title and message. Do not be verbose in your commit title or message responses.
