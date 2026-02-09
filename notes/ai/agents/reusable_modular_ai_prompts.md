@@ -31,3 +31,8 @@ Gemini 3 Flash works well here.
 > Check diff between the current working directory files (including untracked files, if any) and the last commit and suggest a git commit title and message. Do not add any links. Do not be verbose in your commit title or message responses. Present the result in a markdown code block.
 
 > Check git diff from last commit to this commit `8b2de56` and suggest a comprehensive MR request title and message. Present the result in a markdown code block. Do not add any links. Do not be verbose with the titles and messages - comprehensive simplicity is what matters.
+
+### Ensuring build quality
+
+> I've given you a lot of detail from previous code to help you perform this design and build with utmost accuracy. Therefore, deliver excellently. Test iteratively on the browser until everything you've produced matches what I've described here.
+
