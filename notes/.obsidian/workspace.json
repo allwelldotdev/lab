@@ -48,9 +48,21 @@
               "icon": "lucide-file",
               "title": "reusable_modular_ai_prompts"
             }
+          },
+          {
+            "id": "5d577419d22f9cec",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.11.7"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.11.7"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -219,7 +231,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "3d9051d2f3ac673a",
+  "active": "5d577419d22f9cec",
   "lastOpenFiles": [
     "ai/agents/doc_template.md",
     "ai/agents/reusable_modular_ai_prompts.md",
