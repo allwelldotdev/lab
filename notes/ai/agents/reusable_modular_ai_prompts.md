@@ -30,6 +30,15 @@ Gemini 3 Flash works well here.
 
 > Check diff between the current working directory files (including untracked files, if any) and the last commit and suggest a git commit title and message. Do not add any links. Do not be verbose in your commit title or message responses. Present the result in a markdown code block.
 
+Variations to the above prompt:
+> Check diff between the current working directory files (including untracked files, if any) and the last commit and ...
+> 
+> ["...and list both tracked changes AND untracked files separately in the commit title and message."]
+> ["...and describe ALL changes including new untracked files in the commit title and message."]
+> ["...and include untracked files as a separate section in the commit title and message."]
+> 
+> Do not add any links. Do not be verbose in your commit title or message responses. Present the result in a markdown code block.
+
 > Check git diff from last commit to this commit `8b2de56` and suggest a comprehensive MR request title and message. Present the result in a markdown code block. Do not add any links. Do not be verbose with the titles and messages - comprehensive simplicity is what matters.
 
 ### Ensuring build quality
