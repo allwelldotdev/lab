@@ -50,7 +50,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -170,13 +170,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "linux/vim.md",
+                "file": "ai/agents/reusable_modular_ai_prompts.md",
                 "followCursor": true,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of vim"
+              "title": "Outline of reusable_modular_ai_prompts"
             }
           },
           {
@@ -218,12 +218,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "a209810b9029d3d9",
+  "active": "3d9051d2f3ac673a",
   "lastOpenFiles": [
+    "linux/vim.md",
     "blockchain.md",
     "ai/agents/reusable_modular_ai_prompts.md",
     "ai/agents/doc_template.md",
-    "linux/vim.md",
     "ai/agents",
     "ai",
     "rust/blog/heapless dsa/Building a heapless vector data structure using uninitialized values....md",
