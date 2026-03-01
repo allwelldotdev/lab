@@ -48,34 +48,9 @@
               "icon": "lucide-file",
               "title": "vim"
             }
-          },
-          {
-            "id": "5371c2899a512457",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.11.4"
-              },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.11.4"
-            }
-          },
-          {
-            "id": "98cadb2575d6e582",
-            "type": "leaf",
-            "state": {
-              "type": "diff-view",
-              "state": {
-                "file": "notes/linux/vim.md",
-                "staged": true
-              },
-              "icon": "git-pull-request",
-              "title": "Diff View (vim)"
-            }
           }
         ],
-        "currentTab": 4
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -183,7 +158,9 @@
               "type": "tag",
               "state": {
                 "sortOrder": "frequency",
-                "useHierarchy": true
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-tags",
               "title": "Tags"
@@ -205,17 +182,7 @@
             }
           },
           {
-            "id": "4dade48fcdca82c6",
-            "type": "leaf",
-            "state": {
-              "type": "git-history-view",
-              "state": {},
-              "icon": "history",
-              "title": "History"
-            }
-          },
-          {
-            "id": "b4adc8f8bf772da5",
+            "id": "6a1a99b8edd4b096",
             "type": "leaf",
             "state": {
               "type": "git-view",
@@ -223,9 +190,19 @@
               "icon": "git-pull-request",
               "title": "Source Control"
             }
+          },
+          {
+            "id": "5a703398ff713b01",
+            "type": "leaf",
+            "state": {
+              "type": "git-history-view",
+              "state": {},
+              "icon": "history",
+              "title": "History"
+            }
           }
         ],
-        "currentTab": 5
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -243,7 +220,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "98cadb2575d6e582",
+  "active": "6a1a99b8edd4b096",
   "lastOpenFiles": [
     "linux/vim.md",
     "conflict-files-obsidian-git.md",
