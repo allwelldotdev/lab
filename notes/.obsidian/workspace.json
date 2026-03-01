@@ -48,9 +48,21 @@
               "icon": "lucide-file",
               "title": "vim"
             }
+          },
+          {
+            "id": "5371c2899a512457",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.11.4"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.11.4"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -200,7 +212,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
@@ -218,7 +230,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "3688840e0d682bbb",
+  "active": "5371c2899a512457",
   "lastOpenFiles": [
     "rust/rust.md",
     "rust/blog/heapless dsa/Building a heapless vector data structure using uninitialized values....md",
