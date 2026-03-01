@@ -60,9 +60,22 @@
               "icon": "lucide-book-up",
               "title": "Release Notes 1.11.4"
             }
+          },
+          {
+            "id": "98cadb2575d6e582",
+            "type": "leaf",
+            "state": {
+              "type": "diff-view",
+              "state": {
+                "file": "notes/linux/vim.md",
+                "staged": true
+              },
+              "icon": "git-pull-request",
+              "title": "Diff View (vim)"
+            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -230,11 +243,16 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "5371c2899a512457",
+  "active": "98cadb2575d6e582",
   "lastOpenFiles": [
+    "linux/vim.md",
+    "conflict-files-obsidian-git.md",
+    "ai/agents/reusable_modular_ai_prompts.md",
+    "ai/agents/doc_template.md",
+    "ai/agents",
+    "ai",
     "rust/rust.md",
     "rust/blog/heapless dsa/Building a heapless vector data structure using uninitialized values....md",
-    "linux/vim.md",
     "blockchain.md",
     "assets/Pasted image 20251121162620.png",
     "git/git_commit_message_tip.md",
@@ -269,13 +287,9 @@
     "linux/linux.md",
     "javascript/typescript.md",
     "javascript/nodejs.md",
-    "obsidian.md",
-    "js.md",
     "javascript",
     "python/ai",
     "go",
-    "rust",
-    "python",
-    "Untitled"
+    "rust"
   ]
 }
