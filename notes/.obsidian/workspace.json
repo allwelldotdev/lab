@@ -48,21 +48,9 @@
               "icon": "lucide-file",
               "title": "vim"
             }
-          },
-          {
-            "id": "840f1e705d4d0977",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.12.4"
-              },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.12.4"
-            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -214,7 +202,7 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -232,7 +220,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "840f1e705d4d0977",
+  "active": "3688840e0d682bbb",
   "lastOpenFiles": [
     "linux/vim.md",
     "conflict-files-obsidian-git.md",
